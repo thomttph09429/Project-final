@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/drawable/arrow_left.xml" value="0.1115" />
+        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/drawable/bd_border_20_topbot_right.xml" value="0.1115" />
+        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/drawable/bg_boder_20_green.xml" value="0.1115" />
+        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/drawable/bg_boder_20_green1.xml" value="0.1115" />
+        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/drawable/bg_border_40_header_user.xml" value="0.1115" />
+        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/drawable/bg_stroke_border_20.xml" value="0.1115" />
+        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/drawable/ic_add_image.xml" value="0.1115" />
+        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/activity_add_product.xml" value="0.33" />
+        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/activity_cart.xml" value="0.16304347826086957" />
+        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/fragment_user.xml" value="0.33" />
+        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/item_category.xml" value="0.33" />
+        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/item_product.xml" value="0.1" />
+      </map>
+    </option>
+  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
+</project>
