@@ -8,9 +8,10 @@ public class Product {
         return idShop;
     }
 
-    public Product( String price, String name) {
+    public Product( String price, String name,String image) {
         this.price = price;
         this.name = name;
+        this.image= image;
     }
 
     public void setIdShop(String idShop) {

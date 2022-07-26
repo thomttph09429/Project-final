@@ -1,6 +1,8 @@
 package com.app.projectfinal.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.app.projectfinal.R;
+import com.app.projectfinal.activity.ProductDetailActivity;
 import com.app.projectfinal.model.Product;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -40,6 +44,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         product = products.get(position);
         holder.name.setText(product.getName());
         holder.price.setText(product.getPrice());
+        Glide.with(context).load(product.getImage()).error(R.drawable.ic_image_error).into(holder.image);
+        holder.itemView.setOnClickListener(v->{
+            Intent intent = new Intent(context, ProductDetailActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putInt("product", position);
+            intent.putExtras(bundle);
+           context.startActivity(intent);
+        });
 
 
     }

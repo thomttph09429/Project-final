@@ -30,7 +30,7 @@
         </androidx.appcompat.widget.Toolbar>
 
         <ImageView
-            android:id="@+id/img_product_detail"
+            android:id="@+id/iv_detail_product"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_180sdp"
             android:layout_below="@+id/toolbar"
@@ -40,7 +40,7 @@
             android:id="@+id/txt_product_detail_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/img_product_detail"
+            android:layout_below="@id/iv_detail_product"
             android:layout_marginLeft="@dimen/_6sdp"
             android:layout_marginTop="@dimen/_6sdp"
             android:layout_marginRight="@dimen/_6sdp"

@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -23,7 +24,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
 import com.app.projectfinal.adapter.ProductAdapter;
+import com.app.projectfinal.adapter.SliderAddsAdapter;
 import com.app.projectfinal.model.Product;
+import com.app.projectfinal.model.SliderItem;
 import com.app.projectfinal.utils.VolleySingleton;
 
 import org.json.JSONArray;
@@ -38,6 +41,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView rcvProduct;
     private ProductAdapter productAdapter;
     private List<Product> products;
+    private ViewPager2 vpAds;
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -67,13 +71,28 @@ public class HomeFragment extends Fragment {
         if (view == null)
             view = inflater.inflate(R.layout.fragment_home, container, false);
         initView();
+        initAds();
         products = new ArrayList<>();
         showProducts();
         return view;
     }
 
+    private void initAds() {
+        List<SliderItem> sliderItems = new ArrayList<>();
+        sliderItems.add(new SliderItem(R.drawable.ic_cover));
+        sliderItems.add(new SliderItem(R.drawable.ic_cover));
+        sliderItems.add(new SliderItem(R.drawable.ic_cover));
+
+        vpAds.setAdapter(new SliderAddsAdapter(sliderItems,vpAds));
+        vpAds.setClipToPadding(false);
+        vpAds.setClipChildren(false);
+        vpAds.setOffscreenPageLimit(2);
+        vpAds.getChildAt(0).setOverScrollMode(RecyclerView.HORIZONTAL);
+    }
+
     private void initView() {
-        rcvProduct = view.findViewById(R.id.rcvProduct);
+        rcvProduct = view.findViewById(R.id.rcv_products);
+        vpAds=view.findViewById(R.id.vp_ads);
 
     }
 
@@ -92,9 +111,9 @@ public class HomeFragment extends Fragment {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
                         String productName = object.getString("productName");
-//                        String image = object.getString("image");
+                        String image = object.getString("image1");
                         String price = object.getString("price");
-                        products.add(new Product(price, productName));
+                        products.add(new Product(price, productName, image));
 
                     }
                 } catch (JSONException e) {

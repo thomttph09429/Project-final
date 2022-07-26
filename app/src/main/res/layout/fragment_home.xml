@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f3f3f3"
-    >
+    android:background="@color/white">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#f3f3f3"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -28,43 +26,25 @@
                 android:layout_height="wrap_content">
 
                 <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/viewpager_ads"
+                    android:id="@+id/vp_ads"
                     android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    android:layout_below="@+id/toolbar" />
+                    android:layout_height="250dp" />
 
                 <me.relex.circleindicator.CircleIndicator3
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/viewpager_ads"
+                    android:layout_alignBottom="@+id/vp_ads"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="20dp"
                     android:id="@+id/circleIndicator3"/>
 
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_border_20_bottom_left_right"
-                    android:fitsSystemWindows="true"
-                    app:menu="@menu/dashboard_menu">
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/edt_search"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_border_20"
-                        android:drawableStart="@drawable/ic_search"
-                        android:hint="Search"
-                        android:padding="8dp" />
-                </androidx.appcompat.widget.Toolbar>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcvLSP"
+                    android:id="@+id/rcv_categories"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/viewpager_ads"
-                    android:layout_margin="8dp"
+                    android:layout_below="@id/vp_ads"
+                    android:layout_margin="@dimen/_8sdp"
                     android:background="@drawable/bg_stroke_border_20"
                     android:backgroundTint="@null"
                     android:nestedScrollingEnabled="true"
@@ -86,7 +66,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#f3f3f3"
+            android:background="@color/white"
             android:orientation="vertical">
 
             <TextView
@@ -99,9 +79,10 @@
                 android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcvProduct"
+                android:id="@+id/rcv_products"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:padding="@dimen/_4sdp"
                 android:overScrollMode="never"
                 app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
         </LinearLayout>
