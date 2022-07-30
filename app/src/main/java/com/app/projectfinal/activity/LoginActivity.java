@@ -1,6 +1,7 @@
 package com.app.projectfinal.activity;
 
 import static com.app.projectfinal.utils.Constant.LOGIN;
+import static com.google.common.base.StandardSystemProperty.USER_NAME;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,7 +27,10 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.app.projectfinal.R;
+import com.app.projectfinal.data.MySharedPreferences;
+import com.app.projectfinal.utils.Constant;
 import com.app.projectfinal.utils.ProgressBarDialog;
+import com.app.projectfinal.utils.ValidateForm;
 import com.app.projectfinal.utils.VolleySingleton;
 import com.google.android.gms.auth.api.identity.BeginSignInRequest;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -38,6 +42,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -59,6 +64,8 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleSignInClient gsc;
     private Button btn_login;
     private EditText edt_pass, edt_acc;
+    private View parentLayout;
+    private MySharedPreferences mySharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,22 +73,49 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
-
+        mySharedPreferences = new MySharedPreferences(this);
         initView();
+        clickLoginWithServer();
+        changeScreenRegister();
+    }
+
+    /**
+     * click button "login" and validate form login
+     * <pre>
+     *     author: ThomTT
+     *     date: 30/07/2022
+     * </pre>
+     */
+    private void clickLoginWithServer() {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String userName = edt_acc.getText().toString().trim();
                 String passWord = edt_pass.getText().toString().trim();
-                signInWithServer(userName, passWord);
-//                clickSignInWithFỉrebase(userName, passWord);
+                if (userName.isEmpty()) {
+                    Snackbar snackbar = Snackbar
+                            .make(parentLayout, "Nhập tên đăng nhập hoặc số điện thoại", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                } else if (!ValidateForm.validatePassword(passWord)) {
+                    Snackbar snackbar = Snackbar
+                            .make(parentLayout, "Mật khẩu chứa ít nhất 8 ký tự", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                } else {
+                    signInWithServer(userName, passWord);
+
+                }
 
             }
         });
-        changeScreenRegister();
-        loginWithGoogle();
     }
 
+    /**
+     * navigate register screen
+     * <pre>
+     *     author:ThomTT
+     *     date:30/07/2022
+     * </pre>
+     */
     private void changeScreenRegister() {
         tv_register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,19 +125,34 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * init view
+     * <pre>
+     *     author:ThomTT
+     *     date: 30/07/2022
+     * </pre>
+     */
     private void initView() {
         tv_register = (TextView) findViewById(R.id.tv_register);
         btn_login_with_google = (AppCompatButton) findViewById(R.id.btn_login_with_google);
         btn_login = findViewById(R.id.btn_login);
         edt_acc = findViewById(R.id.edt_acc);
         edt_pass = findViewById(R.id.edt_pass);
+        parentLayout = findViewById(android.R.id.content);
 
     }
 
 
-private  void validateLogin(){
-
-}
+    /**
+     * Call API sign in with server
+     * <pre>
+     *     author:ThomTT1
+     *     date:24/07/2022
+     * </pre>
+     *
+     * @param name
+     * @param passWord
+     */
     private void signInWithServer(String name, String passWord) {
         JSONObject user = new JSONObject();
 
@@ -120,10 +169,10 @@ private  void validateLogin(){
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, LOGIN, user, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-
+                mySharedPreferences.putStringValue(String.valueOf(USER_NAME), name);
                 Toast.makeText(LoginActivity.this, "" + "Đăng nhập thành công!", Toast.LENGTH_LONG).show();
-                Log.e("LoginActivity", ""+response.toString());
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                Log.e("LoginActivity", "" + response.toString());
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
 
@@ -135,69 +184,10 @@ private  void validateLogin(){
 
             }
 
-        }) ;
+        });
         VolleySingleton.getInstance(getApplicationContext()).getRequestQueue().add(jsonObjectRequest);
 
 
     }
 
-    private void clickSignInWithFỉrebase(String userName,String passWord) {
-                    fAuth.signInWithEmailAndPassword(userName, passWord).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(LoginActivity.this, com.app.projectfinal.activity.MainActivity.class));
-                                finish();
-                            } else {
-                                Toast.makeText(LoginActivity.this, "Đăng nhập thất bại", Toast.LENGTH_LONG).show();
-                            }
-
-                        }
-                    });
-
-            }
-
-
-
-
-
-    public void checkUserAccessLevel(String uid) {
-        DocumentReference df = fStore.collection("Users").document(uid);
-        df.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Log.d("TAG", "onSuccess: " + documentSnapshot.getData());
-            }
-        });
-    }
-
-    private void loginWithGoogle(){
-        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        gsc = GoogleSignIn.getClient(LoginActivity.this, gso);
-        btn_login_with_google.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = gsc.getSignInIntent();
-                startActivityForResult(intent, 100);
-            }
-        });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 100){
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                task.getResult(ApiException.class);
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            } catch (ApiException e){
-                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
 }

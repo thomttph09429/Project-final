@@ -21,7 +21,9 @@
     <color name="greenLight">#CCE59D</color>
 
     <color name="red">#F44336</color>
-<color name="color_main">#1CAE81</color>
+    <color name="color_main">#1CAE81</color>
     <color name="shopcuatoi">#1CAE81</color>
+    <color name="green">#1CAE81</color>
+    <color name="greenWhite">#E3EFCE</color>
 
 </resources>

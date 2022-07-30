@@ -54,7 +54,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="right|end"
                     android:layout_marginTop="0dp"
-                    android:background="@drawable/mess" />
+                    android:background="@drawable/ic_chart_white" />
             </LinearLayout>
         </RelativeLayout>
 
@@ -79,15 +79,14 @@
             android:layout_marginLeft="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginRight="@dimen/_16sdp"
-            android:background="@drawable/bg_border_40"
+            android:background="@drawable/bg_default_border_40"
             android:orientation="horizontal">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/img_user"
                 android:layout_width="@dimen/_50sdp"
                 android:layout_height="@dimen/_50sdp"
-                android:background="@drawable/bg_border_25"
-                android:src="@drawable/demo" />
+                android:src="@drawable/avatar_empty" />
 
             <TextView
                 android:id="@+id/txt_user_name"

@@ -44,7 +44,7 @@
                     android:layout_marginLeft="90dp"
                     android:layout_marginTop="0dp"
                     android:layout_marginRight="12dp"
-                    android:background="@drawable/cart" />
+                    android:background="@drawable/ic_cart" />
 
                 <ImageView
                     android:id="@+id/img_kekabMenu"
@@ -52,7 +52,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="right|end"
                     android:layout_marginTop="0dp"
-                    android:background="@drawable/chat" />
+                    android:background="@drawable/ic_chat" />
             </LinearLayout>
         </RelativeLayout>
 
@@ -76,15 +76,13 @@
             android:layout_height="@dimen/_50sdp"
             android:layout_marginLeft="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_8sdp"
-            android:background="@drawable/bg_border_40"
             android:orientation="horizontal">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/img_user"
                 android:layout_width="@dimen/_50sdp"
                 android:layout_height="@dimen/_50sdp"
-                android:background="@drawable/bg_border_25"
-                android:src="@drawable/demo" />
+                android:src="@drawable/avatar_empty" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -124,7 +122,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/linear_user_topHeader"
-            android:layout_margin="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -162,10 +163,10 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tv_start_sell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/linear_user_contentHeader"
-            android:layout_marginBottom="@dimen/_16sdp"
             android:background="@drawable/bd_border_20_topbot_right"
             android:paddingLeft="@dimen/_8sdp"
             android:paddingRight="@dimen/_3sdp"
@@ -183,7 +184,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/_30sdp"
-            android:background="#CCE59D"
+            android:background="@color/greenLight"
             android:orientation="horizontal"
             android:padding="@dimen/_5sdp">
 
@@ -341,7 +342,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/_30sdp"
-            android:background="#CCE59D"
+            android:background="@color/greenLight"
             android:orientation="horizontal"
             android:padding="@dimen/_5sdp">
 
@@ -448,10 +449,10 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/ln_start_sell"
+            android:id="@+id/ln_sign_up_sell"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_30sdp"
-            android:background="#CCE59D"
+            android:background="@drawable/bg_border_0"
             android:orientation="horizontal"
             android:padding="@dimen/_5sdp">
 
@@ -479,6 +480,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:gravity="left"
+                android:textSize="@dimen/_10sdp"
                 android:text="đăng ký miễn phí"
                 android:textStyle="italic" />
         </LinearLayout>
@@ -486,7 +488,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/_30sdp"
-            android:background="#CCE59D"
+            android:background="@drawable/bg_border_0"
             android:orientation="horizontal"
             android:padding="@dimen/_5sdp">
 
@@ -511,7 +513,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/_30sdp"
-            android:background="#CCE59D"
+            android:background="@drawable/bg_border_0"
             android:orientation="horizontal"
             android:padding="@dimen/_5sdp">
 
@@ -536,7 +538,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/_30sdp"
-            android:background="#CCE59D"
+            android:background="@drawable/bg_border_0"
             android:orientation="horizontal"
             android:padding="@dimen/_5sdp">
 
@@ -561,7 +563,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/_30sdp"
-            android:background="#CCE59D"
+            android:background="@drawable/bg_border_0"
             android:orientation="horizontal"
             android:padding="@dimen/_5sdp">
 
@@ -586,7 +588,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/_30sdp"
-            android:background="#CCE59D"
+            android:background="@drawable/bg_border_0"
             android:orientation="horizontal"
             android:padding="@dimen/_5sdp">
 

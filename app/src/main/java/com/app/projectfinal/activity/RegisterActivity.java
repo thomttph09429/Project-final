@@ -22,17 +22,20 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.app.projectfinal.R;
 import com.app.projectfinal.utils.Constant;
+import com.app.projectfinal.utils.ValidateForm;
 import com.app.projectfinal.utils.VolleySingleton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONException;
@@ -43,19 +46,13 @@ import java.util.Map;
 import java.util.Objects;
 
 public class RegisterActivity extends AppCompatActivity {
-
-
-    AppCompatButton btn_register;
-    TextView tv_login;
-    TextInputEditText edt_phone;
-    TextInputEditText edt_acc;
-    TextInputEditText edt_pass;
-    TextInputEditText edt_re_pass;
-
+    private AppCompatButton btn_register;
+    private TextView tv_login;
+    private TextInputEditText edt_phone, edt_acc, edt_pass, edt_re_pass;
     //firebase
     private FirebaseAuth fAuth;
     private FirebaseFirestore fStore;
-
+    private View parentLayout;
     private boolean valid = true;
 
 
@@ -67,34 +64,55 @@ public class RegisterActivity extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
         initView();
         changeScreenLogin();
+        clickRegisterWithServer();
 
+    }
+
+    /**
+     * click button "sign up" and validate form sign up
+     * <pre>
+     *     author:ThomTT1
+     *     date:24/07/2022
+     * </pre>
+     */
+    private void clickRegisterWithServer() {
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (edt_pass.getText().toString().trim().equals(edt_re_pass.getText().toString())){
-                    registerServer(Objects.requireNonNull(edt_phone.getText()).toString().trim(), Objects.requireNonNull(edt_pass.getText()).toString().trim(), Objects.requireNonNull(edt_acc.getText()).toString().trim()) ;
-//                    registerFirebase(Objects.requireNonNull(edt_phone.getText()).toString(), Objects.requireNonNull(edt_pass.getText()).toString());
-                }else {
-                    Toast.makeText(RegisterActivity.this, "" +"Nhập lại mật khẩu", Toast.LENGTH_LONG).show();
-
+                String name = edt_acc.getText().toString().trim();
+                String phone = edt_phone.getText().toString().trim();
+                String pass = edt_pass.getText().toString().trim();
+                String rePass = edt_re_pass.getText().toString().trim();
+                if (!ValidateForm.isPhoneNumber(phone)) {
+                    Snackbar snackbar = Snackbar
+                            .make(parentLayout, "Hãy nhập số điện thoại", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                } else if (!ValidateForm.validatePassword(pass)) {
+                    Snackbar snackbar = Snackbar
+                            .make(parentLayout, "Mật khẩu chứa ít nhất 8 ký tự", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                } else if (!ValidateForm.checkRePassWord(pass, rePass)) {
+                    Snackbar snackbar = Snackbar
+                            .make(parentLayout, "Nhập lại mật khẩu", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                } else {
+                    registerServer(phone, pass, name);
                 }
+
 
             }
         });
     }
-    private void sendMessageEmail(String email){
-        ActionCodeSettings actionCodeSettings =
-                ActionCodeSettings.newBuilder()
-                        .setHandleCodeInApp(true)
-                        .setAndroidPackageName(
-                                "com.app.projectfinal",
-                                true, /* installIfNotAvailable */
-                                "12"    /* minimumVersion */)
-                        .build();
-        fAuth.sendSignInLinkToEmail(email, actionCodeSettings);
-    }
 
-    private void changeScreenLogin(){
+
+    /**
+     * navigate login screen
+     * <pre>
+     *     author:ThomTT1
+     *     date:24/07/2022
+     * </pre>
+     */
+    private void changeScreenLogin() {
         tv_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,18 +121,35 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void initView(){
-        btn_register = (AppCompatButton) findViewById(R.id.btn_register);
-        edt_phone = (TextInputEditText) findViewById(R.id.edt_phone);
-        edt_acc = (TextInputEditText) findViewById(R.id.edt_acc);
-        edt_pass = (TextInputEditText) findViewById(R.id.edt_pass);
-        edt_re_pass = (TextInputEditText) findViewById(R.id.edt_re_pass);
-        tv_login = (TextView) findViewById(R.id.tv_login);
+    /**
+     * init view
+     * <pre>
+     *     author:ThomTT
+     *     date: 24/07/2022
+     * </pre>
+     */
+    private void initView() {
+        btn_register = findViewById(R.id.btn_register);
+        edt_phone = findViewById(R.id.edt_phone);
+        edt_acc = findViewById(R.id.edt_acc);
+        edt_pass = findViewById(R.id.edt_pass);
+        edt_re_pass = findViewById(R.id.edt_re_pass);
+        tv_login = findViewById(R.id.tv_login);
+        parentLayout = findViewById(android.R.id.content);
     }
-     private  void  validateRegister(){
 
-     }
-    private void registerServer(final String phone, final String pass, String name){
+    /**
+     * Call API sign up with server
+     * <pre>
+     *     author:ThomTT
+     *     date:24/07/2022
+     * </pre>
+     *
+     * @param phone
+     * @param pass
+     * @param name
+     */
+    private void registerServer(final String phone, final String pass, String name) {
         JSONObject user = new JSONObject();
         try {
             user.put("phone", phone);
@@ -145,34 +180,7 @@ public class RegisterActivity extends AppCompatActivity {
         VolleySingleton.getInstance(getApplicationContext()).getRequestQueue().add(jsonObjectRequest);
     }
 
-    public boolean checkField(EditText textField){
-        String checkEmail = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-        if (textField.getText().toString().isEmpty()){
-            textField.setError("Không được để trống");
-            valid = false;
-        } else {
-            valid = true;
-        }
-        return valid;
-    }
 
-    private void registerFirebase(String username, String password){
-        fAuth.createUserWithEmailAndPassword(username, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-            @Override
-            public void onSuccess(AuthResult authResult) {
-                FirebaseUser user = fAuth.getCurrentUser();
-                DocumentReference df = fStore.collection("Users").document(user.getUid());
-                Map<String, Object> userInfo = new HashMap<>();
-                userInfo.put("username", username);
-                userInfo.put("password", password);
-                df.set(userInfo);
-                finish();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
 
-            }
-        });
-    }
+
 }

@@ -1,10 +1,11 @@
 package com.app.projectfinal.data;
 
+import static com.app.projectfinal.utils.Constant.MY_SHARED_PREFERENCES;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 
 public class MySharedPreferences {
-    private static final String MY_SHARED_PREFERENCES = "MY_SHARED_PREFERENCES";
     private Context mContext;
 
     public MySharedPreferences (Context mContext) {

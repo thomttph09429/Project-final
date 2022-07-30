@@ -1,6 +1,12 @@
 package com.app.projectfinal.fragment;
 
+import static com.app.projectfinal.utils.Constant.CATEGORY_NAME;
+import static com.app.projectfinal.utils.Constant.DESCRIPTION_PRODUCT;
+import static com.app.projectfinal.utils.Constant.IMAGE1_PRODUCT;
+import static com.app.projectfinal.utils.Constant.NAME_PRODUCT;
+import static com.app.projectfinal.utils.Constant.PRICE_PRODUCT;
 import static com.app.projectfinal.utils.Constant.PRODUCTS;
+import static com.app.projectfinal.utils.Constant.STORE_NAME_PRODUCT;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -36,7 +42,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment  {
     private View view;
     private RecyclerView rcvProduct;
     private ProductAdapter productAdapter;
@@ -110,10 +116,14 @@ public class HomeFragment extends Fragment {
                     JSONArray jsonArray = jsonObject.getJSONArray("products");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
-                        String productName = object.getString("productName");
-                        String image = object.getString("image1");
-                        String price = object.getString("price");
-                        products.add(new Product(price, productName, image));
+                        String productName = object.getString(NAME_PRODUCT);
+                        String image1 = object.getString(IMAGE1_PRODUCT);
+                        String price = object.getString(PRICE_PRODUCT);
+                        String storeName = object.getString(STORE_NAME_PRODUCT);
+                        String categoryName = object.getString(CATEGORY_NAME);
+                        String description = object.getString(DESCRIPTION_PRODUCT);
+
+                        products.add(new Product(price, productName, image1, description, storeName, categoryName));
 
                     }
                 } catch (JSONException e) {
@@ -135,4 +145,7 @@ public class HomeFragment extends Fragment {
         VolleySingleton.getInstance(getContext()).getRequestQueue().add(jsonObjectRequest);
 
     }
+
+
+
 }

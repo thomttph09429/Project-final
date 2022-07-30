@@ -1,5 +1,7 @@
 package com.app.projectfinal.listener;
 
+import android.view.View;
+
 public interface ListenerCategoryName {
-    void getInfoCategory(String Name , int position);
+    public void onItemClick( int position, String categoryName);
 }

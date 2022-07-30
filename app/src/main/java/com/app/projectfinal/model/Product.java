@@ -1,37 +1,43 @@
 package com.app.projectfinal.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 public class Product {
+    private String storeId;
+    private String categoryId;
+    private String quantity;
+    private String price;
+    private String productName;
+    private String image1;
+    private String image2;
+    private String image3;
+    private String image4;
+    private String image5;
+    private String description;
+    private String status;
+    private String createdAt;
+    private String createdBy;
+    private String updatedAt;
+    private String updatedBy;
+    private String storeName;
+    private String categoryName;
+    private String unitName;
 
-    private String idShop, idCategory, idUnit, quantity, price, name, image, info, dateCreate, createBy, date_Update, updateBy, status;
-
-    public String getIdShop() {
-        return idShop;
+    public String getStoreId() {
+        return storeId;
     }
 
-    public Product( String price, String name,String image) {
-        this.price = price;
-        this.name = name;
-        this.image= image;
+    public void setStoreId(String storeId) {
+        this.storeId = storeId;
     }
 
-    public void setIdShop(String idShop) {
-        this.idShop = idShop;
+    public String getCategoryId() {
+        return categoryId;
     }
 
-    public String getIdCategory() {
-        return idCategory;
-    }
-
-    public void setIdCategory(String idCategory) {
-        this.idCategory = idCategory;
-    }
-
-    public String getIdUnit() {
-        return idUnit;
-    }
-
-    public void setIdUnit(String idUnit) {
-        this.idUnit = idUnit;
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getQuantity() {
@@ -50,60 +56,60 @@ public class Product {
         this.price = price;
     }
 
-    public String getName() {
-        return name;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
-    public String getImage() {
-        return image;
+    public String getImage1() {
+        return image1;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImage1(String image1) {
+        this.image1 = image1;
     }
 
-    public String getInfo() {
-        return info;
+    public String getImage2() {
+        return image2;
     }
 
-    public void setInfo(String info) {
-        this.info = info;
+    public void setImage2(String image2) {
+        this.image2 = image2;
     }
 
-    public String getDateCreate() {
-        return dateCreate;
+    public String getImage3() {
+        return image3;
     }
 
-    public void setDateCreate(String dateCreate) {
-        this.dateCreate = dateCreate;
+    public void setImage3(String image3) {
+        this.image3 = image3;
     }
 
-    public String getCreateBy() {
-        return createBy;
+    public String getImage4() {
+        return image4;
     }
 
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
+    public void setImage4(String image4) {
+        this.image4 = image4;
     }
 
-    public String getDate_Update() {
-        return date_Update;
+    public String getImage5() {
+        return image5;
     }
 
-    public void setDate_Update(String date_Update) {
-        this.date_Update = date_Update;
+    public void setImage5(String image5) {
+        this.image5 = image5;
     }
 
-    public String getUpdateBy() {
-        return updateBy;
+    public String getDescription() {
+        return description;
     }
 
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getStatus() {
@@ -114,19 +120,69 @@ public class Product {
         this.status = status;
     }
 
-    public Product(String idShop, String idCategory, String idUnit, String quantity, String price, String name, String image, String info, String dateCreate, String createBy, String date_Update, String updateBy, String status) {
-        this.idShop = idShop;
-        this.idCategory = idCategory;
-        this.idUnit = idUnit;
-        this.quantity = quantity;
-        this.price = price;
-        this.name = name;
-        this.image = image;
-        this.info = info;
-        this.dateCreate = dateCreate;
-        this.createBy = createBy;
-        this.date_Update = date_Update;
-        this.updateBy = updateBy;
-        this.status = status;
+    public String getCreatedAt() {
+        return createdAt;
     }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public String getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public String getUnitName() {
+        return unitName;
+    }
+
+    public void setUnitName(String unitName) {
+        this.unitName = unitName;
+    }
+
+    public Product(String price, String productName, String image1, String description, String storeName, String categoryName) {
+        this.price = price;
+        this.productName = productName;
+        this.image1 = image1;
+        this.description = description;
+        this.storeName = storeName;
+        this.categoryName = categoryName;
+    }
+
 }

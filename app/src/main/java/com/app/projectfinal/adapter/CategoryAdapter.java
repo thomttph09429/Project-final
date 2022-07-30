@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.projectfinal.R;
+import com.app.projectfinal.listener.ListenerCategoryName;
 import com.app.projectfinal.model.Category;
 import com.app.projectfinal.model.Product;
 
@@ -22,14 +23,17 @@ import java.util.List;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder> {
     private List<Category> categories;
     private Category category;
+    private Context context;
+    private ListenerCategoryName listenerCategoryName;
+    int selectedPosition=-1;
 
-    public CategoryAdapter(List<Category> categories, Context context) {
+    public CategoryAdapter(List<Category> categories, Context context, ListenerCategoryName listenerCategoryName) {
         this.categories = categories;
         this.context = context;
+        this.listenerCategoryName = listenerCategoryName;
 
     }
 
-    private Context context;
 
     @NonNull
     @Override
@@ -43,20 +47,34 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
     public void onBindViewHolder(@NonNull MyViewHolder holder,  int position) {
         category = categories.get(position);
         holder.name.setText(category.getNameCategory());
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // get adapter position
+                int position=holder.getAdapterPosition();
+                // call listener
+                listenerCategoryName.onItemClick(position, categories.get(position).getNameCategory());
+                // update position
+                selectedPosition=position;
+                // notify
+                notifyDataSetChanged();
 
-                if (holder.iv_mark.getVisibility() == View.VISIBLE) {
-                    holder.iv_mark.setVisibility(View.GONE);
-                } else  {
-                    holder.iv_mark.setVisibility(View.VISIBLE);
-                }
+
+
+
 
             }
         });
+        if(selectedPosition==position)
+        {
+            holder.iv_mark.setVisibility(View.VISIBLE);
+        }
+        else
+        {
 
+            holder.iv_mark.setVisibility(View.GONE);
+
+        }
 
     }
 

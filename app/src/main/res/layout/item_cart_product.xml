@@ -27,7 +27,6 @@
             android:id="@+id/img_product"
             android:layout_marginStart="8dp"
             android:layout_width="100dp"
-            android:src="@drawable/demo"
             android:layout_height="100dp"
             android:layout_gravity="center"
             android:scaleType="centerCrop"/>

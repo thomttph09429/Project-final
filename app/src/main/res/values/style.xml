@@ -59,11 +59,11 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
     <style name="NameProductText">
-        <item name="android:textSize">@dimen/_13sdp</item>
+        <item name="android:textSize">@dimen/_15sdp</item>
         <item name="android:textStyle">normal</item>
     </style>
     <style name="PriceProductText">
-        <item name="android:textSize">@dimen/_13sdp</item>
+        <item name="android:textSize">@dimen/_15sdp</item>
         <item name="android:textStyle">normal</item>
     </style>
 </resources>

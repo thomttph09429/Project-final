@@ -163,7 +163,6 @@
         android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginEnd="@dimen/_8sdp"
         android:background="@drawable/bg_border_40"
-        android:backgroundTint="@color/color_main"
         android:gravity="center"
         android:padding="@dimen/_14sdp"
         android:text="@string/register"

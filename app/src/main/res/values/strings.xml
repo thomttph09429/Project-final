@@ -26,5 +26,27 @@
 
     <string name="or">hoặc</string>
     <string name="shopcuatoi">Shop của tôi </string>
+    <string name="buy">Mua hàng</string>
+    <string name="buy_now">Mua ngay</string>
+    <string name="sum_price">Tổng thanh toán</string>
+    <string name="bill">Đơn mua</string>
+    <string name="buy_history">Lịch sử mua hàng</string>
+    <string name="select_all">Tất cả</string>
+    <string name="wait_confirm">Chờ xác nhận</string>
+    <string name="wait_deli">Chờ lấy hàng</string>
+    <string name="deli">Đang giao</string>
+    <string name="refund">Hoàn tiền</string>
+    <string name="view_shop">Xem shop</string>
+    <string name="new_product">Sản phẩm mới nhất</string>
+    <string name="my_gadget">Tiện ích của tôi</string>
+    <string name="my_voucher">Voucher của tôi</string>
+    <string name="start_sell">Bắt đầu bán</string>
+    <string name="view_history">Đã xem gần đây</string>
+    <string name="setting_user">Thiết lập tài khoản</string>
+    <string name="free_register">Đăng ký miễn phí</string>
+    <string name="type_account">Loại tài khoản</string>
+    <string name="follow">Đang theo dõi:</string>
+    <string name="followed">Người theo dõi:</string>
+    <string name="slash">/</string>
 
 </resources>

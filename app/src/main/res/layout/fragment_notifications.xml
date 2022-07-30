@@ -47,14 +47,14 @@
                         android:layout_marginRight="12dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="0dp"
-                        android:background="@drawable/cart"/>
+                        android:background="@drawable/ic_cart"/>
                     <ImageView
                         android:id="@+id/img_kekabMenu"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="0dp"
-                        android:background="@drawable/chat"/>
+                        android:background="@drawable/ic_chat"/>
                 </LinearLayout>
             </RelativeLayout>
         </com.google.android.material.appbar.CollapsingToolbarLayout>

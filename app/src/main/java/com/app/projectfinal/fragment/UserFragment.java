@@ -12,12 +12,12 @@ import androidx.fragment.app.Fragment;
 
 import com.app.projectfinal.R;
 import com.app.projectfinal.activity.AddProductActivity;
-import com.app.projectfinal.activity.myshop;
-import com.app.projectfinal.activity.shop_settings;
+import com.app.projectfinal.activity.SignUpShopActivity;
 
 public class UserFragment extends Fragment {
-    private LinearLayout lnStartSell;
+    private LinearLayout lnSignUpSell;
     private View view;
+    private TextView tvStartSell;
 
     public UserFragment() {
     }
@@ -29,19 +29,30 @@ public class UserFragment extends Fragment {
         if (view == null)
             view = inflater.inflate(R.layout.fragment_user, container, false);
         initView();
-        lnStartSell.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent= new Intent(getActivity(), AddProductActivity.class);
-                startActivity(intent);
-            }
-        });
+        signupToBecomeSeller();
+        openMyShop();
         return view;
     }
 
-    private void initView() {
-        lnStartSell = view.findViewById(R.id.ln_start_sell);
+    private void signupToBecomeSeller() {
+        lnSignUpSell.setOnClickListener(v->{
+            Intent intent= new Intent(getActivity(), SignUpShopActivity.class);
+            startActivity(intent);
+        });
 
+
+    }
+    private void openMyShop() {
+        tvStartSell.setOnClickListener(v->{
+            Intent intent= new Intent(getActivity(), AddProductActivity.class);
+            startActivity(intent);
+        });
+
+
+    }
+    private void initView() {
+        tvStartSell=view.findViewById(R.id.tv_start_sell);
+        lnSignUpSell = view.findViewById(R.id.ln_sign_up_sell);
     }
 
 }
