@@ -33,6 +33,7 @@ import com.app.projectfinal.adapter.ProductAdapter;
 import com.app.projectfinal.adapter.SliderAddsAdapter;
 import com.app.projectfinal.model.Product;
 import com.app.projectfinal.model.SliderItem;
+import com.app.projectfinal.utils.ProgressBarDialog;
 import com.app.projectfinal.utils.VolleySingleton;
 
 import org.json.JSONArray;
@@ -42,12 +43,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment  {
+public class HomeFragment extends Fragment {
     private View view;
     private RecyclerView rcvProduct;
     private ProductAdapter productAdapter;
     private List<Product> products;
-    private ViewPager2 vpAds;
+//    private ViewPager2 vpAds;
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -66,8 +67,6 @@ public class HomeFragment extends Fragment  {
         inflater.inflate(R.menu.dashboard_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
-
-
 
 
     @Override
@@ -89,28 +88,29 @@ public class HomeFragment extends Fragment  {
         sliderItems.add(new SliderItem(R.drawable.ic_cover));
         sliderItems.add(new SliderItem(R.drawable.ic_cover));
 
-        vpAds.setAdapter(new SliderAddsAdapter(sliderItems,vpAds));
-        vpAds.setClipToPadding(false);
-        vpAds.setClipChildren(false);
-        vpAds.setOffscreenPageLimit(2);
-        vpAds.getChildAt(0).setOverScrollMode(RecyclerView.HORIZONTAL);
+//        vpAds.setAdapter(new SliderAddsAdapter(sliderItems, vpAds));
+//        vpAds.setClipToPadding(false);
+//        vpAds.setClipChildren(false);
+//        vpAds.setOffscreenPageLimit(2);
+//        vpAds.getChildAt(0).setOverScrollMode(RecyclerView.HORIZONTAL);
     }
 
     private void initView() {
         rcvProduct = view.findViewById(R.id.rcv_products);
-        vpAds=view.findViewById(R.id.vp_ads);
+//        vpAds = view.findViewById(R.id.vp_ads);
 
     }
 
     private void showProducts() {
         LinearLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         rcvProduct.setLayoutManager(layoutManager);
+        ProgressBarDialog.getInstance(getContext()).showDialog("Đang tải", getContext());
 
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, PRODUCTS, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-
+                if (response != null) {
                 try {
                     JSONObject jsonObject = response.getJSONObject("data");
                     JSONArray jsonArray = jsonObject.getJSONArray("products");
@@ -122,15 +122,15 @@ public class HomeFragment extends Fragment  {
                         String storeName = object.getString(STORE_NAME_PRODUCT);
                         String categoryName = object.getString(CATEGORY_NAME);
                         String description = object.getString(DESCRIPTION_PRODUCT);
-
                         products.add(new Product(price, productName, image1, description, storeName, categoryName));
+                        ProgressBarDialog.getInstance(getContext()).closeDialog();
 
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(getContext(), e.toString(), Toast.LENGTH_LONG).show();
 
-                }
+                }}
                 productAdapter = new ProductAdapter(products, getContext());
                 rcvProduct.setAdapter(productAdapter);
 
@@ -145,7 +145,6 @@ public class HomeFragment extends Fragment  {
         VolleySingleton.getInstance(getContext()).getRequestQueue().add(jsonObjectRequest);
 
     }
-
 
 
 }

@@ -17,40 +17,61 @@
             android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:contentScrim="@color/white"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
             app:toolbarId="@+id/toolbar">
 
             <RelativeLayout
+                android:id="@+id/top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/vp_ads"
+                <Toolbar
+                    android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="250dp" />
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_relative_header" />
 
-                <me.relex.circleindicator.CircleIndicator3
+                <ImageView
+                    android:layout_width="@dimen/_200sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:src="@drawable/ic_search" />
+
+                <ImageView
+                    android:id="@+id/cart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/vp_ads"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="20dp"
-                    android:id="@+id/circleIndicator3"/>
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_40sdp"
+                    android:src="@drawable/ic_cart" />
+
+                <ImageView
+                    android:id="@+id/chart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_15sdp"
+                    android:src="@drawable/ic_chart_white" />
 
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcv_categories"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/vp_ads"
+                    android:layout_below="@+id/toolbar"
                     android:layout_margin="@dimen/_8sdp"
                     android:background="@drawable/bg_stroke_border_20"
                     android:backgroundTint="@null"
                     android:nestedScrollingEnabled="true"
                     android:numColumns="1"
                     android:orientation="vertical"
-                    android:padding="8dp" />
+                    android:padding="8dp"
+                    android:visibility="gone" />
 
             </RelativeLayout>
 
@@ -82,21 +103,11 @@
                 android:id="@+id/rcv_products"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="@dimen/_4sdp"
                 android:overScrollMode="never"
+                android:padding="@dimen/_4sdp"
                 app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <ProgressBar
-        android:id="@+id/progressbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="center_horizontal|center_vertical"
-        android:indeterminate="true"
-        android:indeterminateTint="@color/color_main"
-        android:indeterminateTintMode="src_atop"
-        android:visibility="gone" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

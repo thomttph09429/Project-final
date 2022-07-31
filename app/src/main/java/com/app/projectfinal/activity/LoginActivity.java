@@ -18,9 +18,11 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.app.projectfinal.R;
 import com.app.projectfinal.data.SharedPrefsSingleton;
 import com.app.projectfinal.utils.Constant;
+import com.app.projectfinal.utils.ProgressBarDialog;
 import com.app.projectfinal.utils.ValidateForm;
 import com.app.projectfinal.utils.VolleySingleton;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -149,6 +151,7 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void signInWithServer(String name, String passWord) {
         JSONObject user = new JSONObject();
+        ProgressBarDialog.getInstance(this).showDialog("Đang tải", this);
 
         try {
             user.put("userNamePhone", name);
@@ -168,12 +171,10 @@ public class LoginActivity extends AppCompatActivity {
                         JSONObject strRes = response.getJSONObject("data");
                         String idUser = strRes.getString("id");
                         String userName = strRes.getString("userName");
-
                         SharedPrefsSingleton.getInstance(getApplicationContext()).putStringValue(Constant.USER_ID_SAVE, idUser);
                         SharedPrefsSingleton.getInstance(getApplicationContext()).putStringValue(Constant.USER_NAME_SAVE, userName);
-
+                        ProgressBarDialog.getInstance(LoginActivity.this).closeDialog();
                         Toast.makeText(LoginActivity.this, "" + "Đăng nhập thành công!", Toast.LENGTH_LONG).show();
-                        Log.e("LoginActivity", "" + response.toString());
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();

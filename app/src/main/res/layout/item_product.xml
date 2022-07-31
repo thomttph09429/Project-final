@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_margin="@dimen/_5sdp"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_3sdp">
 
     <ImageView
         android:id="@+id/imageProduct"
         android:layout_width="@dimen/_150sdp"
         android:layout_height="@dimen/_150sdp"
-        android:scaleType="centerCrop"
         android:background="@drawable/bg_border_20"
+        android:scaleType="centerCrop"
 
         />
 
@@ -23,26 +23,44 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_5sdp"
         android:layout_marginTop="@dimen/_135sdp"
+        android:weightSum="3"
         android:orientation="vertical">
 
         <TextView
-
+            android:layout_weight="2"
             android:id="@+id/tvNameProduct"
             style="@style/NameProductText"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/_130sdp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:text="Thơm hahahaa" />
+            android:maxLines="2"
+            android:lines="2"
+            android:text="váy sơ mi cộc tay, sơ mi khuy gỗ eo chun co dãn , vvv"
+            android:textSize="@dimen/_11sdp" />
+     <LinearLayout
+         android:layout_weight="1"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:orientation="horizontal"
+         >
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="@string/under_text"
+             android:textSize="@dimen/_10sdp"
+             android:textColor="@color/red"
+             />
+         <TextView
+             android:id="@+id/tvPriceProduct"
+             android:textSize="@dimen/_11sdp"
+             android:layout_width="@dimen/_130sdp"
+             android:layout_height="wrap_content"
+             android:maxLines="2"
+             android:text="120"
+             android:textColor="@color/red" />
+     </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvPriceProduct"
-            style="@style/PriceProductText"
-            android:layout_width="wrap_content"
-            android:textColor="@color/red"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:text="Thơm hahahaa" />
     </LinearLayout>
 
 

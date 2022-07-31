@@ -22,6 +22,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.app.projectfinal.R;
 import com.app.projectfinal.utils.Constant;
+import com.app.projectfinal.utils.ProgressBarDialog;
 import com.app.projectfinal.utils.ValidateForm;
 import com.app.projectfinal.utils.VolleySingleton;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -150,6 +151,7 @@ public class RegisterActivity extends AppCompatActivity {
      * @param name
      */
     private void registerServer(final String phone, final String pass, String name) {
+        ProgressBarDialog.getInstance(this).showDialog("Đang tải", this);
         JSONObject user = new JSONObject();
         try {
             user.put("phone", phone);
@@ -166,10 +168,14 @@ public class RegisterActivity extends AppCompatActivity {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Constant.REGISTER, user, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Toast.makeText(RegisterActivity.this, "" + "Đăng ký thành công!", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
+                if (response!=null){
+                    ProgressBarDialog.getInstance(RegisterActivity.this).closeDialog();
+                    Toast.makeText(RegisterActivity.this, "" + "Đăng ký thành công!", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+
             }
         }, new Response.ErrorListener() {
             @Override

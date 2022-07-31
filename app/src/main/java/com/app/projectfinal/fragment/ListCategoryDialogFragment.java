@@ -26,6 +26,7 @@ import com.app.projectfinal.adapter.CategoryAdapter;
 import com.app.projectfinal.listener.ListenerCategoryName;
 import com.app.projectfinal.listener.ListenerSendCategory;
 import com.app.projectfinal.model.Category;
+import com.app.projectfinal.utils.ProgressBarDialog;
 import com.app.projectfinal.utils.VolleySingleton;
 
 import org.json.JSONArray;
@@ -101,6 +102,7 @@ public class ListCategoryDialogFragment extends DialogFragment {
     }
 
     private void getCategory() {
+        ProgressBarDialog.getInstance(getContext()).showDialog("Đang tải", getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         rvListCategory.setLayoutManager(layoutManager);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, CATEGORY, null, new Response.Listener<JSONObject>() {
@@ -115,6 +117,7 @@ public class ListCategoryDialogFragment extends DialogFragment {
                         String categoryName = object.getString("name");
                         String categoryId = object.getString("id");
                         categories.add(new Category(categoryName, categoryId));
+                        ProgressBarDialog.getInstance(getContext()).closeDialog();
 
                     }
                 } catch (JSONException e) {

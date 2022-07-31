@@ -50,6 +50,9 @@ import com.app.projectfinal.listener.ListenerCategoryName;
 import com.app.projectfinal.listener.ListenerSendCategory;
 import com.app.projectfinal.listener.ListenerSendUnit;
 import com.app.projectfinal.model.Category;
+import com.app.projectfinal.utils.NDigitCardFormatWatcher;
+import com.app.projectfinal.utils.ProgressBarDialog;
+import com.app.projectfinal.utils.ValidateForm;
 import com.app.projectfinal.utils.VolleySingleton;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Continuation;
@@ -71,7 +74,7 @@ import java.util.List;
 public class AddProductActivity extends AppCompatActivity {
     private ImageView img_add_product;
     private Uri uriImage;
-    private TextView tv_add_product, tvCountNameProduct, tvCountDescription, tvShowUnit,tvShowCategory;
+    private TextView  tvCountNameProduct, tvCountDescription, tvShowUnit,tvShowCategory;
     private LinearLayout ln_category, lnUnit;
     private StorageReference storageRef;
     private StorageTask uploadTask;
@@ -160,13 +163,14 @@ public class AddProductActivity extends AppCompatActivity {
 
             }
         });
+       edt_enter_price.addTextChangedListener(new NDigitCardFormatWatcher(edt_enter_price));
+
     }
 
     private void initView() {
         img_add_product = findViewById(R.id.img_add_product);
         ln_category = findViewById(R.id.lnCategory);
         lnUnit = findViewById(R.id.lnUnit);
-        tv_add_product = findViewById(R.id.tv_add_product);
         btn_add_product = findViewById(R.id.btn_add_product);
         edt_enter_description = findViewById(R.id.edt_enter_description);
         edt_enter_name_product = findViewById(R.id.edt_enter_name_product);
@@ -227,7 +231,13 @@ public class AddProductActivity extends AppCompatActivity {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, ADD_PRODUCTS, user, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.e("addProduct", response.toString());
+                if (response!=null){
+                    Log.e("addProduct", response.toString());
+                    ProgressBarDialog.getInstance(AddProductActivity.this).closeDialog();
+                    Toast.makeText(AddProductActivity.this, "Thêm thành công ", Toast.LENGTH_LONG).show();
+                    finish();
+
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -243,7 +253,7 @@ public class AddProductActivity extends AppCompatActivity {
     private void uploadImage() {
         storageRef = FirebaseStorage.getInstance().getReference("Posts");
         if (uriImage != null) {
-
+            ProgressBarDialog.getInstance(this).showDialog("Vui lòng đợi", this);
             final StorageReference fileReference = storageRef.child(System.currentTimeMillis()
                     + "." + getFileExtension(uriImage));
 

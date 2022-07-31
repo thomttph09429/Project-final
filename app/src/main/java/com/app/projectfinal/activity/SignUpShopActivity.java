@@ -24,6 +24,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
 import com.app.projectfinal.data.SharedPrefsSingleton;
 import com.app.projectfinal.utils.Constant;
+import com.app.projectfinal.utils.ProgressBarDialog;
 import com.app.projectfinal.utils.VolleySingleton;
 
 import org.json.JSONException;
@@ -113,6 +114,7 @@ public class SignUpShopActivity extends AppCompatActivity {
      * @param linkSupport
      */
     private void signUpToBecomeSeller(String userId, String storeName, String description, String linkSupport) {
+        ProgressBarDialog.getInstance(this).showDialog("Vui lòng đợi", this);
         JSONObject user = new JSONObject();
         try {
             user.put(NAME_STORE, storeName);
@@ -138,6 +140,7 @@ public class SignUpShopActivity extends AppCompatActivity {
                         String storeId = str.getString("id");
                         Log.e("storeId", storeId);
                         SharedPrefsSingleton.getInstance(getApplicationContext()).putStringValue(Constant.STORE_ID, storeId);
+                        ProgressBarDialog.getInstance(SignUpShopActivity.this).closeDialog();
                         Toast.makeText(SignUpShopActivity.this, "" + "Đăng ký thành công!", Toast.LENGTH_LONG).show();
                         finish();
                     } catch (JSONException e) {

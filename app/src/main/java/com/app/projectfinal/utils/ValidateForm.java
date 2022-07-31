@@ -1,6 +1,9 @@
 package com.app.projectfinal.utils;
 
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 public class ValidateForm {
     /**
      * check if it's email format
@@ -8,10 +11,11 @@ public class ValidateForm {
      *     author:ThomTT
      *     date: 21/07/2022
      * </pre>
+     *
      * @param email
      * @return
      */
-    public static   boolean isEmail(String email) {
+    public static boolean isEmail(String email) {
         String checkEmail = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         if (email.matches(checkEmail)) {
             return true;
@@ -25,11 +29,12 @@ public class ValidateForm {
      *     author: ThomTT
      *     date 21/07/2022
      * </pre>
+     *
      * @param pass
      * @return
      */
-    public   static  boolean validatePassword(String pass){
-        if (pass.length()>=8) {
+    public static boolean validatePassword(String pass) {
+        if (pass.length() >= 8) {
             return true;
         }
         return false;
@@ -41,11 +46,12 @@ public class ValidateForm {
      *     author: ThomTT
      *     date 21/07/2022
      * </pre>
+     *
      * @param pass
      * @param rePass
      * @return
      */
-    public   static  boolean checkRePassWord(String pass, String rePass){
+    public static boolean checkRePassWord(String pass, String rePass) {
         if (pass.equals(rePass)) {
             return true;
         }
@@ -58,6 +64,7 @@ public class ValidateForm {
      *     author: ThomTT
      *     date 21/07/2022
      * </pre>
+     *
      * @param phoneNumber
      * @return
      */
@@ -69,5 +76,10 @@ public class ValidateForm {
         return false;
     }
 
+    public static String convertNumberToCurrency(String number) {
+        double m = Double.parseDouble(number);
+        DecimalFormat formatter = new DecimalFormat("###,###,###");
+        return formatter.format(m);
+    }
 
-}
+    }

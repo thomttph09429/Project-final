@@ -27,6 +27,7 @@ import com.app.projectfinal.adapter.UnitAdapter;
 import com.app.projectfinal.listener.ListenerSendUnit;
 import com.app.projectfinal.listener.ListenerUnit;
 import com.app.projectfinal.model.Unit;
+import com.app.projectfinal.utils.ProgressBarDialog;
 import com.app.projectfinal.utils.VolleySingleton;
 
 import org.json.JSONArray;
@@ -73,8 +74,8 @@ public class UnitDialogFragment extends DialogFragment {
             @Override
             public void onItemClick(String unitName, String id) {
                 btnChooseUnit.setEnabled(true);
-                name= unitName;
-                unitId= id;
+                name = unitName;
+                unitId = id;
 
             }
         };
@@ -83,7 +84,7 @@ public class UnitDialogFragment extends DialogFragment {
 
     private void clickChooseUnit() {
         btnChooseUnit.setOnClickListener(v -> {
-            mListenerSendUnit.onClickSave(name,unitId );
+            mListenerSendUnit.onClickSave(name, unitId);
 
             dismiss();
 
@@ -111,6 +112,7 @@ public class UnitDialogFragment extends DialogFragment {
      * </pre>
      */
     private void getUnits() {
+        ProgressBarDialog.getInstance(getContext()).showDialog("Đang tải", getContext());
         unitList = new ArrayList<>();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         rvUnit.setLayoutManager(layoutManager);
@@ -118,19 +120,22 @@ public class UnitDialogFragment extends DialogFragment {
             @Override
             public void onResponse(JSONObject response) {
 
-                try {
-                    JSONObject jsonObject = response.getJSONObject("data");
-                    JSONArray jsonArray = jsonObject.getJSONArray("units");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject object = jsonArray.getJSONObject(i);
-                        String unitName = object.getString(NAME_UNIT);
-                        String unitId = object.getString(ID_UNIT);
-                        unitList.add(new Unit(unitName, unitId));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getContext(), e.toString(), Toast.LENGTH_LONG).show();
+                if (response != null) {
+                    try {
+                        JSONObject jsonObject = response.getJSONObject("data");
+                        JSONArray jsonArray = jsonObject.getJSONArray("units");
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+                            String unitName = object.getString(NAME_UNIT);
+                            String unitId = object.getString(ID_UNIT);
+                            unitList.add(new Unit(unitName, unitId));
+                            ProgressBarDialog.getInstance(getContext()).closeDialog();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getContext(), e.toString(), Toast.LENGTH_LONG).show();
 
+                    }
                 }
                 unitAdapter = new UnitAdapter(unitList, getContext(), mListenerUnit);
                 rvUnit.setAdapter(unitAdapter);
