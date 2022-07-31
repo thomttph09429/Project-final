@@ -53,7 +53,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
                 // get adapter position
                 int position=holder.getAdapterPosition();
                 // call listener
-                listenerCategoryName.onItemClick(position, categories.get(position).getNameCategory());
+                listenerCategoryName.onItemClick(categories.get(position).getIdCategory(), categories.get(position).getNameCategory());
                 // update position
                 selectedPosition=position;
                 // notify
@@ -67,12 +67,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         });
         if(selectedPosition==position)
         {
-            holder.iv_mark.setVisibility(View.VISIBLE);
+            holder.ivMark.setVisibility(View.VISIBLE);
         }
         else
         {
 
-            holder.iv_mark.setVisibility(View.GONE);
+            holder.ivMark.setVisibility(View.GONE);
 
         }
 
@@ -86,12 +86,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView name;
-        private ImageView iv_mark;
+        private ImageView ivMark;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tv_category_name);
-            iv_mark = itemView.findViewById(R.id.iv_mark);
+            ivMark = itemView.findViewById(R.id.ivMark);
 
         }
     }

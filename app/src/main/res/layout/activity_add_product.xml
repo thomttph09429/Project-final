@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".activity.AddProductActivity">
 
@@ -142,8 +142,9 @@
             android:id="@+id/edt_enter_name_product"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/backgroundLight"
+            android:background="@color/backgroundLight1"
             android:hint="Nhập tên sản phẩm"
+            android:textSize="@dimen/_12sdp"
             android:padding="@dimen/_10sdp"
            />
 
@@ -177,6 +178,9 @@
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
             android:lines="5"
+            android:paddingStart="@dimen/_10sdp"
+            android:textSize="13sp"
+            android:background="@color/backgroundLight1"
             android:gravity="top|start"
             android:scrollbars="vertical" />
 
@@ -185,92 +189,75 @@
             android:layout_height="@dimen/_1sdp"
             android:background="@color/backgroundLight"
             />
+
         <LinearLayout
-            android:id="@+id/ln_category"
+            android:id="@+id/lnCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/backgroundLight"
+            android:gravity="center"
             android:padding="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             android:weightSum="10">
 
             <TextView
+                android:padding="@dimen/_5sdp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="9"
-                android:padding="@dimen/_5sdp"
-                android:text="Danh mục " />
+                android:layout_weight="2"
+                android:text="Danh mục" />
 
+
+            <TextView
+                android:padding="@dimen/_5sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="7"
+                android:id="@+id/tvShowCategory"
+                android:gravity="bottom|end"
+                />
             <ImageView
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"
                 android:layout_weight="1"
                 android:src="@drawable/ic_right"
-              />
+                />
 
         </LinearLayout>
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/rvCategory"
-            android:visibility="gone"
-            />
+
 
         <LinearLayout
+            android:gravity="center"
             android:id="@+id/ln_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/backgroundLight"
             android:padding="@dimen/_5sdp"
+            android:weightSum="10"
             android:layout_marginTop="@dimen/_5sdp"
-            android:weightSum="10">
+           >
 
             <TextView
+                android:layout_weight="2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="9"
                 android:padding="@dimen/_5sdp"
-                android:text="Gía" />
-
-            <ImageView
-                android:layout_width="@dimen/_15sdp"
-                android:layout_height="@dimen/_15sdp"
-                android:layout_weight="1"
-                android:src="@drawable/ic_right"
+                android:text="Giá" />
+            <EditText
+                android:id="@+id/edt_enter_price"
+                android:layout_weight="8"
+                android:hint="Nhập giá"
+                android:textSize="14sp"
+                android:inputType="number"
+                android:gravity="bottom|end"
+                android:background="@color/backgroundLight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 />
 
+
         </LinearLayout>
-        <LinearLayout
-            android:id="@+id/ln_enter_price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_weight="10"
-                >
-                <EditText
-                    android:id="@+id/edt_enter_price"
-                    android:layout_weight="9"
-                    android:hint="Nhập giá"
-                    android:background="@color/white"
-                    android:inputType="textMultiLine"
-                    android:textSize="@dimen/_12sdp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_35sdp"
-                    />
-                <TextView
-                    android:text="VNĐ"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    />
-            </LinearLayout>
 
-
-    </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -283,23 +270,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/_5sdp"
-                android:layout_weight="9"
+                android:layout_weight="2"
                 android:text="Kho hàng" />
 
-            <ImageView
-                android:layout_width="@dimen/_15sdp"
-                android:layout_height="@dimen/_15sdp"
-                android:layout_weight="1"
-                android:src="@drawable/ic_right"
-                />
+         <EditText
+             android:id="@+id/edtEnterQuantity"
+             android:layout_weight="8"
+             android:hint="Đặt"
+             android:textSize="14sp"
+             android:inputType="number"
+             android:gravity="bottom|end"
+             android:background="@color/backgroundLight"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             />
 
 
         </LinearLayout>
 
+
         <LinearLayout
+            android:id="@+id/lnUnit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/backgroundLight"
+            android:gravity="center"
             android:padding="@dimen/_5sdp"
             android:layout_marginTop="@dimen/_5sdp"
             android:weightSum="10">
@@ -308,9 +303,18 @@
                 android:padding="@dimen/_5sdp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="9"
+                android:layout_weight="2"
                 android:text="Phân loại hàng" />
 
+
+            <TextView
+                android:padding="@dimen/_5sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="7"
+                android:id="@+id/tvShowUnit"
+                android:gravity="bottom|end"
+                />
             <ImageView
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"

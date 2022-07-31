@@ -28,6 +28,7 @@
                 android:id="@+id/iv_image_product"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_250sdp"
+                android:scaleType="center"
                 app:layout_collapseMode="parallax"/>
 
             <androidx.appcompat.widget.Toolbar

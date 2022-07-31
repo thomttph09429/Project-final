@@ -4,7 +4,7 @@
     <corners android:radius="0dp" />
     <solid
 
-        android:color="@color/backgroundLight" />
+        android:color="@color/greenLight_20" />
 
 
 

@@ -18,7 +18,12 @@
     <color name="ffff">#85E1C5</color>
     <color name="labelGrayGreenBG">#95a296</color>
     <color name="backgroundLight">#e6f2ce</color>
-    <color name="greenLight">#CCE59D</color>
+    <color name="backgroundLight1">#F5F8F0</color>
+
+    <color name="greenLight">#80CCE59D</color>
+    <color name="greenLight_30">#4DCCE59D</color>
+    <color name="greenLight_20">#33CCE59D</color>
+    <color name="greenLight_70">#B3CCE59D</color>
 
     <color name="red">#F44336</color>
     <color name="color_main">#1CAE81</color>

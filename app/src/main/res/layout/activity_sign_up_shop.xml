@@ -110,21 +110,22 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#CCE59D"
                 android:orientation="vertical"
-                android:padding="@dimen/_8sdp">
+                >
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:background="@color/greenLight_30"
                     android:weightSum="10"
                     >
                     <TextView
                         android:layout_weight="9"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/_35sdp"
                         android:gravity="center_vertical"
                         android:text="Tên cửa hàng"
+                        android:paddingStart="@dimen/_10sdp"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12sdp"
                         android:textStyle="bold" />
@@ -144,7 +145,8 @@
                     android:layout_height="@dimen/_35sdp"
                     android:hint="Nhập tên cửa hàng"
                     android:textSize="@dimen/_12sdp"
-                    android:background="@color/greenLight"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:background="@color/greenLight_20"
                     />
 
 
@@ -152,73 +154,32 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/linear_shopSettings_content2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/linear_shopSettings_content1"
-            android:orientation="vertical"
-            android:paddingTop="@dimen/_8sdp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_30sdp"
-                android:background="#CCE59D"
-                android:orientation="horizontal"
-                android:padding="@dimen/_8sdp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="Loại người dùng"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_12sdp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#E3EFCE"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/_8sdp"
-                android:paddingTop="8dp"
-                android:paddingBottom="@dimen/_8sdp">
-
-                <Spinner
-                    android:id="@+id/spiner_shopSettings_theLoaiUser"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_12sdp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/linear_shopSettings_content3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/linear_shopSettings_content2"
+            android:layout_below="@id/linear_shopSettings_content1"
             android:orientation="vertical"
-            android:paddingTop="@dimen/_8sdp">
+            android:paddingTop="@dimen/_8sdp"
+          >
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_30sdp"
-                android:background="#CCE59D"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="@dimen/_8sdp">
+
+             >
 
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
                     android:layout_weight="1"
-                    android:gravity="center_vertical"
+                    android:background="@color/greenLight_30"
                     android:text="FaceBook"
                     android:textColor="@color/black"
+                    android:paddingStart="@dimen/_10sdp"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -226,7 +187,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#E3EFCE"
                 android:orientation="horizontal"
             >
 
@@ -234,8 +194,9 @@
                     android:id="@+id/edtLinkFace"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_35sdp"
-                    android:background="@color/greenLight"
+                    android:background="@color/greenLight_20"
                     android:hint="Rau sạch"
+                    android:paddingStart="@dimen/_10sdp"
                     android:paddingLeft="@dimen/_8sdp"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp"
@@ -254,31 +215,34 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#CCE59D"
                 android:orientation="vertical"
-                android:padding="@dimen/_8sdp">
+             >
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_35sdp"
                     android:gravity="center_vertical"
                     android:text="Địa Chỉ"
+                    android:background="@color/greenLight_30"
                     android:textColor="@color/black"
+                    android:paddingStart="@dimen/_10sdp"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
                 <EditText
                     android:id="@+id/edtEnterAddress"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_45sdp"
                     android:hint="Nhập địa chỉ"
                     android:textSize="@dimen/_12sdp"
-                    android:background="@color/greenLight"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:background="@color/greenLight_20"
                     />
             </LinearLayout>
         </LinearLayout>
 
+
         <LinearLayout
-            android:id="@+id/linear_shopSettings_content5"
+            android:id="@+id/lnDes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/linear_shopSettings_content4"
@@ -287,18 +251,61 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_30sdp"
-                android:background="#CCE59D"
-                android:orientation="horizontal"
-                android:padding="@dimen/_8sdp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
 
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
                     android:gravity="center_vertical"
+                    android:text="Mô tả shop"
+                    android:background="@color/greenLight_30"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:textStyle="bold" />
+
+
+                <EditText
+                    android:id="@+id/edtDesStore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/greenLight_20"
+                    android:gravity="top|start"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:hint="Nhập mô tả shop"
+                    android:inputType="textMultiLine"
+                    android:lines="5"
+                    android:scrollbars="vertical"
+                    android:textSize="@dimen/_12sdp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_shopSettings_content5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lnDes"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/_8sdp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"
+                android:orientation="horizontal"
+               >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:gravity="center_vertical"
+                    android:background="@color/greenLight_30"
                     android:text="Hình ảnh giới thiệu"
                     android:textColor="@color/black"
+                    android:paddingStart="@dimen/_10sdp"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -323,14 +330,14 @@
                     android:textAllCaps="false"
                     android:gravity="center"
                     android:text="Thêm" />
+
+
             </LinearLayout>
 
             <Button
                 android:id="@+id/btnSignUpShop"
                 android:layout_width="@dimen/_300sdp"
                 android:layout_height="@dimen/_50sdp"
-                android:layout_gravity="center"
-                android:gravity="center"
                 android:textAllCaps="false"
                 android:text="Lưu" />
         </LinearLayout>

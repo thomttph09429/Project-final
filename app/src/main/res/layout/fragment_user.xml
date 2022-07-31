@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.UserFragment"
+    android:fillViewport="true">
+
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.UserFragment">
@@ -91,7 +99,7 @@
 
                 <TextView
 
-                    android:id="@+id/txt_user_name"
+                    android:id="@+id/tvUserName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_5sdp"
@@ -109,6 +117,7 @@
                     android:paddingLeft="@dimen/_2sdp"
                     android:paddingTop="@dimen/_1sdp"
                     android:paddingRight="@dimen/_2sdp"
+                    android:visibility="gone"
                     android:paddingBottom="@dimen/_1sdp"
                     android:text="Nông Dân >"
                     android:textColor="@color/white"
@@ -163,7 +172,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_start_sell"
+            android:id="@+id/tvMyShop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/linear_user_contentHeader"
@@ -449,9 +458,9 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/ln_sign_up_sell"
+            android:id="@+id/lnStartSell"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_height="@dimen/_35sdp"
             android:background="@drawable/bg_border_0"
             android:orientation="horizontal"
             android:padding="@dimen/_5sdp">
@@ -476,6 +485,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tvWhenNotSignUp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
@@ -487,7 +497,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_height="@dimen/_35sdp"
             android:background="@drawable/bg_border_0"
             android:orientation="horizontal"
             android:padding="@dimen/_5sdp">
@@ -512,7 +522,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_height="@dimen/_35sdp"
             android:background="@drawable/bg_border_0"
             android:orientation="horizontal"
             android:padding="@dimen/_5sdp">
@@ -537,7 +547,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_height="@dimen/_35sdp"
             android:background="@drawable/bg_border_0"
             android:orientation="horizontal"
             android:padding="@dimen/_5sdp">
@@ -562,7 +572,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_height="@dimen/_35sdp"
             android:background="@drawable/bg_border_0"
             android:orientation="horizontal"
             android:padding="@dimen/_5sdp">
@@ -587,7 +597,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_height="@dimen/_35sdp"
             android:background="@drawable/bg_border_0"
             android:orientation="horizontal"
             android:padding="@dimen/_5sdp">
@@ -611,3 +621,4 @@
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
+</ScrollView>

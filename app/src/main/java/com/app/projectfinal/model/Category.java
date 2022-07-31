@@ -2,7 +2,15 @@ package com.app.projectfinal.model;
 
 public class Category {
 
-    private String nameCategory, imageCategory;
+    private String nameCategory, imageCategory, idCategory;
+
+    public String getIdCategory() {
+        return idCategory;
+    }
+
+    public void setIdCategory(String idCategory) {
+        this.idCategory = idCategory;
+    }
 
     public String getNameCategory() {
         return nameCategory;
@@ -20,7 +28,10 @@ public class Category {
         this.imageCategory = imageCategory;
     }
 
-    public Category(String nameCategory) {
+
+
+    public Category(String nameCategory, String idCategory) {
         this.nameCategory = nameCategory;
+        this.idCategory = idCategory;
     }
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.myshop">
+    tools:context=".activity.MyShopActivity">
     <com.google.android.material.appbar.CollapsingToolbarLayout
         android:id="@+id/collapsing_toolbar"
         android:layout_width="match_parent"
@@ -70,7 +70,7 @@
         android:layout_marginTop="@dimen/_8sdp"
 
         android:layout_marginBottom="@dimen/_8sdp"
-        android:background="@color/greenLight">
+        android:background="@color/greenLight_70">
 
         <LinearLayout
             android:id="@+id/linear_user_topHeader"
@@ -79,7 +79,6 @@
             android:layout_marginLeft="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginRight="@dimen/_16sdp"
-            android:background="@drawable/bg_default_border_40"
             android:orientation="horizontal">
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -93,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_5sdp"
-                android:text="Người Mua"
+                android:text="ThomShop"
                 android:textColor="#1CAE81"
                 android:textSize="@dimen/_12sdp"
                 android:textStyle="bold" />
@@ -102,7 +101,7 @@
                 android:id="@+id/txt_myShop_setting"
                 android:layout_width="@dimen/_70sdp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_50sdp"
+                android:layout_marginLeft="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/bg_boder_20_green1"
                 android:gravity="center"
@@ -120,7 +119,7 @@
         android:layout_below="@id/relative_top_user"
         >
         <LinearLayout
-            android:background="#CCE59D"
+            android:background="@color/greenLight"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_30sdp"
             android:orientation="horizontal"
@@ -157,9 +156,11 @@
         <LinearLayout
             android:paddingTop="8dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_60sdp"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:orientation="horizontal"
-            android:background="#E3EFCE">
+            android:background="@color/greenLight_20">
             <LinearLayout
 
                 android:layout_width="0dp"
@@ -269,7 +270,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/_30sdp"
-            android:background="#CCE59D"
+            android:background="@color/greenLight"
             android:orientation="horizontal"
             android:padding="@dimen/_5sdp">
 
@@ -294,7 +295,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#E3EFCE"
+            android:background="@color/greenLight_20"
             android:orientation="horizontal"
             android:paddingTop="8dp">
 
@@ -351,7 +352,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#E3EFCE"
+            android:background="@color/greenLight_20"
             android:orientation="horizontal"
             android:paddingTop="8dp">
 
@@ -414,9 +415,9 @@
         android:layout_below="@+id/linear_user_content2"
         android:orientation="vertical">
         <LinearLayout
-            android:background="#CCE59D"
+            android:background="@color/greenLight"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_height="@dimen/_35sdp"
             android:orientation="horizontal"
             android:padding="@dimen/_5sdp"
             >
@@ -439,8 +440,8 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_30sdp"
-            android:background="#CCE59D"
+            android:layout_height="@dimen/_35sdp"
+            android:background="@color/greenLight"
             android:orientation="horizontal"
             android:padding="@dimen/_5sdp">
             <ImageView
@@ -461,8 +462,8 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_30sdp"
-            android:background="#CCE59D"
+            android:layout_height="@dimen/_35sdp"
+            android:background="@color/greenLight"
             android:orientation="horizontal"
             android:padding="@dimen/_5sdp">
 
@@ -485,8 +486,8 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_30sdp"
-            android:background="#CCE59D"
+            android:layout_height="@dimen/_35sdp"
+            android:background="@color/greenLight"
             android:orientation="horizontal"
             android:padding="@dimen/_5sdp">
 

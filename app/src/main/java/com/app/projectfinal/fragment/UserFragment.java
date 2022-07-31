@@ -1,5 +1,8 @@
 package com.app.projectfinal.fragment;
 
+import static com.app.projectfinal.utils.Constant.STORE_ID;
+import static com.app.projectfinal.utils.Constant.USER_NAME_SAVE;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,12 +15,15 @@ import androidx.fragment.app.Fragment;
 
 import com.app.projectfinal.R;
 import com.app.projectfinal.activity.AddProductActivity;
+import com.app.projectfinal.activity.MyShopActivity;
 import com.app.projectfinal.activity.SignUpShopActivity;
+import com.app.projectfinal.data.SharedPrefsSingleton;
 
 public class UserFragment extends Fragment {
-    private LinearLayout lnSignUpSell;
+    private LinearLayout lnStartSell;
     private View view;
-    private TextView tvStartSell;
+    private TextView tvMyShop, tvWhenNotSignUp, tvUserName;
+    private String isSignUp;
 
     public UserFragment() {
     }
@@ -29,30 +35,76 @@ public class UserFragment extends Fragment {
         if (view == null)
             view = inflater.inflate(R.layout.fragment_user, container, false);
         initView();
-        signupToBecomeSeller();
         openMyShop();
+        getInformation();
         return view;
     }
 
-    private void signupToBecomeSeller() {
-        lnSignUpSell.setOnClickListener(v->{
-            Intent intent= new Intent(getActivity(), SignUpShopActivity.class);
-            startActivity(intent);
-        });
-
-
+    /**
+     * get user name of user
+     */
+    private void getInformation() {
+        String userName = SharedPrefsSingleton.getInstance(getActivity().getApplicationContext()).getStringValue(USER_NAME_SAVE);
+        tvUserName.setText(userName.toString());
     }
+
     private void openMyShop() {
-        tvStartSell.setOnClickListener(v->{
-            Intent intent= new Intent(getActivity(), AddProductActivity.class);
+        tvMyShop.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), MyShopActivity.class);
             startActivity(intent);
+        });
+    }
+
+    /**
+     * check if the user is registered to sell
+     * <pre>
+     *     author:ThomTT1
+     *     date:31/07/2022
+     * </pre>
+     */
+    private void isSignUpToBecomeSeller() {
+        isSignUp = SharedPrefsSingleton.getInstance(getActivity().getApplicationContext()).getStringValue(STORE_ID);
+        if (isSignUp.isEmpty()) {
+            tvWhenNotSignUp.setVisibility(View.VISIBLE);
+            tvMyShop.setVisibility(View.GONE);
+
+
+        } else {
+            tvWhenNotSignUp.setVisibility(View.GONE);
+            tvMyShop.setVisibility(View.VISIBLE);
+
+
+        }
+
+    }
+
+    private void clickStartSell() {
+        lnStartSell.setOnClickListener(v -> {
+            if (isSignUp.isEmpty()) {
+                Intent intent = new Intent(getActivity(), SignUpShopActivity.class);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(getActivity(), AddProductActivity.class);
+                startActivity(intent);
+            }
+
         });
 
 
     }
+
     private void initView() {
-        tvStartSell=view.findViewById(R.id.tv_start_sell);
-        lnSignUpSell = view.findViewById(R.id.ln_sign_up_sell);
+        tvMyShop = view.findViewById(R.id.tvMyShop);
+        lnStartSell = view.findViewById(R.id.lnStartSell);
+        tvWhenNotSignUp = view.findViewById(R.id.tvWhenNotSignUp);
+        tvUserName = view.findViewById(R.id.tvUserName);
+
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        isSignUpToBecomeSeller();
+        clickStartSell();
+    }
 }

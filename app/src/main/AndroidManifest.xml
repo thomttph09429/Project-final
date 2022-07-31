@@ -16,6 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjectFinalMaster"
         tools:targetApi="31">
+
         <activity
             android:name=".activity.DetailProductActivity"
             android:exported="false" />
@@ -26,7 +27,7 @@
             android:name=".activity.SignUpShopActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.myshop"
+            android:name=".activity.MyShopActivity"
             android:exported="false" />
         <activity
             android:name=".activity.cart"

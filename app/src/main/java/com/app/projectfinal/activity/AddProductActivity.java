@@ -2,14 +2,17 @@ package com.app.projectfinal.activity;
 
 import static com.app.projectfinal.utils.Constant.ADD_PRODUCTS;
 import static com.app.projectfinal.utils.Constant.CATEGORY;
+import static com.app.projectfinal.utils.Constant.CATEGORY_ID;
 import static com.app.projectfinal.utils.Constant.CATEGORY_NAME;
 import static com.app.projectfinal.utils.Constant.DESCRIPTION_PRODUCT;
 import static com.app.projectfinal.utils.Constant.IMAGE1_PRODUCT;
-import static com.app.projectfinal.utils.Constant.NAME_PRODUCT;
+import static com.app.projectfinal.utils.Constant.NAME;
 import static com.app.projectfinal.utils.Constant.PICK_IMAGE_REQUEST;
 import static com.app.projectfinal.utils.Constant.PRICE_PRODUCT;
-import static com.app.projectfinal.utils.Constant.PRODUCTS;
-import static com.app.projectfinal.utils.Constant.STORE_NAME_PRODUCT;
+import static com.app.projectfinal.utils.Constant.QUANTITY_PRODUCT;
+import static com.app.projectfinal.utils.Constant.STORE_ID;
+import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
+import static com.app.projectfinal.utils.Constant.UNIT_ID_PRODUCT;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,20 +43,19 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
 import com.app.projectfinal.adapter.CategoryAdapter;
-import com.app.projectfinal.adapter.ProductAdapter;
+import com.app.projectfinal.data.SharedPrefsSingleton;
+import com.app.projectfinal.fragment.ListCategoryDialogFragment;
+import com.app.projectfinal.fragment.UnitDialogFragment;
 import com.app.projectfinal.listener.ListenerCategoryName;
+import com.app.projectfinal.listener.ListenerSendCategory;
+import com.app.projectfinal.listener.ListenerSendUnit;
 import com.app.projectfinal.model.Category;
-import com.app.projectfinal.model.Product;
-import com.app.projectfinal.utils.Constant;
 import com.app.projectfinal.utils.VolleySingleton;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
@@ -69,18 +71,16 @@ import java.util.List;
 public class AddProductActivity extends AppCompatActivity {
     private ImageView img_add_product;
     private Uri uriImage;
-    private TextView tv_add_product, tvCountNameProduct, tvCountDescription;
-    private LinearLayout ln_category, ln_price, ln_enter_price;
-    private RecyclerView rv_category;
-    private List<Category> categories;
-    private CategoryAdapter categoryAdapter;
+    private TextView tv_add_product, tvCountNameProduct, tvCountDescription, tvShowUnit,tvShowCategory;
+    private LinearLayout ln_category, lnUnit;
     private StorageReference storageRef;
     private StorageTask uploadTask;
     private Button btn_add_product;
     private String linkImageUrlFirebase;
-    private EditText edt_enter_name_product, edt_enter_description, edt_enter_price;
-    private ListenerCategoryName mListenerCategoryName;
-    private String typeOfCategory;
+    private EditText edt_enter_name_product, edt_enter_description, edt_enter_price, edtEnterQuantity;
+    private String typeOfCategory, typeOfUnit, unitId, idCategory;
+    private ListenerSendUnit mListenerSendUnit;
+    private ListenerSendCategory mListenerSendCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,43 +88,41 @@ public class AddProductActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_product);
         initView();
         checkWordCount();
-        categories = new ArrayList<>();
-        getCategory();
+        openUnitList();
+        openCategoryList();
         img_add_product.setOnClickListener(v -> {
             openFileChose();
         });
-        ln_category.setOnClickListener(v -> {
-            if (rv_category.getVisibility() == View.GONE) {
-                rv_category.setVisibility(View.VISIBLE);
 
-            } else {
-                rv_category.setVisibility(View.GONE);
 
-            }
-
-        });
-        ln_price.setOnClickListener(v -> {
-            if (ln_enter_price.getVisibility() == View.GONE) {
-                ln_enter_price.setVisibility(View.VISIBLE);
-
-            } else {
-                ln_enter_price.setVisibility(View.GONE);
-
-            }
-        });
         btn_add_product.setOnClickListener(v -> {
             uploadImage();
 
         });
-        mListenerCategoryName = new ListenerCategoryName() {
-            @Override
-            public void onItemClick(int position, String categoryName) {
-                typeOfCategory = categoryName.toString();
 
+        mListenerSendUnit = new ListenerSendUnit() {
+            @Override
+            public void onClickSave(String unitName, String id) {
+                typeOfUnit =unitName;
+                unitId =id;
+                tvShowUnit.setText(typeOfUnit);
+            }
+        };
+        mListenerSendCategory=new ListenerSendCategory() {
+            @Override
+            public void onClickSaveCategory(String categoryName, String id) {
+                typeOfCategory = categoryName;
+                idCategory= id;
+                tvShowCategory.setText(typeOfCategory);
+                Log.e("onClickSaveCategory",""+ typeOfCategory+id);
             }
         };
 
     }
+
+
+
+
 
     private void checkWordCount() {
         edt_enter_name_product.addTextChangedListener(new TextWatcher() {
@@ -136,7 +134,7 @@ public class AddProductActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 int character = charSequence.length();
-                tvCountNameProduct.setText(character+"/120");
+                tvCountNameProduct.setText(character + "/120");
 
             }
 
@@ -154,7 +152,7 @@ public class AddProductActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 int character = charSequence.length();
-                tvCountDescription.setText(character+"/3000");
+                tvCountDescription.setText(character + "/3000");
             }
 
             @Override
@@ -166,28 +164,58 @@ public class AddProductActivity extends AppCompatActivity {
 
     private void initView() {
         img_add_product = findViewById(R.id.img_add_product);
-        ln_category = findViewById(R.id.ln_category);
-        rv_category = findViewById(R.id.rvCategory);
-        ln_price = findViewById(R.id.ln_price);
-        ln_enter_price = findViewById(R.id.ln_enter_price);
+        ln_category = findViewById(R.id.lnCategory);
+        lnUnit = findViewById(R.id.lnUnit);
         tv_add_product = findViewById(R.id.tv_add_product);
         btn_add_product = findViewById(R.id.btn_add_product);
         edt_enter_description = findViewById(R.id.edt_enter_description);
         edt_enter_name_product = findViewById(R.id.edt_enter_name_product);
         edt_enter_price = findViewById(R.id.edt_enter_price);
-        tvCountNameProduct=findViewById(R.id.tvCountNameProduct);
-        tvCountDescription=findViewById(R.id.tvCountDescription);
+        tvCountNameProduct = findViewById(R.id.tvCountNameProduct);
+        tvCountDescription = findViewById(R.id.tvCountDescription);
+        edtEnterQuantity = findViewById(R.id.edtEnterQuantity);
+        tvShowUnit=findViewById(R.id.tvShowUnit);
+        tvShowCategory=findViewById(R.id.tvShowCategory);
+
+    }
+
+    /**
+     * open units list screen
+     * <pre>
+     *     author:ThomTT1
+     *     date:31/07/2022
+     * </pre>
+     */
+    private void openUnitList() {
+        lnUnit.setOnClickListener(v -> {
+            UnitDialogFragment post = new UnitDialogFragment(mListenerSendUnit);
+            post.show(getSupportFragmentManager(), "UnitDialogFragment");
+
+        });
+
+    }
+    private void openCategoryList() {
+        ln_category.setOnClickListener(v -> {
+            ListCategoryDialogFragment post = new ListCategoryDialogFragment(mListenerSendCategory);
+            post.show(getSupportFragmentManager(), "ListCategoryDialogFragment");
+
+        });
 
     }
 
     private void postProducts() {
         JSONObject user = new JSONObject();
         try {
-            user.put(NAME_PRODUCT, edt_enter_name_product.getText().toString().trim());
+            String storeId= SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(STORE_ID);
+            user.put(NAME, edt_enter_name_product.getText().toString().trim());
             user.put(DESCRIPTION_PRODUCT, edt_enter_description.getText().toString().trim());
             user.put(PRICE_PRODUCT, edt_enter_price.getText().toString().trim());
             user.put(IMAGE1_PRODUCT, linkImageUrlFirebase);
             user.put(CATEGORY_NAME, typeOfCategory);
+            user.put(QUANTITY_PRODUCT, edtEnterQuantity.getText().toString().trim());
+            user.put(STORE_ID_PRODUCT, storeId);
+            user.put(UNIT_ID_PRODUCT, unitId);
+            user.put(CATEGORY_ID, idCategory);
 
             JSONObject data = new JSONObject();
             data.put("user", user);
@@ -279,39 +307,6 @@ public class AddProductActivity extends AppCompatActivity {
         }
     }
 
-    private void getCategory() {
-        LinearLayoutManager layoutManager = new GridLayoutManager(this, 2);
-        rv_category.setLayoutManager(layoutManager);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, CATEGORY, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
 
-                try {
-                    JSONObject jsonObject = response.getJSONObject("data");
-                    JSONArray jsonArray = jsonObject.getJSONArray("categories");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject object = jsonArray.getJSONObject(i);
-                        String categoryName = object.getString("name");
-                        categories.add(new Category(categoryName));
 
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(AddProductActivity.this, e.toString(), Toast.LENGTH_LONG).show();
-
-                }
-                categoryAdapter = new CategoryAdapter(categories, AddProductActivity.this, mListenerCategoryName);
-                rv_category.setAdapter(categoryAdapter);
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(AddProductActivity.this, error.toString(), Toast.LENGTH_LONG).show();
-
-            }
-        });
-        VolleySingleton.getInstance(this).getRequestQueue().add(jsonObjectRequest);
-
-    }
 }
