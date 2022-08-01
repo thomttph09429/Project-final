@@ -211,11 +211,14 @@ public class AddProductActivity extends AppCompatActivity {
         JSONObject user = new JSONObject();
         try {
             String storeId= SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(STORE_ID);
-            user.put(NAME, edt_enter_name_product.getText().toString().trim());
-            user.put(DESCRIPTION_PRODUCT, edt_enter_description.getText().toString().trim());
-            user.put(PRICE_PRODUCT, edt_enter_price.getText().toString().trim());
+             String price= edt_enter_price.getText().toString();
+           String newPrice= price.replace(",","");
+
+            user.put(NAME, ValidateForm.capitalizeFirst(edt_enter_name_product.getText().toString().trim()));
+            user.put(DESCRIPTION_PRODUCT, ValidateForm.capitalizeFirst(edt_enter_description.getText().toString().trim()));
+            user.put(PRICE_PRODUCT, newPrice);
             user.put(IMAGE1_PRODUCT, linkImageUrlFirebase);
-            user.put(CATEGORY_NAME, typeOfCategory);
+            user.put(CATEGORY_NAME, ValidateForm.capitalizeFirst(typeOfCategory));
             user.put(QUANTITY_PRODUCT, edtEnterQuantity.getText().toString().trim());
             user.put(STORE_ID_PRODUCT, storeId);
             user.put(UNIT_ID_PRODUCT, unitId);

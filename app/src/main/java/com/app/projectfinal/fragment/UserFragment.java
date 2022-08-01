@@ -16,11 +16,12 @@ import androidx.fragment.app.Fragment;
 import com.app.projectfinal.R;
 import com.app.projectfinal.activity.AddProductActivity;
 import com.app.projectfinal.activity.MyShopActivity;
+import com.app.projectfinal.activity.ProfileSettingActivity;
 import com.app.projectfinal.activity.SignUpShopActivity;
 import com.app.projectfinal.data.SharedPrefsSingleton;
 
 public class UserFragment extends Fragment {
-    private LinearLayout lnStartSell;
+    private LinearLayout lnStartSell,lnSetting;
     private View view;
     private TextView tvMyShop, tvWhenNotSignUp, tvUserName;
     private String isSignUp;
@@ -37,6 +38,7 @@ public class UserFragment extends Fragment {
         initView();
         openMyShop();
         getInformation();
+        clickProfileSetting();
         return view;
     }
 
@@ -67,9 +69,11 @@ public class UserFragment extends Fragment {
         if (isSignUp.isEmpty()) {
             tvWhenNotSignUp.setVisibility(View.VISIBLE);
             tvMyShop.setVisibility(View.GONE);
+            lnStartSell.setVisibility(View.VISIBLE);
 
 
         } else {
+            lnStartSell.setVisibility(View.GONE);
             tvWhenNotSignUp.setVisibility(View.GONE);
             tvMyShop.setVisibility(View.VISIBLE);
 
@@ -80,16 +84,22 @@ public class UserFragment extends Fragment {
 
     private void clickStartSell() {
         lnStartSell.setOnClickListener(v -> {
-            if (isSignUp.isEmpty()) {
                 Intent intent = new Intent(getActivity(), SignUpShopActivity.class);
                 startActivity(intent);
-            } else {
-                Intent intent = new Intent(getActivity(), AddProductActivity.class);
-                startActivity(intent);
-            }
 
         });
 
+
+    }
+
+    /**
+     * click setting profile
+     */
+    private void clickProfileSetting(){
+        lnSetting.setOnClickListener(v->{
+            Intent intent= new Intent(getContext(), ProfileSettingActivity.class);
+            startActivity(intent);
+        });
 
     }
 
@@ -98,7 +108,7 @@ public class UserFragment extends Fragment {
         lnStartSell = view.findViewById(R.id.lnStartSell);
         tvWhenNotSignUp = view.findViewById(R.id.tvWhenNotSignUp);
         tvUserName = view.findViewById(R.id.tvUserName);
-
+        lnSetting = view.findViewById(R.id.lnSetting);
     }
 
     @Override

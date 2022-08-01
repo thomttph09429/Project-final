@@ -17,6 +17,7 @@ import com.app.projectfinal.R;
 import com.app.projectfinal.listener.ListenerCategoryName;
 import com.app.projectfinal.model.Category;
 import com.app.projectfinal.model.Product;
+import com.app.projectfinal.utils.ValidateForm;
 
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder,  int position) {
         category = categories.get(position);
-        holder.name.setText(category.getNameCategory());
+        holder.name.setText(ValidateForm.capitalizeFirst(category.getNameCategory()));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

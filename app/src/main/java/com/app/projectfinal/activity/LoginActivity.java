@@ -154,7 +154,7 @@ public class LoginActivity extends AppCompatActivity {
         ProgressBarDialog.getInstance(this).showDialog("Đang tải", this);
 
         try {
-            user.put("userNamePhone", name);
+            user.put("userNamePhone", ValidateForm.capitalizeFirst(name));
             user.put("password", passWord);
             JSONObject data = new JSONObject();
             data.put("data", user);
@@ -171,10 +171,13 @@ public class LoginActivity extends AppCompatActivity {
                         JSONObject strRes = response.getJSONObject("data");
                         String idUser = strRes.getString("id");
                         String userName = strRes.getString("userName");
+                        String phoneNumber = strRes.getString("phone");
+                        SharedPrefsSingleton.getInstance(getApplicationContext()).putStringValue(Constant.PHONE_NUMBER, phoneNumber);
                         SharedPrefsSingleton.getInstance(getApplicationContext()).putStringValue(Constant.USER_ID_SAVE, idUser);
-                        SharedPrefsSingleton.getInstance(getApplicationContext()).putStringValue(Constant.USER_NAME_SAVE, userName);
+                        SharedPrefsSingleton.getInstance(getApplicationContext()).putStringValue(Constant.USER_NAME_SAVE, ValidateForm.capitalizeFirst(userName));
                         ProgressBarDialog.getInstance(LoginActivity.this).closeDialog();
                         Toast.makeText(LoginActivity.this, "" + "Đăng nhập thành công!", Toast.LENGTH_LONG).show();
+                        Log.e("LoginActivity",response.toString() );
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();

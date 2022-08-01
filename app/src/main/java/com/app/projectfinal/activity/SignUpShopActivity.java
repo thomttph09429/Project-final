@@ -8,6 +8,7 @@ import static com.app.projectfinal.utils.Constant.USER_ID_SAVE;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -25,6 +26,7 @@ import com.app.projectfinal.R;
 import com.app.projectfinal.data.SharedPrefsSingleton;
 import com.app.projectfinal.utils.Constant;
 import com.app.projectfinal.utils.ProgressBarDialog;
+import com.app.projectfinal.utils.ValidateForm;
 import com.app.projectfinal.utils.VolleySingleton;
 
 import org.json.JSONException;
@@ -117,9 +119,9 @@ public class SignUpShopActivity extends AppCompatActivity {
         ProgressBarDialog.getInstance(this).showDialog("Vui lòng đợi", this);
         JSONObject user = new JSONObject();
         try {
-            user.put(NAME_STORE, storeName);
+            user.put(NAME_STORE, ValidateForm.capitalizeFirst(storeName));
             user.put(USER_ID, userId);
-            user.put(DESCRIPTION_STORE, description);
+            user.put(DESCRIPTION_STORE,ValidateForm.capitalizeFirst(description));
             user.put(LINK_SUPPORT_STORE, linkSupport);
 
             JSONObject data = new JSONObject();
@@ -138,10 +140,16 @@ public class SignUpShopActivity extends AppCompatActivity {
                         JSONObject strRes = response.getJSONObject("data");
                         JSONObject str = strRes.getJSONObject("user");
                         String storeId = str.getString("id");
+                        String storeName = str.getString("name");
+
                         Log.e("storeId", storeId);
                         SharedPrefsSingleton.getInstance(getApplicationContext()).putStringValue(Constant.STORE_ID, storeId);
+                        SharedPrefsSingleton.getInstance(getApplicationContext()).putStringValue(Constant.STORE_NAME, storeName);
+
                         ProgressBarDialog.getInstance(SignUpShopActivity.this).closeDialog();
                         Toast.makeText(SignUpShopActivity.this, "" + "Đăng ký thành công!", Toast.LENGTH_LONG).show();
+                        Intent intent= new Intent(SignUpShopActivity.this, MyShopActivity.class);
+                        startActivity(intent);
                         finish();
                     } catch (JSONException e) {
                         e.printStackTrace();

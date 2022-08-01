@@ -156,7 +156,7 @@ public class RegisterActivity extends AppCompatActivity {
         try {
             user.put("phone", phone);
             user.put("password", pass);
-            user.put("userName", name);
+            user.put("userName", ValidateForm.capitalizeFirst(name));
 
             JSONObject data = new JSONObject();
             data.put("user", user);

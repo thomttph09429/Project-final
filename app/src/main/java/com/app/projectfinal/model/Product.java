@@ -176,13 +176,15 @@ public class Product {
         this.unitName = unitName;
     }
 
-    public Product(String price, String productName, String image1, String description, String storeName, String categoryName) {
+    public Product(String price, String productName, String image1, String description, String storeName, String categoryName, String storeId, String quantity) {
         this.price = price;
         this.productName = productName;
         this.image1 = image1;
         this.description = description;
         this.storeName = storeName;
         this.categoryName = categoryName;
+        this.storeId=storeId;
+        this.quantity=quantity;
     }
 
 }

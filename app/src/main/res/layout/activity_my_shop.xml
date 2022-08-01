@@ -24,18 +24,20 @@
                 android:background="@drawable/custom_relative_header"
                 android:orientation="horizontal"
                 android:padding="10dp">
+
                 <ImageView
                     android:id="@+id/img_myShop_back"
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
                     android:src="@drawable/arrow_left" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="30dp"
                     android:text="Shop của tôi"
                     android:textColor="@color/white"
-                    android:textSize="22dp"
+                    android:textSize="@dimen/_18sdp"
                     android:textStyle="bold" />
 
                 <ImageView
@@ -88,7 +90,7 @@
                 android:src="@drawable/avatar_empty" />
 
             <TextView
-                android:id="@+id/txt_user_name"
+                android:id="@+id/tvStoreName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_5sdp"
@@ -415,10 +417,11 @@
         android:layout_below="@+id/linear_user_content2"
         android:orientation="vertical">
         <LinearLayout
-            android:background="@color/greenLight"
+            android:id="@id/lnStartSell"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_35sdp"
             android:orientation="horizontal"
+            android:background="@drawable/bg_border_0"
             android:padding="@dimen/_5sdp"
             >
             <ImageView

@@ -40,6 +40,8 @@ public class Constant {
         public static final String USER_ID_SAVE = "USER_ID";
     public static final String STORE_ID = "STORE_ID";
     public static final String USER_NAME_SAVE = "USER_NAME";
+    public static final String STORE_NAME = "STORE_NAME";
+    public static final String PHONE_NUMBER = "PHONE_NUMBER";
 
 
 

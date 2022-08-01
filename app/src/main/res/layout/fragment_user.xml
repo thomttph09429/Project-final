@@ -595,6 +595,7 @@
                     android:layout_height="@dimen/_35sdp"
                     android:background="@drawable/bg_border_0"
                     android:orientation="horizontal"
+                    android:id="@+id/lnSetting"
                     android:padding="@dimen/_5sdp">
 
                     <ImageView

@@ -6,6 +6,8 @@ import static com.app.projectfinal.utils.Constant.IMAGE1_PRODUCT;
 import static com.app.projectfinal.utils.Constant.NAME_PRODUCT;
 import static com.app.projectfinal.utils.Constant.PRICE_PRODUCT;
 import static com.app.projectfinal.utils.Constant.PRODUCTS;
+import static com.app.projectfinal.utils.Constant.QUANTITY_PRODUCT;
+import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
 import static com.app.projectfinal.utils.Constant.STORE_NAME_PRODUCT;
 
 import android.os.Bundle;
@@ -78,7 +80,6 @@ public class HomeFragment extends Fragment {
         initView();
         initAds();
         products = new ArrayList<>();
-        showProducts();
         return view;
     }
 
@@ -104,7 +105,10 @@ public class HomeFragment extends Fragment {
     private void showProducts() {
         LinearLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         rcvProduct.setLayoutManager(layoutManager);
-        ProgressBarDialog.getInstance(getContext()).showDialog("Đang tải", getContext());
+        if(products.size()==0){
+            ProgressBarDialog.getInstance(getContext()).showDialog("Đang tải", getContext());
+
+        }
 
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, PRODUCTS, null, new Response.Listener<JSONObject>() {
@@ -122,7 +126,10 @@ public class HomeFragment extends Fragment {
                         String storeName = object.getString(STORE_NAME_PRODUCT);
                         String categoryName = object.getString(CATEGORY_NAME);
                         String description = object.getString(DESCRIPTION_PRODUCT);
-                        products.add(new Product(price, productName, image1, description, storeName, categoryName));
+                        String storeId = object.getString(STORE_ID_PRODUCT);
+                        String quantity = object.getString(QUANTITY_PRODUCT);
+
+                        products.add(new Product(price, productName, image1, description, storeName, categoryName, storeId, quantity));
                         ProgressBarDialog.getInstance(getContext()).closeDialog();
 
                     }
@@ -146,5 +153,10 @@ public class HomeFragment extends Fragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        showProducts();
 
+    }
 }
