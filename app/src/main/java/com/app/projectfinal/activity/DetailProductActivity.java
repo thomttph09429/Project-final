@@ -13,12 +13,14 @@ import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
 import static com.app.projectfinal.utils.Constant.STORE_NAME_PRODUCT;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +31,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
 import com.app.projectfinal.adapter.ProductAdapter;
+import com.app.projectfinal.bottom.ChooseCartFragment;
 import com.app.projectfinal.model.Product;
 import com.app.projectfinal.utils.ProgressBarDialog;
 import com.app.projectfinal.utils.ValidateForm;
@@ -52,6 +55,7 @@ public class DetailProductActivity extends AppCompatActivity {
     private RecyclerView rvProductByStoreId;
     private ProductAdapter productAdapter;
     private List<Product> products;
+    private AppCompatImageButton btnAddCart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +66,7 @@ public class DetailProductActivity extends AppCompatActivity {
         receiveProductDetailWhenClick();
         displayProduct();
         showProductsByStory();
+        clickAddCart();
     }
 
     private void initActions() {
@@ -85,6 +90,7 @@ public class DetailProductActivity extends AppCompatActivity {
         tvQuantity = findViewById(R.id.tvQuantity);
         tvCategory = findViewById(R.id.tvCategory);
         tvDescription = findViewById(R.id.tvDescription);
+        btnAddCart=findViewById(R.id.btnAddCart);
 
     }
 
@@ -106,6 +112,7 @@ public class DetailProductActivity extends AppCompatActivity {
         storeId = data.getString(STORE_ID_PRODUCT);
         quantity = data.getString(QUANTITY_PRODUCT);
 
+        Log.e("pricedd", price+quantity+ image1);
 
     }
 
@@ -123,9 +130,22 @@ public class DetailProductActivity extends AppCompatActivity {
         tvNameShop.setText(ValidateForm.capitalizeFirst(storeName));
         tvDescription.setText(ValidateForm.capitalizeFirst(description));
         tvCategory.setText(ValidateForm.capitalizeFirst(categoryName));
-        tvQuantity.setText(ValidateForm.capitalizeFirst(quantity));
+        tvQuantity.setText(quantity);
         Glide.with(this).load(image1).error(R.drawable.ic_image_error).into(ivProduct);
 
+    }
+    private  void clickAddCart(){
+        btnAddCart.setOnClickListener(v->{
+            Log.e("pricedd", price+quantity+ image1);
+            Bundle bundle= new Bundle();
+            bundle.putString(PRICE_PRODUCT,ValidateForm.getDecimalFormattedString(price));
+            bundle.putString(QUANTITY_PRODUCT, quantity);
+            bundle.putString(IMAGE1_PRODUCT, image1);
+            ChooseCartFragment chooseCartFragment= new ChooseCartFragment();
+            chooseCartFragment.setArguments(bundle);
+            chooseCartFragment.show(getSupportFragmentManager(),"ChooseCartFragment");
+
+        });
     }
 
     /**
@@ -180,4 +200,5 @@ public class DetailProductActivity extends AppCompatActivity {
         });
         VolleySingleton.getInstance(DetailProductActivity.this).getRequestQueue().add(jsonObjectRequest);
     }
+
 }

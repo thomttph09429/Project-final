@@ -17,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -50,7 +51,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView rcvProduct;
     private ProductAdapter productAdapter;
     private List<Product> products;
-//    private ViewPager2 vpAds;
+    private TextView tvLoading;
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -80,6 +81,9 @@ public class HomeFragment extends Fragment {
         initView();
         initAds();
         products = new ArrayList<>();
+        showProducts();
+
+
         return view;
     }
 
@@ -89,55 +93,52 @@ public class HomeFragment extends Fragment {
         sliderItems.add(new SliderItem(R.drawable.ic_cover));
         sliderItems.add(new SliderItem(R.drawable.ic_cover));
 
-//        vpAds.setAdapter(new SliderAddsAdapter(sliderItems, vpAds));
-//        vpAds.setClipToPadding(false);
-//        vpAds.setClipChildren(false);
-//        vpAds.setOffscreenPageLimit(2);
-//        vpAds.getChildAt(0).setOverScrollMode(RecyclerView.HORIZONTAL);
+
     }
 
     private void initView() {
         rcvProduct = view.findViewById(R.id.rcv_products);
-//        vpAds = view.findViewById(R.id.vp_ads);
+        tvLoading=view.findViewById(R.id.tvLoading);
 
     }
 
     private void showProducts() {
         LinearLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         rcvProduct.setLayoutManager(layoutManager);
-        if(products.size()==0){
+        if (products.size() == 0) {
             ProgressBarDialog.getInstance(getContext()).showDialog("Đang tải", getContext());
 
         }
+        String urlProducts = PRODUCTS + "?" + "page=" + 1 + "&size=" + 10;
 
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, PRODUCTS, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlProducts, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 if (response != null) {
-                try {
-                    JSONObject jsonObject = response.getJSONObject("data");
-                    JSONArray jsonArray = jsonObject.getJSONArray("products");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject object = jsonArray.getJSONObject(i);
-                        String productName = object.getString(NAME_PRODUCT);
-                        String image1 = object.getString(IMAGE1_PRODUCT);
-                        String price = object.getString(PRICE_PRODUCT);
-                        String storeName = object.getString(STORE_NAME_PRODUCT);
-                        String categoryName = object.getString(CATEGORY_NAME);
-                        String description = object.getString(DESCRIPTION_PRODUCT);
-                        String storeId = object.getString(STORE_ID_PRODUCT);
-                        String quantity = object.getString(QUANTITY_PRODUCT);
+                    try {
+                        JSONObject jsonObject = response.getJSONObject("data");
+                        JSONArray jsonArray = jsonObject.getJSONArray("products");
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+                            String productName = object.getString(NAME_PRODUCT);
+                            String image1 = object.getString(IMAGE1_PRODUCT);
+                            String price = object.getString(PRICE_PRODUCT);
+                            String storeName = object.getString(STORE_NAME_PRODUCT);
+                            String categoryName = object.getString(CATEGORY_NAME);
+                            String description = object.getString(DESCRIPTION_PRODUCT);
+                            String storeId = object.getString(STORE_ID_PRODUCT);
+                            String quantity = object.getString(QUANTITY_PRODUCT);
 
-                        products.add(new Product(price, productName, image1, description, storeName, categoryName, storeId, quantity));
-                        ProgressBarDialog.getInstance(getContext()).closeDialog();
+                            products.add(new Product(price, productName, image1, description, storeName, categoryName, storeId, quantity));
+                            ProgressBarDialog.getInstance(getContext()).closeDialog();
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getContext(), e.toString(), Toast.LENGTH_LONG).show();
 
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getContext(), e.toString(), Toast.LENGTH_LONG).show();
-
-                }}
+                }
                 productAdapter = new ProductAdapter(products, getContext());
                 rcvProduct.setAdapter(productAdapter);
 
@@ -153,10 +154,26 @@ public class HomeFragment extends Fragment {
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        showProducts();
+    private void readMore() {
+        rcvProduct.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                LinearLayoutManager layoutManager=LinearLayoutManager.class.cast(recyclerView.getLayoutManager());
+                int totalItemCount = layoutManager.getItemCount();
+                int lastVisible = layoutManager.findLastVisibleItemPosition();
 
+                boolean endHasBeenReached = lastVisible + 5 >= totalItemCount;
+                if (totalItemCount > 0 && endHasBeenReached) {
+                    //you have reached to the bottom of your recycler view
+                    tvLoading.setVisibility(View.VISIBLE);
+                }else {
+                    tvLoading.setVisibility(View.GONE);
+
+                }
+            }
+        });
     }
+
+
 }

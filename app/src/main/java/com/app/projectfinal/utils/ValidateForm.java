@@ -35,8 +35,10 @@ public class ValidateForm {
      * @return
      */
     public static boolean validatePassword(String pass) {
-        if (pass.length() >= 8) {
-            return true;
+
+        String patterns = "^(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d]{8,}$";
+        if (pass.matches(patterns) && pass.length()>=8 && pass.length()<=16){
+                return true;
         }
         return false;
     }
@@ -70,7 +72,7 @@ public class ValidateForm {
      * @return
      */
     public static boolean isPhoneNumber(String phoneNumber) {
-        String checkPhoneNumber = "^[0-9]{9,10}$";
+        String checkPhoneNumber = "^[0-9]{10}$";
         if (phoneNumber.matches(checkPhoneNumber)) {
             return true;
         }
@@ -114,6 +116,16 @@ public class ValidateForm {
 
     }
 
+    /**
+     * capitalize first character
+     * <pre>
+     *     author:ThomTT
+     *     date:01/08/2022
+     * </pre>
+     *
+     * @param text
+     * @return
+     */
     public static String capitalizeFirst(String text) {
         String textAfter = "";
         if (text.length() > 0) {
@@ -124,4 +136,10 @@ public class ValidateForm {
 
     }
 
+    public static boolean isName(String name) {
+        if (name.length() >= 8) {
+            return true;
+        }
+        return false;
+    }
 }

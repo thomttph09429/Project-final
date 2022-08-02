@@ -123,7 +123,6 @@ public class SignUpShopActivity extends AppCompatActivity {
             user.put(USER_ID, userId);
             user.put(DESCRIPTION_STORE,ValidateForm.capitalizeFirst(description));
             user.put(LINK_SUPPORT_STORE, linkSupport);
-
             JSONObject data = new JSONObject();
             data.put("user", user);
             JSONObject datas = new JSONObject();

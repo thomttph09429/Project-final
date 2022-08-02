@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_relative_header"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                android:padding="@dimen/_11sdp">
 
                 <ImageView
                     android:id="@+id/img_myShop_back"
@@ -41,12 +41,16 @@
                     android:textSize="@dimen/_18sdp"
                     android:textStyle="bold" />
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnSave"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_25sdp"
                     android:background="@drawable/bg_boder_20_green"
                     android:text="Lưu"
+                    android:layout_gravity="end"
+                    android:layout_marginLeft="@dimen/_20sdp"
                     android:textAllCaps="false"
+                    android:textColor="@color/color_main"
                     android:textSize="@dimen/_10sdp" />
 
 

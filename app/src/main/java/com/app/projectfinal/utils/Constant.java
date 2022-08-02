@@ -8,7 +8,7 @@ public class Constant {
     public static final String ADD_STORES = "https://graduate-tmdt-be.herokuapp.com/stores";
     public static final String CATEGORY = "https://graduate-tmdt-be.herokuapp.com/categories";
     public static final String GET_UNIT = "https://graduate-tmdt-be.herokuapp.com/units";
-
+    public static final String UPDATE_USER = "https://graduate-tmdt-be.herokuapp.com/users";
     public static final int PICK_IMAGE_REQUEST = 100;
     //product
     public static final String NAME_PRODUCT = "productName";
@@ -34,15 +34,16 @@ public class Constant {
     public static final String ID_UNIT = "id";
 
 
-
     //sharedpreference
     public static final String MY_SHARED_PREFERENCES = "MY_SHARED_PREFERENCES";
-        public static final String USER_ID_SAVE = "USER_ID";
+    public static final String USER_ID_SAVE = "USER_ID";
     public static final String STORE_ID = "STORE_ID";
     public static final String USER_NAME_SAVE = "USER_NAME";
     public static final String STORE_NAME = "STORE_NAME";
     public static final String PHONE_NUMBER = "PHONE_NUMBER";
-
-
+    //pass data
+    public static final String SENT_PHONE_NUMBER = "SENT_PHONE_NUMBER";
+    public static final String SEND_NAME = "SEND_NAME";
+    public static final String SEND_PASS = "SEND_PASS";
 
 }
