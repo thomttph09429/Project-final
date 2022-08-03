@@ -78,6 +78,7 @@ public class LoginActivity extends AppCompatActivity {
      *     date:31/07/2022
      * </pre>
      */
+    //TODO
     private void isLogin() {
         String isSave = SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(Constant.USER_ID_SAVE);
         if (!isSave.isEmpty()) {

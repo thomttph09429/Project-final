@@ -1,5 +1,17 @@
 package com.app.projectfinal.activity;
 
+import static com.app.projectfinal.utils.Constant.CATEGORY_NAME;
+import static com.app.projectfinal.utils.Constant.DESCRIPTION_PRODUCT;
+import static com.app.projectfinal.utils.Constant.IMAGE1_PRODUCT;
+import static com.app.projectfinal.utils.Constant.NAME_PRODUCT;
+import static com.app.projectfinal.utils.Constant.PRICE_PRODUCT;
+import static com.app.projectfinal.utils.Constant.QUANTITY_PRODUCT;
+import static com.app.projectfinal.utils.Constant.ROLE;
+import static com.app.projectfinal.utils.Constant.ROLE_SAVE;
+import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
+import static com.app.projectfinal.utils.Constant.STORE_NAME_PRODUCT;
+import static com.app.projectfinal.utils.Constant.UPDATE_USER;
+
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
@@ -7,18 +19,33 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.app.projectfinal.adapter.ProductAdapter;
 import com.app.projectfinal.adapter.ViewPagerAdapter;
+import com.app.projectfinal.data.SharedPrefsSingleton;
+import com.app.projectfinal.model.Product;
+import com.app.projectfinal.utils.Constant;
+import com.app.projectfinal.utils.ProgressBarDialog;
+import com.app.projectfinal.utils.VolleySingleton;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
 
 import com.app.projectfinal.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigation.setDefaultBackgroundColor(Color.parseColor("#1CAE81"));
         bottomNavigation.setNotificationBackgroundColor(Color.parseColor("#1CAE81"));
-
+        checkIfUserRegisterShop();
 
         bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
@@ -84,6 +111,50 @@ public class MainActivity extends AppCompatActivity {
                 .setTextColor(ContextCompat.getColor(MainActivity.this, R.color.white))
                 .build();
         bottomNavigation.setNotification(notification, 1);
+    }
+
+    /**
+     * function to check if user already register store or not
+     * if role=2=> registered store
+     * if role =1=>not registered store yet
+     * <pre>
+     *     author:ThomTT
+     *     date:03/08/2022
+     * </pre>
+     */
+    //todo
+    public void checkIfUserRegisterShop() {
+
+        String url = UPDATE_USER + "/" + SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(Constant.USER_ID_SAVE);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                if (response != null) {
+                    try {
+                        JSONObject jsonObject = response.getJSONObject("data");
+                        JSONObject user = jsonObject.getJSONObject("user");
+                        String role = user.getString(ROLE);
+                        if (role.equals(2)) {
+                            SharedPrefsSingleton.getInstance(getApplicationContext()).putStringValue(ROLE_SAVE, role);
+                        } else {
+                            SharedPrefsSingleton.getInstance(getApplicationContext()).putStringValue(ROLE_SAVE, "1");
+
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        VolleySingleton.getInstance(this).getRequestQueue().add(jsonObjectRequest);
     }
 
 }

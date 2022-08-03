@@ -1,8 +1,11 @@
 package com.app.projectfinal.activity;
 
+import static com.app.projectfinal.utils.Constant.ADD_STORES;
 import static com.app.projectfinal.utils.Constant.DESCRIPTION_STORE;
+import static com.app.projectfinal.utils.Constant.IS_ACTIVE;
 import static com.app.projectfinal.utils.Constant.LINK_SUPPORT_STORE;
 import static com.app.projectfinal.utils.Constant.NAME_STORE;
+import static com.app.projectfinal.utils.Constant.UPDATE_USER;
 import static com.app.projectfinal.utils.Constant.USER_ID;
 import static com.app.projectfinal.utils.Constant.USER_ID_SAVE;
 
@@ -29,6 +32,7 @@ import com.app.projectfinal.utils.ProgressBarDialog;
 import com.app.projectfinal.utils.ValidateForm;
 import com.app.projectfinal.utils.VolleySingleton;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -121,7 +125,7 @@ public class SignUpShopActivity extends AppCompatActivity {
         try {
             user.put(NAME_STORE, ValidateForm.capitalizeFirst(storeName));
             user.put(USER_ID, userId);
-            user.put(DESCRIPTION_STORE,ValidateForm.capitalizeFirst(description));
+            user.put(DESCRIPTION_STORE, ValidateForm.capitalizeFirst(description));
             user.put(LINK_SUPPORT_STORE, linkSupport);
             JSONObject data = new JSONObject();
             data.put("user", user);

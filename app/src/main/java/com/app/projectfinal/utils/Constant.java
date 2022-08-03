@@ -29,6 +29,9 @@ public class Constant {
     public static final String DESCRIPTION_STORE = "description";
     public static final String LINK_SUPPORT_STORE = "linkSupport";
     public static final String USER_ID = "userId";
+    public static final String IS_ACTIVE = "isActive";
+    public static final String ROLE = "role";
+
     //unit
     public static final String NAME_UNIT = "name";
     public static final String ID_UNIT = "id";
@@ -41,6 +44,8 @@ public class Constant {
     public static final String USER_NAME_SAVE = "USER_NAME";
     public static final String STORE_NAME = "STORE_NAME";
     public static final String PHONE_NUMBER = "PHONE_NUMBER";
+    public static final String ROLE_SAVE = "ROLE_SAVE";
+
     //pass data
     public static final String SENT_PHONE_NUMBER = "SENT_PHONE_NUMBER";
     public static final String SEND_NAME = "SEND_NAME";
