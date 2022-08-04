@@ -120,9 +120,9 @@ public class MainActivity extends AppCompatActivity {
      * <pre>
      *     author:ThomTT
      *     date:03/08/2022
+     *     TODO
      * </pre>
      */
-    //todo
     public void checkIfUserRegisterShop() {
 
         String url = UPDATE_USER + "/" + SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(Constant.USER_ID_SAVE);

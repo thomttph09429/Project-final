@@ -1,9 +1,9 @@
 package com.app.projectfinal.activity;
 
 
-import static com.app.projectfinal.utils.Constant.CATEGORY;
 import static com.app.projectfinal.utils.Constant.CATEGORY_NAME;
 import static com.app.projectfinal.utils.Constant.DESCRIPTION_PRODUCT;
+import static com.app.projectfinal.utils.Constant.ID_PRODUCT;
 import static com.app.projectfinal.utils.Constant.IMAGE1_PRODUCT;
 import static com.app.projectfinal.utils.Constant.NAME_PRODUCT;
 import static com.app.projectfinal.utils.Constant.PRICE_PRODUCT;
@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -55,7 +56,9 @@ public class DetailProductActivity extends AppCompatActivity {
     private RecyclerView rvProductByStoreId;
     private ProductAdapter productAdapter;
     private List<Product> products;
-    private AppCompatImageButton btnAddCart;
+    private AppCompatImageButton btnAddCart, btnChat;
+    private String idProduct;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,9 +68,11 @@ public class DetailProductActivity extends AppCompatActivity {
         initActions();
         receiveProductDetailWhenClick();
         displayProduct();
-        showProductsByStory();
+        showProductsByStore();
         clickAddCart();
+        clickChat();
     }
+
 
     private void initActions() {
         products = new ArrayList<>();
@@ -90,7 +95,8 @@ public class DetailProductActivity extends AppCompatActivity {
         tvQuantity = findViewById(R.id.tvQuantity);
         tvCategory = findViewById(R.id.tvCategory);
         tvDescription = findViewById(R.id.tvDescription);
-        btnAddCart=findViewById(R.id.btnAddCart);
+        btnAddCart = findViewById(R.id.btnAddCart);
+        btnChat = findViewById(R.id.btnChat);
 
     }
 
@@ -112,7 +118,7 @@ public class DetailProductActivity extends AppCompatActivity {
         storeId = data.getString(STORE_ID_PRODUCT);
         quantity = data.getString(QUANTITY_PRODUCT);
 
-        Log.e("pricedd", price+quantity+ image1);
+        Log.e("pricedd", price + quantity + image1);
 
     }
 
@@ -134,16 +140,17 @@ public class DetailProductActivity extends AppCompatActivity {
         Glide.with(this).load(image1).error(R.drawable.ic_image_error).into(ivProduct);
 
     }
-    private  void clickAddCart(){
-        btnAddCart.setOnClickListener(v->{
-            Log.e("pricedd", price+quantity+ image1);
-            Bundle bundle= new Bundle();
-            bundle.putString(PRICE_PRODUCT,ValidateForm.getDecimalFormattedString(price));
+
+    private void clickAddCart() {
+        btnAddCart.setOnClickListener(v -> {
+            Log.e("pricedd", price + quantity + image1);
+            Bundle bundle = new Bundle();
+            bundle.putString(PRICE_PRODUCT, ValidateForm.getDecimalFormattedString(price));
             bundle.putString(QUANTITY_PRODUCT, quantity);
             bundle.putString(IMAGE1_PRODUCT, image1);
-            ChooseCartFragment chooseCartFragment= new ChooseCartFragment();
+            ChooseCartFragment chooseCartFragment = new ChooseCartFragment();
             chooseCartFragment.setArguments(bundle);
-            chooseCartFragment.show(getSupportFragmentManager(),"ChooseCartFragment");
+            chooseCartFragment.show(getSupportFragmentManager(), "ChooseCartFragment");
 
         });
     }
@@ -155,9 +162,10 @@ public class DetailProductActivity extends AppCompatActivity {
      *     date: 01/08/2022
      * </pre>
      */
-    private void showProductsByStory() {
+    private void showProductsByStore() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         rvProductByStoreId.setLayoutManager(layoutManager);
+        ProgressBarDialog.getInstance(this).showDialog("Đợi 1 lát", this);
 
         String url = PRODUCTS + "?" + "storeId" + "=" + storeId;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -177,7 +185,8 @@ public class DetailProductActivity extends AppCompatActivity {
                             String description = object.getString(DESCRIPTION_PRODUCT);
                             String storeId = object.getString(STORE_ID_PRODUCT);
                             String quantity = object.getString(QUANTITY_PRODUCT);
-                            products.add(new Product(price, productName, image1, description, storeName, categoryName, storeId, quantity));
+                            idProduct = object.getString(ID_PRODUCT);
+                            products.add(new Product(price, productName, image1, description, storeName, categoryName, storeId, quantity, idProduct));
                             ProgressBarDialog.getInstance(DetailProductActivity.this).closeDialog();
 
                         }
@@ -200,5 +209,27 @@ public class DetailProductActivity extends AppCompatActivity {
         });
         VolleySingleton.getInstance(DetailProductActivity.this).getRequestQueue().add(jsonObjectRequest);
     }
+
+    /**
+     * open chat screen when click button chat
+     * <pre>
+     *     author ThomTT
+     *     date:03/08/2022
+     *
+     * </pre>
+     */
+    private void clickChat() {
+        btnChat.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ChatActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString(ID_PRODUCT, idProduct);
+            bundle.putString(STORE_ID_PRODUCT, storeId);
+            bundle.putString(STORE_NAME_PRODUCT, storeName);
+            intent.putExtras(bundle);
+            startActivity(intent);
+
+        });
+    }
+
 
 }

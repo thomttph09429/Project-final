@@ -1,7 +1,15 @@
 package com.app.projectfinal.model;
 
 public class User {
-    String id, phone_number, name, date_of_birth, role, avatar, pass, email, username, status, is_online;
+    String id, phone_number, name, date_of_birth, role, avatar, pass, email, username, status, is_online, name_store;
+
+    public String getName_store() {
+        return name_store;
+    }
+
+    public void setName_store(String name_store) {
+        this.name_store = name_store;
+    }
 
     public String getId() {
         return id;
@@ -57,6 +65,9 @@ public class User {
 
     public void setPass(String pass) {
         this.pass = pass;
+    }
+
+    public User() {
     }
 
     public String getEmail() {

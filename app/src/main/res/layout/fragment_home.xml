@@ -47,10 +47,10 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_40sdp"
-                    android:src="@drawable/ic_cart" />
+                    android:src="@drawable/ic_cart_home" />
 
                 <ImageView
-                    android:id="@+id/chart"
+                    android:id="@+id/ivMessage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"

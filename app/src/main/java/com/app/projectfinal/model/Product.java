@@ -23,6 +23,15 @@ public class Product {
     private String storeName;
     private String categoryName;
     private String unitName;
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getStoreId() {
         return storeId;
@@ -176,7 +185,7 @@ public class Product {
         this.unitName = unitName;
     }
 
-    public Product(String price, String productName, String image1, String description, String storeName, String categoryName, String storeId, String quantity) {
+    public Product(String price, String productName, String image1, String description, String storeName, String categoryName, String storeId, String quantity, String id) {
         this.price = price;
         this.productName = productName;
         this.image1 = image1;
@@ -185,6 +194,7 @@ public class Product {
         this.categoryName = categoryName;
         this.storeId=storeId;
         this.quantity=quantity;
+        this.id=id;
     }
 
 }

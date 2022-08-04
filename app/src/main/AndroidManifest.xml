@@ -17,6 +17,12 @@
         android:theme="@style/Theme.ProjectFinalMaster"
         tools:targetApi="31">
         <activity
+            android:name=".activity.ChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ListChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.ProfileSettingActivity"
             android:exported="false" />
         <activity

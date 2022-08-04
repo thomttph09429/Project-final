@@ -3,6 +3,8 @@ package com.app.projectfinal.utils;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.StringTokenizer;
 
 public class ValidateForm {
@@ -136,10 +138,34 @@ public class ValidateForm {
 
     }
 
+    /**
+     * check user name more than 8 characters
+     * <pre>
+     *     author:ThomTT
+     *     date:03/08/2022
+     * </pre>
+     * @param name
+     * @return
+     */
     public static boolean isName(String name) {
         if (name.length() >= 8) {
             return true;
         }
         return false;
+    }
+    /**
+     * get date
+     * <pre>
+     *     author:ThomTT
+     *     date:03/08/2022
+     * </pre>
+     *  @return
+     */
+
+    public static String getDateAndTime() {
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("EEE, MMM dd hh:mm a");
+        String dateAndTime = formatter.format(date);
+        return dateAndTime;
     }
 }

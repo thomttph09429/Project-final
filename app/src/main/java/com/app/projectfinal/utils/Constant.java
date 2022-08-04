@@ -22,6 +22,9 @@ public class Constant {
     public static final String STORE_ID_PRODUCT = "storeId";
     public static final String CATEGORY_ID = "categoryId";
     public static final String NAME = "name";
+    public static final String ID_PRODUCT = "id";
+    //user
+    public static final String PHONE = "phone";
 
 
     //sign up store
@@ -50,5 +53,8 @@ public class Constant {
     public static final String SENT_PHONE_NUMBER = "SENT_PHONE_NUMBER";
     public static final String SEND_NAME = "SEND_NAME";
     public static final String SEND_PASS = "SEND_PASS";
+    //chat
+    public static final int MSG_LEFT = 0;
+    public static final int MSG_RIGHT = 1;
 
 }

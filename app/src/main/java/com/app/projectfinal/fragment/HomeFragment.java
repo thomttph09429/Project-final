@@ -2,6 +2,7 @@ package com.app.projectfinal.fragment;
 
 import static com.app.projectfinal.utils.Constant.CATEGORY_NAME;
 import static com.app.projectfinal.utils.Constant.DESCRIPTION_PRODUCT;
+import static com.app.projectfinal.utils.Constant.ID_PRODUCT;
 import static com.app.projectfinal.utils.Constant.IMAGE1_PRODUCT;
 import static com.app.projectfinal.utils.Constant.NAME_PRODUCT;
 import static com.app.projectfinal.utils.Constant.PRICE_PRODUCT;
@@ -10,6 +11,7 @@ import static com.app.projectfinal.utils.Constant.QUANTITY_PRODUCT;
 import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
 import static com.app.projectfinal.utils.Constant.STORE_NAME_PRODUCT;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,6 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +35,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
+import com.app.projectfinal.activity.ListChatActivity;
 import com.app.projectfinal.adapter.ProductAdapter;
 import com.app.projectfinal.adapter.SliderAddsAdapter;
 import com.app.projectfinal.model.Product;
@@ -52,6 +56,7 @@ public class HomeFragment extends Fragment {
     private ProductAdapter productAdapter;
     private List<Product> products;
     private TextView tvLoading;
+    private ImageView ivMessage;
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -82,6 +87,7 @@ public class HomeFragment extends Fragment {
         initAds();
         products = new ArrayList<>();
         showProducts();
+        clickMessage();
 
 
         return view;
@@ -99,6 +105,7 @@ public class HomeFragment extends Fragment {
     private void initView() {
         rcvProduct = view.findViewById(R.id.rcv_products);
         tvLoading=view.findViewById(R.id.tvLoading);
+        ivMessage=view.findViewById(R.id.ivMessage);
 
     }
 
@@ -128,8 +135,9 @@ public class HomeFragment extends Fragment {
                             String description = object.getString(DESCRIPTION_PRODUCT);
                             String storeId = object.getString(STORE_ID_PRODUCT);
                             String quantity = object.getString(QUANTITY_PRODUCT);
+                            String id= object.getString(ID_PRODUCT);
 
-                            products.add(new Product(price, productName, image1, description, storeName, categoryName, storeId, quantity));
+                            products.add(new Product(price, productName, image1, description, storeName, categoryName, storeId, quantity, id));
                             ProgressBarDialog.getInstance(getContext()).closeDialog();
 
                         }
@@ -147,6 +155,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getContext(), error.toString(), Toast.LENGTH_LONG).show();
+                ProgressBarDialog.getInstance(getContext()).closeDialog();
 
             }
         });
@@ -173,6 +182,24 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
+    }
+
+    /**
+     * open list chat screen when click image chat
+     * <pre>
+     *     author:ThomTT
+     *     date:03/08/2022
+     *     TODO
+     * </pre>
+     */
+
+    private void clickMessage(){
+        ivMessage.setOnClickListener(v->{
+            Intent intent= new Intent(getActivity(), ListChatActivity.class);
+            startActivity(intent);
+        });
+
+
     }
 
 

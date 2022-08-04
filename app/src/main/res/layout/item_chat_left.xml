@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:padding="3dp"
+        android:text="05/05/1999"
+        android:textSize="@dimen/_11sdp"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_time">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_avartar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/avatar_empty" />
+
+
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_time"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/iv_avartar"
+            android:background="@drawable/bg_chat_left"
+            android:padding="@dimen/_8sdp"
+            android:text="Hello world"
+            android:textSize="@dimen/_14sdp" />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:textSize="14sp"
+        android:id="@+id/tv_seen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/content"
+        android:visibility="gone" />
+
+
+</RelativeLayout>

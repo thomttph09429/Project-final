@@ -1,6 +1,7 @@
 package com.app.projectfinal.activity;
 
 import static com.app.projectfinal.utils.Constant.LOGIN;
+import static com.app.projectfinal.utils.Constant.PHONE;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -76,9 +77,9 @@ public class LoginActivity extends AppCompatActivity {
      * <pre>
      *     author:ThomTT
      *     date:31/07/2022
+     *     TODO
      * </pre>
      */
-    //TODO
     private void isLogin() {
         String isSave = SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(Constant.USER_ID_SAVE);
         if (!isSave.isEmpty()) {
@@ -229,12 +230,13 @@ public class LoginActivity extends AppCompatActivity {
             HashMap<String, Object> mUser = new HashMap<>();
             mUser.put("userName", userName);
             mUser.put("id", idUser);
-            mUser.put("phone", phoneNumber);
+            mUser.put("phone_number", phoneNumber);
             reference.setValue(mUser).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
                         ProgressBarDialog.getInstance(LoginActivity.this).closeDialog();
+                        SharedPrefsSingleton.getInstance(getApplicationContext()).putStringValue(PHONE, phoneNumber);
                         Toast.makeText(LoginActivity.this, "" + "Đăng nhập thành công!", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);

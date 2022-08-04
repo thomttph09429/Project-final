@@ -30,5 +30,6 @@
     <color name="shopcuatoi">#1CAE81</color>
     <color name="green">#1CAE81</color>
     <color name="greenWhite">#E3EFCE</color>
+    <color name="bg_chat">#F1F1F1</color>
 
 </resources>

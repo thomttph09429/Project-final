@@ -108,16 +108,16 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/img_avt_shop"
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_height="@dimen/_50sdp"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
                     android:src="@drawable/avatar_empty" />
 
                 <LinearLayout
                     android:id="@+id/ll_info_shop"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
                     android:layout_toEndOf="@+id/img_avt_shop"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
@@ -127,9 +127,10 @@
                         style="@style/ContentText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="2dp"
                         android:gravity="center"
-                        android:text="bensho shop"
+                        android:maxWidth="@dimen/_100sdp"
+                        android:maxLines="2"
+                        android:text="svvvvvvvvvv"
                         android:textColor="@color/green"
                         android:textStyle="bold" />
 
@@ -281,7 +282,7 @@
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/btn_chat"
+            android:id="@+id/btnChat"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
