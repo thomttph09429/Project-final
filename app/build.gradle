@@ -80,4 +80,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:20.2.0'
     //
     implementation 'com.intuit.sdp:sdp-android:1.0.5'
+    // room db
+    implementation  "android.arch.persistence.room:runtime:1.0.0"
+    annotationProcessor  "android.arch.persistence.room:compiler:1.0.0"
 }

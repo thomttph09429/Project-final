@@ -6,6 +6,7 @@ import static com.app.projectfinal.utils.Constant.DESCRIPTION_PRODUCT;
 import static com.app.projectfinal.utils.Constant.ID_PRODUCT;
 import static com.app.projectfinal.utils.Constant.IMAGE1_PRODUCT;
 import static com.app.projectfinal.utils.Constant.NAME_PRODUCT;
+import static com.app.projectfinal.utils.Constant.PHONE;
 import static com.app.projectfinal.utils.Constant.PRICE_PRODUCT;
 import static com.app.projectfinal.utils.Constant.PRODUCTS;
 import static com.app.projectfinal.utils.Constant.QUANTITY_PRODUCT;
@@ -52,7 +53,7 @@ public class DetailProductActivity extends AppCompatActivity {
     private ImageView ivProduct;
     private TextView tvName, tvPrice, tvNameShop, tvQuantity, tvCategory, tvDescription;
     private Bundle data;
-    private String productName, price, image1, storeName, categoryName, description, storeId, quantity;
+    private String productName, price, image1, storeName, categoryName, description, storeId, quantity, phone;
     private RecyclerView rvProductByStoreId;
     private ProductAdapter productAdapter;
     private List<Product> products;
@@ -187,7 +188,7 @@ public class DetailProductActivity extends AppCompatActivity {
                             String quantity = object.getString(QUANTITY_PRODUCT);
                             idProduct = object.getString(ID_PRODUCT);
                             products.add(new Product(price, productName, image1, description, storeName, categoryName, storeId, quantity, idProduct));
-                            ProgressBarDialog.getInstance(DetailProductActivity.this).closeDialog();
+                            getDetailProduct();
 
                         }
                     } catch (JSONException e) {
@@ -222,7 +223,7 @@ public class DetailProductActivity extends AppCompatActivity {
         btnChat.setOnClickListener(v -> {
             Intent intent = new Intent(this, ChatActivity.class);
             Bundle bundle = new Bundle();
-            bundle.putString(ID_PRODUCT, idProduct);
+            bundle.putString(PHONE, phone);
             bundle.putString(STORE_ID_PRODUCT, storeId);
             bundle.putString(STORE_NAME_PRODUCT, storeName);
             intent.putExtras(bundle);
@@ -231,5 +232,46 @@ public class DetailProductActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Call api get phone number of store
+     * <pre>
+     *     author: ThomTT1
+     *     date: 10/08/2022
+     * </pre>
+     */
+    private void getDetailProduct() {
+        String url = PRODUCTS + "/" + idProduct;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                if (response != null) {
+                    try {
+                        JSONObject jsonObject = response.getJSONObject("data");
+                        JSONObject data = jsonObject.getJSONObject("product");
+                        phone = data.getString(PHONE);
+                        ProgressBarDialog.getInstance(DetailProductActivity.this).closeDialog();
 
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(DetailProductActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+                        ProgressBarDialog.getInstance(DetailProductActivity.this).closeDialog();
+                        ProgressBarDialog.getInstance(DetailProductActivity.this).closeDialog();
+
+                    }
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(DetailProductActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+                ProgressBarDialog.getInstance(DetailProductActivity.this).closeDialog();
+
+            }
+        });
+        VolleySingleton.getInstance(DetailProductActivity.this).getRequestQueue().add(jsonObjectRequest);
+
+
+    }
 }

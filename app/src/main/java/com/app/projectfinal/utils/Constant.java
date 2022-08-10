@@ -56,5 +56,8 @@ public class Constant {
     //chat
     public static final int MSG_LEFT = 0;
     public static final int MSG_RIGHT = 1;
+    //db
+    public static final String TABLE_NAME = "CARD";
+
 
 }

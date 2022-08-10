@@ -15,6 +15,7 @@ import com.app.projectfinal.adapter.ListChatAdapter;
 import com.app.projectfinal.data.SharedPrefsSingleton;
 import com.app.projectfinal.model.ChatList;
 import com.app.projectfinal.model.User;
+import com.app.projectfinal.utils.ProgressBarDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -53,7 +54,7 @@ public class ListChatActivity extends AppCompatActivity {
     }
 
     private void addUser() {
-
+        ProgressBarDialog.getInstance(this).showDialog("Đợi một lát!", this);
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("ChatList").child(phoneOfMe);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -95,6 +96,8 @@ public class ListChatActivity extends AppCompatActivity {
                 }
                 listChatAdapter = new ListChatAdapter(ListChatActivity.this, mUser);
                 rvListChat.setAdapter(listChatAdapter);
+                ProgressBarDialog.getInstance(ListChatActivity.this).closeDialog();
+
             }
 
             @Override

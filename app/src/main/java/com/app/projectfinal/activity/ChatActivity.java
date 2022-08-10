@@ -57,7 +57,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
-    private String storeName, storeId, idProduct, userId, phoneOfStore, phoneOfMe;
+    private String storeName, storeId, userId, phoneOfStore, phoneOfMe;
     private TextView tvNameShop;
     private ImageView btnSentMessage;
     private EditText edtEnterMessage;
@@ -76,10 +76,21 @@ public class ChatActivity extends AppCompatActivity {
         initAction();
         receiveInfoStoreFromClickItem();
         receiveInfoStore();
-        getDetailProduct();
-        showInfoStore();
-        clickSendMessage();
 
+
+        if (getPhoneOfStore != null) {
+            showInfoStore(getStoreName);
+            readMessage(getPhoneOfStore);
+            clickSendMessage(getPhoneOfStore, getStoreName);
+            Toast.makeText(this, "getPhoneOfStore", Toast.LENGTH_LONG).show();
+
+        }else {
+            showInfoStore(storeName);
+            readMessage(phoneOfStore);
+            clickSendMessage(phoneOfStore, storeName);
+            Toast.makeText(this, "PhoneOfStore", Toast.LENGTH_LONG).show();
+
+        }
 
     }
 
@@ -128,58 +139,26 @@ public class ChatActivity extends AppCompatActivity {
         Bundle data = getIntent().getExtras();
         storeName = data.getString(STORE_NAME_PRODUCT);
         storeId = data.getString(STORE_ID_PRODUCT);
-        idProduct = data.getString(ID_PRODUCT);
-        Log.e("ChatActivity", storeId + "and" + idProduct);
+        phoneOfStore = data.getString(PHONE);
+        Log.e("ChatActivity", storeId + "and" + phoneOfStore);
 
 
     }
 
-    private void getDetailProduct() {
-    String url = PRODUCTS + "/" + idProduct;
-    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-        @Override
-        public void onResponse(JSONObject response) {
-            if (response != null) {
-                try {
-                    JSONObject jsonObject = response.getJSONObject("data");
-                    JSONObject data = jsonObject.getJSONObject("product");
-                    phoneOfStore = data.getString(PHONE);
-                    readMessage();
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(ChatActivity.this, e.toString(), Toast.LENGTH_LONG).show();
-
-                }
-            }
 
 
-        }
-    }, new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            Toast.makeText(ChatActivity.this, error.toString(), Toast.LENGTH_LONG).show();
-
-        }
-    });
-    VolleySingleton.getInstance(ChatActivity.this).getRequestQueue().add(jsonObjectRequest);
-
-
-
-    }
-
-    private void showInfoStore() {
-            tvNameShop.setText(ValidateForm.capitalizeFirst(storeName));
+    private void showInfoStore( String nameStore) {
+            tvNameShop.setText(ValidateForm.capitalizeFirst(nameStore));
 
     }
 
 
-    private void clickSendMessage() {
+    private void clickSendMessage(String phone, String store) {
 
         btnSentMessage.setOnClickListener(v -> {
             String message = edtEnterMessage.getText().toString();
             if (!message.equals("")) {
-                    sendMessage(phoneOfMe, phoneOfStore, message);
+                    sendMessage(phoneOfMe, phone, message, store);
 
 
 
@@ -196,8 +175,8 @@ public class ChatActivity extends AppCompatActivity {
      * @param receiver
      * @param message
      */
-    private void sendMessage(String sender, String receiver, String message) {
-        AddInfoOfStoreToFirebase();
+    private void sendMessage(String sender, String receiver, String message, String store) {
+        AddInfoOfStoreToFirebase(receiver, store);
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("sender", sender);
@@ -208,14 +187,14 @@ public class ChatActivity extends AppCompatActivity {
         reference.child("Chats").push().setValue(hashMap);
         final DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("ChatList")
                 .child(phoneOfMe)
-                .child(phoneOfStore);
+                .child(receiver);
 
 
         chatRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (!dataSnapshot.exists()) {
-                    chatRef.child("phone_number").setValue(phoneOfStore);
+                    chatRef.child("phone_number").setValue(receiver);
                 }
             }
 
@@ -227,17 +206,17 @@ public class ChatActivity extends AppCompatActivity {
 
 
         final DatabaseReference chatRefReceiver = FirebaseDatabase.getInstance().getReference("ChatList")
-                .child(phoneOfStore)
+                .child(receiver)
                 .child(phoneOfMe);
         chatRefReceiver.child("phone_number").setValue(phoneOfMe);
     }
 
-    private void AddInfoOfStoreToFirebase() {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(phoneOfStore);
+    private void AddInfoOfStoreToFirebase(String phone, String store) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(phone);
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                reference.child("name_store").setValue(storeName);
+                reference.child("name_store").setValue(store);
                 reference.child("avatar").setValue("yy");
 
             }
@@ -251,7 +230,7 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
-    private void readMessage() {
+    private void readMessage( String phone) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Chats");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -260,8 +239,8 @@ public class ChatActivity extends AppCompatActivity {
 
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Chat chat = dataSnapshot.getValue(Chat.class);
-                        if (chat.getReceiver().equals(phoneOfMe) && chat.getSender().equals(phoneOfStore)
-                                || chat.getReceiver().equals(phoneOfStore) && chat.getSender().equals(phoneOfMe)) {
+                        if (chat.getReceiver().equals(phoneOfMe) && chat.getSender().equals(phone)
+                                || chat.getReceiver().equals(phone) && chat.getSender().equals(phoneOfMe)) {
                             chatList.add(chat);
 
 
