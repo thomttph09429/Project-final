@@ -32,4 +32,6 @@
     <color name="greenWhite">#E3EFCE</color>
     <color name="bg_chat">#F1F1F1</color>
 
+    <color name="black_30">#4D000000</color>
+
 </resources>

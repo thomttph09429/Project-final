@@ -58,6 +58,7 @@ public class Constant {
     public static final int MSG_RIGHT = 1;
     //db
     public static final String TABLE_NAME = "CARD";
+    public static final String TABLE_DB = "Cart.db";
 
 
 }

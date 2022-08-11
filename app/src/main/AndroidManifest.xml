@@ -38,7 +38,7 @@
             android:name=".activity.MyShopActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.cart"
+            android:name=".activity.CartActivity"
             android:exported="false" />
         <activity
             android:name=".activity.RegisterActivity"

@@ -149,6 +149,10 @@ public class DetailProductActivity extends AppCompatActivity {
             bundle.putString(PRICE_PRODUCT, ValidateForm.getDecimalFormattedString(price));
             bundle.putString(QUANTITY_PRODUCT, quantity);
             bundle.putString(IMAGE1_PRODUCT, image1);
+            bundle.putString(NAME_PRODUCT, productName);
+            bundle.putString(ID_PRODUCT, idProduct);
+            bundle.putString(STORE_ID_PRODUCT, storeId);
+
             ChooseCartFragment chooseCartFragment = new ChooseCartFragment();
             chooseCartFragment.setArguments(bundle);
             chooseCartFragment.show(getSupportFragmentManager(), "ChooseCartFragment");

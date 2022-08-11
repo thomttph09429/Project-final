@@ -1,65 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rlCategory"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:id="@+id/rlCategory"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:padding="8dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="8dp"
-        >
+        app:cardElevation="8dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_item_rcv_cart"
             android:orientation="vertical">
-        <LinearLayout
-            android:id="@+id/linear_item_cart"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
 
-            <CheckBox
-                android:id="@+id/cbxShop"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:buttonTint="@color/navBot" />
-
-            <ImageView
-                android:id="@+id/img_shop"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:background="@drawable/shop"
-                android:layout_gravity="center"/>
-
-            <TextView
-                android:id="@+id/txt_nameShop"
+            <LinearLayout
+                android:id="@+id/linear_item_cart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/cbxShop"
-                android:padding="12dp"
-                android:text="Tên shop"
-                android:textColor="@color/navBot"
-                android:textSize="24dp"
-                android:layout_gravity="center"
-                android:textStyle="bold" />
-        </LinearLayout>
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/cbxShop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:buttonTint="@color/navBot" />
+
+                <ImageView
+                    android:id="@+id/img_shop"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/shop" />
+
+                <TextView
+                    android:id="@+id/txt_nameShop"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_toEndOf="@id/cbxShop"
+                    android:padding="12dp"
+                    android:text="Tên shop"
+                    android:textColor="@color/navBot"
+                    android:textSize="24dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcv_item_cart"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/linear_item_cart"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="5dp" />
+                android:layout_below="@id/linear_item_cart">
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:layout_width="@dimen/_70sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:src="@drawable/avatar_empty" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+                    <TextView
+                        android:text="Ca cao nguyên hạt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 

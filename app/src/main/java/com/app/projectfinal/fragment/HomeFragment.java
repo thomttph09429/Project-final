@@ -35,6 +35,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
+import com.app.projectfinal.activity.CartActivity;
 import com.app.projectfinal.activity.ListChatActivity;
 import com.app.projectfinal.adapter.ProductAdapter;
 import com.app.projectfinal.adapter.SliderAddsAdapter;
@@ -56,7 +57,7 @@ public class HomeFragment extends Fragment {
     private ProductAdapter productAdapter;
     private List<Product> products;
     private TextView tvLoading;
-    private ImageView ivMessage;
+    private ImageView ivMessage, ivCart;
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -88,6 +89,7 @@ public class HomeFragment extends Fragment {
         products = new ArrayList<>();
         showProducts();
         clickMessage();
+        clickCart();
 
 
         return view;
@@ -106,6 +108,8 @@ public class HomeFragment extends Fragment {
         rcvProduct = view.findViewById(R.id.rcv_products);
         tvLoading=view.findViewById(R.id.tvLoading);
         ivMessage=view.findViewById(R.id.ivMessage);
+        ivCart=view.findViewById(R.id.ivCart);
+
 
     }
 
@@ -200,6 +204,12 @@ public class HomeFragment extends Fragment {
         });
 
 
+    }
+    private void  clickCart(){
+        ivCart.setOnClickListener(v->{
+            Intent intent= new Intent(getActivity(), CartActivity.class);
+            startActivity(intent);
+        });
     }
 
 
