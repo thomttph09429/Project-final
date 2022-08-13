@@ -2,6 +2,7 @@ package com.app.projectfinal.adapter;
 
 import static com.app.projectfinal.utils.Constant.CATEGORY_NAME;
 import static com.app.projectfinal.utils.Constant.DESCRIPTION_PRODUCT;
+import static com.app.projectfinal.utils.Constant.ID_PRODUCT;
 import static com.app.projectfinal.utils.Constant.IMAGE1_PRODUCT;
 import static com.app.projectfinal.utils.Constant.NAME_PRODUCT;
 import static com.app.projectfinal.utils.Constant.PRICE_PRODUCT;
@@ -71,15 +72,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                 bundle.putString(CATEGORY_NAME, products.get(position).getCategoryName());
                 bundle.putString(STORE_ID_PRODUCT, products.get(position).getStoreId());
                 bundle.putString(QUANTITY_PRODUCT, products.get(position).getQuantity());
+                bundle.putString(ID_PRODUCT, products.get(position).getId());
 
                 intent.putExtras(bundle);
                 context.startActivity(intent);
-                Log.e("getProductName ", "" + product.getProductName());
-                Log.e("getPrice", "" + product.getPrice());
-                Log.e("getCategoryName", "" + product.getCategoryName());
-                Log.e("getDescription", "" + product.getDescription());
-                Log.e("getImage1", "" + product.getImage1());
-                Log.e("getStoreName", "" + product.getStoreName());
+                Log.e("idProductidProduct ", "" + product.getId());
+
 
             }
         });

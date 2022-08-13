@@ -6,6 +6,7 @@ import static com.app.projectfinal.utils.Constant.DESCRIPTION_PRODUCT;
 import static com.app.projectfinal.utils.Constant.ID_PRODUCT;
 import static com.app.projectfinal.utils.Constant.IMAGE1_PRODUCT;
 import static com.app.projectfinal.utils.Constant.NAME_PRODUCT;
+import static com.app.projectfinal.utils.Constant.NAME_STORE;
 import static com.app.projectfinal.utils.Constant.PHONE;
 import static com.app.projectfinal.utils.Constant.PRICE_PRODUCT;
 import static com.app.projectfinal.utils.Constant.PRODUCTS;
@@ -118,8 +119,9 @@ public class DetailProductActivity extends AppCompatActivity {
         description = data.getString(DESCRIPTION_PRODUCT);
         storeId = data.getString(STORE_ID_PRODUCT);
         quantity = data.getString(QUANTITY_PRODUCT);
+         idProduct = data.getString(ID_PRODUCT);
 
-        Log.e("pricedd", price + quantity + image1);
+        Log.e("idProductidProduct", idProduct+"");
 
     }
 
@@ -152,7 +154,9 @@ public class DetailProductActivity extends AppCompatActivity {
             bundle.putString(NAME_PRODUCT, productName);
             bundle.putString(ID_PRODUCT, idProduct);
             bundle.putString(STORE_ID_PRODUCT, storeId);
+            bundle.putString(NAME_STORE, storeName);
 
+            Log.e("idProduct", idProduct);
             ChooseCartFragment chooseCartFragment = new ChooseCartFragment();
             chooseCartFragment.setArguments(bundle);
             chooseCartFragment.show(getSupportFragmentManager(), "ChooseCartFragment");
@@ -171,7 +175,7 @@ public class DetailProductActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         rvProductByStoreId.setLayoutManager(layoutManager);
         ProgressBarDialog.getInstance(this).showDialog("Đợi 1 lát", this);
-
+//https://graduate-tmdt-be.herokuapp.com/stores/products?storeId=
         String url = PRODUCTS + "?" + "storeId" + "=" + storeId;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -190,7 +194,7 @@ public class DetailProductActivity extends AppCompatActivity {
                             String description = object.getString(DESCRIPTION_PRODUCT);
                             String storeId = object.getString(STORE_ID_PRODUCT);
                             String quantity = object.getString(QUANTITY_PRODUCT);
-                            idProduct = object.getString(ID_PRODUCT);
+                            Log.e("idProductss", idProduct + "");
                             products.add(new Product(price, productName, image1, description, storeName, categoryName, storeId, quantity, idProduct));
                             getDetailProduct();
 

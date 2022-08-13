@@ -168,4 +168,9 @@ public class ValidateForm {
         String dateAndTime = formatter.format(date);
         return dateAndTime;
     }
+    public  static int getPriceToInt(String priceOld){
+        int newPrice= Integer.parseInt(priceOld.replace(",",""));
+        return  newPrice;
+
+    }
 }

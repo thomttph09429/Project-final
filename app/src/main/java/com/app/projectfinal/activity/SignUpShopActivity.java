@@ -144,20 +144,50 @@ public class SignUpShopActivity extends AppCompatActivity {
                         JSONObject str = strRes.getJSONObject("user");
                         String storeId = str.getString("id");
                         String storeName = str.getString("name");
+                        String userId = str.getString("userId");
 
+                        updateStore(storeId, userId);
                         Log.e("storeId", storeId);
                         SharedPrefsSingleton.getInstance(getApplicationContext()).putStringValue(Constant.STORE_ID, storeId);
                         SharedPrefsSingleton.getInstance(getApplicationContext()).putStringValue(Constant.STORE_NAME, storeName);
 
                         ProgressBarDialog.getInstance(SignUpShopActivity.this).closeDialog();
                         Toast.makeText(SignUpShopActivity.this, "" + "Đăng ký thành công!", Toast.LENGTH_LONG).show();
-                        Intent intent= new Intent(SignUpShopActivity.this, MyShopActivity.class);
+                        Intent intent = new Intent(SignUpShopActivity.this, MyShopActivity.class);
                         startActivity(intent);
                         finish();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(SignUpShopActivity.this, "" + error.toString(), Toast.LENGTH_LONG).show();
+            }
+        });
+        VolleySingleton.getInstance(getApplicationContext()).getRequestQueue().add(jsonObjectRequest);
+    }
+
+    private void updateStore(String storeId, String userId) {
+        JSONObject user = new JSONObject();
+        String url = ADD_STORES + "/" + storeId;
+        try {
+            user.put("userId", userId);
+            user.put("isActive", 1);
+            JSONObject datas = new JSONObject();
+            datas.put("data", user);
+            Log.e("ma", user+"");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, user, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.e("huuuu", response+"");
+
             }
         }, new Response.ErrorListener() {
             @Override

@@ -14,6 +14,7 @@ import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
 import static com.app.projectfinal.utils.Constant.STORE_NAME_PRODUCT;
 import static com.app.projectfinal.utils.Constant.UPDATE_USER;
 import static com.app.projectfinal.utils.Constant.USER_ID;
+import static com.app.projectfinal.utils.Constant.USER_NAME_SAVE;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,7 +36,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
 import com.app.projectfinal.adapter.ChatAdapter;
-import com.app.projectfinal.adapter.ProductAdapter;
 import com.app.projectfinal.data.SharedPrefsSingleton;
 import com.app.projectfinal.model.Chat;
 import com.app.projectfinal.model.Product;
@@ -227,6 +227,21 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+        DatabaseReference references = FirebaseDatabase.getInstance().getReference().child("Users").child(phoneOfMe);
+        references.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String userName = SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(USER_NAME_SAVE);
+                references.child("name_store").setValue(userName);
+                references.child("avatar").setValue("yy");
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 

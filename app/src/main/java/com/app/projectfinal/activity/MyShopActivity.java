@@ -13,8 +13,8 @@ import com.app.projectfinal.R;
 import com.app.projectfinal.data.SharedPrefsSingleton;
 
 public class MyShopActivity extends AppCompatActivity {
-   private TextView tvStoreName;
-    private LinearLayout lnStartSell;
+    private TextView tvStoreName;
+    private LinearLayout lnStartSell, lnMyProduct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,19 +23,32 @@ public class MyShopActivity extends AppCompatActivity {
         initView();
         getInf();
         startSell();
+        openMyProductScreen();
     }
 
 
     private void initView() {
-        tvStoreName=findViewById(R.id.tvStoreName);
-        lnStartSell=findViewById(R.id.lnStartSell);
+        tvStoreName = findViewById(R.id.tvStoreName);
+        lnStartSell = findViewById(R.id.lnStartSell);
+        lnMyProduct = findViewById(R.id.lnMyProduct);
     }
+
     private void getInf() {
         tvStoreName.setText(SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(STORE_NAME));
     }
-    private  void startSell(){
-        lnStartSell.setOnClickListener(v->{
-            Intent intent= new Intent(this, AddProductActivity.class);
+
+    private void startSell() {
+        lnStartSell.setOnClickListener(v -> {
+            Intent intent = new Intent(this, AddProductActivity.class);
+            startActivity(intent);
+        });
+
+
+    }
+
+    private void openMyProductScreen() {
+        lnMyProduct.setOnClickListener(v -> {
+            Intent intent = new Intent(this, MyProductActivity.class);
             startActivity(intent);
         });
 

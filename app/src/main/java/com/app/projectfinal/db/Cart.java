@@ -16,14 +16,24 @@ public class Cart {
     public String amount;
     public String price;
     public String imageOfProduct;
+    public  String nameShop;
 
-    public Cart(String idProduct, String idShop, String nameProduct, String amount, String price, String imageOfProduct) {
+    public Cart(@NonNull String idProduct, String idShop, String nameProduct, String amount, String price, String imageOfProduct, String nameShop) {
         this.idProduct = idProduct;
         this.idShop = idShop;
         this.nameProduct = nameProduct;
         this.amount = amount;
         this.price = price;
         this.imageOfProduct = imageOfProduct;
+        this.nameShop = nameShop;
+    }
+
+    public String getNameShop() {
+        return nameShop;
+    }
+
+    public void setNameShop(String nameShop) {
+        this.nameShop = nameShop;
     }
 
     public String getIdProduct() {

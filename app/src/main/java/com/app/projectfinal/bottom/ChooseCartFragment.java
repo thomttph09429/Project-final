@@ -3,6 +3,7 @@ package com.app.projectfinal.bottom;
 import static com.app.projectfinal.utils.Constant.ID_PRODUCT;
 import static com.app.projectfinal.utils.Constant.IMAGE1_PRODUCT;
 import static com.app.projectfinal.utils.Constant.NAME_PRODUCT;
+import static com.app.projectfinal.utils.Constant.NAME_STORE;
 import static com.app.projectfinal.utils.Constant.PRICE_PRODUCT;
 import static com.app.projectfinal.utils.Constant.QUANTITY_PRODUCT;
 import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
@@ -25,6 +26,7 @@ import com.app.projectfinal.R;
 import com.app.projectfinal.activity.DetailProductActivity;
 import com.app.projectfinal.db.Cart;
 import com.app.projectfinal.db.CartDatabase;
+import com.app.projectfinal.utils.ValidateForm;
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
@@ -35,7 +37,7 @@ public class ChooseCartFragment extends BottomSheetDialogFragment {
     private View view;
     private ImageView ivProduct, ivClose;
     private TextView tvPrice, tvQuantity, tvRaiseAmount, tvAmount, tvReduceAmount;
-    private String price, image, idProduct, idShop, nameProduct, quantity;
+    private String price, image, idProduct, idShop, nameProduct, quantity, nameStore;
     private AppCompatButton btnAddToCart;
 
 
@@ -54,6 +56,7 @@ public class ChooseCartFragment extends BottomSheetDialogFragment {
         }
         initView();
         getInfo();
+        checkStillInStock();
         clickImageClose();
         reduceAmount();
         raiseAmount();
@@ -62,11 +65,20 @@ public class ChooseCartFragment extends BottomSheetDialogFragment {
 
     }
 
+    /**
+     * add to cart
+     * <pre>
+     *     author:ThomTT
+     *     date: 11/08/2022
+     *     todo
+     * </pre>
+     */
     private void addToCart() {
         btnAddToCart.setOnClickListener(v -> {
             String amount = tvAmount.getText().toString();
-            CartDatabase.getInstance(getContext()).cartDAO().insert(new Cart(idProduct, idShop, nameProduct, amount, price, image));
+            CartDatabase.getInstance(getContext()).cartDAO().insert(new Cart(idProduct, idShop, nameProduct, amount, price, image, nameStore));
             showToast();
+            dismiss();
         });
 
 
@@ -104,7 +116,7 @@ public class ChooseCartFragment extends BottomSheetDialogFragment {
         idProduct = getArguments().getString(ID_PRODUCT);
         idShop = getArguments().getString(STORE_ID_PRODUCT);
         nameProduct = getArguments().getString(NAME_PRODUCT);
-
+        nameStore = getArguments().getString(NAME_STORE);
 
         quantity = getArguments().getString(QUANTITY_PRODUCT);
         tvQuantity.setText(quantity);
@@ -119,6 +131,13 @@ public class ChooseCartFragment extends BottomSheetDialogFragment {
         });
     }
 
+    /**
+     * reduce amount when click (-)
+     * <pre>
+     *     author:ThomTT
+     *     date:11/08/2022
+     * </pre>
+     */
     private void reduceAmount() {
         tvReduceAmount.setOnClickListener(v -> {
             int amount = Integer.parseInt(tvAmount.getText().toString());
@@ -132,6 +151,13 @@ public class ChooseCartFragment extends BottomSheetDialogFragment {
 
     }
 
+    /**
+     * raise amount when click (+)
+     * <pre>
+     *     author:ThomTT
+     *     date:11/08/2022
+     * </pre>
+     */
     private void raiseAmount() {
         tvRaiseAmount.setOnClickListener(v -> {
             int amount = Integer.parseInt(tvAmount.getText().toString());
@@ -159,5 +185,10 @@ public class ChooseCartFragment extends BottomSheetDialogFragment {
         toast.setDuration(Toast.LENGTH_LONG);
         toast.setView(layout);
         toast.show();
+    }
+    private  void  checkStillInStock(){
+        if (ValidateForm.getPriceToInt(price)<=0){
+            tvAmount.setText("0");
+        }
     }
 }

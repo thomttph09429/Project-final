@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -58,6 +59,8 @@ public class HomeFragment extends Fragment {
     private List<Product> products;
     private TextView tvLoading;
     private ImageView ivMessage, ivCart;
+    private NestedScrollView nestedScrollView;
+    private int page = 1;
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -85,9 +88,9 @@ public class HomeFragment extends Fragment {
         if (view == null)
             view = inflater.inflate(R.layout.fragment_home, container, false);
         initView();
+        initAction();
         initAds();
-        products = new ArrayList<>();
-        showProducts();
+        scrollPage();
         clickMessage();
         clickCart();
 
@@ -104,23 +107,62 @@ public class HomeFragment extends Fragment {
 
     }
 
+
     private void initView() {
         rcvProduct = view.findViewById(R.id.rcv_products);
-        tvLoading=view.findViewById(R.id.tvLoading);
-        ivMessage=view.findViewById(R.id.ivMessage);
-        ivCart=view.findViewById(R.id.ivCart);
+        tvLoading = view.findViewById(R.id.tvLoading);
+        ivMessage = view.findViewById(R.id.ivMessage);
+        ivCart = view.findViewById(R.id.ivCart);
+        nestedScrollView = view.findViewById(R.id.nestedScrollView);
 
 
     }
 
-    private void showProducts() {
+    private void initAction() {
+        products = new ArrayList<>();
         LinearLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+        rcvProduct.setHasFixedSize(true);
         rcvProduct.setLayoutManager(layoutManager);
+        productAdapter = new ProductAdapter(products, getContext());
+        rcvProduct.setAdapter(productAdapter);
+        getProducts(page);
+    }
+
+    /**
+     * load more when scroll page
+     * <pre>
+     *     author:ThomTT
+     *     date:13/08/2022
+     * </pre>
+     */
+    private void scrollPage() {
+        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()) {
+                    page++;
+                    getProducts(page);
+                }
+            }
+        });
+
+    }
+
+    /**
+     * get product by page
+     * <pre>
+     *     author:ThomTT
+     *     date:13/08/2022
+     * </pre>
+     * @param page
+     */
+    private void getProducts(int page) {
+
         if (products.size() == 0) {
             ProgressBarDialog.getInstance(getContext()).showDialog("Đang tải", getContext());
 
         }
-        String urlProducts = PRODUCTS + "?" + "page=" + 1 + "&size=" + 10;
+        String urlProducts = PRODUCTS + "?" + "page=" + page + "&size=" + 16;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlProducts, null, new Response.Listener<JSONObject>() {
             @Override
@@ -139,20 +181,21 @@ public class HomeFragment extends Fragment {
                             String description = object.getString(DESCRIPTION_PRODUCT);
                             String storeId = object.getString(STORE_ID_PRODUCT);
                             String quantity = object.getString(QUANTITY_PRODUCT);
-                            String id= object.getString(ID_PRODUCT);
+                            String id = object.getString(ID_PRODUCT);
 
                             products.add(new Product(price, productName, image1, description, storeName, categoryName, storeId, quantity, id));
                             ProgressBarDialog.getInstance(getContext()).closeDialog();
 
                         }
+                        productAdapter.notifyDataSetChanged();
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                         Toast.makeText(getContext(), e.toString(), Toast.LENGTH_LONG).show();
 
                     }
                 }
-                productAdapter = new ProductAdapter(products, getContext());
-                rcvProduct.setAdapter(productAdapter);
+
 
             }
         }, new Response.ErrorListener() {
@@ -167,26 +210,6 @@ public class HomeFragment extends Fragment {
 
     }
 
-    private void readMore() {
-        rcvProduct.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                LinearLayoutManager layoutManager=LinearLayoutManager.class.cast(recyclerView.getLayoutManager());
-                int totalItemCount = layoutManager.getItemCount();
-                int lastVisible = layoutManager.findLastVisibleItemPosition();
-
-                boolean endHasBeenReached = lastVisible + 5 >= totalItemCount;
-                if (totalItemCount > 0 && endHasBeenReached) {
-                    //you have reached to the bottom of your recycler view
-                    tvLoading.setVisibility(View.VISIBLE);
-                }else {
-                    tvLoading.setVisibility(View.GONE);
-
-                }
-            }
-        });
-    }
 
     /**
      * open list chat screen when click image chat
@@ -197,17 +220,18 @@ public class HomeFragment extends Fragment {
      * </pre>
      */
 
-    private void clickMessage(){
-        ivMessage.setOnClickListener(v->{
-            Intent intent= new Intent(getActivity(), ListChatActivity.class);
+    private void clickMessage() {
+        ivMessage.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), ListChatActivity.class);
             startActivity(intent);
         });
 
 
     }
-    private void  clickCart(){
-        ivCart.setOnClickListener(v->{
-            Intent intent= new Intent(getActivity(), CartActivity.class);
+
+    private void clickCart() {
+        ivCart.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), CartActivity.class);
             startActivity(intent);
         });
     }

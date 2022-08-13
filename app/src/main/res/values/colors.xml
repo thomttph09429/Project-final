@@ -24,6 +24,7 @@
     <color name="greenLight_30">#4DCCE59D</color>
     <color name="greenLight_20">#33CCE59D</color>
     <color name="greenLight_70">#B3CCE59D</color>
+    <color name="greenLight_50">#CCE59D</color>
 
     <color name="red">#F44336</color>
     <color name="color_main">#1CAE81</color>
@@ -33,5 +34,7 @@
     <color name="bg_chat">#F1F1F1</color>
 
     <color name="black_30">#4D000000</color>
+    <color name="border_item">#CCE59D</color>
+    <color name="black_94">#F018273A</color>
 
 </resources>

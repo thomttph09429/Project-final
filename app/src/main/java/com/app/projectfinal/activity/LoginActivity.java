@@ -33,8 +33,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONException;
@@ -226,26 +229,48 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void pushInformationToFirebase(String idUser, String userName, String phoneNumber) {
         reference = FirebaseDatabase.getInstance().getReference().child("Users").child(phoneNumber);
-        if (!idUser.equals(reference)) {
-            HashMap<String, Object> mUser = new HashMap<>();
-            mUser.put("userName", userName);
-            mUser.put("id", idUser);
-            mUser.put("phone_number", phoneNumber);
-            reference.setValue(mUser).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        ProgressBarDialog.getInstance(LoginActivity.this).closeDialog();
+//        if (!idUser.equals(reference)) {
+//            HashMap<String, Object> mUser = new HashMap<>();
+//            mUser.put("userName", userName);
+//            mUser.put("id", idUser);
+//            mUser.put("phone_number", phoneNumber);
+//            reference.setValue(mUser).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                @Override
+//                public void onComplete(@NonNull Task<Void> task) {
+//                    if (task.isSuccessful()) {
+//                        ProgressBarDialog.getInstance(LoginActivity.this).closeDialog();
+//                        SharedPrefsSingleton.getInstance(getApplicationContext()).putStringValue(PHONE, phoneNumber);
+//                        Toast.makeText(LoginActivity.this, "" + "Đăng nhập thành công!", Toast.LENGTH_LONG).show();
+//                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                        startActivity(intent);
+//                        finish();
+//                    }
+//                }
+//            });
+//
+//        }
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                reference.child("userName").setValue(userName);
+                reference.child("id").setValue(idUser);
+                reference.child("phone_number").setValue(phoneNumber);
+                ProgressBarDialog.getInstance(LoginActivity.this).closeDialog();
                         SharedPrefsSingleton.getInstance(getApplicationContext()).putStringValue(PHONE, phoneNumber);
                         Toast.makeText(LoginActivity.this, "" + "Đăng nhập thành công!", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
-                    }
-                }
-            });
+            }
 
-        }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
     }
 
 }

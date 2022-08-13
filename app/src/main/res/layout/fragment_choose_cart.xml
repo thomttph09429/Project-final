@@ -103,6 +103,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:background="@drawable/bg_border_25_green"
             android:layout_marginTop="@dimen/_10sdp"
             android:orientation="horizontal">
 
@@ -110,7 +111,7 @@
                 android:id="@+id/tvReduceAmount"
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/_8sdp"
+                android:paddingLeft="@dimen/_10sdp"
                 android:text="-"
                 android:textSize="@dimen/_15sdp" />
 
@@ -119,15 +120,15 @@
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_8sdp"
-                android:text="1"
+                android:text="0"
                 android:textColor="@color/red"
-                android:textSize="@dimen/_15sdp" />
+                android:textSize="@dimen/_13sdp" />
 
             <TextView
                 android:id="@+id/tvRaiseAmount"
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/_8sdp"
+                android:paddingLeft="@dimen/_5sdp"
                 android:text="+"
                 android:textSize="@dimen/_15sdp" />
         </LinearLayout>
