@@ -14,8 +14,11 @@ import static com.app.projectfinal.utils.Constant.QUANTITY_PRODUCT;
 import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
 import static com.app.projectfinal.utils.Constant.STORE_NAME_PRODUCT;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +26,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,6 +40,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
 import com.app.projectfinal.adapter.ProductAdapter;
+import com.app.projectfinal.adapter.ProductByShopAdapter;
 import com.app.projectfinal.bottom.ChooseCartFragment;
 import com.app.projectfinal.model.Product;
 import com.app.projectfinal.utils.ProgressBarDialog;
@@ -56,10 +63,12 @@ public class DetailProductActivity extends AppCompatActivity {
     private Bundle data;
     private String productName, price, image1, storeName, categoryName, description, storeId, quantity, phone;
     private RecyclerView rvProductByStoreId;
-    private ProductAdapter productAdapter;
+    private ProductByShopAdapter productByShopAdapter;
     private List<Product> products;
     private AppCompatImageButton btnAddCart, btnChat;
     private String idProduct;
+    private Toolbar toolbar;
+    private ActionBar actionBar;
 
 
     @Override
@@ -75,9 +84,34 @@ public class DetailProductActivity extends AppCompatActivity {
         clickChat();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_detail, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_carts:
+                Intent intent = new Intent(this, CartActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.action_report:
+                Toast.makeText(this, "Báo cáo", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.action_help:
+                Toast.makeText(this, "Hỗ trợ", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     private void initActions() {
         products = new ArrayList<>();
+        setSupportActionBar(toolbar);
+        actionBar = getSupportActionBar();
+        actionBar.setTitle(null);
 
     }
 
@@ -99,6 +133,7 @@ public class DetailProductActivity extends AppCompatActivity {
         tvDescription = findViewById(R.id.tvDescription);
         btnAddCart = findViewById(R.id.btnAddCart);
         btnChat = findViewById(R.id.btnChat);
+        toolbar = findViewById(R.id.toolbar);
 
     }
 
@@ -119,9 +154,8 @@ public class DetailProductActivity extends AppCompatActivity {
         description = data.getString(DESCRIPTION_PRODUCT);
         storeId = data.getString(STORE_ID_PRODUCT);
         quantity = data.getString(QUANTITY_PRODUCT);
-         idProduct = data.getString(ID_PRODUCT);
+        idProduct = data.getString(ID_PRODUCT);
 
-        Log.e("idProductidProduct", idProduct+"");
 
     }
 
@@ -144,6 +178,14 @@ public class DetailProductActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * pass data to ChooseCartFragment
+     * <pre>
+     *     author:ThomTT
+     *     date:
+     *     todo
+     * </pre>
+     */
     private void clickAddCart() {
         btnAddCart.setOnClickListener(v -> {
             Log.e("pricedd", price + quantity + image1);
@@ -156,7 +198,6 @@ public class DetailProductActivity extends AppCompatActivity {
             bundle.putString(STORE_ID_PRODUCT, storeId);
             bundle.putString(NAME_STORE, storeName);
 
-            Log.e("idProduct", idProduct);
             ChooseCartFragment chooseCartFragment = new ChooseCartFragment();
             chooseCartFragment.setArguments(bundle);
             chooseCartFragment.show(getSupportFragmentManager(), "ChooseCartFragment");
@@ -175,7 +216,6 @@ public class DetailProductActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         rvProductByStoreId.setLayoutManager(layoutManager);
         ProgressBarDialog.getInstance(this).showDialog("Đợi 1 lát", this);
-//https://graduate-tmdt-be.herokuapp.com/stores/products?storeId=
         String url = PRODUCTS + "?" + "storeId" + "=" + storeId;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -194,7 +234,8 @@ public class DetailProductActivity extends AppCompatActivity {
                             String description = object.getString(DESCRIPTION_PRODUCT);
                             String storeId = object.getString(STORE_ID_PRODUCT);
                             String quantity = object.getString(QUANTITY_PRODUCT);
-                            Log.e("idProductss", idProduct + "");
+                            String idProduct = object.getString(ID_PRODUCT);
+                            Log.e("idpro", idProduct);
                             products.add(new Product(price, productName, image1, description, storeName, categoryName, storeId, quantity, idProduct));
                             getDetailProduct();
 
@@ -205,8 +246,8 @@ public class DetailProductActivity extends AppCompatActivity {
 
                     }
                 }
-                productAdapter = new ProductAdapter(products, DetailProductActivity.this);
-                rvProductByStoreId.setAdapter(productAdapter);
+                productByShopAdapter = new ProductByShopAdapter(products, DetailProductActivity.this);
+                rvProductByStoreId.setAdapter(productByShopAdapter);
 
             }
         }, new Response.ErrorListener() {

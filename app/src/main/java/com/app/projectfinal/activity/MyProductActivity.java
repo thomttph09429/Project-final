@@ -1,6 +1,7 @@
 package com.app.projectfinal.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
@@ -8,7 +9,7 @@ import android.os.Bundle;
 import com.app.projectfinal.R;
 
 public class MyProductActivity extends AppCompatActivity {
-    private ViewPager2 viewPager2;
+    private RecyclerView rvMyProduct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +19,6 @@ public class MyProductActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        viewPager2=findViewById(R.id.pager);
+        rvMyProduct=findViewById(R.id.rvMyProduct);
     }
 }

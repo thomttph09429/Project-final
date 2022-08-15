@@ -82,17 +82,12 @@
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
 
-            <androidx.viewpager2.widget.ViewPager2
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/pager"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMyProduct"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-        </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

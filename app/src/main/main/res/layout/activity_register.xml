@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="16dp"
+    tools:context=".activity.RegisterActivity">
+
+    <ImageView
+        android:id="@+id/img_icon_app"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/logo_not_text" />
+
+    <TextView
+        android:id="@+id/tv_screen_register"
+        style="@style/HeaderText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/img_icon_app"
+        android:layout_centerHorizontal="true"
+        android:text="@string/register" />
+
+    <TextView
+        android:id="@+id/tv_content_register"
+        style="@style/ContainerText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_screen_register"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_3sdp"
+        android:text="@string/content_register" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_form_acc"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_content_register"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:hint="@string/account"
+        android:textColorHint="@color/gray"
+        app:boxStrokeColor="@color/gray"
+        app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_acc"
+            style="@style/InputText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_16sdp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_form_phone"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/til_form_acc"
+        android:layout_marginTop="@dimen/_15sdp"
+        app:boxStrokeColor="@color/gray"
+        android:textColorHint="@color/gray"
+        app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_phone"
+            style="@style/InputText"
+            android:layout_width="match_parent"
+            android:inputType="number"
+            android:layout_height="wrap_content"
+            android:hint="@string/phone_number"
+            android:padding="@dimen/_16sdp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_form_pass"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/til_form_phone"
+        android:layout_marginTop="@dimen/_15sdp"
+        app:boxStrokeColor="@color/gray"
+        android:textColorHint="@color/gray"
+        app:endIconCheckable="true"
+        app:endIconMode="password_toggle"
+        app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_pass"
+            style="@style/InputText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/pass"
+            android:inputType="textPassword"
+            android:padding="@dimen/_16sdp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_form_re_pass"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/til_form_pass"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:textColorHint="@color/gray"
+        app:boxStrokeColor="@color/gray"
+        app:endIconCheckable="true"
+        app:endIconMode="password_toggle"
+        app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_re_pass"
+            style="@style/InputText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/re_pass"
+            android:inputType="textPassword"
+            android:padding="@dimen/_16sdp"
+            app:boxStrokeColor="@color/gray" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/til_form_re_pass"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:gravity="center_vertical">
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/chb_remember"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:button="@drawable/checkbox_layout"
+            android:gravity="center" />
+
+        <TextView
+            style="@style/SupportText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/agree" />
+
+        <TextView
+            android:id="@+id/tv_terms_of_service"
+            style="@style/QuestionText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/terms_of_service" />
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_register"
+        style="@style/ButtonText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_options"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:background="@drawable/bg_border_40"
+        android:gravity="center"
+        android:padding="@dimen/_14sdp"
+        android:text="@string/register"
+        android:textAllCaps="false" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_register"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_6sdp">
+
+        <TextView
+            style="@style/SupportText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/already_acc" />
+
+        <TextView
+            android:id="@+id/tv_login"
+            style="@style/QuestionText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/login" />
+
+    </LinearLayout>
+
+</RelativeLayout>

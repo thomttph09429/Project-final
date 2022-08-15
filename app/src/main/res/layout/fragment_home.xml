@@ -47,7 +47,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_40sdp"
-                    android:src="@drawable/ic_cart_home" />
+                    android:src="@drawable/ic_cart" />
 
                 <ImageView
                     android:id="@+id/ivMessage"

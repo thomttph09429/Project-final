@@ -25,6 +25,7 @@ public class Constant {
     public static final String ID_PRODUCT = "id";
     //user
     public static final String PHONE = "phone";
+    public static final String ROLE = "role";
 
 
     //sign up store
@@ -33,7 +34,6 @@ public class Constant {
     public static final String LINK_SUPPORT_STORE = "linkSupport";
     public static final String USER_ID = "userId";
     public static final String IS_ACTIVE = "isActive";
-    public static final String ROLE = "role";
 
     //unit
     public static final String NAME_UNIT = "name";
