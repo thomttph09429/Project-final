@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/ivImage"
+        android:scaleType="centerCrop"
         android:layout_width="@dimen/_100sdp"
         android:layout_height="@dimen/_100sdp" />
 
     <TextView
         android:id="@+id/tvNameProduct"
         android:layout_width="wrap_content"
-        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_10sdp"
         android:layout_toRightOf="@+id/ivImage"
         android:maxLines="2"
         android:text="quan ccccccccccccccccccccccccccccc" />
@@ -25,13 +27,32 @@
         android:layout_below="@+id/tvNameProduct"
         android:maxLines="2"
         android:text="@string/under_text" />
+
     <TextView
+        android:id="@+id/tvPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/text"
         android:layout_below="@+id/tvNameProduct"
+        android:layout_toRightOf="@+id/text"
         android:maxLines="2"
         android:text="1000.000" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvPrice"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_toRightOf="@+id/ivImage"
+        android:text="Kho hàng" />
+    <TextView
+        android:id="@+id/tvQuantity"
+        android:layout_toRightOf="@+id/title"
+        android:layout_width="wrap_content"
+        android:text="200"
+        android:layout_below="@+id/tvPrice"
+        android:layout_height="wrap_content"
+        />
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

@@ -209,8 +209,10 @@ public class AddProductActivity extends AppCompatActivity {
 
     private void postProducts() {
         JSONObject user = new JSONObject();
+        Bundle bundle = getIntent().getExtras();
+        String storeId= bundle.getString(STORE_ID_PRODUCT);
+
         try {
-            String storeId= SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(STORE_ID);
              String price= edt_enter_price.getText().toString();
            String newPrice= price.replace(",","");
 

@@ -1,6 +1,15 @@
 package com.app.projectfinal.utils;
 
 
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.app.projectfinal.R;
+
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -173,4 +182,6 @@ public class ValidateForm {
         return  newPrice;
 
     }
+
+
 }

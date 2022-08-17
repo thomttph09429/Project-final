@@ -62,6 +62,9 @@ public class MyShopActivity extends AppCompatActivity {
     private void startSell() {
         lnStartSell.setOnClickListener(v -> {
             Intent intent = new Intent(this, AddProductActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString(STORE_ID_PRODUCT, storeId);
+            intent.putExtras(bundle);
             startActivity(intent);
         });
 
@@ -71,6 +74,9 @@ public class MyShopActivity extends AppCompatActivity {
     private void openMyProductScreen() {
         lnMyProduct.setOnClickListener(v -> {
             Intent intent = new Intent(this, MyProductActivity.class);
+            Bundle bundle=new Bundle();
+            bundle.putString(STORE_ID_PRODUCT,storeId);
+            intent.putExtras(bundle);
             startActivity(intent);
         });
 

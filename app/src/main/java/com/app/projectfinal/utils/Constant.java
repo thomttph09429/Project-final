@@ -9,6 +9,8 @@ public class Constant {
     public static final String CATEGORY = "https://graduate-tmdt-be.herokuapp.com/categories";
     public static final String GET_UNIT = "https://graduate-tmdt-be.herokuapp.com/units";
     public static final String UPDATE_USER = "https://graduate-tmdt-be.herokuapp.com/users";
+    public static final String ADDRESS = "https://graduate-tmdt-be.herokuapp.com/addresses";
+
     public static final int PICK_IMAGE_REQUEST = 100;
     //product
     public static final String NAME_PRODUCT = "productName";
@@ -23,9 +25,13 @@ public class Constant {
     public static final String CATEGORY_ID = "categoryId";
     public static final String NAME = "name";
     public static final String ID_PRODUCT = "id";
+    public static final String TOTAL = "total";
+
     //user
     public static final String PHONE = "phone";
     public static final String ROLE = "role";
+    public static final String DATE_OF_BIRTH = "dateOfBirth";
+    public static final String EMAIL = "email";
 
 
     //sign up store
@@ -59,6 +65,15 @@ public class Constant {
     //db
     public static final String TABLE_NAME = "CARD";
     public static final String TABLE_DB = "Cart.db";
+    //address
+    public static final String PROVINCE = "https://provinces.open-api.vn/api/?depth=1";
+    public static final String CODE_PROVINCE = "PROVINCE";
+    public static final String CODE_DISTRICT = "DISTRICT";
+
+    public static final String PROVINCE_NAME = "PROVINCE_NAME";
+    public static final String DISTRICT_NAME = "DISTRICT_NAME";
+    public static final String WARD_NAME = "WARD_NAME";
+
 
 
 }

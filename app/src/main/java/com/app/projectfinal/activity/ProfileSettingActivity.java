@@ -1,15 +1,9 @@
 package com.app.projectfinal.activity;
 
-import static com.app.projectfinal.utils.Constant.CATEGORY_NAME;
-import static com.app.projectfinal.utils.Constant.DESCRIPTION_PRODUCT;
-import static com.app.projectfinal.utils.Constant.IMAGE1_PRODUCT;
-import static com.app.projectfinal.utils.Constant.NAME_PRODUCT;
+import static com.app.projectfinal.utils.Constant.DATE_OF_BIRTH;
+import static com.app.projectfinal.utils.Constant.EMAIL;
 import static com.app.projectfinal.utils.Constant.PHONE_NUMBER;
 import static com.app.projectfinal.utils.Constant.PICK_IMAGE_REQUEST;
-import static com.app.projectfinal.utils.Constant.PRICE_PRODUCT;
-import static com.app.projectfinal.utils.Constant.QUANTITY_PRODUCT;
-import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
-import static com.app.projectfinal.utils.Constant.STORE_NAME_PRODUCT;
 import static com.app.projectfinal.utils.Constant.UPDATE_USER;
 import static com.app.projectfinal.utils.Constant.USER_ID_SAVE;
 import static com.app.projectfinal.utils.Constant.USER_NAME_SAVE;
@@ -17,15 +11,20 @@ import static com.app.projectfinal.utils.Constant.USER_NAME_SAVE;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.webkit.MimeTypeMap;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,12 +33,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
-import com.app.projectfinal.adapter.ProductAdapter;
+import com.app.projectfinal.activity.address.AddressActivity;
 import com.app.projectfinal.data.SharedPrefsSingleton;
-import com.app.projectfinal.model.Product;
-import com.app.projectfinal.utils.Constant;
 import com.app.projectfinal.utils.ProgressBarDialog;
-import com.app.projectfinal.utils.ValidateForm;
 import com.app.projectfinal.utils.VolleySingleton;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Continuation;
@@ -51,41 +47,73 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ProfileSettingActivity extends AppCompatActivity {
-    private TextView tvUserLogin, tvNumberLogin, tvUpdateAvatar;
+public class ProfileSettingActivity extends AppCompatActivity implements View.OnClickListener {
+    private TextView tvUpdateAvatar;
     private Uri uriImage;
     private ImageView ivAvtUser;
-    private String linkImageUrlFirebase;
+    private String linkImageUrlFirebase, userId, dateOfBirth, email;
     private StorageReference storageRef;
     private StorageTask uploadTask;
-    private Button btnSave;
+    private LinearLayout lnAddress, lnNameLogin, lnNumberLogin, lnEmail, lnChangePass, lnPolicy, lnRules;
+    private EditText edtUserLogin, edtNumberLogin, edtEmail, edtDateOfBirth;
+    private AppCompatButton btnSaveInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_setting);
         initView();
+        initAction();
         getInfo();
-        updateAvatar();
-        clickSave();
+
+    }
+
+    /**
+     * init view
+     * <pre>
+     *     author:ThomTT
+     *     date:01/08/2022
+     * </pre>
+     */
+    private void initView() {
+        edtUserLogin = findViewById(R.id.edtUserLogin);
+        edtNumberLogin = findViewById(R.id.edtNumberLogin);
+        edtEmail = findViewById(R.id.edtEmail);
+
+        tvUpdateAvatar = findViewById(R.id.tvUpdateAvatar);
+        ivAvtUser = findViewById(R.id.ivAvtUser);
+        lnAddress = findViewById(R.id.lnAddress);
+        lnNameLogin = findViewById(R.id.lnNameLogin);
+        lnNumberLogin = findViewById(R.id.lnNumberLogin);
+        lnEmail = findViewById(R.id.lnEmail);
+        lnChangePass = findViewById(R.id.lnChangePass);
+        lnPolicy = findViewById(R.id.lnPolicy);
+        lnRules = findViewById(R.id.lnRules);
+        edtDateOfBirth = findViewById(R.id.edtDateOfBirth);
+        btnSaveInfo = findViewById(R.id.btnSaveInfo);
+
+    }
+
+    private void initAction() {
+        tvUpdateAvatar.setOnClickListener(this);
+        btnSaveInfo.setOnClickListener(this);
+        lnAddress.setOnClickListener(this);
+        userId = SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(USER_ID_SAVE);
 
     }
 
     private void updateAvatar() {
-        tvUpdateAvatar.setOnClickListener(v -> {
-            if (tvUpdateAvatar.getText().equals("Sửa")) {
-                openFileChose();
+        if (tvUpdateAvatar.getText().equals("Sửa")) {
+            openFileChose();
 
-            } else if (tvUpdateAvatar.getText().equals("Cập nhật")) {
-                uploadImage();
-            }
+        } else if (tvUpdateAvatar.getText().equals("Cập nhật")) {
+            uploadImage();
+        }
 
 
-        });
     }
 
     private void openFileChose() {
@@ -147,64 +175,41 @@ public class ProfileSettingActivity extends AppCompatActivity {
     }
 
     private void getInfo() {
-        tvUserLogin.setText(SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(USER_NAME_SAVE));
-        tvNumberLogin.setText(SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(PHONE_NUMBER));
+        edtUserLogin.setText(SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(USER_NAME_SAVE));
+        edtNumberLogin.setText(SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(PHONE_NUMBER));
 
     }
 
-    /**
-     * init view
-     * <pre>
-     *     author:ThomTT
-     *     date:01/08/2022
-     * </pre>
-     */
-    private void initView() {
-        tvUserLogin = findViewById(R.id.tvUserLogin);
-        tvNumberLogin = findViewById(R.id.tvNumberLogin);
-        tvUpdateAvatar = findViewById(R.id.tvUpdateAvatar);
-        ivAvtUser = findViewById(R.id.ivAvtUser);
-        btnSave=findViewById(R.id.btnSave);
-    }
-    private void clickSave(){
-        btnSave.setOnClickListener(v->{
-//            updateInfoUser();
+
+    private void updateInfo() {
+        JSONObject user = new JSONObject();
+        String url = UPDATE_USER + "/" + userId;
+        try {
+            dateOfBirth = edtDateOfBirth.getText().toString().trim();
+            email = edtEmail.getText().toString().trim();
+            user.put(DATE_OF_BIRTH, dateOfBirth);
+            user.put(EMAIL, email);
+            JSONObject data = new JSONObject();
+            data.put("data", user);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, user, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                showToast("Cập nhật thành công", R.drawable.ic_mark);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(ProfileSettingActivity.this, "" + error.toString(), Toast.LENGTH_LONG).show();
+            }
         });
+        VolleySingleton.getInstance(getApplicationContext()).getRequestQueue().add(jsonObjectRequest);
     }
 
-//    private void updateInfoUser() {
-//        ProgressBarDialog.getInstance(this).showDialog("Đang tải", this);
-//        JSONObject user = new JSONObject();
-//        try {
-//            user.put("image1", linkImageUrlFirebase);
-//            user.put("userName", linkImageUrlFirebase);
-//            user.put("phone", linkImageUrlFirebase);
-//
-//            JSONObject data = new JSONObject();
-//            data.put("user", user);
-//            JSONObject datas = new JSONObject();
-//            datas.put("data", data);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        String url = UPDATE_USER+"?"+"id"+"="+SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(USER_ID_SAVE);
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, user, new Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                if (response!=null){
-//                        ProgressBarDialog.getInstance(ProfileSettingActivity.this).closeDialog();
-//
-//                }
-//
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Toast.makeText(ProfileSettingActivity.this, "" + error.toString(), Toast.LENGTH_LONG).show();
-//            }
-//        });
-//        VolleySingleton.getInstance(getApplicationContext()).getRequestQueue().add(jsonObjectRequest);
-//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -218,5 +223,44 @@ public class ProfileSettingActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tvUpdateAvatar:
+                updateAvatar();
+                break;
+            case R.id.btnSaveInfo:
+                updateInfo();
+                break;
+            case R.id.lnAddress:
+                openAddressScreen();
+                break;
+
+        }
+
+    }
+
+    private void openAddressScreen() {
+        Intent intent= new Intent(this, AddressActivity.class);
+        startActivity(intent);
+    }
+
+    private void showToast(String text, int src) {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_toast, findViewById(R.id.toast_layout_root));
+
+        TextView textView = (TextView) layout.findViewById(R.id.text);
+        textView.setText(text);
+        ImageView ivImage = (ImageView) layout.findViewById(R.id.ivImage);
+        ivImage.setImageResource(src);
+
+        Toast toast = new Toast(this);
+        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.show();
     }
 }
