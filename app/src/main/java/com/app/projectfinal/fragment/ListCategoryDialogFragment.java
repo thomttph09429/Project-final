@@ -101,7 +101,7 @@ public class ListCategoryDialogFragment extends DialogFragment {
 
     }
 
-    private void getCategory() {
+    public  void getCategory() {
         ProgressBarDialog.getInstance(getContext()).showDialog("Đang tải", getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         rvListCategory.setLayoutManager(layoutManager);
@@ -116,23 +116,29 @@ public class ListCategoryDialogFragment extends DialogFragment {
                         JSONObject object = jsonArray.getJSONObject(i);
                         String categoryName = object.getString("name");
                         String categoryId = object.getString("id");
-                        categories.add(new Category(categoryName, categoryId));
-                        ProgressBarDialog.getInstance(getContext()).closeDialog();
+                        String image1 = object.getString("image1");
+                        categories.add(new Category(categoryName,  image1,categoryId));
+                        categoryAdapter = new CategoryAdapter(categories, getContext(), mListenerCategory);
+                        rvListCategory.setAdapter(categoryAdapter);
+
 
                     }
+                    ProgressBarDialog.getInstance(getContext()).closeDialog();
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(getContext(), e.toString(), Toast.LENGTH_LONG).show();
+                    ProgressBarDialog.getInstance(getContext()).closeDialog();
 
                 }
-                categoryAdapter = new CategoryAdapter(categories, getContext(), mListenerCategory);
-                rvListCategory.setAdapter(categoryAdapter);
+
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getContext(), error.toString(), Toast.LENGTH_LONG).show();
+                ProgressBarDialog.getInstance(getContext()).closeDialog();
 
             }
         });

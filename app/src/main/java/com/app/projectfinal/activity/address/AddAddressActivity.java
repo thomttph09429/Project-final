@@ -6,6 +6,7 @@ import static com.app.projectfinal.utils.Constant.DISTRICT_NAME;
 import static com.app.projectfinal.utils.Constant.LOGIN;
 import static com.app.projectfinal.utils.Constant.PHONE_NUMBER;
 import static com.app.projectfinal.utils.Constant.PROVINCE_NAME;
+import static com.app.projectfinal.utils.Constant.TOKEN;
 import static com.app.projectfinal.utils.Constant.USER_NAME_SAVE;
 import static com.app.projectfinal.utils.Constant.WARD_NAME;
 
@@ -57,17 +58,18 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
         btnSaveAddress.setOnClickListener(v -> {
             JSONObject address = new JSONObject();
             ProgressBarDialog.getInstance(this).showDialog("Đang tải", this);
+            String token = SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(TOKEN);
             String userName = SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(USER_NAME_SAVE);
             String phone = SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(PHONE_NUMBER);
-            String addressDetail =edtEnterAddress.getText().toString().trim();
-            String province= tvAddress.getText().toString();
+            String addressDetail = edtEnterAddress.getText().toString().trim();
+            String province = tvAddress.getText().toString();
             try {
                 address.put("type", "");
                 address.put("default", "");
                 address.put("storeId", "");
                 address.put("customerName", userName);
                 address.put("phone", phone);
-                address.put("location", province+ addressDetail);
+                address.put("location", province + addressDetail);
                 JSONObject data = new JSONObject();
                 data.put("address", address);
                 JSONObject product = new JSONObject();

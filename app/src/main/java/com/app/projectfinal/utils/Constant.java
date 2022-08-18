@@ -26,6 +26,7 @@ public class Constant {
     public static final String NAME = "name";
     public static final String ID_PRODUCT = "id";
     public static final String TOTAL = "total";
+    public static final String UNIT_NAME = "unitName";
 
     //user
     public static final String PHONE = "phone";
@@ -54,6 +55,7 @@ public class Constant {
     public static final String STORE_NAME = "STORE_NAME";
     public static final String PHONE_NUMBER = "PHONE_NUMBER";
     public static final String ROLE_SAVE = "ROLE_SAVE";
+    public static final String TOKEN = "TOKEN";
 
     //pass data
     public static final String SENT_PHONE_NUMBER = "SENT_PHONE_NUMBER";

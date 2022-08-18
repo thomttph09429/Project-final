@@ -13,6 +13,7 @@ import static com.app.projectfinal.utils.Constant.PRODUCTS;
 import static com.app.projectfinal.utils.Constant.QUANTITY_PRODUCT;
 import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
 import static com.app.projectfinal.utils.Constant.STORE_NAME_PRODUCT;
+import static com.app.projectfinal.utils.Constant.UNIT_NAME;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -61,7 +62,7 @@ public class DetailProductActivity extends AppCompatActivity {
     private ImageView ivProduct;
     private TextView tvName, tvPrice, tvNameShop, tvQuantity, tvCategory, tvDescription;
     private Bundle data;
-    private String productName, price, image1, storeName, categoryName, description, storeId, quantity, phone;
+    private String productName, price, image1, storeName, categoryName, description, storeId, quantity, phone, unitName;
     private RecyclerView rvProductByStoreId;
     private ProductByShopAdapter productByShopAdapter;
     private List<Product> products;
@@ -155,6 +156,7 @@ public class DetailProductActivity extends AppCompatActivity {
         storeId = data.getString(STORE_ID_PRODUCT);
         quantity = data.getString(QUANTITY_PRODUCT);
         idProduct = data.getString(ID_PRODUCT);
+        unitName = data.getString(UNIT_NAME);
 
 
     }
@@ -197,6 +199,7 @@ public class DetailProductActivity extends AppCompatActivity {
             bundle.putString(ID_PRODUCT, idProduct);
             bundle.putString(STORE_ID_PRODUCT, storeId);
             bundle.putString(NAME_STORE, storeName);
+            bundle.putString(UNIT_NAME, unitName);
 
             ChooseCartFragment chooseCartFragment = new ChooseCartFragment();
             chooseCartFragment.setArguments(bundle);
@@ -215,7 +218,6 @@ public class DetailProductActivity extends AppCompatActivity {
     private void showProductsByStore() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         rvProductByStoreId.setLayoutManager(layoutManager);
-        ProgressBarDialog.getInstance(this).showDialog("Đợi 1 lát", this);
         String url = PRODUCTS + "?" + "storeId" + "=" + storeId;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -235,8 +237,10 @@ public class DetailProductActivity extends AppCompatActivity {
                             String storeId = object.getString(STORE_ID_PRODUCT);
                             String quantity = object.getString(QUANTITY_PRODUCT);
                             String idProduct = object.getString(ID_PRODUCT);
+                            String unitName = object.getString(UNIT_NAME);
+
                             Log.e("idpro", idProduct);
-                            products.add(new Product(price, productName, image1, description, storeName, categoryName, storeId, quantity, idProduct));
+                            products.add(new Product(price, productName, image1, description, storeName, categoryName, storeId, quantity, idProduct, unitName));
                             getDetailProduct();
 
                         }
@@ -298,13 +302,10 @@ public class DetailProductActivity extends AppCompatActivity {
                         JSONObject jsonObject = response.getJSONObject("data");
                         JSONObject data = jsonObject.getJSONObject("product");
                         phone = data.getString(PHONE);
-                        ProgressBarDialog.getInstance(DetailProductActivity.this).closeDialog();
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                         Toast.makeText(DetailProductActivity.this, e.toString(), Toast.LENGTH_LONG).show();
-                        ProgressBarDialog.getInstance(DetailProductActivity.this).closeDialog();
-                        ProgressBarDialog.getInstance(DetailProductActivity.this).closeDialog();
 
                     }
                 }
@@ -315,7 +316,6 @@ public class DetailProductActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(DetailProductActivity.this, error.toString(), Toast.LENGTH_LONG).show();
-                ProgressBarDialog.getInstance(DetailProductActivity.this).closeDialog();
 
             }
         });

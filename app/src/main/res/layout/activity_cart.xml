@@ -7,76 +7,76 @@
     app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
     tools:context=".activity.CartActivity"
     tools:ignore="MissingDefaultResource">
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
 
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#f3f3f3"
-        android:orientation="vertical">
-
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:contentScrim="@color/white"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:toolbarId="@+id/toolbar">
+            android:layout_height="wrap_content"
+            android:background="#f3f3f3"
+            android:orientation="vertical">
 
-            <RelativeLayout
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                app:contentScrim="@color/white"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:toolbarId="@+id/toolbar">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/custom_relative_header"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
+                    android:layout_height="wrap_content">
 
-                    <ImageView
-                        android:id="@+id/ivBack"
-                        android:layout_width="@dimen/_25sdp"
-                        android:layout_height="@dimen/_25sdp"
-                        android:src="@drawable/arrow_left" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="30dp"
-                        android:paddingRight="150dp"
-                        android:text="Giỏ Hàng"
-                        android:textColor="@color/white"
-                        android:textSize="22dp"
-                        android:textStyle="bold" />
+                        android:background="@drawable/custom_relative_header"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:id="@+id/ivBack"
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_height="@dimen/_25sdp"
+                            android:src="@drawable/arrow_left" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="30dp"
+                            android:paddingRight="150dp"
+                            android:text="Giỏ Hàng"
+                            android:textColor="@color/white"
+                            android:textSize="22dp"
+                            android:textStyle="bold" />
 
 
-                    <ImageView
-                        android:id="@+id/ivChat"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="0dp"
-                        android:background="@drawable/ic_chart_white" />
-                </LinearLayout>
-            </RelativeLayout>
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
+                        <ImageView
+                            android:id="@+id/ivChat"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="0dp"
+                            android:background="@drawable/ic_chart_white" />
+                    </LinearLayout>
+                </RelativeLayout>
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-    </com.google.android.material.appbar.AppBarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvCart"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@+id/bottom"
             android:layout_below="@+id/app_bar"
             android:overScrollMode="never"
-            android:layout_above="@+id/bottom"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
         <LinearLayout
@@ -86,43 +86,42 @@
             android:layout_alignParentBottom="true"
             android:layout_gravity="bottom|end"
             android:background="@color/white"
+            android:weightSum="3"
             android:orientation="horizontal">
 
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/navBot"
-                android:gravity="center_vertical" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="Tất cả" />
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:layout_marginRight="@dimen/_8sdp"
-                android:layout_weight="1.5"
-                android:orientation="vertical">
+                android:layout_weight="2"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center|end"
+                    android:layout_marginStart="@dimen/_10sdp"
                     android:text="Tổng thanh toán :" />
 
                 <TextView
                     android:id="@+id/txt_cart_sumPrice"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center|end"
-                    android:text="20.000Đ"
+                    android:text="@string/under_text"
                     android:textColor="@color/red"
-                    android:textSize="@dimen/_16sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:textSize="@dimen/_13sdp"
                     android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="200.000"
+                    android:textStyle="bold"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/_13sdp" />
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatButton

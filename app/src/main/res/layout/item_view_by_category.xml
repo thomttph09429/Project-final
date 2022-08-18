@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/_60sdp"
+    android:layout_height="@dimen/_70sdp"
+    android:layout_marginRight="@dimen/_2sdp"
+    android:background="@color/white"
+    android:id="@+id/lnItemView"
+    android:layout_marginTop="@dimen/_2sdp"
+    android:layout_marginBottom="@dimen/_2sdp"
+    android:orientation="vertical"
+    android:padding="@dimen/_8sdp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ivImage"
+        android:layout_width="@dimen/_24sdp"
+        android:scaleType="centerCrop"
+        android:layout_height="@dimen/_24sdp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/avatar_empty" />
+
+    <TextView
+        android:id="@+id/tvCategoryName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:text="Hoa quả"
+        android:gravity="center_horizontal"
+        android:textSize="@dimen/_10sdp" />
+
+</LinearLayout>

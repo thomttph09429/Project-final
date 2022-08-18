@@ -185,7 +185,7 @@ public class Product {
         this.unitName = unitName;
     }
 
-    public Product(String price, String productName, String image1, String description, String storeName, String categoryName, String storeId, String quantity, String id) {
+    public Product(String price, String productName, String image1, String description, String storeName, String categoryName, String storeId, String quantity, String id, String unitName) {
         this.price = price;
         this.productName = productName;
         this.image1 = image1;
@@ -195,6 +195,7 @@ public class Product {
         this.storeId=storeId;
         this.quantity=quantity;
         this.id=id;
+        this.unitName =unitName;
     }
 
 }

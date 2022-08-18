@@ -7,6 +7,7 @@ import static com.app.projectfinal.utils.Constant.NAME_STORE;
 import static com.app.projectfinal.utils.Constant.PRICE_PRODUCT;
 import static com.app.projectfinal.utils.Constant.QUANTITY_PRODUCT;
 import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
+import static com.app.projectfinal.utils.Constant.UNIT_NAME;
 
 import android.os.Bundle;
 
@@ -36,8 +37,8 @@ import java.util.Objects;
 public class ChooseCartFragment extends BottomSheetDialogFragment {
     private View view;
     private ImageView ivProduct, ivClose;
-    private TextView tvPrice, tvQuantity, tvRaiseAmount, tvAmount, tvReduceAmount;
-    private String price, image, idProduct, idShop, nameProduct, quantity, nameStore;
+    private TextView tvPrice, tvQuantity, tvRaiseAmount, tvAmount, tvReduceAmount, tvUnit;
+    private String price, image, idProduct, idShop, nameProduct, quantity, nameStore, unitName;
     private AppCompatButton btnAddToCart;
 
 
@@ -86,7 +87,6 @@ public class ChooseCartFragment extends BottomSheetDialogFragment {
             }
 
 
-
         });
 
     }
@@ -107,7 +107,7 @@ public class ChooseCartFragment extends BottomSheetDialogFragment {
         tvRaiseAmount = view.findViewById(R.id.tvRaiseAmount);
         tvReduceAmount = view.findViewById(R.id.tvReduceAmount);
         btnAddToCart = view.findViewById(R.id.btnAddToCart);
-
+        tvUnit = view.findViewById(R.id.tvUnit);
     }
 
     /**
@@ -124,10 +124,11 @@ public class ChooseCartFragment extends BottomSheetDialogFragment {
         idShop = getArguments().getString(STORE_ID_PRODUCT);
         nameProduct = getArguments().getString(NAME_PRODUCT);
         nameStore = getArguments().getString(NAME_STORE);
-
+        unitName = getArguments().getString(UNIT_NAME);
         quantity = getArguments().getString(QUANTITY_PRODUCT);
         tvQuantity.setText(quantity);
         tvPrice.setText(price);
+        tvUnit.setText(unitName);
         Glide.with(getContext()).load(image).into(ivProduct);
 
     }
@@ -179,7 +180,6 @@ public class ChooseCartFragment extends BottomSheetDialogFragment {
     }
 
 
-
     private void showToast(String text, int src) {
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.custom_toast, view.findViewById(R.id.toast_layout_root));
@@ -195,8 +195,9 @@ public class ChooseCartFragment extends BottomSheetDialogFragment {
         toast.setView(layout);
         toast.show();
     }
-    private  void  checkStillInStock(){
-        if (ValidateForm.getPriceToInt(price)<=0){
+
+    private void checkStillInStock() {
+        if (ValidateForm.getPriceToInt(price) <= 0) {
             tvAmount.setText("0");
         }
     }

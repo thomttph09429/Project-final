@@ -38,7 +38,7 @@ public class UnitAdapter extends RecyclerView.Adapter<UnitAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull UnitAdapter.MyViewHolder holder, int position) {
-        holder.tvUnit.setText(ValidateForm.capitalizeFirst(unitList.get(position).getUnitName()));
+        holder.tvUnit.setText(unitList.get(position).getUnitName());
         holder.itemView.setOnClickListener(v -> {
             int position1= holder.getAdapterPosition();
             listenerUnit.onItemClick(unitList.get(position1).getUnitName(), unitList.get(position).getId());

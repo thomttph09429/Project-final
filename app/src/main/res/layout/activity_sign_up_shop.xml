@@ -228,11 +228,13 @@
                     android:paddingStart="@dimen/_10sdp"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
-                <EditText
-                    android:id="@+id/edtEnterAddress"
+                <TextView
+                    android:id="@+id/tvAddress"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_45sdp"
-                    android:hint="Nhập địa chỉ"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:text="Tỉnh/Thành phố, Quận/Huyện, Phường/Xã"
                     android:textSize="@dimen/_12sdp"
                     android:paddingStart="@dimen/_10sdp"
                     android:background="@color/greenLight_20"

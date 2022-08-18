@@ -11,6 +11,8 @@ import static com.app.projectfinal.utils.Constant.QUANTITY_PRODUCT;
 import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
 import static com.app.projectfinal.utils.Constant.STORE_NAME_PRODUCT;
 import static com.app.projectfinal.utils.Constant.TOTAL;
+import static com.app.projectfinal.utils.Constant.UNIT_ID_PRODUCT;
+import static com.app.projectfinal.utils.Constant.UNIT_NAME;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -92,13 +94,16 @@ public class MyProductActivity extends AppCompatActivity {
                             String storeId = object.getString(STORE_ID_PRODUCT);
                             String quantity = object.getString(QUANTITY_PRODUCT);
                             String id = object.getString(ID_PRODUCT);
+                            String unit = object.getString(UNIT_NAME);
 
-                            products.add(new Product(price, productName, image1, description, storeName, categoryName, storeId, quantity, id));
+                            products.add(new Product(price, productName, image1, description, storeName, categoryName, storeId, quantity, id,unit));
 
                         }
                         if (products!=null){
                             myProductAdapter = new MyProductAdapter(products, MyProductActivity.this);
                             rvMyProduct.setAdapter(myProductAdapter);
+                        }else {
+
                         }
 
                         ProgressBarDialog.getInstance(MyProductActivity.this).closeDialog();

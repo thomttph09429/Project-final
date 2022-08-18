@@ -37,8 +37,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class SignUpShopActivity extends AppCompatActivity {
-    private TextView tvCountNameStore;
-    private EditText edtEnterStoreName, edtLinkFace, edtEnterAddress, edtDesStore;
+    private TextView tvCountNameStore ,tvAddress;
+    private EditText edtEnterStoreName, edtLinkFace, edtDesStore;
     private Button btnSignUpShop, btnAddImage;
 
 
@@ -101,7 +101,7 @@ public class SignUpShopActivity extends AppCompatActivity {
      */
     private void initView() {
         tvCountNameStore = findViewById(R.id.tvCountNameStore);
-        edtEnterAddress = findViewById(R.id.edtEnterAddress);
+        tvAddress = findViewById(R.id.tvAddress);
         edtLinkFace = findViewById(R.id.edtLinkFace);
         edtEnterStoreName = findViewById(R.id.edtEnterStoreName);
         tvCountNameStore = findViewById(R.id.tvCountNameStore);

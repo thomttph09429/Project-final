@@ -28,10 +28,9 @@ public class Category {
         this.imageCategory = imageCategory;
     }
 
-
-
-    public Category(String nameCategory, String idCategory) {
+    public Category(String nameCategory, String imageCategory, String idCategory) {
         this.nameCategory = nameCategory;
+        this.imageCategory = imageCategory;
         this.idCategory = idCategory;
     }
 }

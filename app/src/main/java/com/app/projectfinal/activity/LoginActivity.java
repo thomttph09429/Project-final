@@ -2,6 +2,7 @@ package com.app.projectfinal.activity;
 
 import static com.app.projectfinal.utils.Constant.LOGIN;
 import static com.app.projectfinal.utils.Constant.PHONE;
+import static com.app.projectfinal.utils.Constant.TOKEN;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -111,11 +112,11 @@ public class LoginActivity extends AppCompatActivity {
                             .make(parentLayout, "Tên đăng nhập từ 8 ký tự", Snackbar.LENGTH_LONG);
                     snackbar.show();
                 }
-//                else if (!ValidateForm.validatePassword(passWord)) {
-//                    Snackbar snackbar = Snackbar
-//                            .make(parentLayout, "Mật khẩu từ 8 đến 16 ký tự, ít nhât 1 ký tự hoa, 1 ký tự số", Snackbar.LENGTH_LONG);
-//                    snackbar.show();
-//                }
+                else if (!ValidateForm.validatePassword(passWord)) {
+                    Snackbar snackbar = Snackbar
+                            .make(parentLayout, "Mật khẩu từ 8 đến 16 ký tự, ít nhât 1 ký tự hoa, 1 ký tự số", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                }
                 else {
                     signInWithServer(userName, passWord);
 
@@ -192,6 +193,9 @@ public class LoginActivity extends AppCompatActivity {
                         String idUser = strRes.getString("id");
                         String userName = strRes.getString("userName");
                         String phoneNumber = strRes.getString("phone");
+                        String token = strRes.getString("token");
+                        SharedPrefsSingleton.getInstance(getApplicationContext()).putStringValue(TOKEN, token);
+                        Log.e("token", token);
                         SharedPrefsSingleton.getInstance(getApplicationContext()).putStringValue(Constant.PHONE_NUMBER, phoneNumber);
                         SharedPrefsSingleton.getInstance(getApplicationContext()).putStringValue(Constant.USER_ID_SAVE, idUser);
                         SharedPrefsSingleton.getInstance(getApplicationContext()).putStringValue(Constant.USER_NAME_SAVE, ValidateForm.capitalizeFirst(userName));

@@ -14,8 +14,8 @@
         <ImageView
             android:id="@+id/ivProduct"
             android:layout_width="@dimen/_100sdp"
-            android:scaleType="centerCrop"
             android:layout_height="@dimen/_100sdp"
+            android:scaleType="centerCrop"
             android:src="@drawable/avatar_empty" />
 
         <LinearLayout
@@ -81,10 +81,30 @@
 
     </RelativeLayout>
 
+    <LinearLayout
+        android:layout_marginTop="@dimen/_50sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:text="Phân loại theo "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvUnit"
+            android:layout_width="wrap_content"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:text="kg" />
+    </LinearLayout>
+
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0.001dp"
-        android:layout_marginTop="@dimen/_50sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:background="@color/gray" />
 
     <RelativeLayout
@@ -103,8 +123,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:background="@drawable/bg_border_25_green"
             android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/bg_border_25_green"
             android:orientation="horizontal">
 
             <TextView
@@ -136,13 +156,13 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnAddToCart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_50sdp"
+        android:background="@drawable/bg_border_40"
         android:text="Thêm vào giỏ hàng"
         android:textAllCaps="false"
-        android:background="@drawable/bg_border_40"
-        android:layout_width="match_parent"
-        android:textColor="@color/white"
-        android:layout_marginTop="@dimen/_50sdp"
-        android:layout_height="wrap_content" />
+        android:textColor="@color/white" />
 
 
 </LinearLayout>

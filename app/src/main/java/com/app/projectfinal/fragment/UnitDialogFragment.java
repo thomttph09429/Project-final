@@ -116,7 +116,8 @@ public class UnitDialogFragment extends DialogFragment {
         unitList = new ArrayList<>();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         rvUnit.setLayoutManager(layoutManager);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, GET_UNIT, null, new Response.Listener<JSONObject>() {
+        String url = GET_UNIT+"?page=1&size=50";
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
 
@@ -129,22 +130,26 @@ public class UnitDialogFragment extends DialogFragment {
                             String unitName = object.getString(NAME_UNIT);
                             String unitId = object.getString(ID_UNIT);
                             unitList.add(new Unit(unitName, unitId));
+                            unitAdapter = new UnitAdapter(unitList, getContext(), mListenerUnit);
+                            rvUnit.setAdapter(unitAdapter);
                             ProgressBarDialog.getInstance(getContext()).closeDialog();
+
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                         Toast.makeText(getContext(), e.toString(), Toast.LENGTH_LONG).show();
 
                     }
+
                 }
-                unitAdapter = new UnitAdapter(unitList, getContext(), mListenerUnit);
-                rvUnit.setAdapter(unitAdapter);
+
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getContext(), error.toString(), Toast.LENGTH_LONG).show();
+                ProgressBarDialog.getInstance(getContext()).closeDialog();
 
             }
         });

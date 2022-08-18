@@ -9,6 +9,8 @@ import static com.app.projectfinal.utils.Constant.PRICE_PRODUCT;
 import static com.app.projectfinal.utils.Constant.QUANTITY_PRODUCT;
 import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
 import static com.app.projectfinal.utils.Constant.STORE_NAME_PRODUCT;
+import static com.app.projectfinal.utils.Constant.UNIT_ID_PRODUCT;
+import static com.app.projectfinal.utils.Constant.UNIT_NAME;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -73,6 +75,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
                 bundle.putString(STORE_ID_PRODUCT, products.get(position).getStoreId());
                 bundle.putString(QUANTITY_PRODUCT, products.get(position).getQuantity());
                 bundle.putString(ID_PRODUCT, products.get(position).getId());
+                bundle.putString(UNIT_NAME, products.get(position).getUnitName());
 
                 intent.putExtras(bundle);
                 context.startActivity(intent);
