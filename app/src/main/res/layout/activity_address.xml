@@ -35,12 +35,12 @@
 
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvAddress"
-            android:layout_width="match_parent"
-            android:layout_above="@+id/lnAddress"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbar" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/lnAddress"
+        android:layout_below="@+id/toolbar" />
 
         <LinearLayout
             android:id="@+id/lnAddress"

@@ -12,6 +12,7 @@ import static com.app.projectfinal.utils.Constant.ROLE;
 import static com.app.projectfinal.utils.Constant.STORE_ID;
 import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
 import static com.app.projectfinal.utils.Constant.STORE_NAME_PRODUCT;
+import static com.app.projectfinal.utils.Constant.TOKEN;
 import static com.app.projectfinal.utils.Constant.UPDATE_USER;
 import static com.app.projectfinal.utils.Constant.USER_ID_SAVE;
 import static com.app.projectfinal.utils.Constant.USER_NAME_SAVE;
@@ -28,6 +29,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -39,12 +41,16 @@ import com.app.projectfinal.activity.ProfileSettingActivity;
 import com.app.projectfinal.activity.SignUpShopActivity;
 import com.app.projectfinal.data.SharedPrefsSingleton;
 import com.app.projectfinal.model.Product;
+import com.app.projectfinal.utils.ConstantData;
 import com.app.projectfinal.utils.ProgressBarDialog;
 import com.app.projectfinal.utils.VolleySingleton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserFragment extends Fragment {
     private LinearLayout lnStartSell, lnSetting;
@@ -83,6 +89,7 @@ public class UserFragment extends Fragment {
     private void getInformation() {
         String userName = SharedPrefsSingleton.getInstance(getActivity().getApplicationContext()).getStringValue(USER_NAME_SAVE);
         tvUserName.setText(userName.toString());
+
     }
 
     /**
@@ -153,7 +160,14 @@ public class UserFragment extends Fragment {
                 ProgressBarDialog.getInstance(getContext()).closeDialog();
 
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", ConstantData.getToken(getContext().getApplicationContext()));
+                return headers;
+            }
+        };
         VolleySingleton.getInstance(getContext()).getRequestQueue().add(jsonObjectRequest);
 
 

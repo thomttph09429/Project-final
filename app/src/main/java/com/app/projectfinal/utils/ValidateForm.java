@@ -48,8 +48,8 @@ public class ValidateForm {
     public static boolean validatePassword(String pass) {
 
         String patterns = "^(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d]{8,}$";
-        if (pass.matches(patterns) && pass.length()>=8 && pass.length()<=16){
-                return true;
+        if (pass.matches(patterns) && pass.length() >= 8 && pass.length() <= 16) {
+            return true;
         }
         return false;
     }
@@ -153,6 +153,7 @@ public class ValidateForm {
      *     author:ThomTT
      *     date:03/08/2022
      * </pre>
+     *
      * @param name
      * @return
      */
@@ -162,13 +163,15 @@ public class ValidateForm {
         }
         return false;
     }
+
     /**
      * get date
      * <pre>
      *     author:ThomTT
      *     date:03/08/2022
      * </pre>
-     *  @return
+     *
+     * @return
      */
 
     public static String getDateAndTime() {
@@ -177,9 +180,10 @@ public class ValidateForm {
         String dateAndTime = formatter.format(date);
         return dateAndTime;
     }
-    public  static int getPriceToInt(String priceOld){
-        int newPrice= Integer.parseInt(priceOld.replace(",",""));
-        return  newPrice;
+
+    public static int getPriceToInt(String priceOld) {
+        int newPrice = Integer.parseInt(priceOld.replace(",", ""));
+        return newPrice;
 
     }
 

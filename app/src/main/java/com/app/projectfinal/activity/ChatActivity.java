@@ -38,19 +38,13 @@ import com.app.projectfinal.R;
 import com.app.projectfinal.adapter.ChatAdapter;
 import com.app.projectfinal.data.SharedPrefsSingleton;
 import com.app.projectfinal.model.Chat;
-import com.app.projectfinal.model.Product;
-import com.app.projectfinal.utils.ProgressBarDialog;
+
 import com.app.projectfinal.utils.ValidateForm;
-import com.app.projectfinal.utils.VolleySingleton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;

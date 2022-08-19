@@ -1,6 +1,7 @@
 package com.app.projectfinal.activity.address;
 
 import static com.app.projectfinal.utils.Constant.PROVINCE;
+import static com.app.projectfinal.utils.Constant.TOKEN;
 
 import android.os.Bundle;
 
@@ -12,14 +13,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.app.projectfinal.R;
 import com.app.projectfinal.adapter.address.ProvinceAdapter;
+import com.app.projectfinal.data.SharedPrefsSingleton;
 import com.app.projectfinal.model.address.Districts;
 import com.app.projectfinal.model.address.Province;
+import com.app.projectfinal.utils.ConstantData;
 import com.app.projectfinal.utils.ProgressBarDialog;
 import com.app.projectfinal.utils.VolleySingleton;
 import com.google.gson.Gson;
@@ -29,7 +33,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class ProvinceFragment extends DialogFragment {
@@ -38,7 +44,6 @@ public class ProvinceFragment extends DialogFragment {
     private ProvinceAdapter provinceAdapter;
     private RecyclerView rvProvince;
     private List<Province> provinces;
-    private List<Districts> districtsList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,6 +70,7 @@ public class ProvinceFragment extends DialogFragment {
         provinces = new ArrayList<>();
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         rvProvince.setLayoutManager(manager);
+
     }
 
     private void initView() {
@@ -102,7 +108,14 @@ public class ProvinceFragment extends DialogFragment {
                 ProgressBarDialog.getInstance(getContext()).closeDialog();
 
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                    headers.put("Authorization", ConstantData.getToken(getContext().getApplicationContext()));
+                return headers;
+            }
+        };
         VolleySingleton.getInstance(getContext()).getRequestQueue().add(jsonArrayRequest);
 
 

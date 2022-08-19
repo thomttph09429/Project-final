@@ -15,12 +15,16 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -29,12 +33,16 @@ import com.app.projectfinal.R;
 import com.app.projectfinal.activity.LoginActivity;
 import com.app.projectfinal.data.SharedPrefsSingleton;
 import com.app.projectfinal.utils.Constant;
+import com.app.projectfinal.utils.ConstantData;
 import com.app.projectfinal.utils.ProgressBarDialog;
 import com.app.projectfinal.utils.ValidateForm;
 import com.app.projectfinal.utils.VolleySingleton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class AddAddressActivity extends AppCompatActivity implements View.OnClickListener {
     private RelativeLayout rlAddress;
@@ -56,20 +64,24 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
 
     private void saveAddress() {
         btnSaveAddress.setOnClickListener(v -> {
+            if (tvAddress.getText().toString().equals("Tỉnh/Thành phố, Quận/Huyện, Phường/Xã") || edtEnterAddress.getText().toString().equals("")) {
+                showToast("Bạn chưa nhập địa chỉ", R.drawable.ic_priority);
+            }else {
+
+
             JSONObject address = new JSONObject();
             ProgressBarDialog.getInstance(this).showDialog("Đang tải", this);
-            String token = SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(TOKEN);
             String userName = SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(USER_NAME_SAVE);
             String phone = SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(PHONE_NUMBER);
             String addressDetail = edtEnterAddress.getText().toString().trim();
             String province = tvAddress.getText().toString();
+
             try {
-                address.put("type", "");
-                address.put("default", "");
+
                 address.put("storeId", "");
                 address.put("customerName", userName);
                 address.put("phone", phone);
-                address.put("location", province + addressDetail);
+                address.put("location", province +" "+ addressDetail);
                 JSONObject data = new JSONObject();
                 data.put("address", address);
                 JSONObject product = new JSONObject();
@@ -95,14 +107,22 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
 
                 }
 
-            });
+            }) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String, String> headers = new HashMap<>();
+                    headers.put("Authorization", ConstantData.getToken(getApplicationContext()));
+                    return headers;
+                }
+            };
             VolleySingleton.getInstance(getApplicationContext()).getRequestQueue().add(jsonObjectRequest);
-
+            }
         });
     }
 
     private void initAction() {
         rlAddress.setOnClickListener(this);
+
     }
 
     private void initView() {
@@ -136,4 +156,19 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
     }
 
 
+    private void showToast(String text, int src) {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_toast, findViewById(R.id.toast_layout_root));
+
+        TextView textView = (TextView) layout.findViewById(R.id.text);
+        textView.setText(text);
+        ImageView ivImage = (ImageView) layout.findViewById(R.id.ivImage);
+        ivImage.setImageResource(src);
+
+        Toast toast = new Toast(this.getApplicationContext());
+        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.show();
+    }
 }

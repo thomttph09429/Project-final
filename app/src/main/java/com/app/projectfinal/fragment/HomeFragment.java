@@ -11,6 +11,7 @@ import static com.app.projectfinal.utils.Constant.PRODUCTS;
 import static com.app.projectfinal.utils.Constant.QUANTITY_PRODUCT;
 import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
 import static com.app.projectfinal.utils.Constant.STORE_NAME_PRODUCT;
+import static com.app.projectfinal.utils.Constant.TOKEN;
 import static com.app.projectfinal.utils.Constant.UNIT_NAME;
 
 import android.content.Intent;
@@ -35,6 +36,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -46,11 +48,13 @@ import com.app.projectfinal.adapter.CategoryAdapter;
 import com.app.projectfinal.adapter.ProductAdapter;
 import com.app.projectfinal.adapter.SliderAddsAdapter;
 import com.app.projectfinal.adapter.ViewByCategoryAdapter;
+import com.app.projectfinal.data.SharedPrefsSingleton;
 import com.app.projectfinal.listener.ListenerCategoryName;
 import com.app.projectfinal.listener.ListenerViewProductByCategory;
 import com.app.projectfinal.model.Category;
 import com.app.projectfinal.model.Product;
 import com.app.projectfinal.model.SliderItem;
+import com.app.projectfinal.utils.ConstantData;
 import com.app.projectfinal.utils.ProgressBarDialog;
 import com.app.projectfinal.utils.VolleySingleton;
 
@@ -59,7 +63,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class HomeFragment extends Fragment {
     private View view;
@@ -178,7 +184,14 @@ public class HomeFragment extends Fragment {
                 ProgressBarDialog.getInstance(getContext()).closeDialog();
 
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", ConstantData.getToken(getContext().getApplicationContext()));
+                return headers;
+            }
+        };
         VolleySingleton.getInstance(getContext()).getRequestQueue().add(jsonObjectRequest);
 
     }
@@ -204,6 +217,7 @@ public class HomeFragment extends Fragment {
         productAdapter = new ProductAdapter(products, getContext());
         rcvProduct.setAdapter(productAdapter);
         getProducts(page);
+
     }
 
     /**
@@ -239,7 +253,7 @@ public class HomeFragment extends Fragment {
      * @param page
      */
     private void getProducts(int page) {
-        if (page==1){
+        if (page == 1) {
             tvLoading.setVisibility(View.GONE);
             ProgressBarDialog.getInstance(getContext()).showDialog("Đang tải", getContext());
 
@@ -290,7 +304,14 @@ public class HomeFragment extends Fragment {
                 ProgressBarDialog.getInstance(getContext()).closeDialog();
 
             }
-        });
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", ConstantData.getToken(getContext().getApplicationContext()));
+                return headers;
+            }
+        };
         VolleySingleton.getInstance(getContext()).getRequestQueue().add(jsonObjectRequest);
 
     }
@@ -357,7 +378,14 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(getContext(), error.toString(), Toast.LENGTH_LONG).show();
 
             }
-        });
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", ConstantData.getToken(getContext().getApplicationContext()));
+                return headers;
+            }
+        };
         VolleySingleton.getInstance(getContext()).getRequestQueue().add(jsonObjectRequest);
     }
 

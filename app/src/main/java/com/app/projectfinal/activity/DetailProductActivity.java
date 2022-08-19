@@ -13,6 +13,7 @@ import static com.app.projectfinal.utils.Constant.PRODUCTS;
 import static com.app.projectfinal.utils.Constant.QUANTITY_PRODUCT;
 import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
 import static com.app.projectfinal.utils.Constant.STORE_NAME_PRODUCT;
+import static com.app.projectfinal.utils.Constant.TOKEN;
 import static com.app.projectfinal.utils.Constant.UNIT_NAME;
 
 import androidx.annotation.NonNull;
@@ -35,6 +36,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -43,7 +45,9 @@ import com.app.projectfinal.R;
 import com.app.projectfinal.adapter.ProductAdapter;
 import com.app.projectfinal.adapter.ProductByShopAdapter;
 import com.app.projectfinal.bottom.ChooseCartFragment;
+import com.app.projectfinal.data.SharedPrefsSingleton;
 import com.app.projectfinal.model.Product;
+import com.app.projectfinal.utils.ConstantData;
 import com.app.projectfinal.utils.ProgressBarDialog;
 import com.app.projectfinal.utils.ValidateForm;
 import com.app.projectfinal.utils.VolleySingleton;
@@ -260,7 +264,14 @@ public class DetailProductActivity extends AppCompatActivity {
                 Toast.makeText(DetailProductActivity.this, error.toString(), Toast.LENGTH_LONG).show();
 
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", ConstantData.getToken(getApplicationContext()));
+                return headers;
+            }
+        };
         VolleySingleton.getInstance(DetailProductActivity.this).getRequestQueue().add(jsonObjectRequest);
     }
 
@@ -318,7 +329,14 @@ public class DetailProductActivity extends AppCompatActivity {
                 Toast.makeText(DetailProductActivity.this, error.toString(), Toast.LENGTH_LONG).show();
 
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", ConstantData.getToken(getApplicationContext().getApplicationContext()));
+                return headers;
+            }
+        };
         VolleySingleton.getInstance(DetailProductActivity.this).getRequestQueue().add(jsonObjectRequest);
 
 

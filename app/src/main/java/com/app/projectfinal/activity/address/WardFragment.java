@@ -15,6 +15,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -22,6 +23,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
 import com.app.projectfinal.adapter.address.WardAdapter;
 import com.app.projectfinal.model.address.Wards;
+import com.app.projectfinal.utils.ConstantData;
 import com.app.projectfinal.utils.VolleySingleton;
 
 import org.json.JSONArray;
@@ -29,7 +31,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class WardFragment extends DialogFragment {
     private View view;
@@ -112,7 +116,14 @@ public class WardFragment extends DialogFragment {
             public void onErrorResponse(VolleyError error) {
 
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", ConstantData.getToken(getContext().getApplicationContext()));
+                return headers;
+            }
+        };
         VolleySingleton.getInstance(getContext()).getRequestQueue().add(jsonObjectRequest);
 
 

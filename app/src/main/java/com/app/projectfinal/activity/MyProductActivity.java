@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -33,6 +34,7 @@ import com.app.projectfinal.adapter.MyProductAdapter;
 import com.app.projectfinal.adapter.ProductAdapter;
 import com.app.projectfinal.adapter.ProductByShopAdapter;
 import com.app.projectfinal.model.Product;
+import com.app.projectfinal.utils.ConstantData;
 import com.app.projectfinal.utils.ProgressBarDialog;
 import com.app.projectfinal.utils.VolleySingleton;
 
@@ -41,7 +43,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 //date 16/08
 
 public class MyProductActivity extends AppCompatActivity {
@@ -125,7 +129,14 @@ public class MyProductActivity extends AppCompatActivity {
                 ProgressBarDialog.getInstance(MyProductActivity.this).closeDialog();
 
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", ConstantData.getToken(getApplicationContext()));
+                return headers;
+            }
+        };
         VolleySingleton.getInstance(MyProductActivity.this).getRequestQueue().add(jsonObjectRequest);
     }
 

@@ -37,6 +37,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -50,6 +51,7 @@ import com.app.projectfinal.listener.ListenerCategoryName;
 import com.app.projectfinal.listener.ListenerSendCategory;
 import com.app.projectfinal.listener.ListenerSendUnit;
 import com.app.projectfinal.model.Category;
+import com.app.projectfinal.utils.ConstantData;
 import com.app.projectfinal.utils.NDigitCardFormatWatcher;
 import com.app.projectfinal.utils.ProgressBarDialog;
 import com.app.projectfinal.utils.ValidateForm;
@@ -69,7 +71,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AddProductActivity extends AppCompatActivity {
     private ImageView img_add_product;
@@ -250,7 +254,14 @@ public class AddProductActivity extends AppCompatActivity {
                 Toast.makeText(AddProductActivity.this, "Thêm thất bại " + error.toString(), Toast.LENGTH_LONG).show();
 
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", ConstantData.getToken(getApplicationContext()));
+                return headers;
+            }
+        };
         VolleySingleton.getInstance(AddProductActivity.this).getRequestQueue().add(jsonObjectRequest);
 
     }

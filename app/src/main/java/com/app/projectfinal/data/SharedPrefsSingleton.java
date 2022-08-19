@@ -1,16 +1,17 @@
 package com.app.projectfinal.data;
 
 import static com.app.projectfinal.utils.Constant.MY_SHARED_PREFERENCES;
+import static com.app.projectfinal.utils.Constant.TOKEN;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 public class SharedPrefsSingleton {
 
     private SharedPreferences sharedPref;
     private Context appContext;
     private static SharedPrefsSingleton instance;
-
     public static synchronized SharedPrefsSingleton getInstance(Context applicationContext) {
         if (instance == null)
             instance = new SharedPrefsSingleton(applicationContext);

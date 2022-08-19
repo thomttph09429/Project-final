@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -26,6 +27,7 @@ import com.app.projectfinal.adapter.address.DistrictAdapter;
 import com.app.projectfinal.adapter.address.ProvinceAdapter;
 import com.app.projectfinal.model.address.Districts;
 import com.app.projectfinal.model.address.Province;
+import com.app.projectfinal.utils.ConstantData;
 import com.app.projectfinal.utils.VolleySingleton;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -35,7 +37,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DistrictFragment extends DialogFragment {
     private View view;
@@ -117,7 +121,14 @@ public class DistrictFragment extends DialogFragment {
             public void onErrorResponse(VolleyError error) {
 
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", ConstantData.getToken(getContext().getApplicationContext()));
+                return headers;
+            }
+        };
         VolleySingleton.getInstance(getContext()).getRequestQueue().add(jsonObjectRequest);
 
 
