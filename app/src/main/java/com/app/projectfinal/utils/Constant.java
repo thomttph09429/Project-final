@@ -1,15 +1,17 @@
 package com.app.projectfinal.utils;
 
 public class Constant {
-    public static final String REGISTER = "https://cb53-42-113-204-137.ap.ngrok.io/register";
-    public static final String LOGIN = "https://cb53-42-113-204-137.ap.ngrok.io/login";
-    public static final String PRODUCTS = "https://cb53-42-113-204-137.ap.ngrok.io/stores/products";
-    public static final String ADD_PRODUCTS = "https://cb53-42-113-204-137.ap.ngrok.io/stores/products";
-    public static final String ADD_STORES = "https://cb53-42-113-204-137.ap.ngrok.io/stores";
-    public static final String CATEGORY = "https://cb53-42-113-204-137.ap.ngrok.io/categories";
-    public static final String GET_UNIT = "https://cb53-42-113-204-137.ap.ngrok.io/units";
-    public static final String UPDATE_USER = "https://cb53-42-113-204-137.ap.ngrok.io/users";
-    public static final String ADDRESS = "https://cb53-42-113-204-137.ap.ngrok.io/addresses";
+    public static final String HTTP = "https://b48d-42-113-204-137.ap.ngrok.io/";
+
+    public static final String REGISTER = HTTP+"register";
+    public static final String LOGIN = HTTP+"login";
+    public static final String PRODUCTS = HTTP+"stores/products";
+    public static final String ADD_PRODUCTS = HTTP+"stores/products";
+    public static final String ADD_STORES = HTTP+"stores";
+    public static final String CATEGORY = HTTP+"categories";
+    public static final String GET_UNIT = HTTP+"hunits";
+    public static final String UPDATE_USER =HTTP+ "users";
+    public static final String ADDRESS = HTTP+ "addresses";
 
     public static final int PICK_IMAGE_REQUEST = 100;
     //product

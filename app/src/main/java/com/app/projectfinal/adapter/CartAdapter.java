@@ -41,6 +41,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
     private Context context;
     private List<Cart> cartList;
     private OnItemCheckListener onItemClick;
+    int selectedPosition=-1;
 
     public CartAdapter(Context context, List<Cart> cartList, OnItemCheckListener onItemClick) {
         this.context = context;

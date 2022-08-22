@@ -40,7 +40,6 @@ public class ChooseProductToBuyAdapter extends RecyclerView.Adapter<ChooseProduc
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Cart cart = chooseProducts.get(position);
-        tvNameShop.setText(cart.getNameShop());
         tvNameProduct.setText(cart.getNameProduct());
         tvPrice.setText(cart.getPrice());
         tvAmount.setText("x"+cart.getAmount());
@@ -54,7 +53,7 @@ public class ChooseProductToBuyAdapter extends RecyclerView.Adapter<ChooseProduc
         return chooseProducts.size();
     }
 
-    private TextView tvNameShop, tvNameProduct, tvPrice, tvAmount, tvNote;
+    private TextView  tvNameProduct, tvPrice, tvAmount;
     private ImageView ivProduct;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -62,11 +61,9 @@ public class ChooseProductToBuyAdapter extends RecyclerView.Adapter<ChooseProduc
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvNameShop = itemView.findViewById(R.id.tvNameShop);
             tvNameProduct = itemView.findViewById(R.id.tvNameProduct);
             tvPrice = itemView.findViewById(R.id.tvPrice);
             tvAmount = itemView.findViewById(R.id.tvAmount);
-            tvNote = itemView.findViewById(R.id.tvNote);
             ivProduct = itemView.findViewById(R.id.ivProduct);
         }
 

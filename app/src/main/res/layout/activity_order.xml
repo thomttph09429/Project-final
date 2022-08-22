@@ -95,14 +95,33 @@
                     android:textSize="@dimen/_12sdp" />
             </RelativeLayout>
 
+            <TextView
+                android:id="@+id/tvNameShop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rlAddress"
+                android:layout_marginLeft="@dimen/_50sdp"
+                android:text=""
+                android:textSize="@dimen/_13sdp"
+                android:textStyle="bold" />
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvPay"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/rlAddress"
+                android:layout_below="@+id/tvNameShop"
                 android:padding="@dimen/_10sdp" />
-
+            <EditText
+                android:id="@+id/tvNote"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_below="@+id/rvPay"
+                android:background="@android:color/transparent"
+                android:hint="Lưu ý cho người bán"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:textSize="12sp" />
         </RelativeLayout>
+
+
     </androidx.core.widget.NestedScrollView>
 
     <LinearLayout

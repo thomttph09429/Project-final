@@ -37,9 +37,9 @@ import java.util.List;
 import java.util.Map;
 
 public class OrderActivity extends AppCompatActivity {
-    private TextView tvUserName, tvPhoneNumber, tvAddress;
+    private TextView tvUserName, tvPhoneNumber, tvAddress, tvNameShop;
     private ChooseProductToBuyAdapter buyAdapter;
-    private List<Cart> cartListChecked ;
+    private List<Cart> cartListChecked;
     private RecyclerView rvPay;
 
 
@@ -53,14 +53,15 @@ public class OrderActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         cartListChecked = intent.getParcelableArrayListExtra("cartListChecked");
-        LinearLayoutManager layoutManager= new LinearLayoutManager(this);
+        tvNameShop.setText(cartListChecked.get(0).getNameShop());
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rvPay.setLayoutManager(layoutManager);
-        buyAdapter= new ChooseProductToBuyAdapter(cartListChecked,this);
+        buyAdapter = new ChooseProductToBuyAdapter(cartListChecked, this);
         rvPay.setAdapter(buyAdapter);
 
 
     }
-
 
 
     private void initView() {
@@ -68,15 +69,15 @@ public class OrderActivity extends AppCompatActivity {
         tvUserName = findViewById(R.id.tvUserName);
         tvPhoneNumber = findViewById(R.id.tvPhoneNumber);
         rvPay = findViewById(R.id.rvPay);
+        tvNameShop = findViewById(R.id.tvNameShop);
 
     }
 
     private void initAction() {
-
     }
 
     private void getAddress() {
-        String url = ADDRESS+ "?userId="+ ConstantData.getUserId(getApplicationContext());
+        String url = ADDRESS + "?userId=" + ConstantData.getUserId(getApplicationContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -84,9 +85,9 @@ public class OrderActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = response.getJSONObject("data");
                     JSONArray jsonArray = jsonObject.getJSONArray("addresses");
-                        JSONObject object = jsonArray.getJSONObject(0);
-                        Gson gson = new Gson();
-                        AddressUser addressUser = gson.fromJson(String.valueOf(object), AddressUser.class);
+                    JSONObject object = jsonArray.getJSONObject(0);
+                    Gson gson = new Gson();
+                    AddressUser addressUser = gson.fromJson(String.valueOf(object), AddressUser.class);
                     tvAddress.setText(addressUser.getLocation());
                     tvUserName.setText(addressUser.getCustomerName());
                     tvPhoneNumber.setText(addressUser.getPhone());

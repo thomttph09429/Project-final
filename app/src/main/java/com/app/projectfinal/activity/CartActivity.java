@@ -34,7 +34,9 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     private AppCompatButton btnBuy;
     private TextView tvPrice;
     private List<Cart> cartListChecked = new ArrayList<>();
-    private CartAdapter cartAdapter= null;
+    private CartAdapter cartAdapter = null;
+    private List<String> storeIdList;
+    private  List<Integer> positions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,18 +50,16 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-
-
     @Override
     protected void onStop() {
         super.onStop();
-
 
 
     }
 
     private void initAction() {
         cartList = new ArrayList<>();
+        storeIdList = new ArrayList<>();
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setStackFromEnd(true);
         manager.setReverseLayout(true);
@@ -89,7 +89,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 
     private void getListCartFromDB() {
         cartList = CartDatabase.getInstance(this).cartDAO().getCards();
-         cartAdapter = new CartAdapter(this, cartList, new CartAdapter.OnItemCheckListener() {
+        cartAdapter = new CartAdapter(this, cartList, new CartAdapter.OnItemCheckListener() {
             @Override
             public void onItemCheck(Cart cart) {
                 cartListChecked.add(cart);
@@ -98,12 +98,10 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                     int price = ValidateForm.getPriceToInt(cartListChecked.get(i).getPrice());
                     int amount = Integer.parseInt(cartListChecked.get(i).getAmount());
                     int newPrice = price * amount;
-
                     sum += newPrice;
 
                 }
-                Log.e("price", sum + "");
-                Log.e("price", cartListChecked.size() + "" + "");
+
                 String totalAmount = ValidateForm.getDecimalFormattedString(String.valueOf(sum));
                 tvPrice.setText(totalAmount);
 
@@ -113,15 +111,13 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
             public void onItemUncheck(Cart cart) {
                 cartListChecked.remove(cart);
                 int sum = 0;
+
                 for (int i = 0; i < cartListChecked.size(); i++) {
                     int price = ValidateForm.getPriceToInt(cartListChecked.get(i).getPrice());
                     int amount = Integer.parseInt(cartListChecked.get(i).getAmount());
                     int newPrice = price * amount;
                     sum += newPrice;
-
                 }
-                Log.e("price", sum + "");
-                Log.e("price", cartListChecked.size() + "" + "");
                 String totalAmount = ValidateForm.getDecimalFormattedString(String.valueOf(sum));
                 tvPrice.setText(totalAmount);
 
@@ -153,7 +149,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 
         Toast toast = new Toast(this);
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
-        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(layout);
         toast.show();
     }

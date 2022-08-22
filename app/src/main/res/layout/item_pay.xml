@@ -4,21 +4,12 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvNameShop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_50sdp"
-        android:text="Ngọc Thơm store"
-        android:textSize="@dimen/_13sdp"
-        android:textStyle="bold" />
 
     <RelativeLayout
         android:id="@+id/rlItem"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvNameShop"
         android:background="@color/bg_chat"
         android:padding="@dimen/_10sdp">
 
@@ -73,13 +64,5 @@
 
     </RelativeLayout>
 
-    <EditText
-        android:id="@+id/tvNote"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_below="@+id/rlItem"
-        android:background="@android:color/transparent"
-        android:hint="Lưu ý cho người bán"
-        android:textSize="12sp" />
 
 </RelativeLayout>
