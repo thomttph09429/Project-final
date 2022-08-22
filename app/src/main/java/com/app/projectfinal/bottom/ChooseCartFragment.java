@@ -1,5 +1,7 @@
 package com.app.projectfinal.bottom;
 
+import static com.app.projectfinal.utils.Constant.CATEGORY_NAME;
+import static com.app.projectfinal.utils.Constant.DESCRIPTION_PRODUCT;
 import static com.app.projectfinal.utils.Constant.ID_PRODUCT;
 import static com.app.projectfinal.utils.Constant.IMAGE1_PRODUCT;
 import static com.app.projectfinal.utils.Constant.NAME_PRODUCT;
@@ -38,7 +40,7 @@ public class ChooseCartFragment extends BottomSheetDialogFragment {
     private View view;
     private ImageView ivProduct, ivClose;
     private TextView tvPrice, tvQuantity, tvRaiseAmount, tvAmount, tvReduceAmount, tvUnit;
-    private String price, image, idProduct, idShop, nameProduct, quantity, nameStore, unitName;
+    private String price, image, idProduct, idShop, nameProduct, quantity, nameStore, unitName, description, categoryName;
     private AppCompatButton btnAddToCart;
 
 
@@ -81,7 +83,7 @@ public class ChooseCartFragment extends BottomSheetDialogFragment {
             if (amount.equals("0")) {
                 showToast("Bạn vẫn chưa chọn số lượng", R.drawable.ic_priority);
             } else {
-                CartDatabase.getInstance(getContext()).cartDAO().insert(new Cart(idProduct, idShop, nameProduct, amount, price, image, nameStore));
+                CartDatabase.getInstance(getContext()).cartDAO().insert(new Cart(idProduct, idShop, nameProduct, amount, price, image, nameStore, unitName,quantity, description, categoryName));
                 showToast("Đã thêm vào giỏ", R.drawable.ic_mark);
                 dismiss();
             }
@@ -126,6 +128,9 @@ public class ChooseCartFragment extends BottomSheetDialogFragment {
         nameStore = getArguments().getString(NAME_STORE);
         unitName = getArguments().getString(UNIT_NAME);
         quantity = getArguments().getString(QUANTITY_PRODUCT);
+        description = getArguments().getString(DESCRIPTION_PRODUCT);
+        categoryName = getArguments().getString(CATEGORY_NAME);
+
         tvQuantity.setText(quantity);
         tvPrice.setText(price);
         tvUnit.setText(unitName);

@@ -285,64 +285,17 @@
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/linear_shopSettings_content5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/lnDes"
-            android:orientation="vertical"
-            android:paddingTop="@dimen/_8sdp"
-            >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_30sdp"
-                android:orientation="horizontal"
-               >
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_35sdp"
-                    android:gravity="center_vertical"
-                    android:background="@color/greenLight_30"
-                    android:text="Hình ảnh giới thiệu"
-                    android:textColor="@color/black"
-                    android:paddingStart="@dimen/_10sdp"
-                    android:textSize="@dimen/_12sdp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/img_shopSettings_gioiThieu"
-                    android:layout_width="@dimen/_200sdp"
-                    android:layout_height="@dimen/_80sdp"
-                    android:background="@color/grayLight" />
-
-                <Button
-                    android:id="@+id/btnAddImage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="@dimen/_8sdp"
-                    android:textAllCaps="false"
-                    android:gravity="center"
-                    android:text="Thêm" />
 
 
-            </LinearLayout>
-
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnSignUpShop"
-                android:layout_width="@dimen/_300sdp"
-                android:layout_height="@dimen/_50sdp"
+                android:layout_width="match_parent"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/bg_border_40"
+                android:textColor="@color/white"
+                android:layout_height="wrap_content"
                 android:textAllCaps="false"
                 android:text="Lưu" />
-        </LinearLayout>
 
 
     </RelativeLayout>

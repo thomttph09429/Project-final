@@ -31,8 +31,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,7 +64,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DetailProductActivity extends AppCompatActivity {
+public class DetailProductActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageView ivProduct;
     private TextView tvName, tvPrice, tvNameShop, tvQuantity, tvCategory, tvDescription;
     private Bundle data;
@@ -74,6 +76,7 @@ public class DetailProductActivity extends AppCompatActivity {
     private String idProduct;
     private Toolbar toolbar;
     private ActionBar actionBar;
+    private RelativeLayout rlShop;
 
 
     @Override
@@ -112,11 +115,13 @@ public class DetailProductActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     private void initActions() {
         products = new ArrayList<>();
         setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();
         actionBar.setTitle(null);
+        rlShop.setOnClickListener(this);
 
     }
 
@@ -139,6 +144,7 @@ public class DetailProductActivity extends AppCompatActivity {
         btnAddCart = findViewById(R.id.btnAddCart);
         btnChat = findViewById(R.id.btnChat);
         toolbar = findViewById(R.id.toolbar);
+        rlShop = findViewById(R.id.rlShop);
 
     }
 
@@ -204,6 +210,9 @@ public class DetailProductActivity extends AppCompatActivity {
             bundle.putString(STORE_ID_PRODUCT, storeId);
             bundle.putString(NAME_STORE, storeName);
             bundle.putString(UNIT_NAME, unitName);
+            bundle.putString(DESCRIPTION_PRODUCT, description);
+            bundle.putString(CATEGORY_NAME, categoryName);
+
 
             ChooseCartFragment chooseCartFragment = new ChooseCartFragment();
             chooseCartFragment.setArguments(bundle);
@@ -264,7 +273,7 @@ public class DetailProductActivity extends AppCompatActivity {
                 Toast.makeText(DetailProductActivity.this, error.toString(), Toast.LENGTH_LONG).show();
 
             }
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<>();
@@ -294,6 +303,11 @@ public class DetailProductActivity extends AppCompatActivity {
             startActivity(intent);
 
         });
+    }
+
+    private void openViewShopScreen() {
+        Intent intent= new Intent(this, ViewShopActivity.class);
+        startActivity(intent);
     }
 
     /**
@@ -329,7 +343,7 @@ public class DetailProductActivity extends AppCompatActivity {
                 Toast.makeText(DetailProductActivity.this, error.toString(), Toast.LENGTH_LONG).show();
 
             }
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<>();
@@ -341,4 +355,13 @@ public class DetailProductActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.rlShop:
+                openViewShopScreen();
+        }
+    }
+
 }

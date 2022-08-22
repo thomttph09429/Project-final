@@ -25,7 +25,7 @@ public class ProgressBarDialog {
         pDialog = new ProgressDialog(context);
         pDialog.setMessage(msg);
         pDialog.show();
-        pDialog.setCancelable(false);
+        pDialog.setCancelable(true);
     }
 
     public void closeDialog() {

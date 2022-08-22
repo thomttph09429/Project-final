@@ -27,6 +27,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
+import com.app.projectfinal.activity.address.AddressActivity;
 import com.app.projectfinal.data.SharedPrefsSingleton;
 import com.app.projectfinal.utils.Constant;
 import com.app.projectfinal.utils.ConstantData;
@@ -44,7 +45,7 @@ import java.util.Map;
 public class SignUpShopActivity extends AppCompatActivity {
     private TextView tvCountNameStore ,tvAddress;
     private EditText edtEnterStoreName, edtLinkFace, edtDesStore;
-    private Button btnSignUpShop, btnAddImage;
+    private Button btnSignUpShop;
 
 
     @Override
@@ -53,6 +54,7 @@ public class SignUpShopActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up_shop);
         initView();
         checkWordCount();
+        addAddress();
         signUpShop();
     }
 
@@ -111,9 +113,13 @@ public class SignUpShopActivity extends AppCompatActivity {
         edtEnterStoreName = findViewById(R.id.edtEnterStoreName);
         tvCountNameStore = findViewById(R.id.tvCountNameStore);
         btnSignUpShop = findViewById(R.id.btnSignUpShop);
-        btnAddImage = findViewById(R.id.btnAddImage);
         edtDesStore = findViewById(R.id.edtDesStore);
 
+    }
+    private  void addAddress(){
+        tvAddress.setOnClickListener(v->{
+            startActivity( new Intent(this, AddressActivity.class));
+        });
     }
 
     /**

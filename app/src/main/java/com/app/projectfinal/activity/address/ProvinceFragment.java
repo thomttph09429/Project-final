@@ -62,6 +62,7 @@ public class ProvinceFragment extends DialogFragment {
             initAction();
             getProvince();
 
+
         }
         return view;
     }
@@ -120,4 +121,5 @@ public class ProvinceFragment extends DialogFragment {
 
 
     }
+
 }

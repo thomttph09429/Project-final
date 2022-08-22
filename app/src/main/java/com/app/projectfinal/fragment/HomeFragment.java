@@ -122,7 +122,8 @@ public class HomeFragment extends Fragment {
 
             }
         };
-
+        String token = ConstantData.getToken(getContext());
+        Log.e("token", token);
         return view;
     }
 
@@ -146,6 +147,7 @@ public class HomeFragment extends Fragment {
                     try {
                         JSONObject jsonObject = response.getJSONObject("data");
                         JSONArray jsonArray = jsonObject.getJSONArray("products");
+
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject object = jsonArray.getJSONObject(i);
                             String productName = object.getString(NAME_PRODUCT);
@@ -184,7 +186,7 @@ public class HomeFragment extends Fragment {
                 ProgressBarDialog.getInstance(getContext()).closeDialog();
 
             }
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<>();
@@ -267,6 +269,7 @@ public class HomeFragment extends Fragment {
                     try {
                         JSONObject jsonObject = response.getJSONObject("data");
                         JSONArray jsonArray = jsonObject.getJSONArray("products");
+
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject object = jsonArray.getJSONObject(i);
                             String productName = object.getString(NAME_PRODUCT);

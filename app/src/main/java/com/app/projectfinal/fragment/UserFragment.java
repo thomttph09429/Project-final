@@ -19,6 +19,7 @@ import static com.app.projectfinal.utils.Constant.USER_NAME_SAVE;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -120,7 +121,6 @@ public class UserFragment extends Fragment {
         ProgressBarDialog.getInstance(getContext()).showDialog("Đợi một lát",getContext());
         String userId = SharedPrefsSingleton.getInstance(getContext().getApplicationContext()).getStringValue(USER_ID_SAVE);
         String urlProducts = UPDATE_USER + "/" + userId;
-
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlProducts, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

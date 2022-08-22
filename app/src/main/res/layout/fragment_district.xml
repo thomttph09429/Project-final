@@ -21,6 +21,15 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_height="@dimen/_24sdp"
             android:src="@drawable/ic_back" />
+        <TextView
+            android:layout_toRightOf="@+id/ivBack"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/_11sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:textSize="@dimen/_14sdp"
+            android:text="Quận, huyện"
+            />
 
     </RelativeLayout>
 

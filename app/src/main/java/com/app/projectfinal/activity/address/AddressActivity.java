@@ -25,6 +25,7 @@ import com.app.projectfinal.model.Category;
 import com.app.projectfinal.model.address.AddressUser;
 import com.app.projectfinal.model.address.Province;
 import com.app.projectfinal.utils.ConstantData;
+import com.app.projectfinal.utils.ProgressBarDialog;
 import com.app.projectfinal.utils.VolleySingleton;
 import com.google.gson.Gson;
 
@@ -40,7 +41,7 @@ import java.util.Map;
 public class AddressActivity extends AppCompatActivity implements View.OnClickListener {
     private LinearLayout lnAddress;
     private RecyclerView rvAddress;
-    private List<AddressUser>  addressUserList;
+    public List<AddressUser>  addressUserList;
 private ListAddressAdapter listAddressAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,7 @@ private ListAddressAdapter listAddressAdapter;
         startActivity(new Intent(this, AddAddressActivity.class));
     }
     private  void getAllMyAddress(){
+        ProgressBarDialog.getInstance(this).showDialog("Đang tải", this);
         String url = ADDRESS+ "?userId="+ ConstantData.getUserId(getApplicationContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -81,11 +83,13 @@ private ListAddressAdapter listAddressAdapter;
                         addressUserList.add(addressUser);
                         listAddressAdapter = new ListAddressAdapter(AddressActivity.this, addressUserList);
                         rvAddress.setAdapter(listAddressAdapter);
+                        ProgressBarDialog.getInstance(AddressActivity.this).closeDialog();
 
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(AddressActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+                    ProgressBarDialog.getInstance(AddressActivity.this).closeDialog();
 
                 }
 
@@ -95,6 +99,8 @@ private ListAddressAdapter listAddressAdapter;
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(AddressActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+                ProgressBarDialog.getInstance(AddressActivity.this
+                ).closeDialog();
 
             }
         }) {

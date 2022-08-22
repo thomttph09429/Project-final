@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,9 +42,9 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MyShopActivity extends AppCompatActivity {
-    private TextView tvStoreName;
-    private LinearLayout lnStartSell, lnMyProduct;
+public class MyShopActivity extends AppCompatActivity implements View.OnClickListener {
+    private TextView tvStoreName, tvViewShop;
+    private LinearLayout lnStartSell, lnMyProduct, lnShopSetting;
     private String storeId, storeName;
 
     @Override
@@ -51,9 +52,15 @@ public class MyShopActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_shop);
         initView();
+        initAction();
         getInfoShop();
-        startSell();
-        openMyProductScreen();
+    }
+
+    private void initAction() {
+        lnStartSell.setOnClickListener(this);
+        lnMyProduct.setOnClickListener(this);
+        lnShopSetting.setOnClickListener(this);
+        tvViewShop.setOnClickListener(this);
     }
 
 
@@ -61,31 +68,35 @@ public class MyShopActivity extends AppCompatActivity {
         tvStoreName = findViewById(R.id.tvStoreName);
         lnStartSell = findViewById(R.id.lnStartSell);
         lnMyProduct = findViewById(R.id.lnMyProduct);
+        lnShopSetting = findViewById(R.id.lnShopSetting);
+        tvViewShop = findViewById(R.id.tvViewShop);
+
     }
 
 
     private void startSell() {
-        lnStartSell.setOnClickListener(v -> {
-            Intent intent = new Intent(this, AddProductActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putString(STORE_ID_PRODUCT, storeId);
-            intent.putExtras(bundle);
-            startActivity(intent);
-        });
+        Intent intent = new Intent(this, AddProductActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(STORE_ID_PRODUCT, storeId);
+        intent.putExtras(bundle);
+        startActivity(intent);
 
 
     }
 
     private void openMyProductScreen() {
-        lnMyProduct.setOnClickListener(v -> {
-            Intent intent = new Intent(this, MyProductActivity.class);
-            Bundle bundle=new Bundle();
-            bundle.putString(STORE_ID_PRODUCT,storeId);
-            intent.putExtras(bundle);
-            startActivity(intent);
-        });
+        Intent intent = new Intent(this, MyProductActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(STORE_ID_PRODUCT, storeId);
+        intent.putExtras(bundle);
+        startActivity(intent);
 
 
+    }
+
+    private void openShopSettingScreen() {
+        Intent intent = new Intent(this, SignUpShopActivity.class);
+        startActivity(intent);
     }
 
     /**
@@ -131,7 +142,7 @@ public class MyShopActivity extends AppCompatActivity {
                 ProgressBarDialog.getInstance(MyShopActivity.this).closeDialog();
 
             }
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<>();
@@ -142,4 +153,26 @@ public class MyShopActivity extends AppCompatActivity {
         VolleySingleton.getInstance(MyShopActivity.this).getRequestQueue().add(jsonObjectRequest);
     }
 
+    private void openViewShopScreen() {
+        Intent intent= new Intent( this, ViewShopActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.lnStartSell:
+                startSell();
+                break;
+            case R.id.lnMyProduct:
+                openMyProductScreen();
+                break;
+            case R.id.lnShopSetting:
+                openShopSettingScreen();
+                break;
+            case R.id.tvViewShop:
+                openViewShopScreen();
+                break;
+        }
+    }
 }

@@ -1,15 +1,15 @@
 package com.app.projectfinal.utils;
 
 public class Constant {
-    public static final String REGISTER = "https://graduate-tmdt-be.herokuapp.com/register";
-    public static final String LOGIN = "https://graduate-tmdt-be.herokuapp.com/login";
-    public static final String PRODUCTS = "https://graduate-tmdt-be.herokuapp.com/stores/products";
-    public static final String ADD_PRODUCTS = "https://graduate-tmdt-be.herokuapp.com/stores/products";
-    public static final String ADD_STORES = "https://graduate-tmdt-be.herokuapp.com/stores";
-    public static final String CATEGORY = "https://graduate-tmdt-be.herokuapp.com/categories";
-    public static final String GET_UNIT = "https://graduate-tmdt-be.herokuapp.com/units";
-    public static final String UPDATE_USER = "https://graduate-tmdt-be.herokuapp.com/users";
-    public static final String ADDRESS = "https://graduate-tmdt-be.herokuapp.com/addresses";
+    public static final String REGISTER = "https://cb53-42-113-204-137.ap.ngrok.io/register";
+    public static final String LOGIN = "https://cb53-42-113-204-137.ap.ngrok.io/login";
+    public static final String PRODUCTS = "https://cb53-42-113-204-137.ap.ngrok.io/stores/products";
+    public static final String ADD_PRODUCTS = "https://cb53-42-113-204-137.ap.ngrok.io/stores/products";
+    public static final String ADD_STORES = "https://cb53-42-113-204-137.ap.ngrok.io/stores";
+    public static final String CATEGORY = "https://cb53-42-113-204-137.ap.ngrok.io/categories";
+    public static final String GET_UNIT = "https://cb53-42-113-204-137.ap.ngrok.io/units";
+    public static final String UPDATE_USER = "https://cb53-42-113-204-137.ap.ngrok.io/users";
+    public static final String ADDRESS = "https://cb53-42-113-204-137.ap.ngrok.io/addresses";
 
     public static final int PICK_IMAGE_REQUEST = 100;
     //product
