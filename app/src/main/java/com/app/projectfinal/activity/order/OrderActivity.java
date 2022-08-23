@@ -117,7 +117,6 @@ public class OrderActivity extends AppCompatActivity {
                     array.put(obj);
                 }
 
-
                 object.put("products", array);
                 object.put("userId", ConstantData.getUserId(this));
                 object.put("addressId", addressId);

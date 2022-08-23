@@ -38,7 +38,6 @@
                     android:layout_height="wrap_content" />
 
 
-
                 <TextView
                     android:id="@id/title"
                     android:layout_width="wrap_content"
@@ -65,9 +64,9 @@
                     android:id="@+id/chart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/_30sdp"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_30sdp"
                     android:src="@drawable/ic_chart_white" />
 
             </RelativeLayout>
@@ -247,18 +246,19 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#E3EFCE"
                     android:orientation="horizontal"
                     android:paddingTop="8dp">
 
                     <LinearLayout
-
+                        android:id="@+id/lnWait"
                         android:layout_width="0dp"
+                        android:background="@drawable/bg_border_0"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="vertical">
 
                         <ImageButton
+                            android:layout_marginTop="@dimen/_10sdp"
                             android:id="@+id/imgBtn_user_waitCheck"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
@@ -280,12 +280,14 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:background="@drawable/bg_border_0"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="vertical">
 
                         <ImageButton
+                            android:layout_marginTop="@dimen/_10sdp"
                             android:id="@+id/imgBtn_user_waitShip"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
@@ -309,9 +311,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="@drawable/bg_border_0"
                         android:orientation="vertical">
 
                         <ImageButton
+                            android:layout_marginTop="@dimen/_10sdp"
                             android:id="@+id/imgBtn_user_goShip"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
@@ -332,12 +336,14 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:background="@drawable/bg_border_0"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="vertical">
 
                         <ImageButton
+                            android:layout_marginTop="@dimen/_10sdp"
                             android:id="@+id/imgBtn_user_refund"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
@@ -591,11 +597,11 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/lnSetting"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_35sdp"
                     android:background="@drawable/bg_border_0"
                     android:orientation="horizontal"
-                    android:id="@+id/lnSetting"
                     android:padding="@dimen/_5sdp">
 
                     <ImageView

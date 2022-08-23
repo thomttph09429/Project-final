@@ -42,6 +42,7 @@ import com.app.projectfinal.activity.ProfileSettingActivity;
 import com.app.projectfinal.activity.SignUpShopActivity;
 import com.app.projectfinal.data.SharedPrefsSingleton;
 import com.app.projectfinal.model.Product;
+import com.app.projectfinal.myOrder.MyOrderActivity;
 import com.app.projectfinal.utils.ConstantData;
 import com.app.projectfinal.utils.ProgressBarDialog;
 import com.app.projectfinal.utils.VolleySingleton;
@@ -54,7 +55,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserFragment extends Fragment {
-    private LinearLayout lnStartSell, lnSetting;
+    private LinearLayout lnStartSell, lnSetting, lnWait;
     private View view;
     private TextView tvMyShop, tvWhenNotSignUp, tvUserName;
     private String isSignUp;
@@ -80,8 +81,15 @@ public class UserFragment extends Fragment {
         getInformation();
         clickProfileSetting();
         isSignUpToBecomeSeller();
+        waitForConfirmation();
 
         return view;
+    }
+
+    private void waitForConfirmation() {
+        lnWait.setOnClickListener(v->{
+            startActivity(new Intent(getContext(), MyOrderActivity.class));
+        });
     }
 
     /**
@@ -200,6 +208,8 @@ public class UserFragment extends Fragment {
         tvWhenNotSignUp = view.findViewById(R.id.tvWhenNotSignUp);
         tvUserName = view.findViewById(R.id.tvUserName);
         lnSetting = view.findViewById(R.id.lnSetting);
+        lnWait = view.findViewById(R.id.lnWait);
+
     }
 
     @Override
