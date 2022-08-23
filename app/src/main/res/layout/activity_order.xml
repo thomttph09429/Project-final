@@ -110,14 +110,15 @@
                 android:layout_height="match_parent"
                 android:layout_below="@+id/tvNameShop"
                 android:padding="@dimen/_10sdp" />
+
             <EditText
                 android:id="@+id/tvNote"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_below="@+id/rvPay"
+                android:layout_marginLeft="@dimen/_10sdp"
                 android:background="@android:color/transparent"
                 android:hint="Lưu ý cho người bán"
-                android:layout_marginLeft="@dimen/_10sdp"
                 android:textSize="12sp" />
         </RelativeLayout>
 

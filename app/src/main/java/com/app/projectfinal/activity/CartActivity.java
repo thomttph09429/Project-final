@@ -36,7 +36,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     private List<Cart> cartListChecked = new ArrayList<>();
     private CartAdapter cartAdapter = null;
     private List<String> storeIdList;
-    private  List<Integer> positions;
+    private String totalAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,8 +91,10 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         cartList = CartDatabase.getInstance(this).cartDAO().getCards();
         cartAdapter = new CartAdapter(this, cartList, new CartAdapter.OnItemCheckListener() {
             @Override
-            public void onItemCheck(Cart cart) {
+            public void onItemCheck(Cart cart, String storeId) {
                 cartListChecked.add(cart);
+                storeIdList.add(storeId);
+
                 int sum = 0;
                 for (int i = 0; i < cartListChecked.size(); i++) {
                     int price = ValidateForm.getPriceToInt(cartListChecked.get(i).getPrice());
@@ -102,14 +104,16 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 
                 }
 
-                String totalAmount = ValidateForm.getDecimalFormattedString(String.valueOf(sum));
+                totalAmount = ValidateForm.getDecimalFormattedString(String.valueOf(sum));
                 tvPrice.setText(totalAmount);
 
             }
 
             @Override
-            public void onItemUncheck(Cart cart) {
+            public void onItemUncheck(Cart cart, String storeId) {
                 cartListChecked.remove(cart);
+                storeIdList.remove(storeId);
+
                 int sum = 0;
 
                 for (int i = 0; i < cartListChecked.size(); i++) {
@@ -117,8 +121,9 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                     int amount = Integer.parseInt(cartListChecked.get(i).getAmount());
                     int newPrice = price * amount;
                     sum += newPrice;
+
                 }
-                String totalAmount = ValidateForm.getDecimalFormattedString(String.valueOf(sum));
+                totalAmount = ValidateForm.getDecimalFormattedString(String.valueOf(sum));
                 tvPrice.setText(totalAmount);
 
             }
@@ -127,14 +132,38 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    /**
+     * check if the selected products are in the same store
+     * @return
+     */
+    private boolean compareStoreId() {
+        for (int i = 0; i < cartListChecked.size(); i++) {
+            for (int j = i + 1; j < cartListChecked.size(); j++) {
+                if (!cartListChecked.get(i).getIdShop().equals(cartListChecked.get(j).getIdShop()))
+                    return false;
+            }
+        }
+        return true;
+    }
+
     private void openOderScreen() {
         if (cartListChecked.size() == 0) {
             showToast("Bạn vẫn chưa chọn sản phẩm nào để mua", R.drawable.ic_priority);
 
         } else {
-            Intent intent = new Intent(this, OrderActivity.class);
-            intent.putParcelableArrayListExtra("cartListChecked", (ArrayList<? extends Parcelable>) cartListChecked);
-            startActivity(intent);        }
+
+
+            if (!compareStoreId()) {
+                showToast("Hãy chọn sản phẩm cùng cửa hàng", R.drawable.ic_priority);
+
+            } else {
+                Intent intent = new Intent(this, OrderActivity.class);
+                intent.putParcelableArrayListExtra("cartListChecked", (ArrayList<? extends Parcelable>) cartListChecked);
+                intent.putExtra("totalAmount", totalAmount);
+                startActivity(intent);
+            }
+
+        }
 
     }
 

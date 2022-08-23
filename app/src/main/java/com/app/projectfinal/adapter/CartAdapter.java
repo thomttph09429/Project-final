@@ -99,10 +99,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
                     ((MyViewHolder) holder).cbSelect.setChecked(
                             !((MyViewHolder) holder).cbSelect.isChecked());
                     if (((MyViewHolder) holder).cbSelect.isChecked()) {
-                            onItemClick.onItemCheck(currentItem);
+                            onItemClick.onItemCheck(currentItem, currentItem.getIdShop());
 
                     } else {
-                        onItemClick.onItemUncheck(currentItem);
+                        onItemClick.onItemUncheck(currentItem, currentItem.getIdShop());
 
                     }
                 }
@@ -146,8 +146,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
     }
 
     public interface OnItemCheckListener {
-        void onItemCheck(Cart cart);
+        void onItemCheck(Cart cart, String storeId);
 
-        void onItemUncheck(Cart cart);
+        void onItemUncheck(Cart cart, String storeId);
     }
 }
