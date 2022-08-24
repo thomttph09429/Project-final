@@ -104,11 +104,13 @@ public class OrderActivity extends AppCompatActivity {
     private void clickOrderProducts() {
         btnBuy.setOnClickListener(v -> {
             JSONArray array = new JSONArray();
-            JSONObject obj = new JSONObject();
             JSONObject object = new JSONObject();
 
             try {
-                for (int i = 0; i < cartListChecked.size(); i++) {
+
+
+                for (int i = 0; i < cartListChecked.size();i++) {
+                    JSONObject obj = new JSONObject(String.valueOf(i));
 
                     obj.put(ID_PRODUCT, cartListChecked.get(i).getIdProduct());
                     obj.put(STORE_ID_PRODUCT, cartListChecked.get(i).getIdShop());
@@ -121,7 +123,6 @@ public class OrderActivity extends AppCompatActivity {
                 object.put("userId", ConstantData.getUserId(this));
                 object.put("addressId", addressId);
                 object.put("note", tvNote.getText().toString().trim());
-
                 Log.e("address", object + "");
 
 
@@ -133,7 +134,7 @@ public class OrderActivity extends AppCompatActivity {
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, ORDER, object, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                    showToast("Đơn hàng đã được đặt", R.drawable.ic_mark);
+                    showToast("Đơn hàng đã được đặt"+ response+"", R.drawable.ic_mark);
 
 
                 }

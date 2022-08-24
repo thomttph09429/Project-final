@@ -3,10 +3,12 @@ package com.app.projectfinal.myOrder;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
+
+import com.app.projectfinal.myOrder.fragment.CompleteFragment;
+import com.app.projectfinal.myOrder.fragment.DeliveryFragment;
+import com.app.projectfinal.myOrder.fragment.WaitFragment;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
@@ -26,7 +28,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
             case 2:
                 return new CompleteFragment();
             default:
-                return new WaitFragment();
+                return new  WaitFragment();
         }
     }
 
@@ -38,16 +40,17 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        String title = "";
+
         switch (position) {
+
             case 0:
-                title = "Chờ xác nhận";
+               return "Chờ xác nhận";
             case 1:
-                title = "Đang giao";
+               return  "Đang giao";
             case 2:
-                title = "Hoàn thành";
+                return  "Hoàn thành";
         }
-        return title;
+        return null;
 
     }
 }

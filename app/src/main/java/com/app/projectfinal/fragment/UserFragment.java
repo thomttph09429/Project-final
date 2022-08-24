@@ -54,7 +54,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UserFragment extends Fragment {
+public class UserFragment extends Fragment implements View.OnClickListener{
     private LinearLayout lnStartSell, lnSetting, lnWait;
     private View view;
     private TextView tvMyShop, tvWhenNotSignUp, tvUserName;
@@ -77,19 +77,23 @@ public class UserFragment extends Fragment {
         if (view == null)
             view = inflater.inflate(R.layout.fragment_user, container, false);
         initView();
-        openMyShop();
+        initAction();
         getInformation();
-        clickProfileSetting();
         isSignUpToBecomeSeller();
-        waitForConfirmation();
 
         return view;
     }
 
+    private void initAction() {
+        lnWait.setOnClickListener(this);
+        tvMyShop.setOnClickListener(this);
+        lnStartSell.setOnClickListener(this);
+        lnSetting.setOnClickListener(this);
+
+    }
+
     private void waitForConfirmation() {
-        lnWait.setOnClickListener(v->{
             startActivity(new Intent(getContext(), MyOrderActivity.class));
-        });
     }
 
     /**
@@ -109,13 +113,11 @@ public class UserFragment extends Fragment {
      * </pre>
      */
     private void openMyShop() {
-        tvMyShop.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), MyShopActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString(STORE_ID_PRODUCT, storeId);
             intent.putExtras(bundle);
             startActivity(intent);
-        });
     }
 
     /**
@@ -182,11 +184,9 @@ public class UserFragment extends Fragment {
     }
 
     private void clickStartSell() {
-        lnStartSell.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), SignUpShopActivity.class);
             startActivity(intent);
 
-        });
 
 
     }
@@ -195,10 +195,8 @@ public class UserFragment extends Fragment {
      * click setting profile
      */
     private void clickProfileSetting() {
-        lnSetting.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), ProfileSettingActivity.class);
             startActivity(intent);
-        });
 
     }
 
@@ -212,9 +210,25 @@ public class UserFragment extends Fragment {
 
     }
 
+
+
     @Override
-    public void onResume() {
-        super.onResume();
-        clickStartSell();
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.tvMyShop:
+                openMyShop();
+                break;
+            case R.id.lnSetting:
+                clickProfileSetting();
+                break;
+            case R.id.lnStartSell:
+                clickStartSell();
+                break;
+            case R.id.lnWait:
+                waitForConfirmation();
+                break;
+            default:
+        }
+
     }
 }
