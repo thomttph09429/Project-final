@@ -1,36 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_marginBottom="@dimen/_20sdp"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/_20sdp">
 
     <TextView
         android:id="@+id/tvNameShop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tiểu cảnh, nhà nông thôn bằng nhựa" />
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:text="Tiểu cảnh, nhà nông thôn bằng nhựa"
+        android:textSize="@dimen/_13sdp"
+        android:textStyle="bold" />
 
 
-    <TextView
-        android:id="@+id/tvViewDetail"
-        android:background="@drawable/bg_border_green_light_20"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/rlItem"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvNameShop"
-        android:padding="@dimen/_10sdp"
-        android:text="Xem chi tiết" />
+        android:layout_marginTop="13dp"
+        android:padding="@dimen/_10sdp">
+
+
+        <ImageView
+            android:id="@+id/ivProduct"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:src="@drawable/avatar_empty" />
+
+        <TextView
+            android:id="@+id/tvNameProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_toRightOf="@+id/ivProduct"
+            android:maxLines="1"
+            android:text="Cây mít không hạt ra trái sau "
+            android:textColor="@color/black_94" />
+
+        <TextView
+            android:id="@+id/tvText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvNameProduct"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_toRightOf="@+id/ivProduct"
+            android:text="@string/under_text"
+            android:textColor="@color/red"
+            android:textSize="@dimen/_12sdp" />
+
+        <TextView
+            android:id="@+id/tvPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvNameProduct"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_toRightOf="@+id/tvText"
+            android:text="12.000"
+            android:textColor="@color/red"
+            android:textSize="@dimen/_12sdp" />
+
+        <TextView
+            android:id="@+id/tvAmountProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvText"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_toRightOf="@+id/ivProduct"
+            android:text="x10"
+            android:textSize="@dimen/_12sdp" />
+
+        <View
+            android:id="@+id/ivView"
+            android:layout_width="match_parent"
+            android:layout_height="0.01dp"
+            android:layout_below="@+id/tvAmountProduct"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@color/labelGrayGreenBG" />
+
+        <TextView
+            android:id="@+id/tvViewDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivView"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Xem chi tiết" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.01dp"
+            android:layout_below="@+id/tvViewDetail"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@color/labelGrayGreenBG" />
+
+    </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvViewDetail">
+        android:layout_below="@+id/rlItem">
 
         <TextView
             android:id="@+id/tvAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/_10sdp"
-            android:text="10 sản phẩm" />
+            android:text="sản phẩm" />
 
         <TextView
             android:id="@+id/tvTotalPrice"
@@ -43,11 +122,11 @@
     </RelativeLayout>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:layout_below="@+id/top"
         android:layout_width="@dimen/_100sdp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top"
+        android:layout_alignParentEnd="true"
         android:text="Đang xử lý"
         android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:layout_alignParentEnd="true"
-        android:layout_height="wrap_content" />
+        android:textColor="@color/white" />
 </RelativeLayout>

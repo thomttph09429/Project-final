@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/_10sdp"
+    tools:context=".order.myOrder.OrderInformationActivity">
+
+    <RelativeLayout
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        >
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_toRightOf="@+id/ivBack"
+            android:fontFamily="@font/arial_bold"
+            android:text="Thông tin đơn hàng"
+            android:textSize="@dimen/_18sdp"
+
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlAddress"
+        android:layout_marginTop="@dimen/_40sdp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_below="@+id/top">
+
+        <ImageView
+            android:id="@+id/ivLocation"
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:src="@drawable/ic_location" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_toRightOf="@+id/ivLocation"
+            android:text="Địa chỉ nhận hàng"
+            android:textSize="@dimen/_12sdp" />
+
+        <TextView
+            android:id="@+id/tvUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_toRightOf="@+id/ivLocation"
+            android:textSize="@dimen/_12sdp" />
+
+        <TextView
+            android:id="@+id/tvPhoneNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvUserName"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_toRightOf="@+id/ivLocation"
+            android:textSize="@dimen/_12sdp" />
+
+        <TextView
+            android:id="@+id/tvAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvPhoneNumber"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_toRightOf="@+id/ivLocation"
+            android:textSize="@dimen/_12sdp" />
+
+        <TextView
+            android:id="@+id/tvChangeAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="@dimen/_40sdp"
+            android:text="Thay đổi"
+            android:textSize="@dimen/_11sdp" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_below="@+id/rlAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:id="@+id/tvNameShop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cửa hàng nông sản" />
+        <TextView
+            android:id="@+id/tvViewShop"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Xem shop"
+            />
+        <View
+            android:id="@+id/ivView"
+            android:layout_width="match_parent"
+            android:layout_height="0.01dp"
+            android:layout_below="@+id/tvViewShop"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:background="@color/labelGrayGreenBG" />
+
+        <androidx.recyclerview.widget.RecyclerView
+
+            android:id="@+id/rvListOrder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivView" />
+    </RelativeLayout>
+
+</RelativeLayout>

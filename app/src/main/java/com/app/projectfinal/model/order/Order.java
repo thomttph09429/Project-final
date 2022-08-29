@@ -5,6 +5,19 @@ import java.util.List;
 public class Order {
     private int total;
     private int totalPrice;
+    private List<ItemOrder> itemOrders;
+    private String name_store;
+    private  String id;
+
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName_store() {
         return name_store;
@@ -14,16 +27,14 @@ public class Order {
         this.name_store = name_store;
     }
 
-    public Order(int total, int totalPrice, List<ItemOrder> itemOrders, String name_store) {
+
+    public Order(int total, int totalPrice, List<ItemOrder> itemOrders, String name_store, String id) {
         this.total = total;
         this.totalPrice = totalPrice;
         this.itemOrders = itemOrders;
         this.name_store = name_store;
+        this.id = id;
     }
-
-    private List<ItemOrder> itemOrders;
-    private String name_store;
-
 
 
     public List<ItemOrder> getItemOrders() {

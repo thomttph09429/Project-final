@@ -87,6 +87,7 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
                 JSONObject product = new JSONObject();
                 product.put("data", data);
                 showToast("Thêm thành công", R.drawable.ic_mark);
+                finish();
 
 
             } catch (JSONException e) {

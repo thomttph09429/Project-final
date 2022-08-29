@@ -38,6 +38,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
 import com.app.projectfinal.activity.AddProductActivity;
+import com.app.projectfinal.activity.address.ChangeAddressFragment;
 import com.app.projectfinal.adapter.chooseProduct.ChooseProductToBuyAdapter;
 import com.app.projectfinal.db.Cart;
 import com.app.projectfinal.model.ChooseProduct;
@@ -58,8 +59,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class OrderActivity extends AppCompatActivity {
-    private TextView tvUserName, tvPhoneNumber, tvAddress, tvNameShop, tvPrice, tvNote;
+public class OrderActivity extends AppCompatActivity implements ChangeAddressFragment.OnInputListener{
+    private TextView tvUserName, tvPhoneNumber, tvAddress, tvNameShop, tvPrice, tvNote, tvChangeAddress;
     private ChooseProductToBuyAdapter buyAdapter;
     private List<Cart> cartListChecked;
     private RecyclerView rvPay;
@@ -74,6 +75,7 @@ public class OrderActivity extends AppCompatActivity {
         initView();
         getAddress();
         initAction();
+        clickChangeAddress();
         Intent intent = getIntent();
         //receive cartListChecked from CartActivity
         cartListChecked = intent.getParcelableArrayListExtra("cartListChecked");
@@ -99,6 +101,8 @@ public class OrderActivity extends AppCompatActivity {
         tvPrice = findViewById(R.id.tvPrice);
         btnBuy = findViewById(R.id.btnBuy);
         tvNote = findViewById(R.id.tvNote);
+        tvChangeAddress = findViewById(R.id.tvChangeAddress);
+
     }
 
     private void clickOrderProducts() {
@@ -107,7 +111,7 @@ public class OrderActivity extends AppCompatActivity {
             JSONObject object = new JSONObject();
 
             try {
-                for (int i = 0; i < cartListChecked.size();i++) {
+                for (int i = 0; i < cartListChecked.size(); i++) {
                     JSONObject obj = new JSONObject();
                     obj.put(ID_PRODUCT, cartListChecked.get(i).getIdProduct());
                     obj.put(STORE_ID_PRODUCT, cartListChecked.get(i).getIdShop());
@@ -131,7 +135,7 @@ public class OrderActivity extends AppCompatActivity {
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, ORDER, object, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                    showToast("Đơn hàng đã được đặt"+ response+"", R.drawable.ic_mark);
+                    showToast("Đơn hàng đã được đặt" + response + "", R.drawable.ic_mark);
 
 
                 }
@@ -154,6 +158,13 @@ public class OrderActivity extends AppCompatActivity {
     }
 
     private void initAction() {
+    }
+
+    private void clickChangeAddress() {
+        tvChangeAddress.setOnClickListener(v -> {
+            ChangeAddressFragment changeAddressFragment= new ChangeAddressFragment();
+            changeAddressFragment.show(getSupportFragmentManager(), "ChangeAddressFragment");
+        });
     }
 
     private void showToast(String text, int src) {
@@ -213,5 +224,12 @@ public class OrderActivity extends AppCompatActivity {
             }
         };
         VolleySingleton.getInstance(this).getRequestQueue().add(jsonObjectRequest);
+    }
+
+    @Override
+    public void sendInfoAddress(String location, String id) {
+        addressId= id;
+        tvAddress.setText(location);
+
     }
 }

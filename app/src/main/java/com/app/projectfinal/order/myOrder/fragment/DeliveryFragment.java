@@ -81,11 +81,11 @@ public class DeliveryFragment extends Fragment {
                         JSONArray jsonArray = jsonObject.getJSONArray("orders");
                         int totalOrder = jsonObject.getInt(TOTAL);
 
-                        if (totalOrder==0){
+                        if (totalOrder == 0) {
                             lnShow.setVisibility(View.GONE);
                             lnHide.setVisibility(View.VISIBLE);
 
-                        }else {
+                        } else {
                             lnShow.setVisibility(View.VISIBLE);
                             lnHide.setVisibility(View.GONE);
                         }
@@ -94,15 +94,15 @@ public class DeliveryFragment extends Fragment {
                             JSONObject object = jsonArray.getJSONObject(i);
                             int totalPrice = object.getInt(TOTAL_PRICE);
                             nameStore = object.getString("name_store");
-
+                            String id = object.getString("id");
                             JSONArray products = object.getJSONArray("products");
-                            List<ItemOrder> itemOrders= new ArrayList<>();
+                            List<ItemOrder> itemOrders = new ArrayList<>();
                             for (int j = 0; j < products.length(); j++) {
                                 JSONObject item = products.getJSONObject(j);
                                 Gson gson = new Gson();
                                 ItemOrder itemOrder = gson.fromJson(String.valueOf(item), ItemOrder.class);
                                 itemOrders.add(itemOrder);
-                                orders.add(new Order(products.length(), totalPrice, itemOrders, nameStore));
+                                orders.add(new Order(products.length(), totalPrice, itemOrders, nameStore, id));
 
                             }
                             orderWaitAdapter = new OrderWaitAdapter(orders, getContext());
@@ -147,6 +147,7 @@ public class DeliveryFragment extends Fragment {
         lnShow = view.findViewById(R.id.lnShow);
         lnHide = view.findViewById(R.id.lnHide);
     }
+
     private void initAction() {
         orders = new ArrayList<>();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());

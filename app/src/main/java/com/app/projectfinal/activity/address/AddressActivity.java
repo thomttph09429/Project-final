@@ -41,8 +41,9 @@ import java.util.Map;
 public class AddressActivity extends AppCompatActivity implements View.OnClickListener {
     private LinearLayout lnAddress;
     private RecyclerView rvAddress;
-    public List<AddressUser>  addressUserList;
-private ListAddressAdapter listAddressAdapter;
+    public List<AddressUser> addressUserList;
+    private ListAddressAdapter listAddressAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,21 +55,23 @@ private ListAddressAdapter listAddressAdapter;
 
     private void initAction() {
         lnAddress.setOnClickListener(this::onClick);
-        addressUserList= new ArrayList<>();
-        LinearLayoutManager layoutManager= new LinearLayoutManager(this);
+        addressUserList = new ArrayList<>();
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rvAddress.setLayoutManager(layoutManager);
     }
 
     private void initView() {
-        lnAddress= findViewById(R.id.lnAddress);
-        rvAddress= findViewById(R.id.rvAddress);
+        lnAddress = findViewById(R.id.lnAddress);
+        rvAddress = findViewById(R.id.rvAddress);
     }
-    private  void openAddAddressScreen(){
+
+    private void openAddAddressScreen() {
         startActivity(new Intent(this, AddAddressActivity.class));
     }
-    private  void getAllMyAddress(){
+
+    private void getAllMyAddress() {
         ProgressBarDialog.getInstance(this).showDialog("Đang tải", this);
-        String url = ADDRESS+ "?userId="+ ConstantData.getUserId(getApplicationContext());
+        String url = ADDRESS + "?userId=" + ConstantData.getUserId(getApplicationContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -116,7 +119,7 @@ private ListAddressAdapter listAddressAdapter;
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.lnAddress:
                 openAddAddressScreen();
                 break;

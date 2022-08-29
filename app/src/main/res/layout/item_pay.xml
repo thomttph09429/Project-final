@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_10sdp"
-        android:background="@color/bg_chat"
         android:padding="@dimen/_10sdp">
 
 
@@ -24,7 +23,7 @@
             android:id="@+id/tvNameProduct"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_3sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
             android:layout_toRightOf="@+id/ivProduct"
             android:maxLines="1"
             android:text="Cây mít không hạt ra trái sau "
@@ -35,10 +34,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvNameProduct"
-            android:layout_marginStart="@dimen/_3sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_2sdp"
             android:layout_toRightOf="@+id/ivProduct"
             android:text="@string/under_text"
+            android:textColor="@color/red"
             android:textSize="@dimen/_12sdp" />
 
         <TextView
@@ -49,6 +49,7 @@
             android:layout_marginTop="@dimen/_2sdp"
             android:layout_toRightOf="@+id/tvText"
             android:text="12.000"
+            android:textColor="@color/red"
             android:textSize="@dimen/_12sdp" />
 
         <TextView
@@ -56,13 +57,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvText"
-            android:layout_marginStart="@dimen/_3sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_2sdp"
             android:layout_toRightOf="@+id/ivProduct"
             android:text="x10"
             android:textSize="@dimen/_12sdp" />
 
     </RelativeLayout>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.01dp"
+        android:layout_below="@+id/rlItem"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@color/labelGrayGreenBG" />
 
 </RelativeLayout>

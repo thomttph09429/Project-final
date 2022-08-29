@@ -50,7 +50,7 @@ public class WaitFragment extends Fragment {
     private TextView tvAmountWait;
     private OrderWaitAdapter orderWaitAdapter;
     private LinearLayout lnShow, lnHide;
-    private String nameStore;
+    private String nameStore, orderId;
 
 
     @Override
@@ -85,7 +85,7 @@ public class WaitFragment extends Fragment {
     }
 
     private void getOrderPendingConfirm() {
-        String urlOrder = ORDER + "?" + "userId=" + ConstantData.getUserId(getContext()) + "&status=" + 1;
+        String urlOrder = ORDER + "?" + "userId=" + ConstantData.getUserId(getContext()) + "&status=" + 1 + "&page=1&size=50";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlOrder, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -94,11 +94,11 @@ public class WaitFragment extends Fragment {
                         JSONObject jsonObject = response.getJSONObject("data");
                         JSONArray jsonArray = jsonObject.getJSONArray("orders");
                         totalOrder = jsonObject.getInt(TOTAL);
-                        if (totalOrder==0){
+                        if (totalOrder == 0) {
                             lnShow.setVisibility(View.GONE);
                             lnHide.setVisibility(View.VISIBLE);
 
-                        }else {
+                        } else {
                             lnShow.setVisibility(View.VISIBLE);
                             lnHide.setVisibility(View.GONE);
                         }
@@ -107,9 +107,9 @@ public class WaitFragment extends Fragment {
                             JSONObject object = jsonArray.getJSONObject(i);
                             totalPrice = object.getInt(TOTAL_PRICE);
                             nameStore = object.getString("name_store");
-
+                            orderId = object.getString("id");
                             JSONArray products = object.getJSONArray("products");
-                            List<ItemOrder> itemOrders= new ArrayList<>();
+                            List<ItemOrder> itemOrders = new ArrayList<>();
                             for (int j = 0; j < products.length(); j++) {
                                 JSONObject item = products.getJSONObject(j);
                                 Gson gson = new Gson();
@@ -117,13 +117,12 @@ public class WaitFragment extends Fragment {
                                 itemOrders.add(itemOrder);
 
                             }
-                            orders.add(new Order(products.length(), totalPrice, itemOrders, nameStore));
-                            orderWaitAdapter = new OrderWaitAdapter(orders, getContext());
+                            orders.add(new Order(products.length(), totalPrice, itemOrders, nameStore, orderId));
+                            orderWaitAdapter = new OrderWaitAdapter(orders, getContext() );
                             rvWait.setAdapter(orderWaitAdapter);
                         }
 
-                        Log.e("itemOrders", orders.get(0).getItemOrders().get(0).getName()+ "");
-
+                        Log.e("itemOrders", orders.get(0).getItemOrders().get(0).getName() + "");
 
 
                     } catch (JSONException e) {

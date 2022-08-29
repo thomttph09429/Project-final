@@ -17,6 +17,9 @@
         android:theme="@style/Theme.ProjectFinalMaster"
         tools:targetApi="31">
         <activity
+            android:name=".order.myOrder.OrderInformationActivity"
+            android:exported="false" />
+        <activity
             android:name=".order.shopOrder.ShopOrderActivity"
             android:exported="false" />
         <activity
