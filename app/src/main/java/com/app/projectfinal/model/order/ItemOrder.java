@@ -9,8 +9,10 @@ public class ItemOrder {
     private String store_id;
     private String name;
     private String image1;
-
-
+    private String image2;
+    private String image3;
+    private String image4;
+    private String image5;
 
     public ItemOrder(String product_id, int quantity, int price, String store_id, String name, String image1, String image2, String image3, String image4, String image5) {
         this.product_id = product_id;
@@ -23,10 +25,10 @@ public class ItemOrder {
         this.image3 = image3;
         this.image4 = image4;
         this.image5 = image5;
+
     }
 
-    private String image2;
-    private String image3;
+
 
     public String getImage1() {
         return image1;
@@ -68,8 +70,6 @@ public class ItemOrder {
         this.image5 = image5;
     }
 
-    private String image4;
-    private String image5;
 
     public String getProduct_id() {
         return product_id;

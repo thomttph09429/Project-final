@@ -1,7 +1,7 @@
 package com.app.projectfinal.utils;
 
 public class Constant {
-    public static final String HTTP = "https://0b3c-42-113-204-137.ap.ngrok.io/";
+    public static final String HTTP = "https://e5e4-117-7-236-58.ap.ngrok.io/";
 
     public static final String REGISTER = HTTP+"register";
     public static final String LOGIN = HTTP+"login";
@@ -9,7 +9,7 @@ public class Constant {
     public static final String ADD_PRODUCTS = HTTP+"stores/products";
     public static final String ADD_STORES = HTTP+"stores";
     public static final String CATEGORY = HTTP+"categories";
-    public static final String GET_UNIT = HTTP+"hunits";
+    public static final String GET_UNIT = HTTP+"units";
     public static final String UPDATE_USER =HTTP+ "users";
     public static final String ADDRESS = HTTP+ "addresses";
     public static final String ORDER = HTTP+ "orders";

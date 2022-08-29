@@ -5,18 +5,26 @@ import java.util.List;
 public class Order {
     private int total;
     private int totalPrice;
-    private List<ItemOrder> itemOrders;
 
-    public Order(int total, int totalPrice, List<ItemOrder> itemOrders) {
+    public String getName_store() {
+        return name_store;
+    }
+
+    public void setName_store(String name_store) {
+        this.name_store = name_store;
+    }
+
+    public Order(int total, int totalPrice, List<ItemOrder> itemOrders, String name_store) {
         this.total = total;
         this.totalPrice = totalPrice;
         this.itemOrders = itemOrders;
+        this.name_store = name_store;
     }
 
-    public Order(int total, int totalPrice) {
-        this.total = total;
-        this.totalPrice = totalPrice;
-    }
+    private List<ItemOrder> itemOrders;
+    private String name_store;
+
+
 
     public List<ItemOrder> getItemOrders() {
         return itemOrders;

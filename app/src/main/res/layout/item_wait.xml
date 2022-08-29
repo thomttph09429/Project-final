@@ -5,22 +5,25 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/tvNameProduct"
+        android:id="@+id/tvNameShop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Tiểu cảnh, nhà nông thôn bằng nhựa" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvProduct"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvNameProduct" />
 
+    <TextView
+        android:id="@+id/tvViewDetail"
+        android:background="@drawable/bg_border_green_light_20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvNameShop"
+        android:padding="@dimen/_10sdp"
+        android:text="Xem chi tiết" />
     <RelativeLayout
         android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rvProduct">
+        android:layout_below="@+id/tvViewDetail">
 
         <TextView
             android:id="@+id/tvAmount"

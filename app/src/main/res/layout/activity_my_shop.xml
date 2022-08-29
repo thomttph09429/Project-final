@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.MyShopActivity">
+
     <com.google.android.material.appbar.CollapsingToolbarLayout
         android:id="@+id/collapsing_toolbar"
         android:layout_width="match_parent"
@@ -113,148 +114,169 @@
                 android:textSize="@dimen/_10sdp" />
         </LinearLayout>
     </RelativeLayout>
+
     <LinearLayout
         android:id="@+id/linear_user_content1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_below="@id/relative_top_user"
-        >
+        android:orientation="vertical">
+
         <LinearLayout
-            android:background="@color/greenLight"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_30sdp"
+            android:background="@color/greenLight"
             android:orientation="horizontal"
-            android:padding="@dimen/_5sdp"
-            >
+          >
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:layout_gravity="center"
                 android:layout_marginRight="@dimen/_5sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
                 android:background="@drawable/order"
-                android:paddingLeft="@dimen/_5sdp"
-                android:layout_gravity="center"/>
+                android:paddingLeft="@dimen/_5sdp" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:text="Đơn Hàng"
                 android:textColor="@color/black"
-                android:textStyle="bold"
                 android:textSize="@dimen/_10sdp"
-                android:gravity="center_vertical"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="0.5"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.5"
                 android:gravity="left"
+                android:textSize="@dimen/_10sdp"
                 android:text="Lịch sử đơn hàng"
-                android:textStyle="italic"/>
+                android:textStyle="italic" />
         </LinearLayout>
 
         <LinearLayout
-            android:paddingTop="8dp"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_60sdp"
-            android:layout_gravity="center"
-            android:gravity="center"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="@color/greenLight_20">
-            <LinearLayout
+            android:paddingTop="8dp">
 
+            <LinearLayout
+                android:id="@+id/lnWaitConfirm"
                 android:layout_width="0dp"
+                android:background="@drawable/bg_border_green_light_20"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
+
                 <ImageButton
-                    android:id="@+id/imgBtn_myShop_waitCheck"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:id="@+id/imgBtn_user_waitCheck"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/boxtime"/>
+                    android:background="@drawable/boxtime" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Chờ xác nhận"
-                    android:textStyle="normal"
-                    android:textColor="@color/black"
-                    android:textSize="11dp"
                     android:gravity="center"
                     android:paddingTop="8dp"
-                    android:paddingBottom="5dp"/>
-
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <ImageButton
-                    android:id="@+id/imgBtn_myShop_waitShip"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/boxship"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Chờ lấy hàng"
-                    android:textStyle="normal"
+                    android:paddingBottom="5dp"
+                    android:text="Chờ xác nhận"
                     android:textColor="@color/black"
                     android:textSize="11dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="5dp"
-                    android:gravity="center"/>
+                    android:textStyle="normal" />
+
 
             </LinearLayout>
+
             <LinearLayout
+                android:id="@+id/lnDelivery"
+                android:background="@drawable/bg_border_green_light_20"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
+
                 <ImageButton
-                    android:id="@+id/imgBtn_myShop_goShip"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:id="@+id/imgBtn_user_waitShip"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/goship"/>
+                    android:background="@drawable/boxship" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="5dp"
                     android:text="Đang giao"
-                    android:textStyle="normal"
                     android:textColor="@color/black"
                     android:textSize="11dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="5dp"
-                    android:gravity="center"/>
+                    android:textStyle="normal" />
 
             </LinearLayout>
+
             <LinearLayout
+                android:id="@+id/lnComplete"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_border_green_light_20"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:id="@+id/imgBtn_user_goShip"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/goship" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="5dp"
+                    android:text="Đã giao"
+                    android:textColor="@color/black"
+                    android:textSize="11dp"
+                    android:textStyle="normal" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:background="@drawable/bg_border_green_light_20"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
+
                 <ImageButton
-                    android:id="@+id/imgBtn_myShop_refund"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:id="@+id/imgBtn_user_refund"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/refund"/>
+                    android:background="@drawable/refund" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Hoàn tiền"
-                    android:textStyle="normal"
-                    android:textColor="@color/black"
-                    android:textSize="11dp"
+                    android:gravity="center"
                     android:paddingTop="8dp"
                     android:paddingBottom="5dp"
-                    android:gravity="center"/>
+                    android:text="Hoàn tiền"
+                    android:textColor="@color/black"
+                    android:textSize="11dp"
+                    android:textStyle="normal" />
 
             </LinearLayout>
         </LinearLayout>
@@ -266,7 +288,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/linear_user_content1"
         android:orientation="vertical"
-        android:paddingTop="@dimen/_8sdp"
         android:paddingBottom="@dimen/_8sdp">
 
         <LinearLayout
@@ -274,7 +295,7 @@
             android:layout_height="@dimen/_30sdp"
             android:background="@color/greenLight"
             android:orientation="horizontal"
-            android:padding="@dimen/_5sdp">
+         >
 
             <ImageView
                 android:layout_width="20dp"
@@ -282,7 +303,7 @@
                 android:layout_gravity="center"
                 android:layout_marginRight="@dimen/_5sdp"
                 android:background="@drawable/tienich"
-                android:paddingLeft="@dimen/_5sdp" />
+                android:layout_marginLeft="@dimen/_5sdp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -297,16 +318,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="@dimen/_8sdp"
-          >
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:id="@+id/lnMyProduct"
                 android:layout_width="0dp"
-                android:background="@drawable/bg_border_green_light_20"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/bg_border_green_light_20"
                 android:orientation="vertical">
 
                 <ImageButton
@@ -327,6 +347,7 @@
                     android:textSize="11dp"
                     android:textStyle="normal" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -354,6 +375,7 @@
 
             </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -385,6 +407,7 @@
                     android:textSize="11dp"
                     android:textStyle="normal" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -413,43 +436,46 @@
     </LinearLayout>
 
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/linear_user_content2"
         android:orientation="vertical">
+
         <LinearLayout
             android:id="@id/lnStartSell"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_35sdp"
-            android:orientation="horizontal"
             android:background="@drawable/bg_border_0"
-            android:padding="@dimen/_5sdp"
-            >
+            android:orientation="horizontal"
+            android:padding="@dimen/_5sdp">
+
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:layout_gravity="center"
                 android:layout_marginRight="@dimen/_5sdp"
                 android:background="@drawable/shop"
-                android:paddingLeft="@dimen/_5sdp"
-                android:layout_gravity="center"/>
+                android:paddingLeft="@dimen/_5sdp" />
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:text="Bắt đầu bán"
                 android:textColor="@color/black"
-                android:textStyle="bold"
                 android:textSize="@dimen/_10sdp"
-                android:gravity="center_vertical"/>
+                android:textStyle="bold" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/_35sdp"
             android:background="@color/greenLight"
             android:orientation="horizontal"
             android:padding="@dimen/_5sdp">
+
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -457,6 +483,7 @@
                 android:layout_marginRight="@dimen/_5sdp"
                 android:background="@drawable/star"
                 android:paddingLeft="@dimen/_5sdp" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -466,6 +493,7 @@
                 android:textSize="@dimen/_10sdp"
                 android:textStyle="bold" />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/lnShopSetting"
             android:layout_width="match_parent"
@@ -491,6 +519,7 @@
                 android:textSize="@dimen/_10sdp"
                 android:textStyle="bold" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/_35sdp"

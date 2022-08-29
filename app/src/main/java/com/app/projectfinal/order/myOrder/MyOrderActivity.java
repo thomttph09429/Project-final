@@ -1,9 +1,8 @@
-package com.app.projectfinal.myOrder;
+package com.app.projectfinal.order.myOrder;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
 
@@ -24,7 +23,7 @@ public class MyOrderActivity extends AppCompatActivity {
     private void initView() {
         tabLayout = findViewById(R.id.tabLayout);
         viewPager2 = findViewById(R.id.viewPager);
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        ViewPagerMyOrderAdapter viewPagerAdapter = new ViewPagerMyOrderAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         viewPager2.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager2);
     }

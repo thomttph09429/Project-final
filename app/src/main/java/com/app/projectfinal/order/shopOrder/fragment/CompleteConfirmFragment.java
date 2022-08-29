@@ -1,15 +1,10 @@
-package com.app.projectfinal.myOrder.fragment;
+package com.app.projectfinal.order.shopOrder.fragment;
 
 import static com.app.projectfinal.utils.Constant.ORDER;
 import static com.app.projectfinal.utils.Constant.TOTAL;
 import static com.app.projectfinal.utils.Constant.TOTAL_PRICE;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +13,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -25,12 +24,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
 import com.app.projectfinal.adapter.order.OrderWaitAdapter;
-import com.app.projectfinal.model.order.ItemOrder;
 import com.app.projectfinal.model.order.Order;
 import com.app.projectfinal.utils.ConstantData;
 import com.app.projectfinal.utils.ProgressBarDialog;
 import com.app.projectfinal.utils.VolleySingleton;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,7 +39,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class CompleteFragment extends Fragment {
+public class CompleteConfirmFragment extends Fragment {
 
     private View view;
     private RecyclerView rvComplete;
@@ -62,7 +59,7 @@ public class CompleteFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         if (view == null)
-            view = inflater.inflate(R.layout.fragment_complete, container, false);
+            view = inflater.inflate(R.layout.fragment_complete_confirm, container, false);
         initView();
         initAction();
         getDelivery();
@@ -75,28 +72,32 @@ public class CompleteFragment extends Fragment {
             @Override
             public void onResponse(JSONObject response) {
                 if (response != null) {
+
                     try {
                         JSONObject jsonObject = response.getJSONObject("data");
                         JSONArray jsonArray = jsonObject.getJSONArray("products");
-                        if (jsonArray!=null){
-                            lnShow.setVisibility(View.VISIBLE);
-                            lnHide.setVisibility(View.GONE);
-                        }else {
+
+                        int totalOrder = jsonObject.getInt(TOTAL);
+                        if (totalOrder==0){
                             lnShow.setVisibility(View.GONE);
                             lnHide.setVisibility(View.VISIBLE);
+
+                        }else {
+                            lnShow.setVisibility(View.VISIBLE);
+                            lnHide.setVisibility(View.GONE);
                         }
-                        int totalOrder = jsonObject.getInt(TOTAL);
                         tvAmountComplete.setText("Bạn có " + totalOrder + " đơn đang giao");
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject object = jsonArray.getJSONObject(i);
                             int totalPrice = object.getInt(TOTAL_PRICE);
+                            Log.e("pricess", totalPrice + "");
+
 
                             JSONArray jsonArray1 = object.getJSONArray("products");
-                            Log.e("price", jsonArray1 + "");
-                            orders.add(new Order(jsonArray1.length(), totalPrice));
-
-                            orderWaitAdapter = new OrderWaitAdapter(orders, getContext());
-                            rvComplete.setAdapter(orderWaitAdapter);
+//                            orders.add(new Order(jsonArray1.length(), totalPrice));
+//
+//                            orderWaitAdapter = new OrderWaitAdapter(orders, getContext());
+//                            rvComplete.setAdapter(orderWaitAdapter);
 
 
                         }
@@ -107,6 +108,8 @@ public class CompleteFragment extends Fragment {
                         ProgressBarDialog.getInstance(getContext()).closeDialog();
 
                     }
+                }else {
+
                 }
 
 
@@ -132,8 +135,8 @@ public class CompleteFragment extends Fragment {
     }
 
     private void initView() {
-        rvComplete = view.findViewById(R.id.rvDelivery);
-        tvAmountComplete = view.findViewById(R.id.tvAmountDelivery);
+        rvComplete = view.findViewById(R.id.rvComplete);
+        tvAmountComplete = view.findViewById(R.id.tvAmountComplete);
         lnShow = view.findViewById(R.id.lnShow);
         lnHide = view.findViewById(R.id.lnHide);
 

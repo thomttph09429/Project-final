@@ -1,21 +1,21 @@
-package com.app.projectfinal.myOrder.fragment;
+package com.app.projectfinal.order.shopOrder.fragment;
 
 import static com.app.projectfinal.utils.Constant.ORDER;
 import static com.app.projectfinal.utils.Constant.TOTAL;
 import static com.app.projectfinal.utils.Constant.TOTAL_PRICE;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -24,7 +24,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
 import com.app.projectfinal.adapter.order.OrderWaitAdapter;
-import com.app.projectfinal.model.address.Province;
 import com.app.projectfinal.model.order.ItemOrder;
 import com.app.projectfinal.model.order.Order;
 import com.app.projectfinal.utils.ConstantData;
@@ -42,7 +41,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class WaitFragment extends Fragment {
+public class WaitConfirmFragment extends Fragment {
     private View view;
     private RecyclerView rvWait;
     private List<Order> orders;
@@ -50,6 +49,7 @@ public class WaitFragment extends Fragment {
     private int totalOrder, totalPrice;
     private TextView tvAmountWait;
     private OrderWaitAdapter orderWaitAdapter;
+    private LinearLayout lnShow, lnHide;
 
 
     @Override
@@ -62,7 +62,7 @@ public class WaitFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         if (view == null)
-            view = inflater.inflate(R.layout.fragment_wait, container, false);
+            view = inflater.inflate(R.layout.fragment_wait_confirm, container, false);
         initView();
         initAction();
         getOrderPendingConfirm();
@@ -72,6 +72,8 @@ public class WaitFragment extends Fragment {
     private void initView() {
         rvWait = view.findViewById(R.id.rvWait);
         tvAmountWait = view.findViewById(R.id.tvAmountWait);
+        lnShow = view.findViewById(R.id.lnShow);
+        lnHide = view.findViewById(R.id.lnHide);
     }
 
     private void initAction() {
@@ -92,27 +94,39 @@ public class WaitFragment extends Fragment {
                         JSONObject jsonObject = response.getJSONObject("data");
                         JSONArray jsonArray = jsonObject.getJSONArray("products");
                         totalOrder = jsonObject.getInt(TOTAL);
+                        if (totalOrder==0){
+                            lnShow.setVisibility(View.GONE);
+                            lnHide.setVisibility(View.VISIBLE);
+
+                        }else {
+                            lnShow.setVisibility(View.VISIBLE);
+                            lnHide.setVisibility(View.GONE);
+                        }
                         tvAmountWait.setText("Bạn có " + totalOrder + " đơn đang chờ xác nhận");
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject object = jsonArray.getJSONObject(i);
                             totalPrice = object.getInt(TOTAL_PRICE);
 
-                            JSONArray jsonArray1 = object.getJSONArray("products");
-                            Log.e("price", jsonArray1 + "");
-                            orders.add(new Order(jsonArray1.length(), totalPrice));
-                            for (int j = 0; j < jsonArray1.length(); j++) {
-                                JSONObject item = jsonArray1.getJSONObject(j);
+                            JSONArray products = object.getJSONArray("products");
+                            Log.e("price", products + "");
+                            for (int j = 0; j < products.length(); j++) {
+                                JSONObject item = products.getJSONObject(j);
                                 Gson gson = new Gson();
                                 ItemOrder itemOrder = gson.fromJson(String.valueOf(item), ItemOrder.class);
                                 itemOrders.add(itemOrder);
+//                                orders.add(new Order(products.length(), totalPrice, itemOrders));
+
+
+
 
                             }
-                            orderWaitAdapter = new OrderWaitAdapter(orders, getContext());
-                            rvWait.setAdapter(orderWaitAdapter);
-
-
 
                         }
+
+                        orderWaitAdapter = new OrderWaitAdapter(orders, getContext());
+                        rvWait.setAdapter(orderWaitAdapter);
+
+
 
                     } catch (JSONException e) {
                         e.printStackTrace();

@@ -1,4 +1,4 @@
-package com.app.projectfinal.myOrder;
+package com.app.projectfinal.order.myOrder;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -6,14 +6,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.app.projectfinal.myOrder.fragment.CompleteFragment;
-import com.app.projectfinal.myOrder.fragment.DeliveryFragment;
-import com.app.projectfinal.myOrder.fragment.WaitFragment;
+import com.app.projectfinal.order.myOrder.fragment.CompleteFragment;
+import com.app.projectfinal.order.myOrder.fragment.DeliveryFragment;
+import com.app.projectfinal.order.myOrder.fragment.WaitFragment;
 
-public class ViewPagerAdapter extends FragmentStatePagerAdapter {
+public class ViewPagerMyOrderAdapter extends FragmentStatePagerAdapter {
 
 
-    public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
+    public ViewPagerMyOrderAdapter(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
     }
 
@@ -48,7 +48,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
             case 1:
                return  "Đang giao";
             case 2:
-                return  "Hoàn thành";
+                return  "Đã giao";
         }
         return null;
 

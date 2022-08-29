@@ -1,16 +1,7 @@
 package com.app.projectfinal.activity;
 
 import static com.app.projectfinal.utils.Constant.ADD_STORES;
-import static com.app.projectfinal.utils.Constant.CATEGORY_NAME;
-import static com.app.projectfinal.utils.Constant.DESCRIPTION_PRODUCT;
-import static com.app.projectfinal.utils.Constant.ID_PRODUCT;
-import static com.app.projectfinal.utils.Constant.IMAGE1_PRODUCT;
-import static com.app.projectfinal.utils.Constant.NAME_PRODUCT;
-import static com.app.projectfinal.utils.Constant.PRICE_PRODUCT;
-import static com.app.projectfinal.utils.Constant.PRODUCTS;
-import static com.app.projectfinal.utils.Constant.QUANTITY_PRODUCT;
 import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
-import static com.app.projectfinal.utils.Constant.STORE_NAME;
 import static com.app.projectfinal.utils.Constant.STORE_NAME_PRODUCT;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,13 +20,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
-import com.app.projectfinal.data.SharedPrefsSingleton;
-import com.app.projectfinal.model.Product;
+import com.app.projectfinal.order.shopOrder.ShopOrderActivity;
 import com.app.projectfinal.utils.ConstantData;
 import com.app.projectfinal.utils.ProgressBarDialog;
 import com.app.projectfinal.utils.VolleySingleton;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,7 +33,7 @@ import java.util.Map;
 
 public class MyShopActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView tvStoreName, tvViewShop;
-    private LinearLayout lnStartSell, lnMyProduct, lnShopSetting;
+    private LinearLayout lnStartSell, lnMyProduct, lnShopSetting,lnWaitConfirm,lnDelivery,lnComplete;
     private String storeId, storeName;
 
     @Override
@@ -61,6 +50,10 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
         lnMyProduct.setOnClickListener(this);
         lnShopSetting.setOnClickListener(this);
         tvViewShop.setOnClickListener(this);
+        lnWaitConfirm.setOnClickListener(this);
+        lnDelivery.setOnClickListener(this);
+        lnComplete.setOnClickListener(this);
+
     }
 
 
@@ -70,6 +63,9 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
         lnMyProduct = findViewById(R.id.lnMyProduct);
         lnShopSetting = findViewById(R.id.lnShopSetting);
         tvViewShop = findViewById(R.id.tvViewShop);
+        lnWaitConfirm = findViewById(R.id.lnWaitConfirm);
+        lnDelivery = findViewById(R.id.lnDelivery);
+        lnComplete = findViewById(R.id.lnComplete);
 
     }
 
@@ -157,6 +153,10 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
         Intent intent= new Intent( this, ViewShopActivity.class);
         startActivity(intent);
     }
+    private void openOrder(){
+        startActivity(new Intent(this, ShopOrderActivity.class));
+
+    }
 
     @Override
     public void onClick(View view) {
@@ -172,6 +172,15 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.tvViewShop:
                 openViewShopScreen();
+                break;
+            case R.id.lnWaitConfirm:
+                openOrder();
+                break;
+            case R.id.lnDelivery:
+                openOrder();
+                break;
+            case R.id.lnComplete:
+                openOrder();
                 break;
         }
     }

@@ -107,11 +107,8 @@ public class OrderActivity extends AppCompatActivity {
             JSONObject object = new JSONObject();
 
             try {
-
-
                 for (int i = 0; i < cartListChecked.size();i++) {
-                    JSONObject obj = new JSONObject(String.valueOf(i));
-
+                    JSONObject obj = new JSONObject();
                     obj.put(ID_PRODUCT, cartListChecked.get(i).getIdProduct());
                     obj.put(STORE_ID_PRODUCT, cartListChecked.get(i).getIdShop());
                     obj.put(QUANTITY_PRODUCT, cartListChecked.get(i).getAmount());

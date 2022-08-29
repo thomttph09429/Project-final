@@ -1,25 +1,13 @@
 package com.app.projectfinal.fragment;
 
-import static com.app.projectfinal.utils.Constant.CATEGORY_NAME;
-import static com.app.projectfinal.utils.Constant.DESCRIPTION_PRODUCT;
-import static com.app.projectfinal.utils.Constant.ID_PRODUCT;
-import static com.app.projectfinal.utils.Constant.IMAGE1_PRODUCT;
-import static com.app.projectfinal.utils.Constant.NAME_PRODUCT;
-import static com.app.projectfinal.utils.Constant.PRICE_PRODUCT;
-import static com.app.projectfinal.utils.Constant.PRODUCTS;
-import static com.app.projectfinal.utils.Constant.QUANTITY_PRODUCT;
 import static com.app.projectfinal.utils.Constant.ROLE;
-import static com.app.projectfinal.utils.Constant.STORE_ID;
 import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
-import static com.app.projectfinal.utils.Constant.STORE_NAME_PRODUCT;
-import static com.app.projectfinal.utils.Constant.TOKEN;
 import static com.app.projectfinal.utils.Constant.UPDATE_USER;
 import static com.app.projectfinal.utils.Constant.USER_ID_SAVE;
 import static com.app.projectfinal.utils.Constant.USER_NAME_SAVE;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,26 +24,23 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
-import com.app.projectfinal.activity.AddProductActivity;
 import com.app.projectfinal.activity.MyShopActivity;
 import com.app.projectfinal.activity.ProfileSettingActivity;
 import com.app.projectfinal.activity.SignUpShopActivity;
 import com.app.projectfinal.data.SharedPrefsSingleton;
-import com.app.projectfinal.model.Product;
-import com.app.projectfinal.myOrder.MyOrderActivity;
+import com.app.projectfinal.order.myOrder.MyOrderActivity;
 import com.app.projectfinal.utils.ConstantData;
 import com.app.projectfinal.utils.ProgressBarDialog;
 import com.app.projectfinal.utils.VolleySingleton;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class UserFragment extends Fragment implements View.OnClickListener{
-    private LinearLayout lnStartSell, lnSetting, lnWait;
+public class UserFragment extends Fragment implements View.OnClickListener {
+    private LinearLayout lnStartSell, lnSetting, lnWait, lnFinish, lnDelivery;
     private View view;
     private TextView tvMyShop, tvWhenNotSignUp, tvUserName;
     private String isSignUp;
@@ -89,11 +74,13 @@ public class UserFragment extends Fragment implements View.OnClickListener{
         tvMyShop.setOnClickListener(this);
         lnStartSell.setOnClickListener(this);
         lnSetting.setOnClickListener(this);
+        lnDelivery.setOnClickListener(this);
+        lnFinish.setOnClickListener(this);
 
     }
 
     private void waitForConfirmation() {
-            startActivity(new Intent(getContext(), MyOrderActivity.class));
+        startActivity(new Intent(getContext(), MyOrderActivity.class));
     }
 
     /**
@@ -113,11 +100,11 @@ public class UserFragment extends Fragment implements View.OnClickListener{
      * </pre>
      */
     private void openMyShop() {
-            Intent intent = new Intent(getActivity(), MyShopActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putString(STORE_ID_PRODUCT, storeId);
-            intent.putExtras(bundle);
-            startActivity(intent);
+        Intent intent = new Intent(getActivity(), MyShopActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(STORE_ID_PRODUCT, storeId);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     /**
@@ -128,7 +115,7 @@ public class UserFragment extends Fragment implements View.OnClickListener{
      * </pre>
      */
     private void isSignUpToBecomeSeller() {
-        ProgressBarDialog.getInstance(getContext()).showDialog("Đợi một lát",getContext());
+        ProgressBarDialog.getInstance(getContext()).showDialog("Đợi một lát", getContext());
         String userId = SharedPrefsSingleton.getInstance(getContext().getApplicationContext()).getStringValue(USER_ID_SAVE);
         String urlProducts = UPDATE_USER + "/" + userId;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlProducts, null, new Response.Listener<JSONObject>() {
@@ -139,13 +126,13 @@ public class UserFragment extends Fragment implements View.OnClickListener{
                         JSONObject jsonObject = response.getJSONObject("data");
                         JSONObject data = jsonObject.getJSONObject("user");
                         int role = data.getInt(ROLE);
-                         storeId= data.getString(STORE_ID_PRODUCT);
-                        if (role == 2 ) {
+                        storeId = data.getString(STORE_ID_PRODUCT);
+                        if (role == 2) {
                             tvWhenNotSignUp.setVisibility(View.GONE);
                             tvMyShop.setVisibility(View.VISIBLE);
                             lnStartSell.setVisibility(View.GONE);
                             ProgressBarDialog.getInstance(getContext()).closeDialog();
-                        }else {
+                        } else {
                             tvWhenNotSignUp.setVisibility(View.VISIBLE);
                             tvMyShop.setVisibility(View.GONE);
                             lnStartSell.setVisibility(View.VISIBLE);
@@ -170,7 +157,7 @@ public class UserFragment extends Fragment implements View.OnClickListener{
                 ProgressBarDialog.getInstance(getContext()).closeDialog();
 
             }
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<>();
@@ -184,9 +171,8 @@ public class UserFragment extends Fragment implements View.OnClickListener{
     }
 
     private void clickStartSell() {
-            Intent intent = new Intent(getActivity(), SignUpShopActivity.class);
-            startActivity(intent);
-
+        Intent intent = new Intent(getActivity(), SignUpShopActivity.class);
+        startActivity(intent);
 
 
     }
@@ -195,8 +181,8 @@ public class UserFragment extends Fragment implements View.OnClickListener{
      * click setting profile
      */
     private void clickProfileSetting() {
-            Intent intent = new Intent(getContext(), ProfileSettingActivity.class);
-            startActivity(intent);
+        Intent intent = new Intent(getContext(), ProfileSettingActivity.class);
+        startActivity(intent);
 
     }
 
@@ -207,14 +193,15 @@ public class UserFragment extends Fragment implements View.OnClickListener{
         tvUserName = view.findViewById(R.id.tvUserName);
         lnSetting = view.findViewById(R.id.lnSetting);
         lnWait = view.findViewById(R.id.lnWait);
+        lnDelivery = view.findViewById(R.id.lnDelivery);
+        lnFinish = view.findViewById(R.id.lnFinish);
 
     }
 
 
-
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.tvMyShop:
                 openMyShop();
                 break;
@@ -227,8 +214,24 @@ public class UserFragment extends Fragment implements View.OnClickListener{
             case R.id.lnWait:
                 waitForConfirmation();
                 break;
+            case R.id.lnDelivery:
+                deliveryOrder();
+                break;
+            case R.id.lnFinish:
+                completeOrder();
+                break;
             default:
         }
+
+    }
+
+    private void completeOrder() {
+        startActivity(new Intent(getContext(), MyOrderActivity.class));
+
+    }
+
+    private void deliveryOrder() {
+        startActivity(new Intent(getContext(), MyOrderActivity.class));
 
     }
 }

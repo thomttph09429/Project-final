@@ -198,7 +198,7 @@
                     android:background="@drawable/bd_border_20_topbot_right"
                     android:paddingLeft="@dimen/_8sdp"
                     android:paddingRight="@dimen/_3sdp"
-                    android:text="Shop cùa tôi  "
+                    android:text="Shop của tôi  "
                     android:textColor="@color/shopcuatoi" />
             </RelativeLayout>
 
@@ -239,6 +239,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
                         android:gravity="left"
+                        android:textSize="@dimen/_10sdp"
                         android:text="Lịch sử mua hàng"
                         android:textStyle="italic" />
                 </LinearLayout>
@@ -252,7 +253,7 @@
                     <LinearLayout
                         android:id="@+id/lnWait"
                         android:layout_width="0dp"
-                        android:background="@drawable/bg_border_0"
+                        android:background="@drawable/bg_border_green_light_20"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="vertical">
@@ -280,7 +281,8 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:background="@drawable/bg_border_0"
+                        android:id="@+id/lnDelivery"
+                        android:background="@drawable/bg_border_green_light_20"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -300,7 +302,7 @@
                             android:gravity="center"
                             android:paddingTop="8dp"
                             android:paddingBottom="5dp"
-                            android:text="Chờ lấy hàng"
+                            android:text="Đang giao"
                             android:textColor="@color/black"
                             android:textSize="11dp"
                             android:textStyle="normal" />
@@ -308,10 +310,11 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/lnFinish"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@drawable/bg_border_0"
+                        android:background="@drawable/bg_border_green_light_20"
                         android:orientation="vertical">
 
                         <ImageButton
@@ -328,7 +331,7 @@
                             android:gravity="center"
                             android:paddingTop="8dp"
                             android:paddingBottom="5dp"
-                            android:text="Đang giao"
+                            android:text="Đã giao"
                             android:textColor="@color/black"
                             android:textSize="11dp"
                             android:textStyle="normal" />
@@ -336,7 +339,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:background="@drawable/bg_border_0"
+                        android:background="@drawable/bg_border_green_light_20"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -402,14 +405,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#E3EFCE"
                     android:orientation="horizontal"
-                    android:paddingTop="8dp">
+              >
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="@drawable/bg_border_green_light_20"
                         android:orientation="vertical">
 
                         <ImageButton
@@ -442,6 +445,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:background="@drawable/bg_border_green_light_20"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

@@ -1,4 +1,4 @@
-package com.app.projectfinal.myOrder.fragment;
+package com.app.projectfinal.order.myOrder.fragment;
 
 import static com.app.projectfinal.utils.Constant.ORDER;
 import static com.app.projectfinal.utils.Constant.TOTAL;
@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +49,8 @@ public class DeliveryFragment extends Fragment {
     private TextView tvAmountDelivery;
     private List<Order> orders;
     private OrderWaitAdapter orderWaitAdapter;
+    private LinearLayout lnShow, lnHide;
+    private String nameStore;
 
 
     @Override
@@ -75,17 +78,33 @@ public class DeliveryFragment extends Fragment {
                 if (response != null) {
                     try {
                         JSONObject jsonObject = response.getJSONObject("data");
-                        JSONArray jsonArray = jsonObject.getJSONArray("products");
+                        JSONArray jsonArray = jsonObject.getJSONArray("orders");
                         int totalOrder = jsonObject.getInt(TOTAL);
+
+                        if (totalOrder==0){
+                            lnShow.setVisibility(View.GONE);
+                            lnHide.setVisibility(View.VISIBLE);
+
+                        }else {
+                            lnShow.setVisibility(View.VISIBLE);
+                            lnHide.setVisibility(View.GONE);
+                        }
                         tvAmountDelivery.setText("Bạn có " + totalOrder + " đơn đang giao");
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject object = jsonArray.getJSONObject(i);
                             int totalPrice = object.getInt(TOTAL_PRICE);
+                            nameStore = object.getString("name_store");
 
-                            JSONArray jsonArray1 = object.getJSONArray("products");
-                            Log.e("price", jsonArray1 + "");
-                            orders.add(new Order(jsonArray1.length(), totalPrice));
+                            JSONArray products = object.getJSONArray("products");
+                            List<ItemOrder> itemOrders= new ArrayList<>();
+                            for (int j = 0; j < products.length(); j++) {
+                                JSONObject item = products.getJSONObject(j);
+                                Gson gson = new Gson();
+                                ItemOrder itemOrder = gson.fromJson(String.valueOf(item), ItemOrder.class);
+                                itemOrders.add(itemOrder);
+                                orders.add(new Order(products.length(), totalPrice, itemOrders, nameStore));
 
+                            }
                             orderWaitAdapter = new OrderWaitAdapter(orders, getContext());
                             rvDelivery.setAdapter(orderWaitAdapter);
 
@@ -125,6 +144,8 @@ public class DeliveryFragment extends Fragment {
     private void initView() {
         rvDelivery = view.findViewById(R.id.rvDelivery);
         tvAmountDelivery = view.findViewById(R.id.tvAmountDelivery);
+        lnShow = view.findViewById(R.id.lnShow);
+        lnHide = view.findViewById(R.id.lnHide);
     }
     private void initAction() {
         orders = new ArrayList<>();
