@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,6 +20,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +39,7 @@ import com.app.projectfinal.model.order.ItemOrder;
 import com.app.projectfinal.model.order.Order;
 import com.app.projectfinal.utils.ConstantData;
 import com.app.projectfinal.utils.ProgressBarDialog;
+import com.app.projectfinal.utils.ValidateForm;
 import com.app.projectfinal.utils.VolleySingleton;
 import com.google.gson.Gson;
 
@@ -52,9 +56,13 @@ public class OrderInformationActivity extends AppCompatActivity {
 
     private List<DetailOrder> detailOrders;
     private String orderId;
-    private TextView tvUserName, tvPhoneNumber, tvAddress, tvNameShop;
+    private TextView tvUserName, tvPhoneNumber, tvAddress, tvNameShop, tvCodeOrder, tvTotalPrice, tvTimeOrder, tvPay, tvComplete, tvCancel;
     private RecyclerView rvListOrder;
     private ItemOrderAdapter mItemOrderAdapter;
+    private RelativeLayout rlCancel, rlComplete, rlPay, rlTimeOrder, rlCode;
+    private TextView tvStatusPending, tvStatusDelivery, tvStatusComplete, tvStatusCancel;
+    private AppCompatButton btnCancel, btnProcess;
+    private LinearLayoutCompat  lnBottom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,13 +79,34 @@ public class OrderInformationActivity extends AppCompatActivity {
         tvUserName = findViewById(R.id.tvUserName);
         tvNameShop = findViewById(R.id.tvNameShop);
         rvListOrder = findViewById(R.id.rvListOrder);
+        tvTotalPrice = findViewById(R.id.tvTotalPrice);
+        tvCodeOrder = findViewById(R.id.tvCodeOrder);
+        tvTimeOrder = findViewById(R.id.tvTimeOrder);
+        tvPay = findViewById(R.id.tvPay);
+        tvComplete = findViewById(R.id.tvComplete);
+        tvCancel = findViewById(R.id.tvCancel);
+
+        rlCancel = findViewById(R.id.rlCancel);
+        rlComplete = findViewById(R.id.rlComplete);
+        rlPay = findViewById(R.id.rlPay);
+        rlTimeOrder = findViewById(R.id.rlTimeOrder);
+        rlCode = findViewById(R.id.rlCode);
+
+        tvStatusPending = findViewById(R.id.tvStatusPending);
+        tvStatusDelivery = findViewById(R.id.tvStatusDelivery);
+        tvStatusComplete = findViewById(R.id.tvStatusComplete);
+        tvStatusCancel = findViewById(R.id.tvStatusCancel);
+        btnCancel = findViewById(R.id.btnCancel);
+        btnProcess = findViewById(R.id.btnProcess);
+        lnBottom=findViewById(R.id.lnBottom);
+
     }
 
     private void initAction() {
         detailOrders = new ArrayList<>();
         Bundle bundle = getIntent().getExtras();
         orderId = bundle.getString("id");
-        Log.e("orderId", orderId+"");
+        Log.e("orderId", orderId + "");
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rvListOrder.setLayoutManager(layoutManager);
@@ -86,6 +115,7 @@ public class OrderInformationActivity extends AppCompatActivity {
 
     private void getDetailOrder() {
         String urlOrder = ORDER + "/" + orderId;
+        ProgressBarDialog.getInstance(this).showDialog("Đang tải", this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlOrder, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -94,11 +124,13 @@ public class OrderInformationActivity extends AppCompatActivity {
                         JSONObject jsonObject = response.getJSONObject("data");
                         JSONObject orders = jsonObject.getJSONObject("order");
                         Gson gson = new Gson();
-                        DetailOrder     detailOrder    = gson.fromJson(String.valueOf(orders), DetailOrder.class);
+                        DetailOrder detailOrder = gson.fromJson(String.valueOf(orders), DetailOrder.class);
                         getInfor(detailOrder);
                         detailOrders.add(detailOrder);
-                        mItemOrderAdapter = new ItemOrderAdapter(detailOrder.getProducts() , OrderInformationActivity.this);
+                        mItemOrderAdapter = new ItemOrderAdapter(detailOrder.getProducts(), OrderInformationActivity.this);
                         rvListOrder.setAdapter(mItemOrderAdapter);
+                        ProgressBarDialog.getInstance(OrderInformationActivity.this).closeDialog();
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                         Toast.makeText(OrderInformationActivity.this, e.toString(), Toast.LENGTH_LONG).show();
@@ -134,5 +166,31 @@ public class OrderInformationActivity extends AppCompatActivity {
         tvAddress.setText(detailOrder.getLocation());
         tvPhoneNumber.setText(detailOrder.getCustomerPhone() + "");
         tvUserName.setText(detailOrder.getCustomerName());
+        tvTotalPrice.setText(ValidateForm.getDecimalFormattedString(detailOrder.getTotalPrice() + ""));
+        //display time in process order
+        tvCodeOrder.setText(detailOrder.getId());
+        tvTimeOrder.setText(detailOrder.getCreatedAt());
+        tvPay.setText(detailOrder.getUpdatedAt());
+        tvComplete.setText(detailOrder.getUpdatedAt());
+        tvCancel.setText(detailOrder.getUpdatedAt());
+        if (detailOrder.getStatus() == 0) {
+            rlCancel.setVisibility(View.VISIBLE);
+            tvStatusCancel.setVisibility(View.VISIBLE);
+        } else if (detailOrder.getStatus() == 1) {
+            tvStatusPending.setVisibility(View.VISIBLE);
+            btnCancel.setVisibility(View.VISIBLE);
+            btnProcess.setVisibility(View.VISIBLE);
+            lnBottom.setVisibility(View.VISIBLE);
+
+
+        } else if (detailOrder.getStatus() == 2) {
+            tvStatusDelivery.setVisibility(View.VISIBLE);
+
+        } else {
+            rlComplete.setVisibility(View.VISIBLE);
+            rlPay.setVisibility(View.VISIBLE);
+            tvStatusComplete.setVisibility(View.VISIBLE);
+        }
+
     }
 }

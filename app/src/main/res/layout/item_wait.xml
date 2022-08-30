@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/_10sdp"
         android:text="Tiểu cảnh, nhà nông thôn bằng nhựa"
+        android:textColor="@color/black_94"
         android:textSize="@dimen/_13sdp"
         android:textStyle="bold" />
 

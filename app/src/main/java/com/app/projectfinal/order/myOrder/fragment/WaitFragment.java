@@ -85,6 +85,7 @@ public class WaitFragment extends Fragment {
     }
 
     private void getOrderPendingConfirm() {
+        ProgressBarDialog.getInstance(getContext()).showDialog("Đang tải",getContext());
         String urlOrder = ORDER + "?" + "userId=" + ConstantData.getUserId(getContext()) + "&status=" + 1 + "&page=1&size=50";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlOrder, null, new Response.Listener<JSONObject>() {
             @Override
@@ -120,6 +121,8 @@ public class WaitFragment extends Fragment {
                             orders.add(new Order(products.length(), totalPrice, itemOrders, nameStore, orderId));
                             orderWaitAdapter = new OrderWaitAdapter(orders, getContext() );
                             rvWait.setAdapter(orderWaitAdapter);
+                            ProgressBarDialog.getInstance(getContext()).closeDialog();
+
                         }
 
                         Log.e("itemOrders", orders.get(0).getItemOrders().get(0).getName() + "");

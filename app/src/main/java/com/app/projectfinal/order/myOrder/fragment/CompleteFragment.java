@@ -90,7 +90,7 @@ public class CompleteFragment extends Fragment {
                             lnShow.setVisibility(View.VISIBLE);
                             lnHide.setVisibility(View.GONE);
                         }
-                        tvAmountComplete.setText("Bạn có " + totalOrder + " đơn đang giao");
+                        tvAmountComplete.setText("Bạn có " + totalOrder + " đơn đã giao");
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject object = jsonArray.getJSONObject(i);
                             int totalPrice = object.getInt(TOTAL_PRICE);
