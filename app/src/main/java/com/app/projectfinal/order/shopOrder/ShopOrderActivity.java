@@ -13,10 +13,14 @@ import com.google.android.material.tabs.TabLayout;
 public class ShopOrderActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager2;
+    private int pos;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_order);
+        Bundle bundle = getIntent().getExtras();
+        pos = bundle.getInt("pos");
         initView();
 
     }
@@ -27,5 +31,7 @@ public class ShopOrderActivity extends AppCompatActivity {
         ViewPagerShopOrderAdapter viewPagerAdapter = new ViewPagerShopOrderAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         viewPager2.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager2);
+        TabLayout.Tab tab = tabLayout.getTabAt(pos);
+        tab.select();
     }
 }

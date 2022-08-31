@@ -1,11 +1,14 @@
 package com.app.projectfinal.order.myOrder;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
+import com.app.projectfinal.order.myOrder.fragment.CancelFragment;
 import com.app.projectfinal.order.myOrder.fragment.CompleteFragment;
 import com.app.projectfinal.order.myOrder.fragment.DeliveryFragment;
 import com.app.projectfinal.order.myOrder.fragment.WaitFragment;
@@ -13,13 +16,14 @@ import com.app.projectfinal.order.myOrder.fragment.WaitFragment;
 public class ViewPagerMyOrderAdapter extends FragmentStatePagerAdapter {
 
 
-    public ViewPagerMyOrderAdapter(@NonNull FragmentManager fm, int behavior) {
+    public ViewPagerMyOrderAdapter(@NonNull FragmentManager fm, int behavior ) {
         super(fm, behavior);
     }
 
     @NonNull
     @Override
     public Fragment getItem(int position) {
+
         switch (position) {
             case 0:
                 return new WaitFragment();
@@ -27,14 +31,18 @@ public class ViewPagerMyOrderAdapter extends FragmentStatePagerAdapter {
                 return new DeliveryFragment();
             case 2:
                 return new CompleteFragment();
+            case 3:
+                return new CancelFragment();
             default:
-                return new  WaitFragment();
+                return new DeliveryFragment();
+
+
         }
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return 4;
     }
 
     @Nullable
@@ -44,11 +52,13 @@ public class ViewPagerMyOrderAdapter extends FragmentStatePagerAdapter {
         switch (position) {
 
             case 0:
-               return "Chờ xác nhận";
+                return "Chờ xác nhận";
             case 1:
-               return  "Đang giao";
+                return "Đang giao";
             case 2:
-                return  "Đã giao";
+                return "Đã giao";
+            case 3:
+                return "Đã hủy";
         }
         return null;
 

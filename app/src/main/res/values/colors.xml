@@ -32,7 +32,7 @@
     <color name="green">#1CAE81</color>
     <color name="greenWhite">#E3EFCE</color>
     <color name="bg_chat">#F1F1F1</color>
-
+    <color name="black_10">#1A000000</color>
     <color name="black_30">#4D000000</color>
     <color name="border_item">#CCE59D</color>
     <color name="black_94">#F018273A</color>

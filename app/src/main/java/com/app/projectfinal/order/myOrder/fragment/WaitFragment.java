@@ -24,7 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
-import com.app.projectfinal.adapter.order.OrderWaitAdapter;
+import com.app.projectfinal.adapter.order.myOrder.OrderAdapter;
 import com.app.projectfinal.model.order.ItemOrder;
 import com.app.projectfinal.model.order.Order;
 import com.app.projectfinal.utils.ConstantData;
@@ -48,9 +48,10 @@ public class WaitFragment extends Fragment {
     private List<Order> orders;
     private int totalOrder, totalPrice;
     private TextView tvAmountWait;
-    private OrderWaitAdapter orderWaitAdapter;
+    private OrderAdapter orderAdapter;
     private LinearLayout lnShow, lnHide;
     private String nameStore, orderId;
+    private  int status;
 
 
     @Override
@@ -85,7 +86,6 @@ public class WaitFragment extends Fragment {
     }
 
     private void getOrderPendingConfirm() {
-        ProgressBarDialog.getInstance(getContext()).showDialog("Đang tải",getContext());
         String urlOrder = ORDER + "?" + "userId=" + ConstantData.getUserId(getContext()) + "&status=" + 1 + "&page=1&size=50";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlOrder, null, new Response.Listener<JSONObject>() {
             @Override
@@ -109,6 +109,7 @@ public class WaitFragment extends Fragment {
                             totalPrice = object.getInt(TOTAL_PRICE);
                             nameStore = object.getString("name_store");
                             orderId = object.getString("id");
+                            status = object.getInt("status");
                             JSONArray products = object.getJSONArray("products");
                             List<ItemOrder> itemOrders = new ArrayList<>();
                             for (int j = 0; j < products.length(); j++) {
@@ -118,9 +119,9 @@ public class WaitFragment extends Fragment {
                                 itemOrders.add(itemOrder);
 
                             }
-                            orders.add(new Order(products.length(), totalPrice, itemOrders, nameStore, orderId));
-                            orderWaitAdapter = new OrderWaitAdapter(orders, getContext() );
-                            rvWait.setAdapter(orderWaitAdapter);
+                            orders.add(new Order(products.length(), totalPrice, itemOrders, nameStore, orderId, status));
+                            orderAdapter = new OrderAdapter(orders, getContext() );
+                            rvWait.setAdapter(orderAdapter);
                             ProgressBarDialog.getInstance(getContext()).closeDialog();
 
                         }

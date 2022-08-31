@@ -149,7 +149,7 @@ public class ListCategoryDialogFragment extends DialogFragment {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<>();
-                headers.put("Authorization", ConstantData.getToken(getContext().getApplicationContext()));
+                headers.put("Authorization", ConstantData.getToken(getContext()));
                 return headers;
             }
         };

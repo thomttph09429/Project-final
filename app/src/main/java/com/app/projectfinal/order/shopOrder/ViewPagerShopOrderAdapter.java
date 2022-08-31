@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import com.app.projectfinal.order.myOrder.fragment.CompleteFragment;
 import com.app.projectfinal.order.myOrder.fragment.DeliveryFragment;
 import com.app.projectfinal.order.myOrder.fragment.WaitFragment;
+import com.app.projectfinal.order.shopOrder.fragment.CancelConfirmFragment;
 import com.app.projectfinal.order.shopOrder.fragment.CompleteConfirmFragment;
 import com.app.projectfinal.order.shopOrder.fragment.DeliveryConfirmFragment;
 import com.app.projectfinal.order.shopOrder.fragment.WaitConfirmFragment;
@@ -30,6 +31,8 @@ public class ViewPagerShopOrderAdapter extends FragmentStatePagerAdapter {
                 return new DeliveryConfirmFragment();
             case 2:
                 return new CompleteConfirmFragment();
+            case 3:
+                return new CancelConfirmFragment();
             default:
                 return new  WaitConfirmFragment();
         }
@@ -37,7 +40,7 @@ public class ViewPagerShopOrderAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return 4;
     }
 
     @Nullable
@@ -52,6 +55,8 @@ public class ViewPagerShopOrderAdapter extends FragmentStatePagerAdapter {
                return  "Đang giao";
             case 2:
                 return  "Đã giao";
+            case 3:
+                return  "Đã hủy";
         }
         return null;
 

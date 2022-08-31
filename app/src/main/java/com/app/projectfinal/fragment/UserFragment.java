@@ -40,7 +40,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserFragment extends Fragment implements View.OnClickListener {
-    private LinearLayout lnStartSell, lnSetting, lnWait, lnFinish, lnDelivery;
+    private LinearLayout lnStartSell, lnSetting, lnWait, lnFinish, lnDelivery, lnCancel;
     private View view;
     private TextView tvMyShop, tvWhenNotSignUp, tvUserName;
     private String isSignUp;
@@ -65,7 +65,6 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         initAction();
         getInformation();
         isSignUpToBecomeSeller();
-
         return view;
     }
 
@@ -76,12 +75,10 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         lnSetting.setOnClickListener(this);
         lnDelivery.setOnClickListener(this);
         lnFinish.setOnClickListener(this);
+        lnCancel.setOnClickListener(this);
 
     }
 
-    private void waitForConfirmation() {
-        startActivity(new Intent(getContext(), MyOrderActivity.class));
-    }
 
     /**
      * get user name of user
@@ -195,6 +192,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         lnWait = view.findViewById(R.id.lnWait);
         lnDelivery = view.findViewById(R.id.lnDelivery);
         lnFinish = view.findViewById(R.id.lnFinish);
+        lnCancel = view.findViewById(R.id.lnCancel);
 
     }
 
@@ -220,18 +218,44 @@ public class UserFragment extends Fragment implements View.OnClickListener {
             case R.id.lnFinish:
                 completeOrder();
                 break;
+            case R.id.lnCancel:
+                cancelOrder();
+                break;
             default:
         }
 
     }
 
+    private void waitForConfirmation() {
+        Intent intent = new Intent(getContext(), MyOrderActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("pos", 0);
+        intent.putExtras(bundle);
+        startActivity(intent);    }
+
+    private void deliveryOrder() {
+        Intent intent = new Intent(getContext(), MyOrderActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("pos", 1);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
     private void completeOrder() {
-        startActivity(new Intent(getContext(), MyOrderActivity.class));
+        Intent intent = new Intent(getContext(), MyOrderActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("pos", 2);
+        intent.putExtras(bundle);
+        startActivity(intent);
 
     }
 
-    private void deliveryOrder() {
-        startActivity(new Intent(getContext(), MyOrderActivity.class));
 
+    private void cancelOrder() {
+        Intent intent = new Intent(getContext(), MyOrderActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("pos", 3);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }

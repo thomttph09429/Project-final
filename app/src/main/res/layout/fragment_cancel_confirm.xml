@@ -3,26 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".order.shopOrder.fragment.WaitConfirmFragment">
+    tools:context=".order.myOrder.fragment.CancelFragment">
     <LinearLayout
         android:visibility="gone"
         android:id="@+id/lnShow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <TextView
-            android:id="@+id/tvAmountWait"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/_10sdp"
-            android:text="Bạn có 33 đơn đang chờ xác nhận" />
+    <TextView
+        android:id="@+id/tvAmountWait"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp"
+        android:text="Bạn có 33 đơn đã hủy" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:padding="@dimen/_10sdp"
-            android:layout_below="@+id/tvAmountWait"
-            android:id="@+id/rvWait"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:padding="@dimen/_10sdp"
+        android:layout_below="@+id/tvAmountWait"
+        android:id="@+id/rvWait"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/lnHide"

@@ -1,21 +1,20 @@
-package com.app.projectfinal.order.myOrder;
+package com.app.projectfinal.order.shopOrder;
 
 import static com.app.projectfinal.utils.Constant.ORDER;
 
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.LinearLayoutCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -39,7 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class OrderInformationActivity extends AppCompatActivity implements View.OnClickListener {
+public class OrderShopInformationActivity extends AppCompatActivity implements View.OnClickListener {
 
     private List<DetailOrder> detailOrders;
     private String orderId;
@@ -55,7 +54,7 @@ public class OrderInformationActivity extends AppCompatActivity implements View.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_information);
+        setContentView(R.layout.activity_order_shop_information);
         initView();
         initAction();
         getDetailOrder();
@@ -118,14 +117,14 @@ public class OrderInformationActivity extends AppCompatActivity implements View.
                         DetailOrder detailOrder = gson.fromJson(String.valueOf(orders), DetailOrder.class);
                         getInfor(detailOrder);
                         detailOrders.add(detailOrder);
-                        mItemOrderAdapter = new ItemOrderAdapter(detailOrder.getProducts(), OrderInformationActivity.this);
+                        mItemOrderAdapter = new ItemOrderAdapter(detailOrder.getProducts(), OrderShopInformationActivity.this);
                         rvListOrder.setAdapter(mItemOrderAdapter);
-                        ProgressBarDialog.getInstance(OrderInformationActivity.this).closeDialog();
+                        ProgressBarDialog.getInstance(OrderShopInformationActivity.this).closeDialog();
 
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        Toast.makeText(OrderInformationActivity.this, e.toString(), Toast.LENGTH_LONG).show();
-                        ProgressBarDialog.getInstance(OrderInformationActivity.this).closeDialog();
+                        Toast.makeText(OrderShopInformationActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+                        ProgressBarDialog.getInstance(OrderShopInformationActivity.this).closeDialog();
 
                     }
                 }
@@ -135,19 +134,19 @@ public class OrderInformationActivity extends AppCompatActivity implements View.
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(OrderInformationActivity.this, error.toString(), Toast.LENGTH_LONG).show();
-                ProgressBarDialog.getInstance(OrderInformationActivity.this).closeDialog();
+                Toast.makeText(OrderShopInformationActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+                ProgressBarDialog.getInstance(OrderShopInformationActivity.this).closeDialog();
 
             }
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<>();
-                headers.put("Authorization", ConstantData.getToken(OrderInformationActivity.this.getApplicationContext()));
+                headers.put("Authorization", ConstantData.getToken(OrderShopInformationActivity.this.getApplicationContext()));
                 return headers;
             }
         };
-        VolleySingleton.getInstance(OrderInformationActivity.this).getRequestQueue().add(jsonObjectRequest);
+        VolleySingleton.getInstance(OrderShopInformationActivity.this).getRequestQueue().add(jsonObjectRequest);
 
     }
 

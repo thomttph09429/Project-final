@@ -21,7 +21,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvNameShop"
         android:layout_marginTop="13dp"
-        android:padding="@dimen/_10sdp">
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_10sdp"
+     >
 
 
         <ImageView
@@ -103,31 +105,82 @@
         android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rlItem">
+        android:layout_below="@+id/rlItem"
+       >
+
 
         <TextView
             android:id="@+id/tvAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/_10sdp"
-            android:text="sản phẩm" />
+            android:text="1"
+            android:textColor="@color/red" />
 
         <TextView
-            android:id="@+id/tvTotalPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tvAmount"
+            android:text=" sản phẩm" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tổng thanh toán: "
+            android:layout_toLeftOf="@+id/tvtv"
+
+            />
+
+
+        <TextView
+            android:id="@+id/tvtv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/under_text"
+            android:layout_toLeftOf="@+id/tvTotalPrice"
+            android:textColor="@color/red"
+
+            />
+        <TextView
             android:layout_alignParentEnd="true"
-            android:padding="@dimen/_10sdp"
-            android:text="Tổng thanh toán: 100" />
+            android:id="@+id/tvTotalPrice"
+            android:textColor="@color/red"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1000" />
 
     </RelativeLayout>
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="0.01dp"
+        android:layout_below="@+id/top"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@color/labelGrayGreenBG" />
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnProcess"
         android:layout_width="@dimen/_100sdp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/top"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_below="@+id/view"
+        android:layout_marginTop="@dimen/_10sdp"
         android:layout_alignParentEnd="true"
-        android:text="Đang xử lý"
+        android:text="đang xử lý"
+        android:fontFamily="@font/arial"
         android:textAllCaps="false"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:visibility="gone" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnConfirm"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_below="@+id/view"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_alignParentEnd="true"
+        android:text="Liên hệ shop"
+        android:background="@color/color_main"
+        android:fontFamily="@font/arial"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:visibility="gone" />
 </RelativeLayout>

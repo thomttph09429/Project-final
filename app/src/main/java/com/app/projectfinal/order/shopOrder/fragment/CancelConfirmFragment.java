@@ -24,10 +24,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
 import com.app.projectfinal.adapter.order.myOrder.OrderAdapter;
+import com.app.projectfinal.model.order.ItemOrder;
 import com.app.projectfinal.model.order.Order;
 import com.app.projectfinal.utils.ConstantData;
 import com.app.projectfinal.utils.ProgressBarDialog;
 import com.app.projectfinal.utils.VolleySingleton;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,14 +41,16 @@ import java.util.List;
 import java.util.Map;
 
 
-public class CompleteConfirmFragment extends Fragment {
-
+public class CancelConfirmFragment extends Fragment {
     private View view;
-    private RecyclerView rvComplete;
-    private TextView tvAmountComplete;
+    private RecyclerView rvWait;
     private List<Order> orders;
+    private int totalOrder, totalPrice;
+    private TextView tvAmountWait;
     private OrderAdapter orderAdapter;
     private LinearLayout lnShow, lnHide;
+    private String nameStore, orderId;
+    private  int status;
 
 
     @Override
@@ -59,48 +63,70 @@ public class CompleteConfirmFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         if (view == null)
-            view = inflater.inflate(R.layout.fragment_complete_confirm, container, false);
+            view = inflater.inflate(R.layout.fragment_cancel_confirm, container, false);
         initView();
         initAction();
-        getDelivery();
+        getOrderPendingConfirm();
         return view;
     }
 
-    private void getDelivery() {
-        String urlOrder = ORDER + "?" + "userId=" + ConstantData.getUserId(getContext()) + "&status=" + 3;
+    private void initView() {
+        rvWait = view.findViewById(R.id.rvWait);
+        tvAmountWait = view.findViewById(R.id.tvAmountWait);
+        lnShow = view.findViewById(R.id.lnShow);
+        lnHide = view.findViewById(R.id.lnHide);
+    }
+
+    private void initAction() {
+        orders = new ArrayList<>();
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        rvWait.setLayoutManager(layoutManager);
+
+    }
+
+    private void getOrderPendingConfirm() {
+        String urlOrder = ORDER + "?" + "userId=" + ConstantData.getUserId(getContext()) + "&status=" + 1 + "&page=1&size=50";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlOrder, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 if (response != null) {
-
                     try {
                         JSONObject jsonObject = response.getJSONObject("data");
-                        JSONArray jsonArray = jsonObject.getJSONArray("products");
-
-                        int totalOrder = jsonObject.getInt(TOTAL);
-                        if (totalOrder==0){
+                        JSONArray jsonArray = jsonObject.getJSONArray("orders");
+                        totalOrder = jsonObject.getInt(TOTAL);
+                        if (totalOrder == 0) {
                             lnShow.setVisibility(View.GONE);
                             lnHide.setVisibility(View.VISIBLE);
 
-                        }else {
+                        } else {
                             lnShow.setVisibility(View.VISIBLE);
                             lnHide.setVisibility(View.GONE);
                         }
-                        tvAmountComplete.setText("Bạn có " + totalOrder + " đơn đang giao");
+                        tvAmountWait.setText("Bạn có " + totalOrder + " đơn đang chờ xác nhận");
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject object = jsonArray.getJSONObject(i);
-                            int totalPrice = object.getInt(TOTAL_PRICE);
-                            Log.e("pricess", totalPrice + "");
+                            totalPrice = object.getInt(TOTAL_PRICE);
+                            nameStore = object.getString("name_store");
+                            orderId = object.getString("id");
+                            status = object.getInt("status");
+                            JSONArray products = object.getJSONArray("products");
+                            List<ItemOrder> itemOrders = new ArrayList<>();
+                            for (int j = 0; j < products.length(); j++) {
+                                JSONObject item = products.getJSONObject(j);
+                                Gson gson = new Gson();
+                                ItemOrder itemOrder = gson.fromJson(String.valueOf(item), ItemOrder.class);
+                                itemOrders.add(itemOrder);
 
-
-                            JSONArray jsonArray1 = object.getJSONArray("products");
-//                            orders.add(new Order(jsonArray1.length(), totalPrice));
-//
-//                            orderWaitAdapter = new OrderWaitAdapter(orders, getContext());
-//                            rvComplete.setAdapter(orderWaitAdapter);
-
+                            }
+                            orders.add(new Order(products.length(), totalPrice, itemOrders, nameStore, orderId, status));
+                            orderAdapter = new OrderAdapter(orders, getContext() );
+                            rvWait.setAdapter(orderAdapter);
+                            ProgressBarDialog.getInstance(getContext()).closeDialog();
 
                         }
+
+                        Log.e("itemOrders", orders.get(0).getItemOrders().get(0).getName() + "");
+
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -108,8 +134,6 @@ public class CompleteConfirmFragment extends Fragment {
                         ProgressBarDialog.getInstance(getContext()).closeDialog();
 
                     }
-                }else {
-
                 }
 
 
@@ -130,21 +154,6 @@ public class CompleteConfirmFragment extends Fragment {
             }
         };
         VolleySingleton.getInstance(getContext()).getRequestQueue().add(jsonObjectRequest);
-
-
-    }
-
-    private void initView() {
-        rvComplete = view.findViewById(R.id.rvComplete);
-        tvAmountComplete = view.findViewById(R.id.tvAmountComplete);
-        lnShow = view.findViewById(R.id.lnShow);
-        lnHide = view.findViewById(R.id.lnHide);
-
-    }
-    private void initAction() {
-        orders = new ArrayList<>();
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        rvComplete.setLayoutManager(layoutManager);
 
     }
 }

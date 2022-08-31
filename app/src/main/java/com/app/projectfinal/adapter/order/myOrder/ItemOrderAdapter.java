@@ -1,5 +1,6 @@
-package com.app.projectfinal.adapter.order;
+package com.app.projectfinal.adapter.order.myOrder;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,34 +13,36 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.projectfinal.R;
 import com.app.projectfinal.model.order.ItemOrder;
-import com.app.projectfinal.model.order.Order;
+import com.app.projectfinal.utils.ValidateForm;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-public class OrderItemWaitAdapter extends RecyclerView.Adapter<OrderItemWaitAdapter.MyViewHolder> {
-    private Context context;
+public class ItemOrderAdapter extends RecyclerView.Adapter<ItemOrderAdapter.MyViewHolder> {
     private List<ItemOrder> itemOrders;
+    private Context context;
 
-    public OrderItemWaitAdapter(Context context, List<ItemOrder> itemOrders) {
-        this.context = context;
+
+    public ItemOrderAdapter(List<ItemOrder> itemOrders, Context context) {
         this.itemOrders = itemOrders;
+        this.context = context;
     }
 
     @NonNull
     @Override
-    public OrderItemWaitAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_pay, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        ItemOrder itemOrder= itemOrders.get(position);
-        holder.tvAmount.setText(itemOrder.getQuantity()+"");
-        holder.tvNameProduct.setText(itemOrder.getName());
-        holder.tvPrice.setText(itemOrder.getPrice()+"");
-        Glide.with(context).load(itemOrder.getQuantity()).error(R.drawable.avatar_empty).into(holder.ivProduct);
+    public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        ItemOrder itemOrder  = itemOrders.get(position);
+        tvNameProduct.setText(itemOrder.getName());
+        tvPrice.setText(ValidateForm.getDecimalFormattedString(itemOrder.getPrice()+""));
+        tvAmount.setText("x"+itemOrder.getQuantity());
+        Glide.with(context).load(itemOrder.getImage1()).centerCrop().into(ivProduct);
+
 
     }
 
@@ -48,19 +51,20 @@ public class OrderItemWaitAdapter extends RecyclerView.Adapter<OrderItemWaitAdap
         return itemOrders.size();
     }
 
+    private TextView  tvNameProduct, tvPrice, tvAmount;
+    private ImageView ivProduct;
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvNameProduct, tvPrice, tvAmount;
-        private ImageView ivProduct;
 
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvAmount = itemView.findViewById(R.id.tvAmount);
             tvNameProduct = itemView.findViewById(R.id.tvNameProduct);
             tvPrice = itemView.findViewById(R.id.tvPrice);
+            tvAmount = itemView.findViewById(R.id.tvAmount);
             ivProduct = itemView.findViewById(R.id.ivProduct);
-
-
         }
+
+
     }
 }

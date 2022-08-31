@@ -8,8 +8,15 @@ public class Order {
     private List<ItemOrder> itemOrders;
     private String name_store;
     private  String id;
+    private int status;
 
+    public int getStatus() {
+        return status;
+    }
 
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public String getId() {
         return id;
@@ -28,14 +35,22 @@ public class Order {
     }
 
 
-    public Order(int total, int totalPrice, List<ItemOrder> itemOrders, String name_store, String id) {
+//    public Order(int total, int totalPrice, List<ItemOrder> itemOrders, String name_store, String id) {
+//        this.total = total;
+//        this.totalPrice = totalPrice;
+//        this.itemOrders = itemOrders;
+//        this.name_store = name_store;
+//        this.id = id;
+//    }
+
+    public Order(int total, int totalPrice, List<ItemOrder> itemOrders, String name_store, String id, int status) {
         this.total = total;
         this.totalPrice = totalPrice;
         this.itemOrders = itemOrders;
         this.name_store = name_store;
         this.id = id;
+        this.status = status;
     }
-
 
     public List<ItemOrder> getItemOrders() {
         return itemOrders;

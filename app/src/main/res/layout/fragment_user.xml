@@ -339,6 +339,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/lnCancel"
                         android:background="@drawable/bg_border_green_light_20"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -359,7 +360,7 @@
                             android:gravity="center"
                             android:paddingTop="8dp"
                             android:paddingBottom="5dp"
-                            android:text="Hoàn tiền"
+                            android:text="Đã hủy"
                             android:textColor="@color/black"
                             android:textSize="11dp"
                             android:textStyle="normal" />

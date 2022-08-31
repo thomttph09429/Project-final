@@ -23,7 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
-import com.app.projectfinal.adapter.order.OrderWaitAdapter;
+import com.app.projectfinal.adapter.order.myOrder.OrderAdapter;
 import com.app.projectfinal.model.order.Order;
 import com.app.projectfinal.utils.ConstantData;
 import com.app.projectfinal.utils.ProgressBarDialog;
@@ -45,7 +45,7 @@ public class DeliveryConfirmFragment extends Fragment {
     private RecyclerView rvDelivery;
     private TextView tvAmountDelivery;
     private List<Order> orders;
-    private OrderWaitAdapter orderWaitAdapter;
+    private OrderAdapter orderAdapter;
     private LinearLayout lnShow, lnHide;
 
 

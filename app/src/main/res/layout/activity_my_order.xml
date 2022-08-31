@@ -28,7 +28,7 @@
                 android:padding="10dp">
 
                 <ImageView
-                    android:id="@+id/img_myShop_back"
+                    android:id="@+id/ivBack"
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
                     android:src="@drawable/arrow_left" />

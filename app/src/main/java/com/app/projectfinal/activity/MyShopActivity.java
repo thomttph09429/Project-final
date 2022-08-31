@@ -20,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
+import com.app.projectfinal.order.myOrder.MyOrderActivity;
 import com.app.projectfinal.order.shopOrder.ShopOrderActivity;
 import com.app.projectfinal.utils.ConstantData;
 import com.app.projectfinal.utils.ProgressBarDialog;
@@ -33,7 +34,7 @@ import java.util.Map;
 
 public class MyShopActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView tvStoreName, tvViewShop;
-    private LinearLayout lnStartSell, lnMyProduct, lnShopSetting,lnWaitConfirm,lnDelivery,lnComplete;
+    private LinearLayout lnStartSell, lnMyProduct, lnShopSetting, lnWaitConfirm, lnDelivery, lnComplete, lnCancel;
     private String storeId, storeName;
 
     @Override
@@ -53,6 +54,7 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
         lnWaitConfirm.setOnClickListener(this);
         lnDelivery.setOnClickListener(this);
         lnComplete.setOnClickListener(this);
+        lnCancel.setOnClickListener(this);
 
     }
 
@@ -66,6 +68,7 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
         lnWaitConfirm = findViewById(R.id.lnWaitConfirm);
         lnDelivery = findViewById(R.id.lnDelivery);
         lnComplete = findViewById(R.id.lnComplete);
+        lnCancel = findViewById(R.id.lnComplete);
 
     }
 
@@ -150,12 +153,42 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void openViewShopScreen() {
-        Intent intent= new Intent( this, ViewShopActivity.class);
+        Intent intent = new Intent(this, ViewShopActivity.class);
         startActivity(intent);
     }
-    private void openOrder(){
-        startActivity(new Intent(this, ShopOrderActivity.class));
 
+
+    private void waitForConfirmation() {
+        Intent intent = new Intent(this, ShopOrderActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("pos", 0);
+        intent.putExtras(bundle);
+        startActivity(intent);    }
+
+    private void deliveryOrder() {
+        Intent intent = new Intent(this, ShopOrderActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("pos", 1);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    private void completeOrder() {
+        Intent intent = new Intent(this, ShopOrderActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("pos", 2);
+        intent.putExtras(bundle);
+        startActivity(intent);
+
+    }
+
+
+    private void cancelOrder() {
+        Intent intent = new Intent(this, ShopOrderActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("pos", 3);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     @Override
@@ -174,14 +207,19 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
                 openViewShopScreen();
                 break;
             case R.id.lnWaitConfirm:
-                openOrder();
+                waitForConfirmation();
                 break;
             case R.id.lnDelivery:
-                openOrder();
+                deliveryOrder();
                 break;
             case R.id.lnComplete:
-                openOrder();
+                completeOrder();
+                break;
+            case R.id.lnCancel:
+                cancelOrder();
                 break;
         }
     }
+
+
 }
