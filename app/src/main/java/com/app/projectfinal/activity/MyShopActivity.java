@@ -35,7 +35,8 @@ import java.util.Map;
 public class MyShopActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView tvStoreName, tvViewShop;
     private LinearLayout lnStartSell, lnMyProduct, lnShopSetting, lnWaitConfirm, lnDelivery, lnComplete, lnCancel;
-    private String storeId, storeName;
+    private String  storeName;
+    public static  String storeId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +69,7 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
         lnWaitConfirm = findViewById(R.id.lnWaitConfirm);
         lnDelivery = findViewById(R.id.lnDelivery);
         lnComplete = findViewById(R.id.lnComplete);
-        lnCancel = findViewById(R.id.lnComplete);
+        lnCancel = findViewById(R.id.lnCancel);
 
     }
 

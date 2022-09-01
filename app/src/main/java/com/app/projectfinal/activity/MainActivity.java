@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigation.setDefaultBackgroundColor(Color.parseColor("#1CAE81"));
         bottomNavigation.setNotificationBackgroundColor(Color.parseColor("#1CAE81"));
-        checkIfUserRegisterShop();
 
         bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
@@ -123,38 +122,38 @@ public class MainActivity extends AppCompatActivity {
      *     TODO
      * </pre>
      */
-    public void checkIfUserRegisterShop() {
-
-        String url = UPDATE_USER + "/" + SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(Constant.USER_ID_SAVE);
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                if (response != null) {
-                    try {
-                        JSONObject jsonObject = response.getJSONObject("data");
-                        JSONObject user = jsonObject.getJSONObject("user");
-                        String role = user.getString(ROLE);
-                        if (role.equals(2)) {
-                            SharedPrefsSingleton.getInstance(getApplicationContext()).putStringValue(ROLE_SAVE, role);
-                        } else {
-                            SharedPrefsSingleton.getInstance(getApplicationContext()).putStringValue(ROLE_SAVE, "1");
-
-                        }
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-
-                    }
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-        VolleySingleton.getInstance(this).getRequestQueue().add(jsonObjectRequest);
-    }
+//    public void checkIfUserRegisterShop() {
+//
+//        String url = UPDATE_USER + "/" + SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(Constant.USER_ID_SAVE);
+//
+//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+//            @Override
+//            public void onResponse(JSONObject response) {
+//                if (response != null) {
+//                    try {
+//                        JSONObject jsonObject = response.getJSONObject("data");
+//                        JSONObject user = jsonObject.getJSONObject("user");
+//                        String role = user.getString(ROLE);
+//                        if (role.equals(2)) {
+//                            SharedPrefsSingleton.getInstance(getApplicationContext()).putStringValue(ROLE_SAVE, role);
+//                        } else {
+//                            SharedPrefsSingleton.getInstance(getApplicationContext()).putStringValue(ROLE_SAVE, "1");
+//
+//                        }
+//
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//
+//                    }
+//                }
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//
+//            }
+//        });
+//        VolleySingleton.getInstance(this).getRequestQueue().add(jsonObjectRequest);
+//    }
 
 }

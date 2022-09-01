@@ -51,8 +51,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
         Log.e("lojjjg", status+"");
         if (status == 1) {
             holder.btnProcess.setVisibility(View.VISIBLE);
-        } else {
+        } else if (status==1){
             holder.btnConfirm.setVisibility(View.VISIBLE);
+
+        }else {
+            holder.btnCancel.setVisibility(View.VISIBLE);
 
         }
         for (int i = 0; i < orders.get(position).getItemOrders().size(); i++) {
@@ -81,7 +84,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
         private TextView tvAmount, tvTotalPrice, tvNameShop, tvPrice, tvAmountProduct, tvNameProduct;
         private ImageView ivProduct;
         private RelativeLayout rlItem;
-        private AppCompatButton btnProcess,btnConfirm;
+        private AppCompatButton btnProcess,btnConfirm,btnCancel;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -95,6 +98,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
             rlItem = itemView.findViewById(R.id.rlItem);
             btnProcess = itemView.findViewById(R.id.btnProcess);
             btnConfirm = itemView.findViewById(R.id.btnConfirm);
+            btnCancel = itemView.findViewById(R.id.btnCancel);
 
 
         }

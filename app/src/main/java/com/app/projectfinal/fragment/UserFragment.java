@@ -2,6 +2,7 @@ package com.app.projectfinal.fragment;
 
 import static com.app.projectfinal.utils.Constant.ROLE;
 import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
+import static com.app.projectfinal.utils.Constant.TOTAL_ORDER;
 import static com.app.projectfinal.utils.Constant.UPDATE_USER;
 import static com.app.projectfinal.utils.Constant.USER_ID_SAVE;
 import static com.app.projectfinal.utils.Constant.USER_NAME_SAVE;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +46,8 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     private View view;
     private TextView tvMyShop, tvWhenNotSignUp, tvUserName;
     private String isSignUp;
+    private TextView tvTotalPending, tvTotalProcess, tvTotalDelivery, tvTotalCancel;
+    private RelativeLayout rlTotalPending, rlTotalProcess, rlTotalDelivery, rlTotalCancel;
     private String storeId;
 
     public UserFragment() {
@@ -113,13 +117,13 @@ public class UserFragment extends Fragment implements View.OnClickListener {
      */
     private void isSignUpToBecomeSeller() {
         ProgressBarDialog.getInstance(getContext()).showDialog("Đợi một lát", getContext());
-        String userId = SharedPrefsSingleton.getInstance(getContext().getApplicationContext()).getStringValue(USER_ID_SAVE);
-        String urlProducts = UPDATE_USER + "/" + userId;
+        String urlProducts = UPDATE_USER + "/" + ConstantData.getUserId(getContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlProducts, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 if (response != null) {
                     try {
+                        getOrderQuantity();
                         JSONObject jsonObject = response.getJSONObject("data");
                         JSONObject data = jsonObject.getJSONObject("user");
                         int role = data.getInt(ROLE);
@@ -183,6 +187,61 @@ public class UserFragment extends Fragment implements View.OnClickListener {
 
     }
 
+    private void getOrderQuantity() {
+        String urlProducts = TOTAL_ORDER + "/" + "?userId=" + ConstantData.getUserId(getContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlProducts, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                if (response != null) {
+                    try {
+                        JSONObject data = response.getJSONObject("data");
+                        int cancelOrder = data.getInt("cancelOrder");
+                        int newOrder = data.getInt("newOrder");
+                        int processingOrder = data.getInt("processingOrder");
+                        int finishOrder = data.getInt("finishOrder");
+
+
+                        //delivery
+                        if (processingOrder != 0) {
+                            rlTotalProcess.setVisibility(View.VISIBLE);
+                            tvTotalProcess.setText(String.valueOf(processingOrder));
+                        }
+
+                        //pending
+                        if (newOrder != 0) {
+                            rlTotalPending.setVisibility(View.VISIBLE);
+                            tvTotalPending.setText(String.valueOf(newOrder));
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getContext(), e.toString(), Toast.LENGTH_LONG).show();
+
+                    }
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), error.toString(), Toast.LENGTH_LONG).show();
+                ProgressBarDialog.getInstance(getContext()).closeDialog();
+
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", ConstantData.getToken(getContext().getApplicationContext()));
+                return headers;
+            }
+        };
+        VolleySingleton.getInstance(getContext()).getRequestQueue().add(jsonObjectRequest);
+
+
+    }
+
     private void initView() {
         tvMyShop = view.findViewById(R.id.tvMyShop);
         lnStartSell = view.findViewById(R.id.lnStartSell);
@@ -193,6 +252,15 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         lnDelivery = view.findViewById(R.id.lnDelivery);
         lnFinish = view.findViewById(R.id.lnFinish);
         lnCancel = view.findViewById(R.id.lnCancel);
+        tvTotalPending = view.findViewById(R.id.tvTotalPending);
+        tvTotalProcess = view.findViewById(R.id.tvTotalProcess);
+        tvTotalDelivery = view.findViewById(R.id.tvTotalDelivery);
+        tvTotalCancel = view.findViewById(R.id.tvTotalCancel);
+        rlTotalPending = view.findViewById(R.id.rlTotalPending);
+        rlTotalProcess = view.findViewById(R.id.rlTotalProcess);
+        rlTotalDelivery = view.findViewById(R.id.rlTotalDelivery);
+        rlTotalCancel = view.findViewById(R.id.rlTotalCancel);
+
 
     }
 
@@ -231,7 +299,8 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         Bundle bundle = new Bundle();
         bundle.putInt("pos", 0);
         intent.putExtras(bundle);
-        startActivity(intent);    }
+        startActivity(intent);
+    }
 
     private void deliveryOrder() {
         Intent intent = new Intent(getContext(), MyOrderActivity.class);

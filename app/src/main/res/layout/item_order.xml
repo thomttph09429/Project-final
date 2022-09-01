@@ -183,4 +183,17 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:visibility="gone" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnCancel"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_below="@+id/view"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_alignParentEnd="true"
+        android:text="Mua lại"
+        android:background="@color/color_main"
+        android:fontFamily="@font/arial"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:visibility="gone" />
 </RelativeLayout>

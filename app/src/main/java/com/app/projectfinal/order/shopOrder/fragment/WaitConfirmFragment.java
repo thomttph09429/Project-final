@@ -1,5 +1,6 @@
 package com.app.projectfinal.order.shopOrder.fragment;
 
+import static com.app.projectfinal.activity.MyShopActivity.storeId;
 import static com.app.projectfinal.utils.Constant.ORDER;
 import static com.app.projectfinal.utils.Constant.TOTAL;
 import static com.app.projectfinal.utils.Constant.TOTAL_PRICE;
@@ -51,7 +52,7 @@ public class WaitConfirmFragment extends Fragment {
     private TextView tvAmountWait;
     private OrderConfirmAdapter mOrderConfirmAdapter;
     private LinearLayout lnShow, lnHide;
-    private String nameStore, orderId;
+    private String nameStore, orderId, userName;
     private  int status;
 
 
@@ -66,6 +67,7 @@ public class WaitConfirmFragment extends Fragment {
                              Bundle savedInstanceState) {
         if (view == null)
             view = inflater.inflate(R.layout.fragment_wait_confirm, container, false);
+
         initView();
         initAction();
         getOrderPendingConfirm();
@@ -87,7 +89,8 @@ public class WaitConfirmFragment extends Fragment {
     }
 
     private void getOrderPendingConfirm() {
-        String urlOrder = ORDER + "?" + "userId=" + ConstantData.getUserId(getContext()) + "&status=" + 1 + "&page=1&size=50";
+
+        String urlOrder = ORDER + "?storeId=" + storeId  + "&status=" + 1 + "&page=1&size=50";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlOrder, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -111,6 +114,8 @@ public class WaitConfirmFragment extends Fragment {
                             nameStore = object.getString("name_store");
                             orderId = object.getString("id");
                             status = object.getInt("status");
+                            userName = object.getString("customerName");
+
                             JSONArray products = object.getJSONArray("products");
                             List<ItemOrder> itemOrders = new ArrayList<>();
                             for (int j = 0; j < products.length(); j++) {
@@ -120,14 +125,13 @@ public class WaitConfirmFragment extends Fragment {
                                 itemOrders.add(itemOrder);
 
                             }
-                            orders.add(new Order(products.length(), totalPrice, itemOrders, nameStore, orderId, status));
+                            orders.add(new Order(products.length(), totalPrice, itemOrders, nameStore, orderId, status, userName));
                             mOrderConfirmAdapter = new OrderConfirmAdapter(orders, getContext() );
                             rvWait.setAdapter(mOrderConfirmAdapter);
                             ProgressBarDialog.getInstance(getContext()).closeDialog();
 
                         }
 
-                        Log.e("itemOrders", orders.get(0).getItemOrders().get(0).getName() + "");
 
 
                     } catch (JSONException e) {

@@ -1,5 +1,6 @@
 package com.app.projectfinal.order.shopOrder.fragment;
 
+import static com.app.projectfinal.activity.MyShopActivity.storeId;
 import static com.app.projectfinal.utils.Constant.ORDER;
 import static com.app.projectfinal.utils.Constant.TOTAL;
 import static com.app.projectfinal.utils.Constant.TOTAL_PRICE;
@@ -24,10 +25,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
 import com.app.projectfinal.adapter.order.myOrder.OrderAdapter;
+import com.app.projectfinal.adapter.order.shopOrder.OrderConfirmAdapter;
+import com.app.projectfinal.model.order.ItemOrder;
 import com.app.projectfinal.model.order.Order;
 import com.app.projectfinal.utils.ConstantData;
 import com.app.projectfinal.utils.ProgressBarDialog;
 import com.app.projectfinal.utils.VolleySingleton;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,9 +49,11 @@ public class DeliveryConfirmFragment extends Fragment {
     private RecyclerView rvDelivery;
     private TextView tvAmountDelivery;
     private List<Order> orders;
-    private OrderAdapter orderAdapter;
+    private OrderConfirmAdapter mOrderConfirmAdapter;
+    private int totalOrder, totalPrice;
     private LinearLayout lnShow, lnHide;
-
+    private String nameStore, orderId, userName;
+    private  int status;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,37 +73,50 @@ public class DeliveryConfirmFragment extends Fragment {
     }
 
     private void getDelivery() {
-        String urlOrder = ORDER + "?" + "userId=" + ConstantData.getUserId(getContext()) + "&status=" + 2;
+
+        String urlOrder = ORDER + "?storeId=" + storeId + "&status=" + 2 + "&page=1&size=50";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlOrder, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 if (response != null) {
                     try {
                         JSONObject jsonObject = response.getJSONObject("data");
-                        JSONArray jsonArray = jsonObject.getJSONArray("products");
-                        int totalOrder = jsonObject.getInt(TOTAL);
-                        if (totalOrder==0){
+                        JSONArray jsonArray = jsonObject.getJSONArray("orders");
+                        totalOrder = jsonObject.getInt(TOTAL);
+                        if (totalOrder == 0) {
                             lnShow.setVisibility(View.GONE);
                             lnHide.setVisibility(View.VISIBLE);
 
-                        }else {
+                        } else {
                             lnShow.setVisibility(View.VISIBLE);
                             lnHide.setVisibility(View.GONE);
                         }
-                        tvAmountDelivery.setText("Bạn có " + totalOrder + " đơn đang giao");
+                        tvAmountDelivery.setText("Bạn có " + totalOrder + " đơn đag giao");
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject object = jsonArray.getJSONObject(i);
-                            int totalPrice = object.getInt(TOTAL_PRICE);
+                            totalPrice = object.getInt(TOTAL_PRICE);
+                            nameStore = object.getString("name_store");
+                            orderId = object.getString("id");
+                            status = object.getInt("status");
+                            userName = object.getString("customerName");
 
-                            JSONArray jsonArray1 = object.getJSONArray("products");
-                            Log.e("price", jsonArray1 + "");
-//                            orders.add(new Order(jsonArray1.length(), totalPrice));
-//
-//                            orderWaitAdapter = new OrderWaitAdapter(orders, getContext());
-//                            rvDelivery.setAdapter(orderWaitAdapter);
+                            JSONArray products = object.getJSONArray("products");
+                            List<ItemOrder> itemOrders = new ArrayList<>();
+                            for (int j = 0; j < products.length(); j++) {
+                                JSONObject item = products.getJSONObject(j);
+                                Gson gson = new Gson();
+                                ItemOrder itemOrder = gson.fromJson(String.valueOf(item), ItemOrder.class);
+                                itemOrders.add(itemOrder);
 
+                            }
+                            orders.add(new Order(products.length(), totalPrice, itemOrders, nameStore, orderId, status, userName));
+                            mOrderConfirmAdapter = new OrderConfirmAdapter(orders, getContext() );
+                            rvDelivery.setAdapter(mOrderConfirmAdapter);
+                            ProgressBarDialog.getInstance(getContext()).closeDialog();
 
                         }
+
+
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -125,8 +144,6 @@ public class DeliveryConfirmFragment extends Fragment {
             }
         };
         VolleySingleton.getInstance(getContext()).getRequestQueue().add(jsonObjectRequest);
-
-
     }
 
     private void initView() {

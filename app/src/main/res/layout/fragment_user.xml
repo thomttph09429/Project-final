@@ -239,8 +239,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
                         android:gravity="left"
-                        android:textSize="@dimen/_10sdp"
                         android:text="Lịch sử mua hàng"
+                        android:textSize="@dimen/_10sdp"
                         android:textStyle="italic" />
                 </LinearLayout>
 
@@ -253,18 +253,49 @@
                     <LinearLayout
                         android:id="@+id/lnWait"
                         android:layout_width="0dp"
-                        android:background="@drawable/bg_border_green_light_20"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="@drawable/bg_border_green_light_20"
                         android:orientation="vertical">
 
-                        <ImageButton
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:id="@+id/imgBtn_user_waitCheck"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:layout_gravity="center"
-                            android:background="@drawable/boxtime" />
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal">
+
+                            <ImageButton
+                                android:id="@+id/imgBtn_user_waitCheck"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:background="@drawable/boxtime" />
+
+                            <RelativeLayout
+                                android:id="@+id/rlTotalPending"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone">
+
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:layout_width="@dimen/_12sdp"
+                                    android:layout_height="@dimen/_12sdp"
+                                    android:layout_marginLeft="@dimen/_15sdp"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:background="@drawable/bg_circle" />
+
+                                <TextView
+                                    android:id="@+id/tvTotalPending"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/_18sdp"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/_8sdp" />
+                            </RelativeLayout>
+
+                        </RelativeLayout>
+
 
                         <TextView
                             android:layout_width="match_parent"
@@ -282,19 +313,52 @@
 
                     <LinearLayout
                         android:id="@+id/lnDelivery"
-                        android:background="@drawable/bg_border_green_light_20"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="@drawable/bg_border_green_light_20"
                         android:orientation="vertical">
 
-                        <ImageButton
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:id="@+id/imgBtn_user_waitShip"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:layout_gravity="center"
-                            android:background="@drawable/boxship" />
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal">
+
+                            <ImageButton
+                                android:id="@+id/imgBtn_user_waitShip"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:background="@drawable/boxship" />
+
+                            <RelativeLayout
+                                android:id="@+id/rlTotalProcess"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone">
+
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:layout_width="@dimen/_12sdp"
+                                    android:layout_height="@dimen/_12sdp"
+                                    android:layout_marginLeft="@dimen/_15sdp"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:background="@drawable/bg_circle" />
+
+                                <TextView
+                                    android:id="@+id/tvTotalProcess"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/_18sdp"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:text="1"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/_8sdp" />
+                            </RelativeLayout>
+
+                        </RelativeLayout>
+
 
                         <TextView
                             android:layout_width="match_parent"
@@ -317,13 +381,46 @@
                         android:background="@drawable/bg_border_green_light_20"
                         android:orientation="vertical">
 
-                        <ImageButton
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:id="@+id/imgBtn_user_goShip"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:layout_gravity="center"
-                            android:background="@drawable/goship" />
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal">
+
+                            <ImageButton
+                                android:id="@+id/imgBtn_user_goShip"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:background="@drawable/goship" />
+
+                            <RelativeLayout
+                                android:id="@+id/rlTotalDelivery"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone">
+
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:layout_width="@dimen/_12sdp"
+                                    android:layout_height="@dimen/_12sdp"
+                                    android:layout_marginLeft="@dimen/_15sdp"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:background="@drawable/bg_circle" />
+
+                                <TextView
+                                    android:id="@+id/tvTotalDelivery"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/_18sdp"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:text="1"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/_8sdp" />
+                            </RelativeLayout>
+
+                        </RelativeLayout>
+
 
                         <TextView
                             android:layout_width="match_parent"
@@ -340,19 +437,54 @@
 
                     <LinearLayout
                         android:id="@+id/lnCancel"
-                        android:background="@drawable/bg_border_green_light_20"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="@drawable/bg_border_green_light_20"
                         android:orientation="vertical">
 
-                        <ImageButton
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:id="@+id/imgBtn_user_refund"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:layout_gravity="center"
-                            android:background="@drawable/refund" />
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal">
+
+                            <ImageButton
+                                android:id="@+id/imgBtn_user_refund"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:background="@drawable/refund" />
+
+
+                            <RelativeLayout
+                                android:id="@+id/rlTotalCancel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone">
+
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:layout_width="@dimen/_12sdp"
+                                    android:layout_height="@dimen/_12sdp"
+                                    android:layout_marginLeft="@dimen/_15sdp"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:background="@drawable/bg_circle" />
+
+                                <TextView
+                                    android:gravity="center_horizontal"
+                                    android:id="@+id/tvTotalCancel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/_18sdp"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:text="6"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/_8sdp" />
+                            </RelativeLayout>
+
+                        </RelativeLayout>
+
 
                         <TextView
                             android:layout_width="match_parent"
@@ -406,8 +538,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-              >
+                    android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -446,10 +577,10 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:background="@drawable/bg_border_green_light_20"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="@drawable/bg_border_green_light_20"
                         android:orientation="vertical">
 
                         <ImageButton

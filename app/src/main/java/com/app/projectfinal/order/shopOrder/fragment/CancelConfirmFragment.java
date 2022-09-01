@@ -1,5 +1,6 @@
 package com.app.projectfinal.order.shopOrder.fragment;
 
+import static com.app.projectfinal.activity.MyShopActivity.storeId;
 import static com.app.projectfinal.utils.Constant.ORDER;
 import static com.app.projectfinal.utils.Constant.TOTAL;
 import static com.app.projectfinal.utils.Constant.TOTAL_PRICE;
@@ -24,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
 import com.app.projectfinal.adapter.order.myOrder.OrderAdapter;
+import com.app.projectfinal.adapter.order.shopOrder.OrderConfirmAdapter;
 import com.app.projectfinal.model.order.ItemOrder;
 import com.app.projectfinal.model.order.Order;
 import com.app.projectfinal.utils.ConstantData;
@@ -43,13 +45,13 @@ import java.util.Map;
 
 public class CancelConfirmFragment extends Fragment {
     private View view;
-    private RecyclerView rvWait;
+    private RecyclerView rvCancel;
     private List<Order> orders;
     private int totalOrder, totalPrice;
     private TextView tvAmountWait;
-    private OrderAdapter orderAdapter;
+    private OrderConfirmAdapter mOrderConfirmAdapter;
     private LinearLayout lnShow, lnHide;
-    private String nameStore, orderId;
+    private String nameStore, orderId, userName;
     private  int status;
 
 
@@ -71,7 +73,7 @@ public class CancelConfirmFragment extends Fragment {
     }
 
     private void initView() {
-        rvWait = view.findViewById(R.id.rvWait);
+        rvCancel = view.findViewById(R.id.rvCancel);
         tvAmountWait = view.findViewById(R.id.tvAmountWait);
         lnShow = view.findViewById(R.id.lnShow);
         lnHide = view.findViewById(R.id.lnHide);
@@ -80,12 +82,12 @@ public class CancelConfirmFragment extends Fragment {
     private void initAction() {
         orders = new ArrayList<>();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        rvWait.setLayoutManager(layoutManager);
+        rvCancel.setLayoutManager(layoutManager);
 
     }
 
     private void getOrderPendingConfirm() {
-        String urlOrder = ORDER + "?" + "userId=" + ConstantData.getUserId(getContext()) + "&status=" + 1 + "&page=1&size=50";
+        String urlOrder =  ORDER + "?storeId=" + storeId  + "&status=" + 0 + "&page=1&size=50";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlOrder, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -102,13 +104,15 @@ public class CancelConfirmFragment extends Fragment {
                             lnShow.setVisibility(View.VISIBLE);
                             lnHide.setVisibility(View.GONE);
                         }
-                        tvAmountWait.setText("Bạn có " + totalOrder + " đơn đang chờ xác nhận");
+                        tvAmountWait.setText("Bạn có " + totalOrder + " đơn đã hủy");
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject object = jsonArray.getJSONObject(i);
                             totalPrice = object.getInt(TOTAL_PRICE);
                             nameStore = object.getString("name_store");
                             orderId = object.getString("id");
                             status = object.getInt("status");
+                            userName = object.getString("customerName");
+
                             JSONArray products = object.getJSONArray("products");
                             List<ItemOrder> itemOrders = new ArrayList<>();
                             for (int j = 0; j < products.length(); j++) {
@@ -118,14 +122,13 @@ public class CancelConfirmFragment extends Fragment {
                                 itemOrders.add(itemOrder);
 
                             }
-                            orders.add(new Order(products.length(), totalPrice, itemOrders, nameStore, orderId, status));
-                            orderAdapter = new OrderAdapter(orders, getContext() );
-                            rvWait.setAdapter(orderAdapter);
+                            orders.add(new Order(products.length(), totalPrice, itemOrders, nameStore, orderId, status, userName));
+                            mOrderConfirmAdapter = new OrderConfirmAdapter(orders, getContext() );
+                            rvCancel.setAdapter(mOrderConfirmAdapter);
                             ProgressBarDialog.getInstance(getContext()).closeDialog();
 
                         }
 
-                        Log.e("itemOrders", orders.get(0).getItemOrders().get(0).getName() + "");
 
 
                     } catch (JSONException e) {

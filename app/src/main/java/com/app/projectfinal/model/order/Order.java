@@ -7,8 +7,18 @@ public class Order {
     private int totalPrice;
     private List<ItemOrder> itemOrders;
     private String name_store;
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
     private  String id;
     private int status;
+    private String customerName;
 
     public int getStatus() {
         return status;
@@ -35,13 +45,15 @@ public class Order {
     }
 
 
-//    public Order(int total, int totalPrice, List<ItemOrder> itemOrders, String name_store, String id) {
-//        this.total = total;
-//        this.totalPrice = totalPrice;
-//        this.itemOrders = itemOrders;
-//        this.name_store = name_store;
-//        this.id = id;
-//    }
+    public Order(int total, int totalPrice, List<ItemOrder> itemOrders, String name_store, String id, int status, String customerName) {
+        this.total = total;
+        this.totalPrice = totalPrice;
+        this.itemOrders = itemOrders;
+        this.name_store = name_store;
+        this.id = id;
+        this.status = status;
+        this.customerName = customerName;
+    }
 
     public Order(int total, int totalPrice, List<ItemOrder> itemOrders, String name_store, String id, int status) {
         this.total = total;
