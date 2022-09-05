@@ -83,14 +83,13 @@ public class OrderConfirmAdapter extends RecyclerView.Adapter<OrderConfirmAdapte
         int status = orders.get(position).getStatus();
         // update order to delivery
         holder.btnProcess.setOnClickListener(v -> {
-            showDialogConfirm("Đồng ý xác nhận giao hàng cho người mua?",status,id);
-
+            showDialogConfirm("Đồng ý xác nhận giao hàng cho người mua?",2,id);
 
         });
         //update order to finish
         holder.btnConfirm.setOnClickListener(v -> {
             showDialogConfirm("Đã hoàn thành đơn giao cho người mua?" +
-                    "",status,id);
+                    "",3,id);
         });
         if (status == 1) {
             holder.btnProcess.setVisibility(View.VISIBLE);
@@ -161,6 +160,9 @@ public class OrderConfirmAdapter extends RecyclerView.Adapter<OrderConfirmAdapte
             @Override
             public void onResponse(JSONObject response) {
                 ConstantData.showToast("Cập nhật thành công", R.drawable.ic_mark, context, view);
+                Log.e("update", response+"");
+                Log.e("update", ConstantData.getToken(context)+"");
+
 
             }
         }, new Response.ErrorListener() {

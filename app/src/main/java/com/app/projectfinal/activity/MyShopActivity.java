@@ -3,6 +3,7 @@ package com.app.projectfinal.activity;
 import static com.app.projectfinal.utils.Constant.ADD_STORES;
 import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
 import static com.app.projectfinal.utils.Constant.STORE_NAME_PRODUCT;
+import static com.app.projectfinal.utils.Constant.TOTAL_ORDER;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +39,8 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
     private LinearLayout lnStartSell, lnMyProduct, lnShopSetting, lnWaitConfirm, lnDelivery, lnComplete, lnCancel;
     private String  storeName;
     public static  String storeId;
+    private RelativeLayout rlTotalPending,rlTotalProcess;
+    private TextView tvTotalPending,tvTotalProcess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +48,13 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_my_shop);
         initView();
         initAction();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getInfoShop();
+
     }
 
     private void initAction() {
@@ -70,6 +80,12 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
         lnDelivery = findViewById(R.id.lnDelivery);
         lnComplete = findViewById(R.id.lnComplete);
         lnCancel = findViewById(R.id.lnCancel);
+
+        rlTotalPending = findViewById(R.id.rlTotalPending);
+        rlTotalProcess = findViewById(R.id.rlTotalProcess);
+        tvTotalProcess = findViewById(R.id.tvTotalProcess);
+        tvTotalPending = findViewById(R.id.tvTotalPending);
+
 
     }
 
@@ -122,6 +138,7 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
                         JSONObject data = jsonObject.getJSONObject("user");
                         storeName = data.getString(STORE_NAME_PRODUCT);
                         tvStoreName.setText(storeName);
+                        getOrderQuantity();
                         ProgressBarDialog.getInstance(MyShopActivity.this).closeDialog();
 
 
@@ -152,6 +169,66 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
         };
         VolleySingleton.getInstance(MyShopActivity.this).getRequestQueue().add(jsonObjectRequest);
     }
+
+
+    private void getOrderQuantity() {
+        String urlProducts = TOTAL_ORDER + "/" + "?storeId=" + storeId;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlProducts, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                if (response != null) {
+                    try {
+                        JSONObject data = response.getJSONObject("data");
+                        int cancelOrder = data.getInt("cancelOrder");
+                        int newOrder = data.getInt("newOrder");
+                        int processingOrder = data.getInt("processingOrder");
+                        int finishOrder = data.getInt("finishOrder");
+
+
+                        //delivery
+                        if (processingOrder != 0) {
+                            rlTotalProcess.setVisibility(View.VISIBLE);
+                            tvTotalProcess.setText(String.valueOf(processingOrder));
+                        }
+
+                        //pending
+                        if (newOrder != 0) {
+                            rlTotalPending.setVisibility(View.VISIBLE);
+                            tvTotalPending.setText(String.valueOf(newOrder));
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(MyShopActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+
+                    }
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(MyShopActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+                ProgressBarDialog.getInstance(MyShopActivity.this).closeDialog();
+
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", ConstantData.getToken(MyShopActivity.this.getApplicationContext()));
+                return headers;
+            }
+        };
+        VolleySingleton.getInstance(MyShopActivity.this).getRequestQueue().add(jsonObjectRequest);
+
+
+    }
+
+
+
+
 
     private void openViewShopScreen() {
         Intent intent = new Intent(this, ViewShopActivity.class);

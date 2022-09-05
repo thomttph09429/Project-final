@@ -41,21 +41,6 @@
                     android:src="@drawable/ic_search" />
 
 
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcv_categories"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/toolbar"
-                    android:layout_margin="@dimen/_8sdp"
-                    android:background="@drawable/bg_stroke_border_20"
-                    android:backgroundTint="@null"
-                    android:nestedScrollingEnabled="true"
-                    android:numColumns="1"
-                    android:orientation="vertical"
-                    android:padding="8dp"
-                    android:visibility="gone" />
-
             </RelativeLayout>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -64,52 +49,22 @@
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
-        android:padding="@dimen/_10sdp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
 
-       <RelativeLayout
-           android:id="@+id/head"
-           android:padding="@dimen/_10sdp"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:background="@drawable/bg_stroke_border_20"
-           android:backgroundTint="@color/greenLight"
-           >
-           <de.hdodenhof.circleimageview.CircleImageView
-               android:id="@+id/ivAvatar"
-               android:src="@drawable/avatar_empty"
-               android:layout_width="@dimen/_40sdp"
-               android:layout_height="@dimen/_40sdp"
-               />
-           <TextView
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_marginTop="@dimen/_10sdp"
-               android:layout_marginStart="@dimen/_20sdp"
-               android:layout_toRightOf="@+id/ivAvatar"
-               android:text="Name shop"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_150sdp"
+            android:src="@drawable/ic_cover"
+         />
 
-       </RelativeLayout>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_avt_shop"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:src="@drawable/avatar_empty" />
 
-<TableLayout
-    android:id="@+id/tabLayout"
-    android:layout_below="@+id/head"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    />
-    <androidx.viewpager2.widget.ViewPager2
-        android:layout_below="@+id/tabLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
-
-</RelativeLayout>
 
     </androidx.core.widget.NestedScrollView>
 

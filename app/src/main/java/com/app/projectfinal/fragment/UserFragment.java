@@ -68,8 +68,14 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         initView();
         initAction();
         getInformation();
-        isSignUpToBecomeSeller();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        isSignUpToBecomeSeller();
+
     }
 
     private void initAction() {
