@@ -9,6 +9,7 @@ import static com.app.projectfinal.utils.Constant.TOTAL;
 import static com.app.projectfinal.utils.Constant.TOTAL_PRICE;
 import static com.app.projectfinal.utils.Constant.UPDATE_USER;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -33,6 +34,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
+import com.app.projectfinal.activity.MyShopActivity;
 import com.app.projectfinal.activity.ProfileSettingActivity;
 import com.app.projectfinal.model.order.ItemOrder;
 import com.app.projectfinal.model.order.Order;
@@ -160,8 +162,9 @@ public class OrderConfirmAdapter extends RecyclerView.Adapter<OrderConfirmAdapte
             @Override
             public void onResponse(JSONObject response) {
                 ConstantData.showToast("Cập nhật thành công", R.drawable.ic_mark, context, view);
-                Log.e("update", response+"");
-                Log.e("update", ConstantData.getToken(context)+"");
+                ((Activity)context).finish();
+
+
 
 
             }

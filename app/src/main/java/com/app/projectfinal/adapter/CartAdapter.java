@@ -11,7 +11,9 @@ import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
 import static com.app.projectfinal.utils.Constant.STORE_NAME_PRODUCT;
 import static com.app.projectfinal.utils.Constant.UNIT_NAME;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +32,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.app.projectfinal.R;
 import com.app.projectfinal.activity.DetailProductActivity;
 import com.app.projectfinal.db.Cart;
+import com.app.projectfinal.db.CartDatabase;
 import com.app.projectfinal.utils.ValidateForm;
 import com.bumptech.glide.Glide;
 
@@ -41,7 +44,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
     private Context context;
     private List<Cart> cartList;
     private OnItemCheckListener onItemClick;
-    int selectedPosition=-1;
+    int selectedPosition = -1;
 
     public CartAdapter(Context context, List<Cart> cartList, OnItemCheckListener onItemClick) {
         this.context = context;
@@ -86,7 +89,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
 
 
         });
+        //delete item from list cart
+        holder.ivDelete.setOnClickListener(v -> {
+            showDialogConfirm("Bạn có muốn xóa khỏi giỏ hàng?", cart);
 
+
+        });
 
         if (holder instanceof MyViewHolder) {
             final Cart currentItem = cartList.get(position);
@@ -99,7 +107,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
                     ((MyViewHolder) holder).cbSelect.setChecked(
                             !((MyViewHolder) holder).cbSelect.isChecked());
                     if (((MyViewHolder) holder).cbSelect.isChecked()) {
-                            onItemClick.onItemCheck(currentItem, currentItem.getIdShop());
+                        onItemClick.onItemCheck(currentItem, currentItem.getIdShop());
 
                     } else {
                         onItemClick.onItemUncheck(currentItem, currentItem.getIdShop());
@@ -119,7 +127,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView tvNameShop, tvAmount, tvPrice, tvNameProduct, tvUnit;
-        private ImageView ivImage;
+        private ImageView ivImage, ivDelete;
         private CheckBox cbSelect;
         private LinearLayout lnCart;
         View itemView;
@@ -135,6 +143,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
             tvUnit = itemView.findViewById(R.id.tvUnit);
             lnCart = itemView.findViewById(R.id.lnCart);
             cbSelect = itemView.findViewById(R.id.cbSelect);
+            ivDelete = itemView.findViewById(R.id.ivDelete);
+
             cbSelect.setClickable(false);
 
 
@@ -149,5 +159,33 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
         void onItemCheck(Cart cart, String storeId);
 
         void onItemUncheck(Cart cart, String storeId);
+    }
+    public void showDialogConfirm(String message, Cart cart) {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+        builder1.setMessage(message);
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "Đồng ý",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // delete item from DB
+                        CartDatabase.getInstance(context).cartDAO().delete(cart);
+                        cartList.remove(cart);
+                        notifyDataSetChanged();
+                    }
+                });
+
+        builder1.setNegativeButton(
+                "Hủy",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+
     }
 }

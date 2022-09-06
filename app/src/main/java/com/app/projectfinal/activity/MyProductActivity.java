@@ -1,5 +1,6 @@
 package com.app.projectfinal.activity;
 
+import static com.app.projectfinal.activity.MyShopActivity.storeId;
 import static com.app.projectfinal.utils.Constant.CATEGORY_NAME;
 import static com.app.projectfinal.utils.Constant.DESCRIPTION_PRODUCT;
 import static com.app.projectfinal.utils.Constant.ID_PRODUCT;
@@ -50,7 +51,7 @@ import java.util.Map;
 
 public class MyProductActivity extends AppCompatActivity {
     private RecyclerView rvMyProduct;
-    private String storeId, total;
+    private String  total;
     private List<Product> products;
     private MyProductAdapter myProductAdapter;
     private TextView tvTotal;
@@ -73,8 +74,7 @@ public class MyProductActivity extends AppCompatActivity {
     }
 
     private void getProduct() {
-        Bundle bundle = getIntent().getExtras();
-        storeId = bundle.getString(STORE_ID_PRODUCT);
+
         String url = PRODUCTS + "?" + "storeId" + "=" + storeId;
         ProgressBarDialog.getInstance(MyProductActivity.this).showDialog("Đang tải", MyProductActivity.this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {

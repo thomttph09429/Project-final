@@ -35,9 +35,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MyShopActivity extends AppCompatActivity implements View.OnClickListener {
-    private TextView tvStoreName, tvViewShop;
-    private LinearLayout lnStartSell, lnMyProduct, lnShopSetting, lnWaitConfirm, lnDelivery, lnComplete, lnCancel;
-    private String  storeName;
+    private TextView tvStoreName, tvViewShop,tvHistory;
+    private LinearLayout lnStartSell, lnMyProduct, lnShopSetting, lnWaitConfirm, lnDelivery, lnComplete, lnCancel,lnViewShop;
+    public static String  storeName;
     public static  String storeId;
     private RelativeLayout rlTotalPending,rlTotalProcess;
     private TextView tvTotalPending,tvTotalProcess;
@@ -66,6 +66,8 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
         lnDelivery.setOnClickListener(this);
         lnComplete.setOnClickListener(this);
         lnCancel.setOnClickListener(this);
+        lnViewShop.setOnClickListener(this);
+        tvHistory.setOnClickListener(this);
 
     }
 
@@ -80,6 +82,8 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
         lnDelivery = findViewById(R.id.lnDelivery);
         lnComplete = findViewById(R.id.lnComplete);
         lnCancel = findViewById(R.id.lnCancel);
+        lnViewShop = findViewById(R.id.lnViewShop);
+        tvHistory = findViewById(R.id.tvHistory);
 
         rlTotalPending = findViewById(R.id.rlTotalPending);
         rlTotalProcess = findViewById(R.id.rlTotalProcess);
@@ -189,12 +193,18 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
                         if (processingOrder != 0) {
                             rlTotalProcess.setVisibility(View.VISIBLE);
                             tvTotalProcess.setText(String.valueOf(processingOrder));
+                        }else {
+                            rlTotalProcess.setVisibility(View.GONE);
+
                         }
 
                         //pending
                         if (newOrder != 0) {
                             rlTotalPending.setVisibility(View.VISIBLE);
                             tvTotalPending.setText(String.valueOf(newOrder));
+                        }else {
+                            rlTotalPending.setVisibility(View.GONE);
+
                         }
 
                     } catch (JSONException e) {
@@ -281,7 +291,7 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.lnShopSetting:
                 openShopSettingScreen();
                 break;
-            case R.id.tvViewShop:
+            case R.id.lnViewShop:
                 openViewShopScreen();
                 break;
             case R.id.lnWaitConfirm:
@@ -295,6 +305,9 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.lnCancel:
                 cancelOrder();
+                break;
+            case R.id.tvHistory:
+                waitForConfirmation();
                 break;
         }
     }

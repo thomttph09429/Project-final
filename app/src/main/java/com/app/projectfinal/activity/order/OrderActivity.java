@@ -43,6 +43,7 @@ import com.app.projectfinal.adapter.chooseProduct.ChooseProductToBuyAdapter;
 import com.app.projectfinal.db.Cart;
 import com.app.projectfinal.model.ChooseProduct;
 import com.app.projectfinal.model.address.AddressUser;
+import com.app.projectfinal.order.myOrder.MyOrderActivity;
 import com.app.projectfinal.utils.ConstantData;
 import com.app.projectfinal.utils.ProgressBarDialog;
 import com.app.projectfinal.utils.ValidateForm;
@@ -135,7 +136,12 @@ public class OrderActivity extends AppCompatActivity implements ChangeAddressFra
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, ORDER, object, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                    showToast("Đơn hàng đã được đặt" + response + "", R.drawable.ic_mark);
+                    showToast("Đơn hàng đã được đặt"  + "", R.drawable.ic_mark);
+                    Intent intent = new Intent(OrderActivity.this, MyOrderActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("pos", 0);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
 
 
                 }

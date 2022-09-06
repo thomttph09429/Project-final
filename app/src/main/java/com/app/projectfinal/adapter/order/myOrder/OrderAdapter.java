@@ -1,6 +1,12 @@
 package com.app.projectfinal.adapter.order.myOrder;
 
+import static com.app.projectfinal.utils.Constant.ORDER;
+import static com.app.projectfinal.utils.Constant.STATUS;
+
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,23 +16,37 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
 import com.app.projectfinal.model.order.Order;
 import com.app.projectfinal.order.myOrder.OrderInformationActivity;
+import com.app.projectfinal.order.shopOrder.OrderShopInformationActivity;
+import com.app.projectfinal.utils.ConstantData;
 import com.app.projectfinal.utils.ValidateForm;
+import com.app.projectfinal.utils.VolleySingleton;
 import com.bumptech.glide.Glide;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder> {
     private List<Order> orders;
     private Context context;
-
+    private View view;
 
     public OrderAdapter(List<Order> orders, Context context) {
         this.orders = orders;
@@ -37,7 +57,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
     @NonNull
     @Override
     public OrderAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_order, parent, false);
+         view = LayoutInflater.from(context).inflate(R.layout.item_order, parent, false);
         return new MyViewHolder(view);
     }
 
@@ -48,13 +68,13 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
         holder.tvNameShop.setText(orders.get(position).getName_store());
         String id = orders.get(position).getId();
         int status = orders.get(position).getStatus();
-        Log.e("lojjjg", status+"");
+        Log.e("lojjjg", status + "");
         if (status == 1) {
             holder.btnProcess.setVisibility(View.VISIBLE);
-        } else if (status==1){
+        } else if (status == 2 || status == 3) {
             holder.btnConfirm.setVisibility(View.VISIBLE);
 
-        }else {
+        } else {
             holder.btnCancel.setVisibility(View.VISIBLE);
 
         }
@@ -65,6 +85,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
             holder.tvAmountProduct.setText("x" + orders.get(position).getItemOrders().get(0).getQuantity() + "");
 
         }
+        //send orderId to OrderInformationActivity
         holder.rlItem.setOnClickListener(v -> {
             Intent intent = new Intent(context, OrderInformationActivity.class);
             Bundle bundle = new Bundle();
@@ -73,6 +94,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
             intent.putExtras(bundle);
             context.startActivity(intent);
         });
+
+
     }
 
     @Override
@@ -84,7 +107,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
         private TextView tvAmount, tvTotalPrice, tvNameShop, tvPrice, tvAmountProduct, tvNameProduct;
         private ImageView ivProduct;
         private RelativeLayout rlItem;
-        private AppCompatButton btnProcess,btnConfirm,btnCancel;
+        private AppCompatButton btnProcess, btnConfirm, btnCancel;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -104,7 +127,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
         }
     }
 
-    public interface SendOrderId {
-        void sendOrderId(String id);
-    }
+
+
 }

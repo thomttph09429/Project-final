@@ -1,7 +1,11 @@
 package com.app.projectfinal.order.shopOrder;
 
 import static com.app.projectfinal.utils.Constant.ORDER;
+import static com.app.projectfinal.utils.Constant.STATUS;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -184,49 +188,76 @@ public class OrderShopInformationActivity extends AppCompatActivity implements V
 
     }
 
+
+    public void showDialogConfirm(String message) {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(OrderShopInformationActivity.this);
+        builder1.setMessage(message);
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "Đồng ý",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        cancelOrder();
+                    }
+                });
+
+        builder1.setNegativeButton(
+                "Hủy",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+
+    }
+
+
     private void cancelOrder() {
-//        String urlOrder = ORDER + "/" + ConstantData.getUserId(OrderInformationActivity.this) ;
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, urlOrder, null, new Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                if (response != null) {
-//                    try {
-//                        JSONObject jsonObject = response.getJSONObject("data");
-//                        JSONArray jsonArray = jsonObject.getJSONArray("orders");
-//
-//
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                        Toast.makeText(OrderInformationActivity.this, e.toString(), Toast.LENGTH_LONG).show();
-//
-//                    }
-//                }
-//
-//
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Toast.makeText(OrderInformationActivity.this, error.toString(), Toast.LENGTH_LONG).show();
-//
-//            }
-//        }) {
-//            @Override
-//            public Map<String, String> getHeaders() throws AuthFailureError {
-//                HashMap<String, String> headers = new HashMap<>();
-//                headers.put("Authorization", ConstantData.getToken(OrderInformationActivity.this.getApplicationContext()));
-//                return headers;
-//            }
-//        };
-//        VolleySingleton.getInstance(OrderInformationActivity.this).getRequestQueue().add(jsonObjectRequest);
+        String urlOrder = ORDER + "/" + orderId;
+        JSONObject user = new JSONObject();
+        try {
+            user.put(STATUS, 0);
+            JSONObject data = new JSONObject();
+            data.put("data", user);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, urlOrder, user, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.e("success", response+"");
+                ConstantData.showToast("Cập nhật thành công", R.drawable.ic_mark, OrderShopInformationActivity.this, getWindow().getDecorView().findViewById(android.R.id.content));
+                finish();
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(OrderShopInformationActivity.this, "" + error.toString(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", ConstantData.getToken(OrderShopInformationActivity.this));
+                return headers;
+            }
+        };
+        VolleySingleton.getInstance(getApplicationContext()).getRequestQueue().add(jsonObjectRequest);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnCancel:
-                cancelOrder();
-                break;
+                showDialogConfirm("Hủy đơn hàng?");
+            break;
             case R.id.ivBack:
                 finish();
                 break;

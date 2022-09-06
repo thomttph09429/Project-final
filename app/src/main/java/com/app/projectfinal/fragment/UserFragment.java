@@ -44,7 +44,7 @@ import java.util.Map;
 public class UserFragment extends Fragment implements View.OnClickListener {
     private LinearLayout lnStartSell, lnSetting, lnWait, lnFinish, lnDelivery, lnCancel;
     private View view;
-    private TextView tvMyShop, tvWhenNotSignUp, tvUserName;
+    private TextView tvMyShop, tvWhenNotSignUp, tvUserName,tvHistory;
     private String isSignUp;
     private TextView tvTotalPending, tvTotalProcess, tvTotalDelivery, tvTotalCancel;
     private RelativeLayout rlTotalPending, rlTotalProcess, rlTotalDelivery, rlTotalCancel;
@@ -86,6 +86,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         lnDelivery.setOnClickListener(this);
         lnFinish.setOnClickListener(this);
         lnCancel.setOnClickListener(this);
+        tvHistory.setOnClickListener(this);
 
     }
 
@@ -266,6 +267,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         rlTotalProcess = view.findViewById(R.id.rlTotalProcess);
         rlTotalDelivery = view.findViewById(R.id.rlTotalDelivery);
         rlTotalCancel = view.findViewById(R.id.rlTotalCancel);
+        tvHistory = view.findViewById(R.id.tvHistory);
 
 
     }
@@ -294,6 +296,9 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.lnCancel:
                 cancelOrder();
+                break;
+            case R.id.tvHistory:
+                waitForConfirmation();
                 break;
             default:
         }

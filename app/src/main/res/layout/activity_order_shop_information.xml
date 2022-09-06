@@ -378,6 +378,7 @@
                 android:id="@+id/btnCancel"
                 android:visibility="gone"
                 android:layout_width="match_parent"
+                android:layout_marginBottom="@dimen/_5sdp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/btnContact"
                 android:layout_marginTop="@dimen/_10sdp"

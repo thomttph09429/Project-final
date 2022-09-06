@@ -1,7 +1,13 @@
 package com.app.projectfinal.order.myOrder;
 
 import static com.app.projectfinal.utils.Constant.ORDER;
+import static com.app.projectfinal.utils.Constant.STATUS;
+import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
+import static com.app.projectfinal.utils.Constant.STORE_NAME_PRODUCT;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,8 +29,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
+import com.app.projectfinal.activity.ViewShopActivity;
 import com.app.projectfinal.adapter.order.myOrder.ItemOrderAdapter;
 import com.app.projectfinal.model.order.DetailOrder;
+import com.app.projectfinal.order.shopOrder.OrderShopInformationActivity;
 import com.app.projectfinal.utils.ConstantData;
 import com.app.projectfinal.utils.ProgressBarDialog;
 import com.app.projectfinal.utils.ValidateForm;
@@ -42,12 +50,12 @@ import java.util.Map;
 public class OrderInformationActivity extends AppCompatActivity implements View.OnClickListener {
 
     private List<DetailOrder> detailOrders;
-    private String orderId;
+    private String orderId, storeId, storeName;
     private TextView tvUserName, tvPhoneNumber, tvAddress, tvNameShop, tvCodeOrder, tvTotalPrice, tvTimeOrder, tvPay, tvComplete, tvCancel;
     private RecyclerView rvListOrder;
     private ItemOrderAdapter mItemOrderAdapter;
     private RelativeLayout rlCancel, rlComplete, rlPay, rlTimeOrder, rlCode;
-    private TextView tvStatusPending, tvStatusDelivery, tvStatusComplete, tvStatusCancel;
+    private TextView tvStatusPending, tvStatusDelivery, tvStatusComplete, tvStatusCancel,tvViewShop;
     private AppCompatButton btnCancel, btnProcess;
     private LinearLayoutCompat lnBottom;
     private ImageView ivBack;
@@ -73,6 +81,7 @@ public class OrderInformationActivity extends AppCompatActivity implements View.
         tvPay = findViewById(R.id.tvPay);
         tvComplete = findViewById(R.id.tvComplete);
         tvCancel = findViewById(R.id.tvCancel);
+        tvViewShop = findViewById(R.id.tvViewShop);
 
         rlCancel = findViewById(R.id.rlCancel);
         rlComplete = findViewById(R.id.rlComplete);
@@ -91,6 +100,9 @@ public class OrderInformationActivity extends AppCompatActivity implements View.
 
     }
 
+    /**
+     * receive orderId from OrderAdapter, item from notify
+     */
     private void initAction() {
         btnCancel.setOnClickListener(this);
         ivBack.setOnClickListener(this);
@@ -153,7 +165,8 @@ public class OrderInformationActivity extends AppCompatActivity implements View.
 
 
     private void getInfor(DetailOrder detailOrder) {
-        tvNameShop.setText(detailOrder.getName_store());
+        storeName= detailOrder.getName_store();
+        tvNameShop.setText(storeName);
         tvAddress.setText(detailOrder.getLocation());
         tvPhoneNumber.setText(detailOrder.getCustomerPhone() + "");
         tvUserName.setText(detailOrder.getCustomerName());
@@ -164,6 +177,7 @@ public class OrderInformationActivity extends AppCompatActivity implements View.
         tvPay.setText(detailOrder.getUpdatedAt());
         tvComplete.setText(detailOrder.getUpdatedAt());
         tvCancel.setText(detailOrder.getUpdatedAt());
+        storeId= detailOrder.getStore_id();
         if (detailOrder.getStatus() == 0) {
             rlCancel.setVisibility(View.VISIBLE);
             tvStatusCancel.setVisibility(View.VISIBLE);
@@ -184,55 +198,90 @@ public class OrderInformationActivity extends AppCompatActivity implements View.
         }
 
     }
+    public void showDialogConfirm(String message) {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(OrderInformationActivity.this);
+        builder1.setMessage(message);
+        builder1.setCancelable(true);
 
+        builder1.setPositiveButton(
+                "Đồng ý",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        cancelOrder();
+                    }
+                });
+
+        builder1.setNegativeButton(
+                "Hủy",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+
+    }
     private void cancelOrder() {
-//        String urlOrder = ORDER + "/" + ConstantData.getUserId(OrderInformationActivity.this) ;
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, urlOrder, null, new Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                if (response != null) {
-//                    try {
-//                        JSONObject jsonObject = response.getJSONObject("data");
-//                        JSONArray jsonArray = jsonObject.getJSONArray("orders");
-//
-//
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                        Toast.makeText(OrderInformationActivity.this, e.toString(), Toast.LENGTH_LONG).show();
-//
-//                    }
-//                }
-//
-//
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Toast.makeText(OrderInformationActivity.this, error.toString(), Toast.LENGTH_LONG).show();
-//
-//            }
-//        }) {
-//            @Override
-//            public Map<String, String> getHeaders() throws AuthFailureError {
-//                HashMap<String, String> headers = new HashMap<>();
-//                headers.put("Authorization", ConstantData.getToken(OrderInformationActivity.this.getApplicationContext()));
-//                return headers;
-//            }
-//        };
-//        VolleySingleton.getInstance(OrderInformationActivity.this).getRequestQueue().add(jsonObjectRequest);
+        String urlOrder = ORDER + "/" + orderId;
+        JSONObject user = new JSONObject();
+        try {
+            user.put(STATUS, 0);
+            JSONObject data = new JSONObject();
+            data.put("data", user);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, urlOrder, user, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.e("success", response+"");
+                ConstantData.showToast("Cập nhật thành công", R.drawable.ic_mark, OrderInformationActivity.this, getWindow().getDecorView().findViewById(android.R.id.content));
+                finish();
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(OrderInformationActivity.this, "" + error.toString(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", ConstantData.getToken(OrderInformationActivity.this));
+                return headers;
+            }
+        };
+        VolleySingleton.getInstance(getApplicationContext()).getRequestQueue().add(jsonObjectRequest);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnCancel:
-                cancelOrder();
+                showDialogConfirm("Hủy đơn hàng?");
                 break;
             case R.id.ivBack:
                 finish();
                 break;
+            case R.id.tvViewShop:
+                openViewShop();
+                break;
         }
 
+    }
+
+    private void openViewShop() {
+        Intent intent= new Intent(this, ViewShopActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(STORE_ID_PRODUCT,storeId);
+        bundle.putString(STORE_NAME_PRODUCT,storeName);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
 }

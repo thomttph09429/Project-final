@@ -50,12 +50,6 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-
-    }
 
     private void initAction() {
         cartList = new ArrayList<>();

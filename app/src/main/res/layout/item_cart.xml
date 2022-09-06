@@ -53,17 +53,21 @@
 
                         <TextView
                             android:id="@+id/tvNameShop"
-                            android:layout_width="match_parent"
+                            android:layout_width="@dimen/_190sdp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_toEndOf="@id/img_shop"
-                            android:maxWidth="@dimen/_100sdp"
                             android:maxLines="1"
                             android:padding="12dp"
-                            android:text="Tên shop hhhhhhhhhhhhhhh uhhhhh"
+                            android:text="Tên shop hhhhhhhhhhhhhh"
                             android:textColor="@color/navBot"
                             android:textSize="@dimen/_15sdp"
                             android:textStyle="bold" />
+                        <ImageView
+                            android:id="@+id/ivDelete"
+                            android:src="@drawable/ic_delete_24"
+                            android:layout_width="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_height="wrap_content"
+                            />
                     </LinearLayout>
 
                     <androidx.appcompat.widget.LinearLayoutCompat

@@ -51,7 +51,7 @@ public class WaitFragment extends Fragment {
     private OrderAdapter orderAdapter;
     private LinearLayout lnShow, lnHide;
     private String nameStore, orderId;
-    private  int status;
+    private int status;
 
 
     @Override
@@ -70,6 +70,8 @@ public class WaitFragment extends Fragment {
         getOrderPendingConfirm();
         return view;
     }
+
+
 
     private void initView() {
         rvWait = view.findViewById(R.id.rvWait);
@@ -120,7 +122,7 @@ public class WaitFragment extends Fragment {
 
                             }
                             orders.add(new Order(products.length(), totalPrice, itemOrders, nameStore, orderId, status));
-                            orderAdapter = new OrderAdapter(orders, getContext() );
+                            orderAdapter = new OrderAdapter(orders, getContext());
                             rvWait.setAdapter(orderAdapter);
                             ProgressBarDialog.getInstance(getContext()).closeDialog();
 

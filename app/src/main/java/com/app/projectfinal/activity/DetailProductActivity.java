@@ -307,6 +307,10 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
 
     private void openViewShopScreen() {
         Intent intent= new Intent(this, ViewShopActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(STORE_ID_PRODUCT,storeId);
+        bundle.putString(STORE_NAME_PRODUCT,storeName);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 

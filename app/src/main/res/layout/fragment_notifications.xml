@@ -24,43 +24,49 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:background="@drawable/custom_relative_header"
+                    android:orientation="horizontal"
                     android:padding="10dp">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="22dp"
-                        android:textColor="@color/white"
-                        android:textStyle="bold"
-                        android:text="Thông Báo"
                         android:paddingLeft="30dp"
-                        android:paddingRight="150dp"/>
+                        android:paddingRight="150dp"
+                        android:text="Thông Báo"
+                        android:textColor="@color/white"
+                        android:textSize="22dp"
+                        android:textStyle="bold" />
+
                     <ImageView
                         android:id="@+id/img_cart"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
                         android:layout_gravity="center"
+                        android:layout_marginLeft="12dp"
                         android:layout_marginTop="0dp"
-                        android:background="@drawable/ic_cart"/>
+                        android:layout_marginRight="12dp"
+                        android:background="@drawable/ic_cart" />
+
                     <ImageView
                         android:id="@+id/img_kekabMenu"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="0dp"
-                        android:background="@drawable/ic_chat"/>
+                        android:background="@drawable/ic_chat" />
                 </LinearLayout>
             </RelativeLayout>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
+
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="@dimen/_8sdp"
@@ -70,48 +76,23 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/relative_notifi_header"
-            android:background="#f3f3f3"
-
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
-                android:text="To Day"
-                android:paddingLeft="8dp"
+                android:layout_marginLeft="@dimen/_10sdp"
                 android:gravity="center_vertical"
+                android:text="Cập nhật đơn hàng"
                 android:textColor="@color/black"
-                android:textSize="20dp"
-                android:background="@color/grayLight"
-                />
+                android:textSize="@dimen/_13sdp" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcv_notifi_day"
+                android:id="@+id/rvNotify"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_200sdp"
-                android:overScrollMode="never"
-                android:paddingTop="@dimen/_8sdp"
-                android:paddingLeft="@dimen/_8sdp"
-                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
-                android:text="This Week"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_vertical"
-                android:paddingLeft="@dimen/_8sdp"
-                android:background="@color/grayLight"
-                android:textColor="@color/black"
-                android:textSize="20dp"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_10sdp"
                 />
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcv_notifi_week"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_200sdp"
-                android:overScrollMode="never"
-                android:paddingTop="@dimen/_8sdp"
-                android:paddingLeft="@dimen/_8sdp"
-                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
