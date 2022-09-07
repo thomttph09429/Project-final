@@ -1,6 +1,7 @@
 package com.app.projectfinal.activity;
 
 
+import static com.app.projectfinal.utils.Constant.BUY_NOW;
 import static com.app.projectfinal.utils.Constant.CATEGORY_NAME;
 import static com.app.projectfinal.utils.Constant.DESCRIPTION_PRODUCT;
 import static com.app.projectfinal.utils.Constant.ID_PRODUCT;
@@ -19,6 +20,7 @@ import static com.app.projectfinal.utils.Constant.UNIT_NAME;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -73,6 +75,7 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
     private ProductByShopAdapter productByShopAdapter;
     private List<Product> products;
     private AppCompatImageButton btnAddCart, btnChat;
+    private AppCompatButton btnBuy;
     private String idProduct;
     private Toolbar toolbar;
     private ActionBar actionBar;
@@ -88,8 +91,6 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
         receiveProductDetailWhenClick();
         displayProduct();
         showProductsByStore();
-        clickAddCart();
-        clickChat();
     }
 
     @Override
@@ -122,6 +123,9 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
         actionBar = getSupportActionBar();
         actionBar.setTitle(null);
         rlShop.setOnClickListener(this);
+        btnBuy.setOnClickListener(this);
+        btnAddCart.setOnClickListener(this);
+        btnChat.setOnClickListener(this);
 
     }
 
@@ -145,6 +149,7 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
         btnChat = findViewById(R.id.btnChat);
         toolbar = findViewById(R.id.toolbar);
         rlShop = findViewById(R.id.rlShop);
+        btnBuy = findViewById(R.id.btnBuy);
 
     }
 
@@ -199,26 +204,24 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
      * </pre>
      */
     private void clickAddCart() {
-        btnAddCart.setOnClickListener(v -> {
-            Log.e("pricedd", price + quantity + image1);
-            Bundle bundle = new Bundle();
-            bundle.putString(PRICE_PRODUCT, ValidateForm.getDecimalFormattedString(price));
-            bundle.putString(QUANTITY_PRODUCT, quantity);
-            bundle.putString(IMAGE1_PRODUCT, image1);
-            bundle.putString(NAME_PRODUCT, productName);
-            bundle.putString(ID_PRODUCT, idProduct);
-            bundle.putString(STORE_ID_PRODUCT, storeId);
-            bundle.putString(NAME_STORE, storeName);
-            bundle.putString(UNIT_NAME, unitName);
-            bundle.putString(DESCRIPTION_PRODUCT, description);
-            bundle.putString(CATEGORY_NAME, categoryName);
+        Bundle bundle = new Bundle();
+        bundle.putString(PRICE_PRODUCT, ValidateForm.getDecimalFormattedString(price));
+        bundle.putString(QUANTITY_PRODUCT, quantity);
+        bundle.putString(IMAGE1_PRODUCT, image1);
+        bundle.putString(NAME_PRODUCT, productName);
+        bundle.putString(ID_PRODUCT, idProduct);
+        bundle.putString(STORE_ID_PRODUCT, storeId);
+        bundle.putString(NAME_STORE, storeName);
+        bundle.putString(UNIT_NAME, unitName);
+        bundle.putString(DESCRIPTION_PRODUCT, description);
+        bundle.putString(CATEGORY_NAME, categoryName);
+        bundle.putString(BUY_NOW, "buy");
 
 
-            ChooseCartFragment chooseCartFragment = new ChooseCartFragment();
-            chooseCartFragment.setArguments(bundle);
-            chooseCartFragment.show(getSupportFragmentManager(), "ChooseCartFragment");
+        ChooseCartFragment chooseCartFragment = new ChooseCartFragment();
+        chooseCartFragment.setArguments(bundle);
+        chooseCartFragment.show(getSupportFragmentManager(), "ChooseCartFragment");
 
-        });
     }
 
     /**
@@ -293,23 +296,21 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
      * </pre>
      */
     private void clickChat() {
-        btnChat.setOnClickListener(v -> {
-            Intent intent = new Intent(this, ChatActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putString(PHONE, phone);
-            bundle.putString(STORE_ID_PRODUCT, storeId);
-            bundle.putString(STORE_NAME_PRODUCT, storeName);
-            intent.putExtras(bundle);
-            startActivity(intent);
+        Intent intent = new Intent(this, ChatActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(PHONE, phone);
+        bundle.putString(STORE_ID_PRODUCT, storeId);
+        bundle.putString(STORE_NAME_PRODUCT, storeName);
+        intent.putExtras(bundle);
+        startActivity(intent);
 
-        });
     }
 
     private void openViewShopScreen() {
-        Intent intent= new Intent(this, ViewShopActivity.class);
+        Intent intent = new Intent(this, ViewShopActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString(STORE_ID_PRODUCT,storeId);
-        bundle.putString(STORE_NAME_PRODUCT,storeName);
+        bundle.putString(STORE_ID_PRODUCT, storeId);
+        bundle.putString(STORE_NAME_PRODUCT, storeName);
         intent.putExtras(bundle);
         startActivity(intent);
     }
@@ -360,12 +361,44 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
 
     }
 
+    private void buyNow() {
+        Bundle bundle = new Bundle();
+        bundle.putString(PRICE_PRODUCT, ValidateForm.getDecimalFormattedString(price));
+        bundle.putString(QUANTITY_PRODUCT, quantity);
+        bundle.putString(IMAGE1_PRODUCT, image1);
+        bundle.putString(NAME_PRODUCT, productName);
+        bundle.putString(ID_PRODUCT, idProduct);
+        bundle.putString(STORE_ID_PRODUCT, storeId);
+        bundle.putString(NAME_STORE, storeName);
+        bundle.putString(UNIT_NAME, unitName);
+        bundle.putString(DESCRIPTION_PRODUCT, description);
+        bundle.putString(CATEGORY_NAME, categoryName);
+        bundle.putString(BUY_NOW, BUY_NOW);
+
+
+        ChooseCartFragment chooseCartFragment = new ChooseCartFragment();
+        chooseCartFragment.setArguments(bundle);
+        chooseCartFragment.show(getSupportFragmentManager(), "ChooseCartFragment");
+
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rlShop:
                 openViewShopScreen();
+                break;
+            case R.id.btnBuy:
+                buyNow();
+                break;
+            case R.id.btnAddCart:
+                clickAddCart();
+                break;
+            case R.id.btnChat:
+                clickChat();
+                break;
         }
     }
+
 
 }

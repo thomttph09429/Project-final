@@ -55,7 +55,7 @@ public class OrderInformationActivity extends AppCompatActivity implements View.
     private RecyclerView rvListOrder;
     private ItemOrderAdapter mItemOrderAdapter;
     private RelativeLayout rlCancel, rlComplete, rlPay, rlTimeOrder, rlCode;
-    private TextView tvStatusPending, tvStatusDelivery, tvStatusComplete, tvStatusCancel,tvViewShop;
+    private TextView tvStatusPending, tvStatusDelivery, tvStatusComplete, tvStatusCancel, tvViewShop;
     private AppCompatButton btnCancel, btnProcess;
     private LinearLayoutCompat lnBottom;
     private ImageView ivBack;
@@ -104,13 +104,12 @@ public class OrderInformationActivity extends AppCompatActivity implements View.
      * receive orderId from OrderAdapter, item from notify
      */
     private void initAction() {
+        tvViewShop.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
         ivBack.setOnClickListener(this);
         detailOrders = new ArrayList<>();
         Bundle bundle = getIntent().getExtras();
         orderId = bundle.getString("id");
-        Log.e("orderId", orderId + "");
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rvListOrder.setLayoutManager(layoutManager);
 
@@ -165,7 +164,7 @@ public class OrderInformationActivity extends AppCompatActivity implements View.
 
 
     private void getInfor(DetailOrder detailOrder) {
-        storeName= detailOrder.getName_store();
+        storeName = detailOrder.getName_store();
         tvNameShop.setText(storeName);
         tvAddress.setText(detailOrder.getLocation());
         tvPhoneNumber.setText(detailOrder.getCustomerPhone() + "");
@@ -177,7 +176,7 @@ public class OrderInformationActivity extends AppCompatActivity implements View.
         tvPay.setText(detailOrder.getUpdatedAt());
         tvComplete.setText(detailOrder.getUpdatedAt());
         tvCancel.setText(detailOrder.getUpdatedAt());
-        storeId= detailOrder.getStore_id();
+        storeId = detailOrder.getStore_id();
         if (detailOrder.getStatus() == 0) {
             rlCancel.setVisibility(View.VISIBLE);
             tvStatusCancel.setVisibility(View.VISIBLE);
@@ -198,6 +197,7 @@ public class OrderInformationActivity extends AppCompatActivity implements View.
         }
 
     }
+
     public void showDialogConfirm(String message) {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(OrderInformationActivity.this);
         builder1.setMessage(message);
@@ -223,6 +223,7 @@ public class OrderInformationActivity extends AppCompatActivity implements View.
         alert11.show();
 
     }
+
     private void cancelOrder() {
         String urlOrder = ORDER + "/" + orderId;
         JSONObject user = new JSONObject();
@@ -237,7 +238,7 @@ public class OrderInformationActivity extends AppCompatActivity implements View.
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, urlOrder, user, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.e("success", response+"");
+                Log.e("success", response + "");
                 ConstantData.showToast("Cập nhật thành công", R.drawable.ic_mark, OrderInformationActivity.this, getWindow().getDecorView().findViewById(android.R.id.content));
                 finish();
 
@@ -276,10 +277,10 @@ public class OrderInformationActivity extends AppCompatActivity implements View.
     }
 
     private void openViewShop() {
-        Intent intent= new Intent(this, ViewShopActivity.class);
+        Intent intent = new Intent(this, ViewShopActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString(STORE_ID_PRODUCT,storeId);
-        bundle.putString(STORE_NAME_PRODUCT,storeName);
+        bundle.putString(STORE_ID_PRODUCT, storeId);
+        bundle.putString(STORE_NAME_PRODUCT, storeName);
         intent.putExtras(bundle);
         startActivity(intent);
     }

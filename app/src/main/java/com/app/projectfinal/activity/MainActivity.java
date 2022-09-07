@@ -26,6 +26,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -35,6 +36,7 @@ import com.app.projectfinal.adapter.ViewPagerAdapter;
 import com.app.projectfinal.data.SharedPrefsSingleton;
 import com.app.projectfinal.model.Product;
 import com.app.projectfinal.utils.Constant;
+import com.app.projectfinal.utils.ConstantData;
 import com.app.projectfinal.utils.ProgressBarDialog;
 import com.app.projectfinal.utils.VolleySingleton;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
@@ -47,23 +49,28 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
 
     FragmentManager manager;
     private AHBottomNavigation bottomNavigation;
     private ViewPager2 viewPager2;
+    public static String storeId;
+    public static int role;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        isHaveAccount();
 
         bottomNavigation = findViewById(R.id.AHBottomNavigation);
         viewPager2 = findViewById(R.id.ViewPager);
         viewPager2.setAdapter(new ViewPagerAdapter(this));
 
-        AHBottomNavigationItem home = new AHBottomNavigationItem(R.string.home, R.drawable.custom_drawable_bottom_nav_home, R.color.white);
+        AHBottomNavigationItem home = new AHBottomNavigationItem(R.string.home, R.drawable.custom_drawable_bottom_nav_home, R.color.color_main);
         AHBottomNavigationItem notification = new AHBottomNavigationItem(R.string.notification, R.drawable.custom_drawable_bottom_nav_notifications, R.color.color_main);
         AHBottomNavigationItem user = new AHBottomNavigationItem(R.string.personal, R.drawable.custom_drawable_bottom_nav_user, R.color.color_main);
 
@@ -71,8 +78,8 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation.addItem(notification);
         bottomNavigation.addItem(user);
 
-        bottomNavigation.setDefaultBackgroundColor(Color.parseColor("#1CAE81"));
-        bottomNavigation.setNotificationBackgroundColor(Color.parseColor("#1CAE81"));
+        bottomNavigation.setDefaultBackgroundColor(Color.parseColor("#ffffff"));
+        bottomNavigation.setNotificationBackgroundColor(Color.parseColor("#ffffff"));
 
         bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
@@ -103,57 +110,45 @@ public class MainActivity extends AppCompatActivity {
         win.setAttributes(winParams);
     }
 
-    public void countCart(int count) {
-        AHNotification notification = new AHNotification.Builder()
-                .setText(String.valueOf(count))
-                .setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.red))
-                .setTextColor(ContextCompat.getColor(MainActivity.this, R.color.white))
-                .build();
-        bottomNavigation.setNotification(notification, 1);
+    public void isHaveAccount() {
+        String urlProducts = UPDATE_USER + "/" + ConstantData.getUserId(this);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlProducts, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                if (response != null) {
+                    try {
+                        JSONObject jsonObject = response.getJSONObject("data");
+                        JSONObject data = jsonObject.getJSONObject("user");
+                         role = data.getInt(ROLE);
+                        storeId = data.getString(STORE_ID_PRODUCT);
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+
+                    }
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", ConstantData.getToken(MainActivity.this));
+                return headers;
+            }
+        };
+        VolleySingleton.getInstance(MainActivity.this).getRequestQueue().add(jsonObjectRequest);
+
     }
 
-    /**
-     * function to check if user already register store or not
-     * if role=2=> registered store
-     * if role =1=>not registered store yet
-     * <pre>
-     *     author:ThomTT
-     *     date:03/08/2022
-     *     TODO
-     * </pre>
-     */
-//    public void checkIfUserRegisterShop() {
-//
-//        String url = UPDATE_USER + "/" + SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(Constant.USER_ID_SAVE);
-//
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                if (response != null) {
-//                    try {
-//                        JSONObject jsonObject = response.getJSONObject("data");
-//                        JSONObject user = jsonObject.getJSONObject("user");
-//                        String role = user.getString(ROLE);
-//                        if (role.equals(2)) {
-//                            SharedPrefsSingleton.getInstance(getApplicationContext()).putStringValue(ROLE_SAVE, role);
-//                        } else {
-//                            SharedPrefsSingleton.getInstance(getApplicationContext()).putStringValue(ROLE_SAVE, "1");
-//
-//                        }
-//
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//
-//                    }
-//                }
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//
-//            }
-//        });
-//        VolleySingleton.getInstance(this).getRequestQueue().add(jsonObjectRequest);
-//    }
 
 }

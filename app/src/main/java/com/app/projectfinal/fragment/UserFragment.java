@@ -1,5 +1,7 @@
 package com.app.projectfinal.fragment;
 
+import static com.app.projectfinal.activity.MainActivity.role;
+import static com.app.projectfinal.activity.MainActivity.storeId;
 import static com.app.projectfinal.utils.Constant.ROLE;
 import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
 import static com.app.projectfinal.utils.Constant.TOTAL_ORDER;
@@ -12,6 +14,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,6 +29,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
+import com.app.projectfinal.activity.CartActivity;
+import com.app.projectfinal.activity.ListChatActivity;
 import com.app.projectfinal.activity.MyShopActivity;
 import com.app.projectfinal.activity.ProfileSettingActivity;
 import com.app.projectfinal.activity.SignUpShopActivity;
@@ -44,11 +49,11 @@ import java.util.Map;
 public class UserFragment extends Fragment implements View.OnClickListener {
     private LinearLayout lnStartSell, lnSetting, lnWait, lnFinish, lnDelivery, lnCancel;
     private View view;
-    private TextView tvMyShop, tvWhenNotSignUp, tvUserName,tvHistory;
+    private TextView tvMyShop, tvWhenNotSignUp, tvUserName, tvHistory;
     private String isSignUp;
     private TextView tvTotalPending, tvTotalProcess, tvTotalDelivery, tvTotalCancel;
     private RelativeLayout rlTotalPending, rlTotalProcess, rlTotalDelivery, rlTotalCancel;
-    private String storeId;
+    private ImageView ivMessage, ivCart;
 
     public UserFragment() {
     }
@@ -68,6 +73,8 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         initView();
         initAction();
         getInformation();
+        getOrderQuantity();
+
         return view;
     }
 
@@ -87,6 +94,8 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         lnFinish.setOnClickListener(this);
         lnCancel.setOnClickListener(this);
         tvHistory.setOnClickListener(this);
+        ivCart.setOnClickListener(this);
+        ivMessage.setOnClickListener(this);
 
     }
 
@@ -123,58 +132,16 @@ public class UserFragment extends Fragment implements View.OnClickListener {
      * </pre>
      */
     private void isSignUpToBecomeSeller() {
-        ProgressBarDialog.getInstance(getContext()).showDialog("Đợi một lát", getContext());
-        String urlProducts = UPDATE_USER + "/" + ConstantData.getUserId(getContext());
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlProducts, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                if (response != null) {
-                    try {
-                        getOrderQuantity();
-                        JSONObject jsonObject = response.getJSONObject("data");
-                        JSONObject data = jsonObject.getJSONObject("user");
-                        int role = data.getInt(ROLE);
-                        storeId = data.getString(STORE_ID_PRODUCT);
-                        if (role == 2) {
-                            tvWhenNotSignUp.setVisibility(View.GONE);
-                            tvMyShop.setVisibility(View.VISIBLE);
-                            lnStartSell.setVisibility(View.GONE);
-                            ProgressBarDialog.getInstance(getContext()).closeDialog();
-                        } else {
-                            tvWhenNotSignUp.setVisibility(View.VISIBLE);
-                            tvMyShop.setVisibility(View.GONE);
-                            lnStartSell.setVisibility(View.VISIBLE);
-                            ProgressBarDialog.getInstance(getContext()).closeDialog();
+        if (role == 2) {
+            tvWhenNotSignUp.setVisibility(View.GONE);
+            tvMyShop.setVisibility(View.VISIBLE);
+            lnStartSell.setVisibility(View.GONE);
+        } else {
+            tvWhenNotSignUp.setVisibility(View.VISIBLE);
+            tvMyShop.setVisibility(View.GONE);
+            lnStartSell.setVisibility(View.VISIBLE);
 
-                        }
-
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        Toast.makeText(getContext(), e.toString(), Toast.LENGTH_LONG).show();
-
-                    }
-                }
-
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), error.toString(), Toast.LENGTH_LONG).show();
-                ProgressBarDialog.getInstance(getContext()).closeDialog();
-
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<>();
-                headers.put("Authorization", ConstantData.getToken(getContext().getApplicationContext()));
-                return headers;
-            }
-        };
-        VolleySingleton.getInstance(getContext()).getRequestQueue().add(jsonObjectRequest);
-
+        }
 
     }
 
@@ -268,6 +235,8 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         rlTotalDelivery = view.findViewById(R.id.rlTotalDelivery);
         rlTotalCancel = view.findViewById(R.id.rlTotalCancel);
         tvHistory = view.findViewById(R.id.tvHistory);
+        ivMessage = view.findViewById(R.id.ivMessage);
+        ivCart = view.findViewById(R.id.ivCart);
 
 
     }
@@ -300,9 +269,27 @@ public class UserFragment extends Fragment implements View.OnClickListener {
             case R.id.tvHistory:
                 waitForConfirmation();
                 break;
+            case R.id.ivCart:
+                clickCart();
+                break;
+            case R.id.ivMessage:
+                clickMessage();
+                break;
             default:
         }
 
+    }
+
+    private void clickMessage() {
+            Intent intent = new Intent(getActivity(), ListChatActivity.class);
+            startActivity(intent);
+
+
+    }
+
+    private void clickCart() {
+            Intent intent = new Intent(getActivity(), CartActivity.class);
+            startActivity(intent);
     }
 
     private void waitForConfirmation() {

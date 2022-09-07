@@ -56,6 +56,7 @@
 
 
                 <ImageView
+                    android:id="@+id/ivCover"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_150sdp"
                     android:alpha="0.3"
@@ -82,7 +83,7 @@
                         android:orientation="horizontal">
 
                         <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/img_user"
+                            android:id="@+id/ivAvatar"
                             android:layout_width="@dimen/_50sdp"
                             android:layout_height="@dimen/_50sdp"
                             android:src="@drawable/avatar_empty" />

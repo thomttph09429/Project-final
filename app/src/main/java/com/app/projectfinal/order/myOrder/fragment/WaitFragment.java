@@ -128,7 +128,6 @@ public class WaitFragment extends Fragment {
 
                         }
 
-                        Log.e("itemOrders", orders.get(0).getItemOrders().get(0).getName() + "");
 
 
                     } catch (JSONException e) {

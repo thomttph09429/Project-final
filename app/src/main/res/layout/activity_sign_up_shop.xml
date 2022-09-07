@@ -4,13 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.SignUpShopActivity"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    tools:context=".activity.SignUpShopActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-     >
+        android:layout_height="match_parent">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar"
@@ -72,32 +71,46 @@
         <RelativeLayout
             android:id="@+id/relative_top_user"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_100sdp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/collapsing_toolbar"
-            android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginBottom="@dimen/_8sdp"
-            android:background="@color/greenLight"
+            android:background="@color/black_30"
             android:gravity="center">
 
+            <ImageView
+                android:id="@+id/ivCover"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_100sdp" />
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/img_user"
+                android:id="@+id/ivAvatar"
                 android:layout_width="@dimen/_50sdp"
                 android:layout_height="@dimen/_50sdp"
+                android:layout_centerInParent="true"
                 android:src="@drawable/avatar_empty" />
 
             <TextView
-                android:id="@+id/txt_myShop_setting"
-                android:layout_width="@dimen/_50sdp"
+                android:id="@+id/tvEditAvatar"
+                android:padding="@dimen/_10sdp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/img_user"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:background="@drawable/bg_boder_20_green1"
-                android:gravity="center"
-                android:padding="@dimen/_3sdp"
-                android:text="Sửa  "
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_45sdp"
+                android:text="Sửa"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_10sdp" />
+
+
+            <TextView
+                android:id="@+id/tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_80sdp"
+                android:text="Chạm để thay đổi"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_10sdp" />
+
         </RelativeLayout>
 
         <LinearLayout
@@ -110,32 +123,32 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:background="@color/greenLight_30"
-                    android:weightSum="10"
-                    >
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
                     <TextView
-                        android:layout_weight="9"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_35sdp"
+                        android:layout_weight="9"
                         android:gravity="center_vertical"
-                        android:text="Tên cửa hàng"
                         android:paddingStart="@dimen/_10sdp"
+                        android:text="Tên cửa hàng"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12sdp"
                         android:textStyle="bold" />
+
                     <TextView
                         android:id="@+id/tvCountNameStore"
-                        android:layout_weight="1"
-                        android:text="0/130"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        />
+                        android:layout_weight="1"
+                        android:text="0/130" />
                 </LinearLayout>
 
 
@@ -143,17 +156,15 @@
                     android:id="@+id/edtEnterStoreName"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_35sdp"
-                    android:hint="Nhập tên cửa hàng"
-                    android:textSize="@dimen/_12sdp"
-                    android:paddingStart="@dimen/_10sdp"
                     android:background="@color/greenLight_20"
-                    />
+                    android:hint="Nhập tên cửa hàng"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:textSize="@dimen/_12sdp" />
 
 
             </LinearLayout>
 
         </LinearLayout>
-
 
 
         <LinearLayout
@@ -162,24 +173,23 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/linear_shopSettings_content1"
             android:orientation="vertical"
-            android:paddingTop="@dimen/_8sdp"
-          >
+            android:paddingTop="@dimen/_8sdp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
 
-             >
+                >
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_35sdp"
                     android:layout_weight="1"
                     android:background="@color/greenLight_30"
+                    android:paddingStart="@dimen/_10sdp"
                     android:text="FaceBook"
                     android:textColor="@color/black"
-                    android:paddingStart="@dimen/_10sdp"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -187,8 +197,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-            >
+                android:orientation="horizontal">
 
                 <EditText
                     android:id="@+id/edtLinkFace"
@@ -199,13 +208,15 @@
                     android:paddingStart="@dimen/_10sdp"
                     android:paddingLeft="@dimen/_8sdp"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_12sdp"
-                   />
+                    android:textSize="@dimen/_12sdp" />
             </LinearLayout>
         </LinearLayout>
 
+
+
+
         <LinearLayout
-            android:id="@+id/linear_shopSettings_content4"
+            android:id="@+id/lnDes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/linear_shopSettings_content3"
@@ -215,57 +226,17 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-             >
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_35sdp"
-                    android:gravity="center_vertical"
-                    android:text="Địa Chỉ"
                     android:background="@color/greenLight_30"
-                    android:textColor="@color/black"
-                    android:paddingStart="@dimen/_10sdp"
-                    android:textSize="@dimen/_12sdp"
-                    android:textStyle="bold" />
-                <TextView
-                    android:id="@+id/tvAddress"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_10sdp"
-                    android:text="Tỉnh/Thành phố, Quận/Huyện, Phường/Xã"
-                    android:textSize="@dimen/_12sdp"
-                    android:paddingStart="@dimen/_10sdp"
-                    android:background="@color/greenLight_20"
-                    />
-            </LinearLayout>
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/lnDes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/linear_shopSettings_content4"
-            android:orientation="vertical"
-            android:paddingTop="@dimen/_8sdp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_35sdp"
                     android:gravity="center_vertical"
+                    android:paddingStart="@dimen/_10sdp"
                     android:text="Mô tả shop"
-                    android:background="@color/greenLight_30"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp"
-                    android:paddingStart="@dimen/_10sdp"
                     android:textStyle="bold" />
 
 
@@ -275,10 +246,10 @@
                     android:layout_height="wrap_content"
                     android:background="@color/greenLight_20"
                     android:gravity="top|start"
-                    android:paddingStart="@dimen/_10sdp"
                     android:hint="Nhập mô tả shop"
                     android:inputType="textMultiLine"
-                    android:lines="5"
+                    android:lines="15"
+                    android:paddingStart="@dimen/_10sdp"
                     android:scrollbars="vertical"
                     android:textSize="@dimen/_12sdp" />
 
@@ -286,16 +257,15 @@
         </LinearLayout>
 
 
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnSignUpShop"
-                android:layout_width="match_parent"
-                android:layout_alignParentBottom="true"
-                android:background="@drawable/bg_border_40"
-                android:textColor="@color/white"
-                android:layout_height="wrap_content"
-                android:textAllCaps="false"
-                android:text="Lưu" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSignUpShop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/bg_border_40"
+            android:text="Lưu"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
 
 
     </RelativeLayout>

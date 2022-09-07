@@ -52,18 +52,18 @@
                     />
 
                 <ImageView
-                    android:id="@+id/cart"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/ivCart"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_60sdp"
                     android:src="@drawable/ic_cart" />
 
                 <ImageView
-                    android:id="@+id/chart"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/ivMessage"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_30sdp"
@@ -90,7 +90,7 @@
             <RelativeLayout
                 android:id="@+id/relative_top_user"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_115sdp"
+                android:layout_height="@dimen/_100sdp"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
@@ -111,90 +111,27 @@
                         android:layout_height="@dimen/_50sdp"
                         android:src="@drawable/avatar_empty" />
 
-                    <LinearLayout
+
+                    <TextView
+                        android:id="@+id/tvUserName"
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/_50sdp"
-                        android:orientation="vertical">
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:text="Người Mua"
+                        android:textColor="#1CAE81"
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold" />
 
-                        <TextView
-
-                            android:id="@+id/tvUserName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/_5sdp"
-                            android:text="Người Mua"
-                            android:textColor="#1CAE81"
-                            android:textSize="@dimen/_12sdp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/txt_user_role"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_5sdp"
-                            android:background="@drawable/bg_border_25"
-                            android:paddingLeft="@dimen/_2sdp"
-                            android:paddingTop="@dimen/_1sdp"
-                            android:paddingRight="@dimen/_2sdp"
-                            android:paddingBottom="@dimen/_1sdp"
-                            android:text="Nông Dân >"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/_8sdp"
-                            android:visibility="gone" />
-                    </LinearLayout>
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/linear_user_contentHeader"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/linear_user_topHeader"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_marginEnd="@dimen/_5sdp"
-                    android:layout_marginBottom="@dimen/_5sdp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingRight="@dimen/_1sdp"
-                        android:text="Đang theo dõi : " />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingRight="@dimen/_5sdp"
-                        android:text="25"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="|" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/_5sdp"
-                        android:paddingRight="@dimen/_1sdp"
-                        android:text="Người theo dõi :" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/_1sdp"
-                        android:text="225"
-                        android:textStyle="bold" />
-                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tvMyShop"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/linear_user_contentHeader"
+                    android:layout_below="@+id/linear_user_topHeader"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:background="@drawable/bd_border_20_topbot_right"
                     android:paddingLeft="@dimen/_8sdp"
                     android:paddingRight="@dimen/_3sdp"
@@ -473,12 +410,12 @@
                                     android:background="@drawable/bg_circle" />
 
                                 <TextView
-                                    android:gravity="center_horizontal"
                                     android:id="@+id/tvTotalCancel"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/_18sdp"
                                     android:layout_marginTop="@dimen/_10sdp"
+                                    android:gravity="center_horizontal"
                                     android:text="6"
                                     android:textColor="@color/white"
                                     android:textSize="@dimen/_8sdp" />
@@ -658,30 +595,6 @@
                         android:textStyle="italic" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_35sdp"
-                    android:background="@drawable/bg_border_0"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/_5sdp">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_gravity="center"
-                        android:layout_marginRight="@dimen/_5sdp"
-                        android:background="@drawable/clock"
-                        android:paddingLeft="@dimen/_5sdp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:text="Đã xem gần đây"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_10sdp"
-                        android:textStyle="bold" />
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -702,7 +615,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:text="Sản phẩm đã thích"
+                        android:text="Đánh giá"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_10sdp"
                         android:textStyle="bold" />
@@ -727,7 +640,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:text="Đánh giá của tôi"
+                        android:text="Giới thiệu với bạn bè"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_10sdp"
                         android:textStyle="bold" />

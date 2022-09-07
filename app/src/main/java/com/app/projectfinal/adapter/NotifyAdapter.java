@@ -29,6 +29,7 @@ import com.app.projectfinal.activity.DetailProductActivity;
 import com.app.projectfinal.model.Product;
 import com.app.projectfinal.model.order.DetailOrder;
 import com.app.projectfinal.order.myOrder.OrderInformationActivity;
+import com.app.projectfinal.order.shopOrder.OrderShopInformationActivity;
 import com.app.projectfinal.utils.ValidateForm;
 import com.bumptech.glide.Glide;
 
@@ -38,10 +39,12 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.MyViewHold
     private List<DetailOrder> orders;
     private Context context;
     private DetailOrder detailOrder;
+    private String isShop;
 
-    public NotifyAdapter(List<DetailOrder> orders, Context context) {
+    public NotifyAdapter(List<DetailOrder> orders, Context context, String isShop) {
         this.orders = orders;
         this.context = context;
+        this.isShop = isShop;
     }
 
     @NonNull
@@ -59,18 +62,38 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.MyViewHold
         String id = orders.get(position).getId();
 
         int status = detailOrder.getStatus();
-        if (status == 0) {
-            holder.tvContent.setText("Đã bị hủy bởi cửa hàng");
-        } else if (status == 1) {
-            holder.tvContent.setText("Đã đặt thành công");
+        if (!isShop.equals("yes")){
+            if (status == 0) {
+                holder.tvContent.setText("Đã bị hủy");
+            } else if (status == 1) {
+                holder.tvContent.setText("Đã đặt thành công");
 
-        } else if (status == 2) {
-            holder.tvContent.setText("Đã được giao cho đơn vị vận chuyển");
+            } else if (status == 2) {
+                holder.tvContent.setText("Đã được giao cho đơn vị vận chuyển");
 
-        } else if (status == 3) {
-            holder.tvContent.setText("Đã giao thành công đến bạn");
+            } else if (status == 3) {
+                holder.tvContent.setText("Đã giao thành công đến bạn");
 
+            }else {
+
+            }
+        }else {
+            if (status == 0) {
+                holder.tvContent.setText("Đã bị hủy");
+            } else if (status == 1) {
+                holder.tvContent.setText("Đang chờ bạn xác nhận");
+
+            } else if (status == 2) {
+                holder.tvContent.setText("Đã được giao cho đơn vị vận chuyển");
+
+            } else if (status == 3) {
+                holder.tvContent.setText("Đã giao thành công đến người mua");
+
+            }else {
+
+            }
         }
+
         holder.tvTime.setText(detailOrder.getUpdatedAt());
 
         for (int i = 0; i < orders.get(position).getProducts().size(); i++) {
@@ -78,12 +101,20 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.MyViewHold
 
         }
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, OrderInformationActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putString("id", id);
+            if (!isShop.equals("yes")){
+                Intent intent = new Intent(context, OrderInformationActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("id", id);
+                intent.putExtras(bundle);
+                context.startActivity(intent);
+            }else {
+                Intent intent = new Intent(context, OrderShopInformationActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("id", id);
+                intent.putExtras(bundle);
+                context.startActivity(intent);
+            }
 
-            intent.putExtras(bundle);
-            context.startActivity(intent);
         });
     }
 

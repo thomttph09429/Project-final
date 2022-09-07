@@ -97,6 +97,7 @@ public class OrderShopInformationActivity extends AppCompatActivity implements V
     private void initAction() {
         btnCancel.setOnClickListener(this);
         ivBack.setOnClickListener(this);
+        btnProcess.setOnClickListener(this);
         detailOrders = new ArrayList<>();
         Bundle bundle = getIntent().getExtras();
         orderId = bundle.getString("id");
@@ -189,7 +190,7 @@ public class OrderShopInformationActivity extends AppCompatActivity implements V
     }
 
 
-    public void showDialogConfirm(String message) {
+    public void showDialogConfirm(String message, int status) {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(OrderShopInformationActivity.this);
         builder1.setMessage(message);
         builder1.setCancelable(true);
@@ -198,7 +199,7 @@ public class OrderShopInformationActivity extends AppCompatActivity implements V
                 "Đồng ý",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        cancelOrder();
+                        updateOrder(status);
                     }
                 });
 
@@ -216,11 +217,11 @@ public class OrderShopInformationActivity extends AppCompatActivity implements V
     }
 
 
-    private void cancelOrder() {
+    private void updateOrder(int status) {
         String urlOrder = ORDER + "/" + orderId;
         JSONObject user = new JSONObject();
         try {
-            user.put(STATUS, 0);
+            user.put(STATUS, status);
             JSONObject data = new JSONObject();
             data.put("data", user);
 
@@ -256,10 +257,13 @@ public class OrderShopInformationActivity extends AppCompatActivity implements V
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnCancel:
-                showDialogConfirm("Hủy đơn hàng?");
+                showDialogConfirm("Hủy đơn hàng?", 0);
             break;
             case R.id.ivBack:
                 finish();
+                break;
+            case R.id.btnProcess:
+                showDialogConfirm("Xác nhận giao?",2);
                 break;
         }
 

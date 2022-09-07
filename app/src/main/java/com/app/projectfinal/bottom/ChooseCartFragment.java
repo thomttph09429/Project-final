@@ -1,5 +1,6 @@
 package com.app.projectfinal.bottom;
 
+import static com.app.projectfinal.utils.Constant.BUY_NOW;
 import static com.app.projectfinal.utils.Constant.CATEGORY_NAME;
 import static com.app.projectfinal.utils.Constant.DESCRIPTION_PRODUCT;
 import static com.app.projectfinal.utils.Constant.ID_PRODUCT;
@@ -11,11 +12,13 @@ import static com.app.projectfinal.utils.Constant.QUANTITY_PRODUCT;
 import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
 import static com.app.projectfinal.utils.Constant.UNIT_NAME;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,12 +30,15 @@ import android.widget.Toast;
 
 import com.app.projectfinal.R;
 import com.app.projectfinal.activity.DetailProductActivity;
+import com.app.projectfinal.activity.order.OrderActivity;
 import com.app.projectfinal.db.Cart;
 import com.app.projectfinal.db.CartDatabase;
 import com.app.projectfinal.utils.ValidateForm;
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -40,8 +46,9 @@ public class ChooseCartFragment extends BottomSheetDialogFragment {
     private View view;
     private ImageView ivProduct, ivClose;
     private TextView tvPrice, tvQuantity, tvRaiseAmount, tvAmount, tvReduceAmount, tvUnit;
-    private String price, image, idProduct, idShop, nameProduct, quantity, nameStore, unitName, description, categoryName;
+    private String price, image, idProduct, idShop, nameProduct, quantity, nameStore, unitName, description, categoryName, isBuyNow;
     private AppCompatButton btnAddToCart;
+    private List<Cart> cartListChecked = new ArrayList<>();
 
 
     @Override
@@ -78,14 +85,27 @@ public class ChooseCartFragment extends BottomSheetDialogFragment {
      */
     private void addToCart() {
         btnAddToCart.setOnClickListener(v -> {
-
             String amount = tvAmount.getText().toString();
-            if (amount.equals("0")) {
-                showToast("Bạn vẫn chưa chọn số lượng", R.drawable.ic_priority);
+            int totalAmount = Integer.valueOf(amount)  *ValidateForm.getPriceToInt(price);
+            cartListChecked.add(new Cart(idProduct, idShop, nameProduct, amount, price, image, nameStore, unitName, quantity, description, categoryName));
+            if (!isBuyNow.equals(BUY_NOW)) {
+                if (amount.equals("0")) {
+                    showToast("Bạn vẫn chưa chọn số lượng", R.drawable.ic_priority);
+                } else {
+                    CartDatabase.getInstance(getContext()).cartDAO().insert(new Cart(idProduct, idShop, nameProduct, amount, price, image, nameStore, unitName, quantity, description, categoryName));
+                    showToast("Đã thêm vào giỏ", R.drawable.ic_mark);
+                    dismiss();
+                }
             } else {
-                CartDatabase.getInstance(getContext()).cartDAO().insert(new Cart(idProduct, idShop, nameProduct, amount, price, image, nameStore, unitName,quantity, description, categoryName));
-                showToast("Đã thêm vào giỏ", R.drawable.ic_mark);
-                dismiss();
+                if (amount.equals("0")) {
+                    showToast("Bạn vẫn chưa chọn số lượng", R.drawable.ic_priority);
+                } else {
+                    dismiss();
+                    Intent intent = new Intent(getContext(), OrderActivity.class);
+                    intent.putParcelableArrayListExtra("cartListChecked", (ArrayList<? extends Parcelable>) cartListChecked);
+                    intent.putExtra("totalAmount", ValidateForm.getDecimalFormattedString(String.valueOf(totalAmount)));
+                    startActivity(intent);
+                }
             }
 
 
@@ -130,11 +150,14 @@ public class ChooseCartFragment extends BottomSheetDialogFragment {
         quantity = getArguments().getString(QUANTITY_PRODUCT);
         description = getArguments().getString(DESCRIPTION_PRODUCT);
         categoryName = getArguments().getString(CATEGORY_NAME);
-
+        isBuyNow = getArguments().getString(BUY_NOW);
         tvQuantity.setText(quantity);
         tvPrice.setText(price);
         tvUnit.setText(unitName);
         Glide.with(getContext()).load(image).into(ivProduct);
+        if (isBuyNow.equals(BUY_NOW)) {
+            btnAddToCart.setText("Mua ngay");
+        }
 
     }
 
