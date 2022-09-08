@@ -258,10 +258,10 @@ public class EnterAuthenticationOTPFragment extends DialogFragment {
             if (edtEnterOTP.getText().toString().isEmpty()) {
                 Toast.makeText(getContext(), "Vui lòng nhập mã!", Toast.LENGTH_LONG).show();
             }
-            else if (!edtEnterOTP.getText().toString().trim().equals(codeId)) {
-                Toast.makeText(getContext(), "Bạn đã nhập sai mã!", Toast.LENGTH_LONG).show();
-
-            }
+//            else if (!edtEnterOTP.getText().toString().trim().equals(codeId)) {
+//                Toast.makeText(getContext(), "Bạn đã nhập sai mã!", Toast.LENGTH_LONG).show();
+//
+//            }
             else {
                 ProgressBarDialog.getInstance(getContext()).showDialog("Đợi một lát", getContext());
                 registerServer(phoneNumber, pass, ValidateForm.capitalizeFirst(name));

@@ -83,6 +83,7 @@ public class ViewShopActivity extends AppCompatActivity {
 
         }
         initAction();
+        getInfoShop();
         scrollPage();
 
     }
@@ -125,7 +126,6 @@ public class ViewShopActivity extends AppCompatActivity {
     private void getProducts(int page) {
 
         String url = PRODUCTS + "?" + "storeId" + "=" + storeIds + "&page=" + page + "&size=" + 12;
-        ProgressBarDialog.getInstance(this).showDialog("Đang tải", ViewShopActivity.this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -149,7 +149,6 @@ public class ViewShopActivity extends AppCompatActivity {
                             String unit = object.getString(UNIT_NAME);
 
                             products.add(new Product(price, productName, image1, description, storeName, categoryName, storeId, quantity, id, unit));
-                            getInfoShop();
                         }
                         if (products != null) {
                             productAdapter = new ProductAdapter(products, ViewShopActivity.this);
@@ -158,7 +157,6 @@ public class ViewShopActivity extends AppCompatActivity {
 
                         }
 
-                        ProgressBarDialog.getInstance(ViewShopActivity.this).closeDialog();
 
                     } catch (JSONException e) {
 
@@ -174,7 +172,6 @@ public class ViewShopActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(ViewShopActivity.this, error.toString(), Toast.LENGTH_LONG).show();
-                ProgressBarDialog.getInstance(ViewShopActivity.this).closeDialog();
 
             }
         }) {
@@ -190,6 +187,7 @@ public class ViewShopActivity extends AppCompatActivity {
 
     private void getInfoShop() {
         String url = ADD_STORES + "/" + storeIds;
+        ProgressBarDialog.getInstance(this).showDialog("Đang tải", ViewShopActivity.this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -199,11 +197,10 @@ public class ViewShopActivity extends AppCompatActivity {
                         JSONObject data = jsonObject.getJSONObject("user");
                         String image1 = data.getString("image1");
                         String image2 = data.getString("image2");
-                        Log.e("hh", image1+"ggggg"+ storeIds+"");
                         Glide.with(ViewShopActivity.this).load(image1).centerCrop().error(R.drawable.avatar_empty).into(ivAvatar);
                         Glide.with(ViewShopActivity.this).load(image2).centerCrop().error(R.drawable.ic_cover).into(ivCover);
                         ProgressBarDialog.getInstance(ViewShopActivity.this).closeDialog();
-
+                        getProducts(page);
                     } catch (JSONException e) {
 
                         e.printStackTrace();

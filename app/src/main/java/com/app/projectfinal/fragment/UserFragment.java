@@ -2,6 +2,7 @@ package com.app.projectfinal.fragment;
 
 import static com.app.projectfinal.activity.MainActivity.role;
 import static com.app.projectfinal.activity.MainActivity.storeId;
+import static com.app.projectfinal.utils.Constant.ADDRESS;
 import static com.app.projectfinal.utils.Constant.ROLE;
 import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
 import static com.app.projectfinal.utils.Constant.TOTAL_ORDER;
@@ -11,6 +12,7 @@ import static com.app.projectfinal.utils.Constant.USER_NAME_SAVE;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,17 +36,28 @@ import com.app.projectfinal.activity.ListChatActivity;
 import com.app.projectfinal.activity.MyShopActivity;
 import com.app.projectfinal.activity.ProfileSettingActivity;
 import com.app.projectfinal.activity.SignUpShopActivity;
+import com.app.projectfinal.activity.address.AddressActivity;
+import com.app.projectfinal.adapter.address.ListAddressAdapter;
 import com.app.projectfinal.data.SharedPrefsSingleton;
+import com.app.projectfinal.model.User;
+import com.app.projectfinal.model.UserDetail;
+import com.app.projectfinal.model.address.AddressUser;
+import com.app.projectfinal.model.order.DetailOrder;
 import com.app.projectfinal.order.myOrder.MyOrderActivity;
 import com.app.projectfinal.utils.ConstantData;
 import com.app.projectfinal.utils.ProgressBarDialog;
 import com.app.projectfinal.utils.VolleySingleton;
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserFragment extends Fragment implements View.OnClickListener {
     private LinearLayout lnStartSell, lnSetting, lnWait, lnFinish, lnDelivery, lnCancel;
@@ -54,6 +67,8 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     private TextView tvTotalPending, tvTotalProcess, tvTotalDelivery, tvTotalCancel;
     private RelativeLayout rlTotalPending, rlTotalProcess, rlTotalDelivery, rlTotalCancel;
     private ImageView ivMessage, ivCart;
+    private CircleImageView ivAvatar;
+    public  static  UserDetail userDetail;
 
     public UserFragment() {
     }
@@ -72,8 +87,8 @@ public class UserFragment extends Fragment implements View.OnClickListener {
             view = inflater.inflate(R.layout.fragment_user, container, false);
         initView();
         initAction();
-        getInformation();
         getOrderQuantity();
+
 
         return view;
     }
@@ -104,8 +119,8 @@ public class UserFragment extends Fragment implements View.OnClickListener {
      * get user name of user
      */
     private void getInformation() {
-        String userName = SharedPrefsSingleton.getInstance(getActivity().getApplicationContext()).getStringValue(USER_NAME_SAVE);
-        tvUserName.setText(userName.toString());
+        tvUserName.setText(userDetail.getUserName());
+        Glide.with(getContext()).load(userDetail.getImage1()).error(R.drawable.avatar_empty).into(ivAvatar);
 
     }
 
@@ -161,19 +176,65 @@ public class UserFragment extends Fragment implements View.OnClickListener {
 
     }
 
+    private void getInfoUser() {
+        String url = UPDATE_USER + "/" + ConstantData.getUserId(getContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                try {
+                    JSONObject jsonObject = response.getJSONObject("data");
+                    JSONObject data = jsonObject.getJSONObject("user");
+                    Gson gson = new Gson();
+                     userDetail = gson.fromJson(String.valueOf(data), UserDetail.class);
+                    getInformation();
+                    ProgressBarDialog.getInstance(getContext()).closeDialog();
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getContext(), e.toString(), Toast.LENGTH_LONG).show();
+                    ProgressBarDialog.getInstance(getContext()).closeDialog();
+
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), error.toString(), Toast.LENGTH_LONG).show();
+                ProgressBarDialog.getInstance(getContext()
+                ).closeDialog();
+
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", ConstantData.getToken(getContext()));
+                return headers;
+            }
+        };
+        VolleySingleton.getInstance(getContext()).getRequestQueue().add(jsonObjectRequest);
+    }
+
     private void getOrderQuantity() {
+        ProgressBarDialog.getInstance(getContext()).showDialog("Đợi 1 lát", getContext());
         String urlProducts = TOTAL_ORDER + "/" + "?userId=" + ConstantData.getUserId(getContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlProducts, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+
                 if (response != null) {
+
                     try {
                         JSONObject data = response.getJSONObject("data");
                         int cancelOrder = data.getInt("cancelOrder");
                         int newOrder = data.getInt("newOrder");
                         int processingOrder = data.getInt("processingOrder");
                         int finishOrder = data.getInt("finishOrder");
-
+                        getInfoUser();
 
                         //delivery
                         if (processingOrder != 0) {
@@ -237,6 +298,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         tvHistory = view.findViewById(R.id.tvHistory);
         ivMessage = view.findViewById(R.id.ivMessage);
         ivCart = view.findViewById(R.id.ivCart);
+        ivAvatar = view.findViewById(R.id.ivAvatar);
 
 
     }
@@ -281,15 +343,15 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     }
 
     private void clickMessage() {
-            Intent intent = new Intent(getActivity(), ListChatActivity.class);
-            startActivity(intent);
+        Intent intent = new Intent(getActivity(), ListChatActivity.class);
+        startActivity(intent);
 
 
     }
 
     private void clickCart() {
-            Intent intent = new Intent(getActivity(), CartActivity.class);
-            startActivity(intent);
+        Intent intent = new Intent(getActivity(), CartActivity.class);
+        startActivity(intent);
     }
 
     private void waitForConfirmation() {

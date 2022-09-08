@@ -2,6 +2,7 @@ package com.app.projectfinal.activity;
 
 import static com.app.projectfinal.activity.MainActivity.role;
 import static com.app.projectfinal.activity.MainActivity.storeId;
+import static com.app.projectfinal.utils.Constant.ADDRESS;
 import static com.app.projectfinal.utils.Constant.ADD_STORES;
 import static com.app.projectfinal.utils.Constant.DESCRIPTION_STORE;
 import static com.app.projectfinal.utils.Constant.IS_ACTIVE;
@@ -38,7 +39,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
 import com.app.projectfinal.activity.address.AddressActivity;
+import com.app.projectfinal.adapter.address.ListAddressAdapter;
 import com.app.projectfinal.data.SharedPrefsSingleton;
+import com.app.projectfinal.model.UserDetail;
+import com.app.projectfinal.model.address.AddressUser;
 import com.app.projectfinal.order.myOrder.OrderInformationActivity;
 import com.app.projectfinal.utils.Constant;
 import com.app.projectfinal.utils.ConstantData;
@@ -54,6 +58,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -91,7 +96,62 @@ public class SignUpShopActivity extends AppCompatActivity {
             openFileChoseCover();
 
         });
+        if (role == 2) {
+            getInforShop();
+        }
     }
+
+    private void getInforShop() {
+        ProgressBarDialog.getInstance(this).showDialog("Đang tải", this);
+        String url = ADD_STORES + "/" + storeId;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                try {
+                    JSONObject jsonObject = response.getJSONObject("data");
+                    JSONObject data = jsonObject.getJSONObject("user");
+                    String image1 = data.getString("image1");
+                    String image2 = data.getString("image2");
+                    String storeName = data.getString("storeName");
+                    String description = data.getString("description");
+                    String linkSupport = data.getString("linkSupport");
+                    Glide.with(SignUpShopActivity.this).load(image1).centerCrop().error(R.drawable.avatar_empty).into(ivAvatar);
+                    Glide.with(SignUpShopActivity.this).load(image2).centerCrop().error(R.drawable.avatar_empty).into(ivCover);
+                    edtDesStore.setText(description);
+                    edtEnterStoreName.setText(storeName);
+                    edtLinkFace.setText(linkSupport);
+                    ProgressBarDialog.getInstance(SignUpShopActivity.this).closeDialog();
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(SignUpShopActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+                    ProgressBarDialog.getInstance(SignUpShopActivity.this).closeDialog();
+
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(SignUpShopActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+                ProgressBarDialog.getInstance(SignUpShopActivity.this
+                ).closeDialog();
+
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", ConstantData.getToken(SignUpShopActivity.this.getApplicationContext()));
+                return headers;
+            }
+        };
+        VolleySingleton.getInstance(this).getRequestQueue().add(jsonObjectRequest);
+    }
+
 
     private void initAction() {
         storageRef = FirebaseStorage.getInstance().getReference("Posts");
@@ -141,7 +201,6 @@ public class SignUpShopActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         Uri downloadUri = task.getResult();
                         image1 = downloadUri.toString();
-                        Log.e("miannn", image1.toString());
 
                         uploadImageCover();
 
@@ -211,8 +270,8 @@ public class SignUpShopActivity extends AppCompatActivity {
             user.put("name", edtEnterStoreName.getText().toString());
             user.put("linkSupport", edtLinkFace.getText().toString());
             user.put("description", edtDesStore.getText().toString());
-            user.put("image1",image1);
-            user.put("image2",image2);
+            user.put("image1", image1);
+            user.put("image2", image2);
 
             JSONObject datas = new JSONObject();
             datas.put("data", user);

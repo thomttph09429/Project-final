@@ -1,5 +1,6 @@
 package com.app.projectfinal.activity;
 
+import static com.app.projectfinal.fragment.UserFragment.userDetail;
 import static com.app.projectfinal.utils.Constant.DATE_OF_BIRTH;
 import static com.app.projectfinal.utils.Constant.EMAIL;
 import static com.app.projectfinal.utils.Constant.PHONE_NUMBER;
@@ -63,8 +64,10 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
     private StorageReference storageRef;
     private StorageTask uploadTask;
     private LinearLayout lnAddress, lnNameLogin, lnNumberLogin, lnEmail, lnChangePass, lnPolicy, lnRules;
-    private EditText edtUserLogin, edtNumberLogin, edtEmail, edtDateOfBirth;
+    private EditText edtUserLogin, edtEmail, edtDateOfBirth;
     private AppCompatButton btnSaveInfo;
+    private TextView tvNumberLogin;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +88,7 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
      */
     private void initView() {
         edtUserLogin = findViewById(R.id.edtUserLogin);
-        edtNumberLogin = findViewById(R.id.edtNumberLogin);
+        tvNumberLogin = findViewById(R.id.tvNumberLogin);
         edtEmail = findViewById(R.id.edtEmail);
 
         tvUpdateAvatar = findViewById(R.id.tvUpdateAvatar);
@@ -111,15 +114,10 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
     }
 
     private void updateAvatar() {
-        if (tvUpdateAvatar.getText().equals("Sửa")) {
-            openFileChose();
-
-        } else if (tvUpdateAvatar.getText().equals("Cập nhật")) {
-            uploadImage();
-        }
-
+        openFileChose();
 
     }
+
 
     private void openFileChose() {
         Intent intent = new Intent();
@@ -158,10 +156,8 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
                     if (task.isSuccessful()) {
                         Uri downloadUri = task.getResult();
                         linkImageUrlFirebase = downloadUri.toString();
-                        Log.e("miannn", linkImageUrlFirebase.toString());
+                        updateInfo();
 
-                        ProgressBarDialog.getInstance(ProfileSettingActivity.this).closeDialog();
-                        tvUpdateAvatar.setText("Sửa");
 
                     } else {
                         Toast.makeText(ProfileSettingActivity.this, "đã xảy ra lỗi" + task.getResult(), Toast.LENGTH_SHORT).show();
@@ -170,6 +166,8 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
+                    ProgressBarDialog.getInstance(ProfileSettingActivity.this).closeDialog();
+
                 }
             });
 
@@ -180,8 +178,11 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
     }
 
     private void getInfo() {
-        edtUserLogin.setText(SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(USER_NAME_SAVE));
-        edtNumberLogin.setText(SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(PHONE_NUMBER));
+        edtUserLogin.setText(userDetail.getUserName());
+        tvNumberLogin.setText(userDetail.getPhone());
+        edtEmail.setText(userDetail.getEmail());
+        edtDateOfBirth.setText(userDetail.getDateOfBirth());
+        Glide.with(this).load(userDetail.getImage1()).error(R.drawable.avatar_empty).into(ivAvtUser);
 
     }
 
@@ -194,6 +195,9 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
             email = edtEmail.getText().toString().trim();
             user.put(DATE_OF_BIRTH, dateOfBirth);
             user.put(EMAIL, email);
+            user.put("userName", edtUserLogin.getText().toString().trim());
+            user.put("image1", linkImageUrlFirebase);
+
             JSONObject data = new JSONObject();
             data.put("data", user);
 
@@ -203,6 +207,7 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, user, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+                ProgressBarDialog.getInstance(ProfileSettingActivity.this).closeDialog();
                 showToast("Cập nhật thành công", R.drawable.ic_mark);
 
             }
@@ -211,7 +216,7 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(ProfileSettingActivity.this, "" + error.toString(), Toast.LENGTH_LONG).show();
             }
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<>();
@@ -230,9 +235,7 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
                 && data != null && data.getData() != null) {
             uriImage = data.getData();
             Glide.with(this).load(uriImage).centerCrop().into(ivAvtUser);
-            if (uriImage != null) {
-                tvUpdateAvatar.setText("Cập nhật");
-            }
+
 
         }
     }
@@ -245,7 +248,7 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
                 updateAvatar();
                 break;
             case R.id.btnSaveInfo:
-                updateInfo();
+                uploadImage();
                 break;
             case R.id.lnAddress:
                 openAddressScreen();
@@ -256,7 +259,7 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
     }
 
     private void openAddressScreen() {
-        Intent intent= new Intent(this, AddressActivity.class);
+        Intent intent = new Intent(this, AddressActivity.class);
         startActivity(intent);
     }
 

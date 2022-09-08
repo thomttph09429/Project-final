@@ -41,17 +41,17 @@
                     android:textSize="@dimen/_18sdp"
                     android:textStyle="bold" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnSaveInfo"
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_height="@dimen/_25sdp"
-                    android:layout_gravity="end"
-                    android:layout_marginLeft="@dimen/_20sdp"
-                    android:background="@drawable/bg_boder_20_green"
-                    android:text="Lưu"
-                    android:textAllCaps="false"
-                    android:textColor="@color/color_main"
-                    android:textSize="@dimen/_10sdp" />
+                                <androidx.appcompat.widget.AppCompatButton
+                                    android:id="@+id/btnSaveInfo"
+                                    android:layout_width="@dimen/_50sdp"
+                                    android:layout_height="@dimen/_25sdp"
+                                    android:layout_gravity="end"
+                                    android:layout_marginLeft="@dimen/_20sdp"
+                                    android:background="@drawable/bg_boder_20_green"
+                                    android:text="Lưu"
+                                    android:textAllCaps="false"
+                                    android:textColor="@color/color_main"
+                                    android:textSize="@dimen/_10sdp" />
 
 
             </LinearLayout>
@@ -140,11 +140,10 @@
             android:padding="@dimen/_5sdp"
             android:text="Số điện thoại" />
 
-        <EditText
-            android:id="@+id/edtNumberLogin"
+        <TextView
+            android:id="@+id/tvNumberLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLength="10"
             android:textSize="@dimen/_11sdp"
             android:background="@android:color/transparent"
             android:gravity="bottom|end"

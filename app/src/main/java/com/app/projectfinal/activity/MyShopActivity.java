@@ -27,6 +27,7 @@ import com.app.projectfinal.order.shopOrder.ShopOrderActivity;
 import com.app.projectfinal.utils.ConstantData;
 import com.app.projectfinal.utils.ProgressBarDialog;
 import com.app.projectfinal.utils.VolleySingleton;
+import com.bumptech.glide.Glide;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,13 +35,16 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MyShopActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView tvStoreName, tvViewShop,tvHistory;
     private LinearLayout lnStartSell, lnMyProduct, lnShopSetting, lnWaitConfirm, lnDelivery, lnComplete, lnCancel,lnViewShop;
-    public static String  storeName;
+    public static String  storeName, avatar;
     public static  String storeId;
     private RelativeLayout rlTotalPending,rlTotalProcess;
     private TextView tvTotalPending,tvTotalProcess;
+    private CircleImageView ivAvatar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +88,7 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
         lnCancel = findViewById(R.id.lnCancel);
         lnViewShop = findViewById(R.id.lnViewShop);
         tvHistory = findViewById(R.id.tvHistory);
+        ivAvatar = findViewById(R.id.ivAvatar);
 
         rlTotalPending = findViewById(R.id.rlTotalPending);
         rlTotalProcess = findViewById(R.id.rlTotalProcess);
@@ -141,8 +146,11 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
                         JSONObject jsonObject = response.getJSONObject("data");
                         JSONObject data = jsonObject.getJSONObject("user");
                         storeName = data.getString(STORE_NAME_PRODUCT);
+                        avatar = data.getString("image1");
                         tvStoreName.setText(storeName);
                         getOrderQuantity();
+                        Glide.with(MyShopActivity.this).load(avatar).centerCrop().error(R.drawable.avatar_empty).into(ivAvatar);
+
                         ProgressBarDialog.getInstance(MyShopActivity.this).closeDialog();
 
 
