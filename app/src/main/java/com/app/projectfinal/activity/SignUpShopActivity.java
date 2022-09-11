@@ -1,6 +1,6 @@
 package com.app.projectfinal.activity;
 
-import static com.app.projectfinal.activity.MainActivity.role;
+import static com.app.projectfinal.activity.MainActivity.status;
 import static com.app.projectfinal.activity.MainActivity.storeId;
 import static com.app.projectfinal.utils.Constant.ADDRESS;
 import static com.app.projectfinal.utils.Constant.ADD_STORES;
@@ -96,7 +96,7 @@ public class SignUpShopActivity extends AppCompatActivity {
             openFileChoseCover();
 
         });
-        if (role == 2) {
+        if (status == 1) {
             getInforShop();
         }
     }
@@ -240,7 +240,20 @@ public class SignUpShopActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         Uri downloadUri = task.getResult();
                         image2 = downloadUri.toString();
-                        updateInfoStore();
+                        if (status==1){
+                            updateInfoStore();
+
+                        }else {
+                            String storeName = edtEnterStoreName.getText().toString().trim();
+                            String linkFace = edtLinkFace.getText().toString().trim();
+                            String description = edtDesStore.getText().toString().trim();
+                            String userId = ConstantData.getUserId(SignUpShopActivity.this);
+                            if (image1!=null && image2!=null){
+                                signUpToBecomeSeller(userId, storeName, description, linkFace);
+
+                            }
+
+                        }
 
                     } else {
                         Toast.makeText(SignUpShopActivity.this, "đã xảy ra lỗi" + task.getResult(), Toast.LENGTH_SHORT).show();
@@ -315,16 +328,8 @@ public class SignUpShopActivity extends AppCompatActivity {
      */
     private void signUpShop() {
         btnSignUpShop.setOnClickListener(v -> {
-            String storeName = edtEnterStoreName.getText().toString().trim();
-            String linkFace = edtLinkFace.getText().toString().trim();
-            String description = edtDesStore.getText().toString().trim();
-            String userId = ConstantData.getUserId(this);
-            if (role != 2) {
-                signUpToBecomeSeller(userId, storeName, description, linkFace);
 
-            } else {
-                uploadImageAvatar();
-            }
+            uploadImageAvatar();
 
 
         });
@@ -390,6 +395,9 @@ public class SignUpShopActivity extends AppCompatActivity {
             user.put(USER_ID, userId);
             user.put(DESCRIPTION_STORE, ValidateForm.capitalizeFirst(description));
             user.put(LINK_SUPPORT_STORE, linkSupport);
+            user.put("image1", image1);
+            user.put("image2", image2);
+
             JSONObject data = new JSONObject();
             data.put("user", user);
             JSONObject datas = new JSONObject();

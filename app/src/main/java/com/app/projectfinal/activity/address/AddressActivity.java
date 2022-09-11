@@ -86,9 +86,10 @@ public class AddressActivity extends AppCompatActivity implements View.OnClickLi
                         addressUserList.add(addressUser);
                         listAddressAdapter = new ListAddressAdapter(AddressActivity.this, addressUserList);
                         rvAddress.setAdapter(listAddressAdapter);
-                        ProgressBarDialog.getInstance(AddressActivity.this).closeDialog();
 
                     }
+                    ProgressBarDialog.getInstance(AddressActivity.this).closeDialog();
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(AddressActivity.this, e.toString(), Toast.LENGTH_LONG).show();

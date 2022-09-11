@@ -78,14 +78,14 @@ import java.util.Map;
 public class AddProductActivity extends AppCompatActivity {
     private ImageView img_add_product;
     private Uri uriImage;
-    private TextView  tvCountNameProduct, tvCountDescription, tvShowUnit,tvShowCategory;
+    private TextView tvCountNameProduct, tvCountDescription, tvShowUnit, tvShowCategory;
     private LinearLayout ln_category, lnUnit;
     private StorageReference storageRef;
     private StorageTask uploadTask;
     private Button btn_add_product;
     private String linkImageUrlFirebase;
     private EditText edt_enter_name_product, edt_enter_description, edt_enter_price, edtEnterQuantity;
-    private String typeOfCategory, typeOfUnit, unitId, idCategory;
+    private String typeOfCategory="", typeOfUnit="", unitId, idCategory;
     private ListenerSendUnit mListenerSendUnit;
     private ListenerSendCategory mListenerSendCategory;
 
@@ -103,32 +103,60 @@ public class AddProductActivity extends AppCompatActivity {
 
 
         btn_add_product.setOnClickListener(v -> {
-            uploadImage();
+
+            if (uriImage == null) {
+                Toast.makeText(AddProductActivity.this, "Hãy thêm ảnh", Toast.LENGTH_SHORT).show();
+
+            } else if (edt_enter_name_product.getText().toString().equals("")) {
+                Toast.makeText(AddProductActivity.this, "Thêm tên sản phẩm", Toast.LENGTH_SHORT).show();
+
+            } else if (typeOfCategory.toString().equals("")) {
+                Toast.makeText(AddProductActivity.this, "Hãy chọn danh mục", Toast.LENGTH_SHORT).show();
+
+            } else if (edt_enter_price.getText().toString().equals("")) {
+                Toast.makeText(AddProductActivity.this, "Hãy nhập giá", Toast.LENGTH_SHORT).show();
+
+            }else if (edtEnterQuantity.getText().toString().equals("")) {
+                Toast.makeText(AddProductActivity.this, "Hãy chọn số lượng hàng", Toast.LENGTH_SHORT).show();
+
+            }else if (typeOfUnit.toString().equals("")) {
+                Toast.makeText(AddProductActivity.this, "Hãy chọn phân loại hàng", Toast.LENGTH_SHORT).show();
+
+            }else {
+                uploadImage();
+
+            }
+
+
+
+
+
+
+
+
+
 
         });
 
         mListenerSendUnit = new ListenerSendUnit() {
             @Override
             public void onClickSave(String unitName, String id) {
-                typeOfUnit =unitName;
-                unitId =id;
+                typeOfUnit = unitName;
+                unitId = id;
                 tvShowUnit.setText(typeOfUnit);
             }
         };
-        mListenerSendCategory=new ListenerSendCategory() {
+        mListenerSendCategory = new ListenerSendCategory() {
             @Override
             public void onClickSaveCategory(String categoryName, String id) {
                 typeOfCategory = categoryName;
-                idCategory= id;
+                idCategory = id;
                 tvShowCategory.setText(typeOfCategory);
-                Log.e("onClickSaveCategory",""+ typeOfCategory+id);
+                Log.e("onClickSaveCategory", "" + typeOfCategory + id);
             }
         };
 
     }
-
-
-
 
 
     private void checkWordCount() {
@@ -167,7 +195,7 @@ public class AddProductActivity extends AppCompatActivity {
 
             }
         });
-       edt_enter_price.addTextChangedListener(new NDigitCardFormatWatcher(edt_enter_price));
+        edt_enter_price.addTextChangedListener(new NDigitCardFormatWatcher(edt_enter_price));
 
     }
 
@@ -182,8 +210,8 @@ public class AddProductActivity extends AppCompatActivity {
         tvCountNameProduct = findViewById(R.id.tvCountNameProduct);
         tvCountDescription = findViewById(R.id.tvCountDescription);
         edtEnterQuantity = findViewById(R.id.edtEnterQuantity);
-        tvShowUnit=findViewById(R.id.tvShowUnit);
-        tvShowCategory=findViewById(R.id.tvShowCategory);
+        tvShowUnit = findViewById(R.id.tvShowUnit);
+        tvShowCategory = findViewById(R.id.tvShowCategory);
 
     }
 
@@ -202,6 +230,7 @@ public class AddProductActivity extends AppCompatActivity {
         });
 
     }
+
     private void openCategoryList() {
         ln_category.setOnClickListener(v -> {
             ListCategoryDialogFragment post = new ListCategoryDialogFragment(mListenerSendCategory);
@@ -214,11 +243,11 @@ public class AddProductActivity extends AppCompatActivity {
     private void postProducts() {
         JSONObject user = new JSONObject();
         Bundle bundle = getIntent().getExtras();
-        String storeId= bundle.getString(STORE_ID_PRODUCT);
+        String storeId = bundle.getString(STORE_ID_PRODUCT);
 
         try {
-             String price= edt_enter_price.getText().toString();
-           String newPrice= price.replace(",","");
+            String price = edt_enter_price.getText().toString();
+            String newPrice = price.replace(",", "");
 
             user.put(NAME, ValidateForm.capitalizeFirst(edt_enter_name_product.getText().toString().trim()));
             user.put(DESCRIPTION_PRODUCT, ValidateForm.capitalizeFirst(edt_enter_description.getText().toString().trim()));
@@ -240,7 +269,7 @@ public class AddProductActivity extends AppCompatActivity {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, ADD_PRODUCTS, user, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                if (response!=null){
+                if (response != null) {
                     Log.e("addProduct", response.toString());
                     ProgressBarDialog.getInstance(AddProductActivity.this).closeDialog();
                     Toast.makeText(AddProductActivity.this, "Thêm thành công ", Toast.LENGTH_LONG).show();
@@ -252,9 +281,11 @@ public class AddProductActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(AddProductActivity.this, "Thêm thất bại " + error.toString(), Toast.LENGTH_LONG).show();
+               Log.e("thatbai",user+"");
+                ProgressBarDialog.getInstance(AddProductActivity.this).closeDialog();
 
             }
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<>();
@@ -288,8 +319,6 @@ public class AddProductActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         Uri downloadUri = task.getResult();
                         linkImageUrlFirebase = downloadUri.toString();
-                        Log.e("miannn", linkImageUrlFirebase.toString());
-
                         postProducts();
 
                     } else {
@@ -328,11 +357,10 @@ public class AddProductActivity extends AppCompatActivity {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
                 && data != null && data.getData() != null) {
             uriImage = data.getData();
-            Glide.with(this).load(uriImage).centerCrop().into(img_add_product);
+            Glide.with(getApplicationContext()).load(uriImage).centerCrop().into(img_add_product);
 
         }
     }
-
 
 
 }

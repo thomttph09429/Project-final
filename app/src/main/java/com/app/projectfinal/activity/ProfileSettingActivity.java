@@ -1,5 +1,6 @@
 package com.app.projectfinal.activity;
 
+import static com.app.projectfinal.activity.MainActivity.storeName;
 import static com.app.projectfinal.fragment.UserFragment.userDetail;
 import static com.app.projectfinal.utils.Constant.DATE_OF_BIRTH;
 import static com.app.projectfinal.utils.Constant.EMAIL;
@@ -45,6 +46,11 @@ import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
@@ -207,6 +213,7 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, user, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+                AddInfoOfStoreToFirebase(storeName,linkImageUrlFirebase,edtUserLogin.getText().toString().trim(),tvNumberLogin.getText().toString());
                 ProgressBarDialog.getInstance(ProfileSettingActivity.this).closeDialog();
                 showToast("Cập nhật thành công", R.drawable.ic_mark);
 
@@ -226,7 +233,25 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
         };
         VolleySingleton.getInstance(getApplicationContext()).getRequestQueue().add(jsonObjectRequest);
     }
+    private void AddInfoOfStoreToFirebase(String nameStore, String avatar, String userName, String phone) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(phone);
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                reference.child("name_store").setValue(nameStore);
+                reference.child("avatar").setValue(avatar);
+                reference.child("userName").setValue(userName);
 
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

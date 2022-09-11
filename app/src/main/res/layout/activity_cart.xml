@@ -76,11 +76,32 @@
             android:layout_height="match_parent"
             android:layout_above="@+id/bottom"
             android:layout_below="@+id/app_bar"
+            android:visibility="gone"
             android:overScrollMode="never"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
 
+        <LinearLayout
+            android:layout_below="@+id/app_bar"
+            android:id="@+id/lnHide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_120sdp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="gone">
 
+            <ImageView
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:src="@drawable/ic_order_empty" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bạn chưa có sản phẩm nào trong giỏ hàng"
+                android:textSize="@dimen/_11sdp" />
+        </LinearLayout>
 
 
 

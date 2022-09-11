@@ -52,14 +52,11 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_my_shop);
         initView();
         initAction();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         getInfoShop();
 
     }
+
+
 
     private void initAction() {
         lnStartSell.setOnClickListener(this);
@@ -135,7 +132,6 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
         Bundle bundle = getIntent().getExtras();
         storeId = bundle.getString(STORE_ID_PRODUCT);
         String urlProducts = ADD_STORES + "/" + storeId;
-        Log.e("store", storeId);
         ProgressBarDialog.getInstance(this).showDialog("Vui lòng đợi", this);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlProducts, null, new Response.Listener<JSONObject>() {

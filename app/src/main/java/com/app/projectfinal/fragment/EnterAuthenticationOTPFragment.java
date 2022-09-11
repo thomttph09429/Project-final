@@ -14,6 +14,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,7 +99,7 @@ public class EnterAuthenticationOTPFragment extends DialogFragment {
         edtEnterOTP = view.findViewById(R.id.edtEnterOTP);
         tvResentOTP = view.findViewById(R.id.tvResentOTP);
         btnConfirm = view.findViewById(R.id.btnConfirm);
-        ivBack=view.findViewById(R.id.ivBack);
+        ivBack = view.findViewById(R.id.ivBack);
 
     }
 
@@ -120,6 +121,7 @@ public class EnterAuthenticationOTPFragment extends DialogFragment {
      *     author:ThomTT
      *     date:02/08/2022
      * </pre>
+     *
      * @param credential
      */
     private void signInWithCredential(PhoneAuthCredential credential) {
@@ -228,7 +230,6 @@ public class EnterAuthenticationOTPFragment extends DialogFragment {
                     PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, codeId);
                     signInWithCredential(credential);
 
-
                 }
 
             }
@@ -265,6 +266,8 @@ public class EnterAuthenticationOTPFragment extends DialogFragment {
             else {
                 ProgressBarDialog.getInstance(getContext()).showDialog("Đợi một lát", getContext());
                 registerServer(phoneNumber, pass, ValidateForm.capitalizeFirst(name));
+                Log.e("heheheeee", phoneNumber + ""+pass+""+name+"");
+
             }
 
 
@@ -294,8 +297,8 @@ public class EnterAuthenticationOTPFragment extends DialogFragment {
      *     date:02/08/2022
      * </pre>
      */
-    private void clickBack(){
-        ivBack.setOnClickListener(v->{
+    private void clickBack() {
+        ivBack.setOnClickListener(v -> {
             dismiss();
         });
     }

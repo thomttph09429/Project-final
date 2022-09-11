@@ -28,7 +28,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hãy đăng ký trở thành người bán để nhận thông báo!"
+        android:text="Bạn chưa có thông báo nào!"
         android:textSize="@dimen/_11sdp" />
     </LinearLayout>
 

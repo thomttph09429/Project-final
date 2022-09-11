@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     private CartAdapter cartAdapter = null;
     private List<String> storeIdList;
     private String totalAmount;
+    private LinearLayout lnHide;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,8 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         ivChat = findViewById(R.id.ivChat);
         btnBuy = findViewById(R.id.btnBuy);
         tvPrice = findViewById(R.id.tvPrice);
+        lnHide = findViewById(R.id.lnHide);
+
     }
 
     private void exit() {
@@ -83,6 +87,13 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 
     private void getListCartFromDB() {
         cartList = CartDatabase.getInstance(this).cartDAO().getCards();
+        if (cartList.size()==0){
+            rvCart.setVisibility(View.GONE);
+            lnHide.setVisibility(View.VISIBLE);
+        }else {
+            rvCart.setVisibility(View.VISIBLE);
+            lnHide.setVisibility(View.GONE);
+        }
         cartAdapter = new CartAdapter(this, cartList, new CartAdapter.OnItemCheckListener() {
             @Override
             public void onItemCheck(Cart cart, String storeId) {

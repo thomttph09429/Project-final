@@ -1,6 +1,6 @@
 package com.app.projectfinal.fragment;
 
-import static com.app.projectfinal.activity.MainActivity.role;
+import static com.app.projectfinal.activity.MainActivity.status;
 import static com.app.projectfinal.activity.MainActivity.storeId;
 import static com.app.projectfinal.utils.Constant.ADDRESS;
 import static com.app.projectfinal.utils.Constant.ROLE;
@@ -68,7 +68,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     private RelativeLayout rlTotalPending, rlTotalProcess, rlTotalDelivery, rlTotalCancel;
     private ImageView ivMessage, ivCart;
     private CircleImageView ivAvatar;
-    public  static  UserDetail userDetail;
+    public static UserDetail userDetail;
 
     public UserFragment() {
     }
@@ -147,10 +147,17 @@ public class UserFragment extends Fragment implements View.OnClickListener {
      * </pre>
      */
     private void isSignUpToBecomeSeller() {
-        if (role == 2) {
+        if (status == 1) {
             tvWhenNotSignUp.setVisibility(View.GONE);
             tvMyShop.setVisibility(View.VISIBLE);
             lnStartSell.setVisibility(View.GONE);
+        } else if (status==0) {
+            tvWhenNotSignUp.setVisibility(View.VISIBLE);
+            tvMyShop.setVisibility(View.GONE);
+            lnStartSell.setVisibility(View.VISIBLE);
+            tvWhenNotSignUp.setText("Đang đợi phê duyệt");
+            lnStartSell.setClickable(false);
+
         } else {
             tvWhenNotSignUp.setVisibility(View.VISIBLE);
             tvMyShop.setVisibility(View.GONE);
@@ -186,7 +193,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                     JSONObject jsonObject = response.getJSONObject("data");
                     JSONObject data = jsonObject.getJSONObject("user");
                     Gson gson = new Gson();
-                     userDetail = gson.fromJson(String.valueOf(data), UserDetail.class);
+                    userDetail = gson.fromJson(String.valueOf(data), UserDetail.class);
                     getInformation();
                     ProgressBarDialog.getInstance(getContext()).closeDialog();
 

@@ -149,13 +149,11 @@ public class ViewShopActivity extends AppCompatActivity {
                             String unit = object.getString(UNIT_NAME);
 
                             products.add(new Product(price, productName, image1, description, storeName, categoryName, storeId, quantity, id, unit));
-                        }
-                        if (products != null) {
                             productAdapter = new ProductAdapter(products, ViewShopActivity.this);
                             rvAllProduct.setAdapter(productAdapter);
-                        } else {
-
                         }
+
+
 
 
                     } catch (JSONException e) {
@@ -197,10 +195,9 @@ public class ViewShopActivity extends AppCompatActivity {
                         JSONObject data = jsonObject.getJSONObject("user");
                         String image1 = data.getString("image1");
                         String image2 = data.getString("image2");
-                        Glide.with(ViewShopActivity.this).load(image1).centerCrop().error(R.drawable.avatar_empty).into(ivAvatar);
-                        Glide.with(ViewShopActivity.this).load(image2).centerCrop().error(R.drawable.ic_cover).into(ivCover);
+                        Glide.with(getApplicationContext()).load(image1).centerCrop().error(R.drawable.avatar_empty).into(ivAvatar);
+                        Glide.with(getApplicationContext()).load(image2).centerCrop().error(R.drawable.ic_cover).into(ivCover);
                         ProgressBarDialog.getInstance(ViewShopActivity.this).closeDialog();
-                        getProducts(page);
                     } catch (JSONException e) {
 
                         e.printStackTrace();

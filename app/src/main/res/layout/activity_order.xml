@@ -35,8 +35,8 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
-        android:layout_above="@+id/bottom"
         android:layout_height="match_parent"
+        android:layout_above="@+id/bottom"
         android:layout_below="@id/toolbar"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
@@ -103,6 +103,30 @@
                     android:layout_marginRight="@dimen/_40sdp"
                     android:text="Thay đổi"
                     android:textSize="@dimen/_11sdp" />
+
+                <RelativeLayout
+                    android:id="@+id/rlNotAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/title"
+                    android:layout_marginLeft="@dimen/_34sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tvNotAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bạn chưa có địa chỉ? hãy cập nhật" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/tvNotAddress"
+                        android:text=" địa chỉ"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
             </RelativeLayout>
 
             <TextView

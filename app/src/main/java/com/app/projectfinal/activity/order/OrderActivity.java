@@ -28,6 +28,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
 import com.app.projectfinal.activity.AddProductActivity;
+import com.app.projectfinal.activity.ProfileSettingActivity;
 import com.app.projectfinal.activity.address.ChangeAddressFragment;
 import com.app.projectfinal.adapter.chooseProduct.ChooseProductToBuyAdapter;
 import com.app.projectfinal.db.Cart;
@@ -60,13 +62,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class OrderActivity extends AppCompatActivity implements ChangeAddressFragment.OnInputListener{
+public class OrderActivity extends AppCompatActivity implements ChangeAddressFragment.OnInputListener {
     private TextView tvUserName, tvPhoneNumber, tvAddress, tvNameShop, tvPrice, tvNote, tvChangeAddress;
     private ChooseProductToBuyAdapter buyAdapter;
     private List<Cart> cartListChecked;
     private RecyclerView rvPay;
     private String totalAmount, addressId;
     private AppCompatButton btnBuy;
+    private RelativeLayout rlNotAddress;
 
 
     @Override
@@ -77,6 +80,7 @@ public class OrderActivity extends AppCompatActivity implements ChangeAddressFra
         getAddress();
         initAction();
         clickChangeAddress();
+        clickUpdateAddress();
         Intent intent = getIntent();
         //receive cartListChecked from CartActivity
         cartListChecked = intent.getParcelableArrayListExtra("cartListChecked");
@@ -103,6 +107,15 @@ public class OrderActivity extends AppCompatActivity implements ChangeAddressFra
         btnBuy = findViewById(R.id.btnBuy);
         tvNote = findViewById(R.id.tvNote);
         tvChangeAddress = findViewById(R.id.tvChangeAddress);
+        rlNotAddress = findViewById(R.id.rlNotAddress);
+
+    }
+
+   private void clickUpdateAddress() {
+        rlNotAddress.setOnClickListener(v->{
+            startActivity(new Intent(this, ProfileSettingActivity.class));
+
+        });
 
     }
 
@@ -136,12 +149,13 @@ public class OrderActivity extends AppCompatActivity implements ChangeAddressFra
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, ORDER, object, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                    showToast("Đơn hàng đã được đặt"  + "", R.drawable.ic_mark);
+                    showToast("Đơn hàng đã được đặt" + "", R.drawable.ic_mark);
                     Intent intent = new Intent(OrderActivity.this, MyOrderActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putInt("pos", 0);
                     intent.putExtras(bundle);
                     startActivity(intent);
+                    finish();
 
 
                 }
@@ -168,7 +182,8 @@ public class OrderActivity extends AppCompatActivity implements ChangeAddressFra
 
     private void clickChangeAddress() {
         tvChangeAddress.setOnClickListener(v -> {
-            ChangeAddressFragment changeAddressFragment= new ChangeAddressFragment();
+
+            ChangeAddressFragment changeAddressFragment = new ChangeAddressFragment();
             changeAddressFragment.show(getSupportFragmentManager(), "ChangeAddressFragment");
         });
     }
@@ -198,13 +213,20 @@ public class OrderActivity extends AppCompatActivity implements ChangeAddressFra
                 try {
                     JSONObject jsonObject = response.getJSONObject("data");
                     JSONArray jsonArray = jsonObject.getJSONArray("addresses");
-                    JSONObject object = jsonArray.getJSONObject(0);
-                    Gson gson = new Gson();
-                    AddressUser addressUser = gson.fromJson(String.valueOf(object), AddressUser.class);
-                    addressId = addressUser.getId();
-                    tvAddress.setText(addressUser.getLocation());
-                    tvUserName.setText(addressUser.getCustomerName());
-                    tvPhoneNumber.setText(addressUser.getPhone());
+                    int total = jsonObject.getInt("total");
+                    if (total != 0) {
+                        JSONObject object = jsonArray.getJSONObject(0);
+                        Gson gson = new Gson();
+                        AddressUser addressUser = gson.fromJson(String.valueOf(object), AddressUser.class);
+                        addressId = addressUser.getId();
+                        tvAddress.setText(addressUser.getLocation());
+                        tvUserName.setText(addressUser.getCustomerName());
+                        tvPhoneNumber.setText(addressUser.getPhone());
+                    } else {
+                        rlNotAddress.setVisibility(View.VISIBLE);
+                        tvChangeAddress.setVisibility(View.GONE);
+                    }
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -234,7 +256,7 @@ public class OrderActivity extends AppCompatActivity implements ChangeAddressFra
 
     @Override
     public void sendInfoAddress(String location, String id) {
-        addressId= id;
+        addressId = id;
         tvAddress.setText(location);
 
     }

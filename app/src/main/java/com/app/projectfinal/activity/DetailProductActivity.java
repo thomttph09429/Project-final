@@ -1,6 +1,8 @@
 package com.app.projectfinal.activity;
 
 
+import static com.app.projectfinal.activity.MainActivity.storeId;
+import static com.app.projectfinal.utils.Constant.ADD_STORES;
 import static com.app.projectfinal.utils.Constant.BUY_NOW;
 import static com.app.projectfinal.utils.Constant.CATEGORY_NAME;
 import static com.app.projectfinal.utils.Constant.DESCRIPTION_PRODUCT;
@@ -22,6 +24,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -66,11 +69,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class DetailProductActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageView ivProduct;
     private TextView tvName, tvPrice, tvNameShop, tvQuantity, tvCategory, tvDescription;
     private Bundle data;
-    private String productName, price, image1, storeName, categoryName, description, storeId, quantity, phone, unitName;
+    private String productName, price, image1, storeName, categoryName, description, storeIdS, quantity, phone, unitName;
     private RecyclerView rvProductByStoreId;
     private ProductByShopAdapter productByShopAdapter;
     private List<Product> products;
@@ -80,6 +85,8 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
     private Toolbar toolbar;
     private ActionBar actionBar;
     private RelativeLayout rlShop;
+    private CircleImageView ivAvatar;
+    private LinearLayoutCompat lnBottom;
 
 
     @Override
@@ -150,6 +157,8 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
         toolbar = findViewById(R.id.toolbar);
         rlShop = findViewById(R.id.rlShop);
         btnBuy = findViewById(R.id.btnBuy);
+        ivAvatar = findViewById(R.id.ivAvatar);
+        lnBottom = findViewById(R.id.lnBottom);
 
     }
 
@@ -168,11 +177,13 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
         storeName = data.getString(STORE_NAME_PRODUCT);
         categoryName = data.getString(CATEGORY_NAME);
         description = data.getString(DESCRIPTION_PRODUCT);
-        storeId = data.getString(STORE_ID_PRODUCT);
+        storeIdS = data.getString(STORE_ID_PRODUCT);
         quantity = data.getString(QUANTITY_PRODUCT);
         idProduct = data.getString(ID_PRODUCT);
         unitName = data.getString(UNIT_NAME);
-
+        if (storeIdS.equals(storeId)) {
+            lnBottom.setVisibility(View.GONE);
+        }
 
     }
 
@@ -191,7 +202,7 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
         tvDescription.setText(ValidateForm.capitalizeFirst(description));
         tvCategory.setText(ValidateForm.capitalizeFirst(categoryName));
         tvQuantity.setText(quantity);
-        Glide.with(this).load(image1).error(R.drawable.ic_image_error).into(ivProduct);
+        Glide.with(getApplicationContext()).load(image1).error(R.drawable.ic_image_error).into(ivProduct);
 
     }
 
@@ -210,7 +221,7 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
         bundle.putString(IMAGE1_PRODUCT, image1);
         bundle.putString(NAME_PRODUCT, productName);
         bundle.putString(ID_PRODUCT, idProduct);
-        bundle.putString(STORE_ID_PRODUCT, storeId);
+        bundle.putString(STORE_ID_PRODUCT, storeIdS);
         bundle.putString(NAME_STORE, storeName);
         bundle.putString(UNIT_NAME, unitName);
         bundle.putString(DESCRIPTION_PRODUCT, description);
@@ -234,7 +245,7 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
     private void showProductsByStore() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         rvProductByStoreId.setLayoutManager(layoutManager);
-        String url = PRODUCTS + "?" + "storeId" + "=" + storeId;
+        String url = PRODUCTS + "?" + "storeId" + "=" + storeIdS;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -299,8 +310,9 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
         Intent intent = new Intent(this, ChatActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString(PHONE, phone);
-        bundle.putString(STORE_ID_PRODUCT, storeId);
+        bundle.putString(STORE_ID_PRODUCT, storeIdS);
         bundle.putString(STORE_NAME_PRODUCT, storeName);
+        Log.e("hehehe", phone + "" + storeIdS + "" + storeName + "");
         intent.putExtras(bundle);
         startActivity(intent);
 
@@ -309,7 +321,7 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
     private void openViewShopScreen() {
         Intent intent = new Intent(this, ViewShopActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString(STORE_ID_PRODUCT, storeId);
+        bundle.putString(STORE_ID_PRODUCT, storeIdS);
         bundle.putString(STORE_NAME_PRODUCT, storeName);
         intent.putExtras(bundle);
         startActivity(intent);
@@ -332,6 +344,47 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
                         JSONObject jsonObject = response.getJSONObject("data");
                         JSONObject data = jsonObject.getJSONObject("product");
                         phone = data.getString(PHONE);
+                        getAvatar();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(DetailProductActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+
+                    }
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(DetailProductActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", ConstantData.getToken(getApplicationContext().getApplicationContext()));
+                return headers;
+            }
+        };
+        VolleySingleton.getInstance(DetailProductActivity.this).getRequestQueue().add(jsonObjectRequest);
+
+
+    }
+
+    private void getAvatar() {
+        String url = ADD_STORES + "/" + storeIdS;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                if (response != null) {
+                    try {
+                        JSONObject jsonObject = response.getJSONObject("data");
+                        JSONObject data = jsonObject.getJSONObject("user");
+                        String avatar = data.getString("image1");
+                        Glide.with(getApplicationContext()).load(avatar).error(R.drawable.ic_image_error).into(ivAvatar);
+
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -361,6 +414,7 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
 
     }
 
+
     private void buyNow() {
         Bundle bundle = new Bundle();
         bundle.putString(PRICE_PRODUCT, ValidateForm.getDecimalFormattedString(price));
@@ -368,7 +422,7 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
         bundle.putString(IMAGE1_PRODUCT, image1);
         bundle.putString(NAME_PRODUCT, productName);
         bundle.putString(ID_PRODUCT, idProduct);
-        bundle.putString(STORE_ID_PRODUCT, storeId);
+        bundle.putString(STORE_ID_PRODUCT, storeIdS);
         bundle.putString(NAME_STORE, storeName);
         bundle.putString(UNIT_NAME, unitName);
         bundle.putString(DESCRIPTION_PRODUCT, description);

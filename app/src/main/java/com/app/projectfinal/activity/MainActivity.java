@@ -1,5 +1,6 @@
 package com.app.projectfinal.activity;
 
+import static com.app.projectfinal.utils.Constant.ADD_STORES;
 import static com.app.projectfinal.utils.Constant.CATEGORY_NAME;
 import static com.app.projectfinal.utils.Constant.DESCRIPTION_PRODUCT;
 import static com.app.projectfinal.utils.Constant.IMAGE1_PRODUCT;
@@ -16,6 +17,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -57,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
     FragmentManager manager;
     private AHBottomNavigation bottomNavigation;
     private ViewPager2 viewPager2;
-    public static String storeId;
-    public static int role;
+    public static String storeId, storeName;
+    public static int status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,16 +113,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void isHaveAccount() {
-        String urlProducts = UPDATE_USER + "/" + ConstantData.getUserId(this);
+        String urlProducts = ADD_STORES + "/" + "?userId=" + ConstantData.getUserId(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlProducts, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 if (response != null) {
                     try {
                         JSONObject jsonObject = response.getJSONObject("data");
-                        JSONObject data = jsonObject.getJSONObject("user");
-                         role = data.getInt(ROLE);
-                        storeId = data.getString(STORE_ID_PRODUCT);
+                        JSONArray data = jsonObject.getJSONArray("stores");
+                        for (int i = 0; i < data.length(); i++) {
+                            JSONObject jsonObject1 = data.getJSONObject(i);
+                             status= jsonObject1.getInt("status");
+                            storeId = jsonObject1.getString("id");
+                            storeName = jsonObject1.getString("storeName");
+
+                        }
 
 
                     } catch (JSONException e) {

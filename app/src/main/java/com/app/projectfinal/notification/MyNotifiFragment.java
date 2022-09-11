@@ -1,6 +1,7 @@
 package com.app.projectfinal.notification;
 
 import static com.app.projectfinal.utils.Constant.ORDER;
+import static com.app.projectfinal.utils.Constant.TOTAL;
 
 import android.os.Bundle;
 
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +46,7 @@ public class MyNotifiFragment extends Fragment {
     private RecyclerView rvNotify;
     private List<DetailOrder> orders;
     private NotifyAdapter notifyAdapter;
+    private LinearLayout lnHide;
 
 
 
@@ -68,6 +71,8 @@ public class MyNotifiFragment extends Fragment {
 
     private void initView() {
         rvNotify = view.findViewById(R.id.rvNotify);
+        lnHide = view.findViewById(R.id.lnHide);
+
     }
         private void initAction() {
         orders = new ArrayList<>();
@@ -83,6 +88,15 @@ public class MyNotifiFragment extends Fragment {
                         try {
                             JSONObject jsonObject = response.getJSONObject("data");
                             JSONArray order = jsonObject.getJSONArray("orders");
+                            int  totalOrder = jsonObject.getInt(TOTAL);
+                            if (totalOrder == 0) {
+                                rvNotify.setVisibility(View.GONE);
+                                lnHide.setVisibility(View.VISIBLE);
+
+                            } else {
+                                rvNotify.setVisibility(View.VISIBLE);
+                                lnHide.setVisibility(View.GONE);
+                            }
                             for (int i=0;i<order.length();i++){
                                 JSONObject object= order.getJSONObject(i);
                                 Gson gson = new Gson();
