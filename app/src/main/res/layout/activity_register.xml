@@ -122,46 +122,15 @@
             app:boxStrokeColor="@color/gray" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_options"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/til_form_re_pass"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:gravity="center_vertical">
-
-        <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/chb_remember"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:button="@drawable/checkbox_layout"
-            android:gravity="center" />
-
-        <TextView
-            style="@style/SupportText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/agree" />
-
-        <TextView
-            android:id="@+id/tv_terms_of_service"
-            style="@style/QuestionText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:text="@string/terms_of_service" />
-
-    </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_register"
         style="@style/ButtonText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ll_options"
+        android:layout_below="@+id/til_form_re_pass"
         android:layout_marginStart="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_15sdp"
         android:layout_marginEnd="@dimen/_8sdp"
         android:background="@drawable/bg_border_40"
         android:gravity="center"

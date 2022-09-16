@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:fitsSystemWindows="false"
- >
+    android:fitsSystemWindows="false">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
@@ -38,6 +37,7 @@
 
 
                     <ImageView
+                        android:id="@+id/ivBack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10sdp"
@@ -45,11 +45,27 @@
                         android:src="@drawable/ic_back_white" />
 
                     <ImageView
-                        android:layout_width="@dimen/_200sdp"
+                        android:id="@+id/ivSearch"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_35sdp"
+                        android:layout_marginStart="@dimen/_15sdp"
                         android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_toRightOf="@+id/ivBack"
                         android:src="@drawable/ic_search" />
+
+                    <EditText
+                        android:id="@+id/edtSearch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_2sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_toRightOf="@+id/ivSearch"
+                        android:background="@android:color/transparent"
+                        android:hint="Tìm kiếm..."
+                        android:maxLines="1"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/greenWhite"
+                        android:textSize="16sp" />
 
 
                 </RelativeLayout>
@@ -74,103 +90,38 @@
                     android:layout_marginEnd="@dimen/_8sdp"
                     android:layout_marginBottom="@dimen/_8sdp">
 
-                    <LinearLayout
-                        android:id="@+id/linear_user_topHeader"
-                        android:layout_width="match_parent"
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/ivAvatar"
+                        android:layout_width="@dimen/_50sdp"
                         android:layout_height="@dimen/_50sdp"
-                        android:layout_marginLeft="@dimen/_16sdp"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:orientation="horizontal">
+                        android:src="@drawable/avatar_empty" />
 
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/ivAvatar"
-                            android:layout_width="@dimen/_50sdp"
-                            android:layout_height="@dimen/_50sdp"
-                            android:src="@drawable/avatar_empty" />
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/_50sdp"
-                            android:orientation="vertical">
-
-                            <TextView
-
-                                android:id="@+id/tvUserName"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="@dimen/_5sdp"
-                                android:maxWidth="@dimen/_200sdp"
-                                android:text="Nông sản"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/_12sdp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/txt_user_role"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/_5sdp"
-                                android:background="@drawable/bg_border_25"
-                                android:paddingLeft="@dimen/_2sdp"
-                                android:paddingTop="@dimen/_1sdp"
-                                android:paddingRight="@dimen/_2sdp"
-                                android:paddingBottom="@dimen/_1sdp"
-                                android:text="Nông Dân >"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/_8sdp"
-                                android:visibility="gone" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/linear_user_contentHeader"
+                    <TextView
+                        android:id="@+id/tvUserName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_toRightOf="@+id/ivAvatar"
+                        android:maxWidth="@dimen/_200sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:text="Nông sản"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/tvDescription"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_12sdp"
+                        android:layout_toRightOf="@+id/ivAvatar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/linear_user_topHeader"
-                        android:layout_marginStart="@dimen/_5sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_marginEnd="@dimen/_5sdp"
-                        android:layout_marginBottom="@dimen/_5sdp"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingRight="@dimen/_1sdp"
-                            android:text="Đang theo dõi : "
-                            android:textColor="@color/white" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingRight="@dimen/_5sdp"
-                            android:text="25"
-                            android:textColor="@color/white"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="|" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/_5sdp"
-                            android:paddingRight="@dimen/_1sdp"
-                            android:text="Người theo dõi :"
-                            android:textColor="@color/white" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="@dimen/_1sdp"
-                            android:text="225"
-                            android:textColor="@color/white"
-                            android:textStyle="bold" />
-                    </LinearLayout>
+                        android:layout_below="@+id/tvUserName"
+                        android:maxLines="2"
+                        android:text="Mô tả ggggggggggggggggggggggggggggggggggggggggggggggshop"
+                        />
 
 
                 </RelativeLayout>
@@ -178,9 +129,9 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_below="@+id/middle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/middle">
 
                 <TextView
                     android:id="@+id/text"
@@ -188,12 +139,35 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/_10sdp"
                     android:text="Tất cả sản phẩm" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvAllProduct"
-                    android:layout_below="@+id/text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    />
+                    android:layout_below="@+id/text" />
+
+                <LinearLayout
+                    android:id="@+id/lnHide"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/text"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="@dimen/_100sdp"
+                        android:src="@drawable/ic_order_empty" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Không tìm thấy kết quả nào"
+                        android:textSize="@dimen/_11sdp" />
+                </LinearLayout>
+
             </RelativeLayout>
 
 

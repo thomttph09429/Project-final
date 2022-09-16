@@ -2,17 +2,14 @@ package com.app.projectfinal.fragment;
 
 import static com.app.projectfinal.activity.MainActivity.status;
 import static com.app.projectfinal.activity.MainActivity.storeId;
-import static com.app.projectfinal.utils.Constant.ADDRESS;
-import static com.app.projectfinal.utils.Constant.ROLE;
+import static com.app.projectfinal.activity.MainActivity.total;
 import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
 import static com.app.projectfinal.utils.Constant.TOTAL_ORDER;
 import static com.app.projectfinal.utils.Constant.UPDATE_USER;
-import static com.app.projectfinal.utils.Constant.USER_ID_SAVE;
-import static com.app.projectfinal.utils.Constant.USER_NAME_SAVE;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,13 +33,7 @@ import com.app.projectfinal.activity.ListChatActivity;
 import com.app.projectfinal.activity.MyShopActivity;
 import com.app.projectfinal.activity.ProfileSettingActivity;
 import com.app.projectfinal.activity.SignUpShopActivity;
-import com.app.projectfinal.activity.address.AddressActivity;
-import com.app.projectfinal.adapter.address.ListAddressAdapter;
-import com.app.projectfinal.data.SharedPrefsSingleton;
-import com.app.projectfinal.model.User;
 import com.app.projectfinal.model.UserDetail;
-import com.app.projectfinal.model.address.AddressUser;
-import com.app.projectfinal.model.order.DetailOrder;
 import com.app.projectfinal.order.myOrder.MyOrderActivity;
 import com.app.projectfinal.utils.ConstantData;
 import com.app.projectfinal.utils.ProgressBarDialog;
@@ -50,7 +41,6 @@ import com.app.projectfinal.utils.VolleySingleton;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -60,7 +50,7 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserFragment extends Fragment implements View.OnClickListener {
-    private LinearLayout lnStartSell, lnSetting, lnWait, lnFinish, lnDelivery, lnCancel;
+    private LinearLayout lnShareApp, lnStartSell, lnSetting, lnWait, lnFinish, lnDelivery, lnCancel, lnContact;
     private View view;
     private TextView tvMyShop, tvWhenNotSignUp, tvUserName, tvHistory;
     private String isSignUp;
@@ -111,6 +101,8 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         tvHistory.setOnClickListener(this);
         ivCart.setOnClickListener(this);
         ivMessage.setOnClickListener(this);
+        lnContact.setOnClickListener(this);
+        lnShareApp.setOnClickListener(this);
 
     }
 
@@ -147,21 +139,27 @@ public class UserFragment extends Fragment implements View.OnClickListener {
      * </pre>
      */
     private void isSignUpToBecomeSeller() {
-        if (status == 1) {
-            tvWhenNotSignUp.setVisibility(View.GONE);
-            tvMyShop.setVisibility(View.VISIBLE);
-            lnStartSell.setVisibility(View.GONE);
-        } else if (status==0) {
-            tvWhenNotSignUp.setVisibility(View.VISIBLE);
-            tvMyShop.setVisibility(View.GONE);
-            lnStartSell.setVisibility(View.VISIBLE);
-            tvWhenNotSignUp.setText("Đang đợi phê duyệt");
-            lnStartSell.setClickable(false);
+        if (total != 0) {
 
+
+            if (status == 1) {
+                tvWhenNotSignUp.setVisibility(View.GONE);
+                tvMyShop.setVisibility(View.VISIBLE);
+                lnStartSell.setVisibility(View.GONE);
+            } else if (status == 0) {
+                tvWhenNotSignUp.setVisibility(View.VISIBLE);
+                tvMyShop.setVisibility(View.GONE);
+                lnStartSell.setVisibility(View.VISIBLE);
+                tvWhenNotSignUp.setText("Đang đợi phê duyệt");
+                lnStartSell.setClickable(false);
+
+            } else {
+                tvWhenNotSignUp.setVisibility(View.VISIBLE);
+                tvMyShop.setVisibility(View.GONE);
+                lnStartSell.setVisibility(View.VISIBLE);
+
+            }
         } else {
-            tvWhenNotSignUp.setVisibility(View.VISIBLE);
-            tvMyShop.setVisibility(View.GONE);
-            lnStartSell.setVisibility(View.VISIBLE);
 
         }
 
@@ -306,6 +304,8 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         ivMessage = view.findViewById(R.id.ivMessage);
         ivCart = view.findViewById(R.id.ivCart);
         ivAvatar = view.findViewById(R.id.ivAvatar);
+        lnContact = view.findViewById(R.id.lnContact);
+        lnShareApp = view.findViewById(R.id.lnShareApp);
 
 
     }
@@ -344,9 +344,33 @@ public class UserFragment extends Fragment implements View.OnClickListener {
             case R.id.ivMessage:
                 clickMessage();
                 break;
+            case R.id.lnContact:
+                contact();
+                break;
+            case R.id.lnShareApp:
+                shareApp();
+                break;
             default:
         }
 
+    }
+
+    private void shareApp() {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://drive.google.com/drive/folders/1np3WhFkIHMcoqftCsHWLP6vzOUh0wlLg?usp=sharing"));
+        startActivity(browserIntent);
+    }
+
+    private void contact() {
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+        emailIntent.setData(Uri.parse("mailto:" + "truongthithom1999@gmail.com"));
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Liên hệ với NSV");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Dear...,");
+
+        try {
+            getContext().startActivity(Intent.createChooser(emailIntent, "Send email using..."));
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(getContext(), "No email clients installed.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void clickMessage() {

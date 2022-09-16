@@ -34,11 +34,27 @@
                     android:background="@drawable/custom_relative_header" />
 
                 <ImageView
-                    android:layout_width="@dimen/_200sdp"
+                    android:id="@+id/ivSearch"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:src="@drawable/ic_search" />
+                <EditText
+                    android:background="@android:color/transparent"
+                    android:textColor="@color/white"
+                    android:id="@+id/edtSearch"
+                    android:textColorHint="@color/greenWhite"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_70sdp"
+                    android:layout_toRightOf="@+id/ivSearch"
+                    android:layout_marginLeft="@dimen/_2sdp"
+                    android:maxLines="1"
+                    android:layout_width="match_parent"
+                    android:textSize="16sp"
+                    android:layout_height="wrap_content"
+                    android:hint="Tìm kiếm..."
+                    />
 
                 <ImageView
                     android:id="@+id/ivCart"
@@ -72,6 +88,18 @@
                     android:orientation="vertical"
                     android:padding="8dp"
                     android:visibility="gone" />
+
+
+
+
+
+
+
+
+
+
+
+
 
             </RelativeLayout>
 
@@ -114,6 +142,40 @@
                 android:layout_height="@dimen/_76sdp"
                 android:layout_below="@+id/tvAllProduct"
                 android:background="@color/backgroundLight1" />
+
+
+
+            <LinearLayout
+                android:layout_below="@+id/tvAllProduct"
+                android:id="@+id/lnHide"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_120sdp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:src="@drawable/ic_order_empty" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Không tìm thấy kết quả nào"
+                    android:textSize="@dimen/_11sdp" />
+            </LinearLayout>
+
+
+
+
+
+
+
+
+
+
 
 
             <androidx.recyclerview.widget.RecyclerView

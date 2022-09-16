@@ -40,15 +40,16 @@
                         android:layout_height="@dimen/_25sdp"
                         android:src="@drawable/arrow_left" />
 
-                    <TextView
-                        android:id="@+id/text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Sản phẩm của tôi"
-                        android:layout_toRightOf="@+id/img_myShop_back"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_18sdp"
-                        android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="30dp"
+                    android:layout_toRightOf="@+id/img_myShop_back"
+                    android:text="Sản phẩm của tôi"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_18sdp"
+                    android:textStyle="bold" />
 
 
                 <ImageView

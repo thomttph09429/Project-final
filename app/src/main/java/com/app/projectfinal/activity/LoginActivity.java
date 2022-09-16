@@ -17,23 +17,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.app.projectfinal.R;
-import com.app.projectfinal.data.SharedPrefsSingleton;
+import com.app.projectfinal.utils.SharedPrefsSingleton;
 import com.app.projectfinal.utils.Constant;
-import com.app.projectfinal.utils.ConstantData;
 import com.app.projectfinal.utils.ProgressBarDialog;
 import com.app.projectfinal.utils.ValidateForm;
 import com.app.projectfinal.utils.VolleySingleton;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -46,8 +41,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.UnsupportedEncodingException;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -215,7 +209,21 @@ public class LoginActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(LoginActivity.this,  error.toString(), Toast.LENGTH_LONG).show();
+
+                try {
+                    String responseBody = new String(error.networkResponse.data, "utf-8");
+                    JSONObject data = new JSONObject(responseBody);
+                    JSONObject errors = data.getJSONObject("error");
+                    String message = errors.getString("message");
+                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();                    Toast.makeText(LoginActivity.this,  error.toString(), Toast.LENGTH_LONG).show();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
+
                 ProgressBarDialog.getInstance(LoginActivity.this).closeDialog();
 
 
@@ -266,6 +274,9 @@ public class LoginActivity extends AppCompatActivity {
                 reference.child("userName").setValue(userName);
                 reference.child("id").setValue(idUser);
                 reference.child("phone_number").setValue(phoneNumber);
+                reference.child("avatar").setValue("https://firebasestorage.googleapis.com/v0/b/final-project-4edd1.appspot.com/o/Posts%2F1661063588056.jpg?alt=media&token=809bf0c0-5167-43db-b511-fc2acb32ca4a");
+                reference.child("name_store").setValue("Người dùng");
+
                 ProgressBarDialog.getInstance(LoginActivity.this).closeDialog();
                         SharedPrefsSingleton.getInstance(getApplicationContext()).putStringValue(PHONE, phoneNumber);
                         Toast.makeText(LoginActivity.this, "" + "Đăng nhập thành công!", Toast.LENGTH_LONG).show();

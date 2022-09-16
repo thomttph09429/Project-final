@@ -11,11 +11,12 @@ import static com.app.projectfinal.utils.Constant.PRODUCTS;
 import static com.app.projectfinal.utils.Constant.QUANTITY_PRODUCT;
 import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
 import static com.app.projectfinal.utils.Constant.STORE_NAME_PRODUCT;
-import static com.app.projectfinal.utils.Constant.TOKEN;
 import static com.app.projectfinal.utils.Constant.UNIT_NAME;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,8 +24,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.HorizontalScrollView;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +36,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -44,12 +45,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
 import com.app.projectfinal.activity.CartActivity;
 import com.app.projectfinal.activity.ListChatActivity;
-import com.app.projectfinal.adapter.CategoryAdapter;
 import com.app.projectfinal.adapter.ProductAdapter;
-import com.app.projectfinal.adapter.SliderAddsAdapter;
 import com.app.projectfinal.adapter.ViewByCategoryAdapter;
-import com.app.projectfinal.data.SharedPrefsSingleton;
-import com.app.projectfinal.listener.ListenerCategoryName;
 import com.app.projectfinal.listener.ListenerViewProductByCategory;
 import com.app.projectfinal.model.Category;
 import com.app.projectfinal.model.Product;
@@ -67,7 +64,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements ProductAdapter.FilterListeners{
     private View view;
     private RecyclerView rcvProduct, rvViewByCategories;
     private ProductAdapter productAdapter;
@@ -79,6 +76,8 @@ public class HomeFragment extends Fragment {
     private ViewByCategoryAdapter mViewByCategoryAdapter;
     private List<Category> categories;
     private ListenerViewProductByCategory mListener;
+    private EditText edtSearch;
+    private LinearLayout lnHide;
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -124,7 +123,28 @@ public class HomeFragment extends Fragment {
         };
         String token = ConstantData.getToken(getContext());
         Log.e("token", token);
+
+
+        edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                productAdapter.getFilter().filter(s.toString().toLowerCase());
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         return view;
+
+
     }
 
     private void initAds() {
@@ -207,6 +227,8 @@ public class HomeFragment extends Fragment {
         nestedScrollView = view.findViewById(R.id.nestedScrollView);
         rvViewByCategories = view.findViewById(R.id.rvViewByCategories);
         tvAllProduct = view.findViewById(R.id.tvAllProduct);
+        edtSearch = view.findViewById(R.id.edtSearch);
+        lnHide = view.findViewById(R.id.lnHide);
 
 
     }
@@ -216,8 +238,6 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         rcvProduct.setHasFixedSize(true);
         rcvProduct.setLayoutManager(layoutManager);
-        productAdapter = new ProductAdapter(products, getContext());
-        rcvProduct.setAdapter(productAdapter);
         getProducts(page);
 
     }
@@ -260,7 +280,7 @@ public class HomeFragment extends Fragment {
             ProgressBarDialog.getInstance(getContext()).showDialog("Đang tải", getContext());
 
         }
-        String urlProducts = PRODUCTS + "?" + "page=" + page + "&size=" + 12;
+        String urlProducts = PRODUCTS + "?" + "page=" + page + "&size=" + 20;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlProducts, null, new Response.Listener<JSONObject>() {
             @Override
@@ -288,6 +308,9 @@ public class HomeFragment extends Fragment {
                             ProgressBarDialog.getInstance(getContext()).closeDialog();
 
                         }
+                        productAdapter = new ProductAdapter(products, getContext());
+                        productAdapter.setFilterListeners(HomeFragment.this::filteringFinished);
+                        rcvProduct.setAdapter(productAdapter);
                         productAdapter.notifyDataSetChanged();
 
                     } catch (JSONException e) {
@@ -398,5 +421,19 @@ public class HomeFragment extends Fragment {
             getProducts(page);
 
         });
+    }
+
+    @Override
+    public void filteringFinished(int filteredItemsCount) {
+
+        if (filteredItemsCount == 0) {
+            rcvProduct.setVisibility(View.GONE);
+            lnHide.setVisibility(View.VISIBLE);
+
+
+        } else {
+            lnHide.setVisibility(View.GONE);
+            rcvProduct.setVisibility(View.VISIBLE);
+        }
     }
 }

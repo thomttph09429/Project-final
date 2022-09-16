@@ -1,5 +1,6 @@
 package com.app.projectfinal.activity;
 
+import static com.app.projectfinal.activity.MainActivity.storeId;
 import static com.app.projectfinal.utils.Constant.ADD_STORES;
 import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
 import static com.app.projectfinal.utils.Constant.STORE_NAME_PRODUCT;
@@ -7,10 +8,14 @@ import static com.app.projectfinal.utils.Constant.TOTAL_ORDER;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -38,13 +43,14 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyShopActivity extends AppCompatActivity implements View.OnClickListener {
-    private TextView tvStoreName, tvViewShop,tvHistory;
-    private LinearLayout lnStartSell, lnMyProduct, lnShopSetting, lnWaitConfirm, lnDelivery, lnComplete, lnCancel,lnViewShop;
-    public static String  storeName, avatar;
-    public static  String storeId;
-    private RelativeLayout rlTotalPending,rlTotalProcess;
-    private TextView tvTotalPending,tvTotalProcess;
+    private TextView tvStoreName, tvViewShop, tvHistory;
+    private LinearLayout lnStartSell, lnContact, lnMyProduct, lnShopSetting, lnWaitConfirm, lnDelivery, lnComplete, lnCancel, lnViewShop;
+    public static String storeName, avatar;
+    public static String storeId;
+    private RelativeLayout rlTotalPending, rlTotalProcess;
+    private TextView tvTotalPending, tvTotalProcess;
     private CircleImageView ivAvatar;
+    private ImageView ivBack, ivChat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +61,6 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
         getInfoShop();
 
     }
-
 
 
     private void initAction() {
@@ -69,6 +74,9 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
         lnCancel.setOnClickListener(this);
         lnViewShop.setOnClickListener(this);
         tvHistory.setOnClickListener(this);
+        lnContact.setOnClickListener(this);
+        ivBack.setOnClickListener(this);
+        ivChat.setOnClickListener(this);
 
     }
 
@@ -86,11 +94,14 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
         lnViewShop = findViewById(R.id.lnViewShop);
         tvHistory = findViewById(R.id.tvHistory);
         ivAvatar = findViewById(R.id.ivAvatar);
+        ivBack = findViewById(R.id.ivBack);
 
         rlTotalPending = findViewById(R.id.rlTotalPending);
         rlTotalProcess = findViewById(R.id.rlTotalProcess);
         tvTotalProcess = findViewById(R.id.tvTotalProcess);
         tvTotalPending = findViewById(R.id.tvTotalPending);
+        lnContact = findViewById(R.id.lnContact);
+        ivChat = findViewById(R.id.ivChat);
 
 
     }
@@ -197,7 +208,7 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
                         if (processingOrder != 0) {
                             rlTotalProcess.setVisibility(View.VISIBLE);
                             tvTotalProcess.setText(String.valueOf(processingOrder));
-                        }else {
+                        } else {
                             rlTotalProcess.setVisibility(View.GONE);
 
                         }
@@ -206,7 +217,7 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
                         if (newOrder != 0) {
                             rlTotalPending.setVisibility(View.VISIBLE);
                             tvTotalPending.setText(String.valueOf(newOrder));
-                        }else {
+                        } else {
                             rlTotalPending.setVisibility(View.GONE);
 
                         }
@@ -241,9 +252,6 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
-
-
-
     private void openViewShopScreen() {
         Intent intent = new Intent(this, ViewShopActivity.class);
         startActivity(intent);
@@ -255,7 +263,8 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
         Bundle bundle = new Bundle();
         bundle.putInt("pos", 0);
         intent.putExtras(bundle);
-        startActivity(intent);    }
+        startActivity(intent);
+    }
 
     private void deliveryOrder() {
         Intent intent = new Intent(this, ShopOrderActivity.class);
@@ -282,6 +291,26 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
         intent.putExtras(bundle);
         startActivity(intent);
     }
+
+    private void contact() {
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+        emailIntent.setData(Uri.parse("mailto:" + "truongthithom1999@gmail.com"));
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Liên hệ với NSV");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Dear...,");
+
+        try {
+            startActivity(Intent.createChooser(emailIntent, "Send email using..."));
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(this, "No email clients installed.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+
+    private void openChatScreen() {
+        startActivity( new Intent(this, ListChatActivity.class));
+    }
+
 
     @Override
     public void onClick(View view) {
@@ -313,8 +342,20 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.tvHistory:
                 waitForConfirmation();
                 break;
+            case R.id.lnContact:
+                contact();
+                break;
+            case R.id.ivBack:
+                finish();
+                break;
+            case R.id.ivChat:
+                openChatScreen();
+                break;
+
         }
     }
+
+
 
 
 }

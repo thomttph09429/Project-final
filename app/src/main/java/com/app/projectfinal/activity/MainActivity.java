@@ -1,30 +1,15 @@
 package com.app.projectfinal.activity;
 
 import static com.app.projectfinal.utils.Constant.ADD_STORES;
-import static com.app.projectfinal.utils.Constant.CATEGORY_NAME;
-import static com.app.projectfinal.utils.Constant.DESCRIPTION_PRODUCT;
-import static com.app.projectfinal.utils.Constant.IMAGE1_PRODUCT;
-import static com.app.projectfinal.utils.Constant.NAME_PRODUCT;
-import static com.app.projectfinal.utils.Constant.PRICE_PRODUCT;
-import static com.app.projectfinal.utils.Constant.QUANTITY_PRODUCT;
-import static com.app.projectfinal.utils.Constant.ROLE;
-import static com.app.projectfinal.utils.Constant.ROLE_SAVE;
-import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
-import static com.app.projectfinal.utils.Constant.STORE_NAME_PRODUCT;
-import static com.app.projectfinal.utils.Constant.UPDATE_USER;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -33,17 +18,11 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.app.projectfinal.adapter.ProductAdapter;
 import com.app.projectfinal.adapter.ViewPagerAdapter;
-import com.app.projectfinal.data.SharedPrefsSingleton;
-import com.app.projectfinal.model.Product;
-import com.app.projectfinal.utils.Constant;
 import com.app.projectfinal.utils.ConstantData;
-import com.app.projectfinal.utils.ProgressBarDialog;
 import com.app.projectfinal.utils.VolleySingleton;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
-import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
 
 import com.app.projectfinal.R;
 
@@ -60,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private AHBottomNavigation bottomNavigation;
     private ViewPager2 viewPager2;
     public static String storeId, storeName;
-    public static int status;
+    public static int status, total;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +99,9 @@ public class MainActivity extends AppCompatActivity {
                 if (response != null) {
                     try {
                         JSONObject jsonObject = response.getJSONObject("data");
+                        total= jsonObject.getInt("total");
                         JSONArray data = jsonObject.getJSONArray("stores");
+
                         for (int i = 0; i < data.length(); i++) {
                             JSONObject jsonObject1 = data.getJSONObject(i);
                              status= jsonObject1.getInt("status");

@@ -1,7 +1,6 @@
 package com.app.projectfinal.activity;
 
 import static com.app.projectfinal.utils.Constant.ADD_PRODUCTS;
-import static com.app.projectfinal.utils.Constant.CATEGORY;
 import static com.app.projectfinal.utils.Constant.CATEGORY_ID;
 import static com.app.projectfinal.utils.Constant.CATEGORY_NAME;
 import static com.app.projectfinal.utils.Constant.DESCRIPTION_PRODUCT;
@@ -10,16 +9,12 @@ import static com.app.projectfinal.utils.Constant.NAME;
 import static com.app.projectfinal.utils.Constant.PICK_IMAGE_REQUEST;
 import static com.app.projectfinal.utils.Constant.PRICE_PRODUCT;
 import static com.app.projectfinal.utils.Constant.QUANTITY_PRODUCT;
-import static com.app.projectfinal.utils.Constant.STORE_ID;
 import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
 import static com.app.projectfinal.utils.Constant.UNIT_ID_PRODUCT;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -28,7 +23,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,14 +37,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
-import com.app.projectfinal.adapter.CategoryAdapter;
-import com.app.projectfinal.data.SharedPrefsSingleton;
 import com.app.projectfinal.fragment.ListCategoryDialogFragment;
 import com.app.projectfinal.fragment.UnitDialogFragment;
-import com.app.projectfinal.listener.ListenerCategoryName;
 import com.app.projectfinal.listener.ListenerSendCategory;
 import com.app.projectfinal.listener.ListenerSendUnit;
-import com.app.projectfinal.model.Category;
 import com.app.projectfinal.utils.ConstantData;
 import com.app.projectfinal.utils.NDigitCardFormatWatcher;
 import com.app.projectfinal.utils.ProgressBarDialog;
@@ -66,17 +56,14 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class AddProductActivity extends AppCompatActivity {
-    private ImageView img_add_product;
+    private ImageView img_add_product, ivBack;
     private Uri uriImage;
     private TextView tvCountNameProduct, tvCountDescription, tvShowUnit, tvShowCategory;
     private LinearLayout ln_category, lnUnit;
@@ -85,7 +72,7 @@ public class AddProductActivity extends AppCompatActivity {
     private Button btn_add_product;
     private String linkImageUrlFirebase;
     private EditText edt_enter_name_product, edt_enter_description, edt_enter_price, edtEnterQuantity;
-    private String typeOfCategory="", typeOfUnit="", unitId, idCategory;
+    private String typeOfCategory = "", typeOfUnit = "", unitId, idCategory;
     private ListenerSendUnit mListenerSendUnit;
     private ListenerSendCategory mListenerSendCategory;
 
@@ -100,7 +87,9 @@ public class AddProductActivity extends AppCompatActivity {
         img_add_product.setOnClickListener(v -> {
             openFileChose();
         });
-
+        ivBack.setOnClickListener(v -> {
+            finish();
+        });
 
         btn_add_product.setOnClickListener(v -> {
 
@@ -116,24 +105,16 @@ public class AddProductActivity extends AppCompatActivity {
             } else if (edt_enter_price.getText().toString().equals("")) {
                 Toast.makeText(AddProductActivity.this, "Hãy nhập giá", Toast.LENGTH_SHORT).show();
 
-            }else if (edtEnterQuantity.getText().toString().equals("")) {
+            } else if (edtEnterQuantity.getText().toString().equals("")) {
                 Toast.makeText(AddProductActivity.this, "Hãy chọn số lượng hàng", Toast.LENGTH_SHORT).show();
 
-            }else if (typeOfUnit.toString().equals("")) {
+            } else if (typeOfUnit.toString().equals("")) {
                 Toast.makeText(AddProductActivity.this, "Hãy chọn phân loại hàng", Toast.LENGTH_SHORT).show();
 
-            }else {
+            } else {
                 uploadImage();
 
             }
-
-
-
-
-
-
-
-
 
 
         });
@@ -212,6 +193,7 @@ public class AddProductActivity extends AppCompatActivity {
         edtEnterQuantity = findViewById(R.id.edtEnterQuantity);
         tvShowUnit = findViewById(R.id.tvShowUnit);
         tvShowCategory = findViewById(R.id.tvShowCategory);
+        ivBack = findViewById(R.id.ivBack);
 
     }
 
@@ -281,7 +263,7 @@ public class AddProductActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(AddProductActivity.this, "Thêm thất bại " + error.toString(), Toast.LENGTH_LONG).show();
-               Log.e("thatbai",user+"");
+                Log.e("thatbai", user + "");
                 ProgressBarDialog.getInstance(AddProductActivity.this).closeDialog();
 
             }

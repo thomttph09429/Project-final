@@ -23,9 +23,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +41,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
 import com.app.projectfinal.adapter.MyProductAdapter;
 import com.app.projectfinal.adapter.ProductAdapter;
+import com.app.projectfinal.fragment.HomeFragment;
 import com.app.projectfinal.model.Product;
 import com.app.projectfinal.utils.ConstantData;
 import com.app.projectfinal.utils.ProgressBarDialog;
@@ -54,16 +59,18 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ViewShopActivity extends AppCompatActivity {
+public class ViewShopActivity extends AppCompatActivity  implements ProductAdapter.FilterListeners{
     private RecyclerView rvAllProduct;
     private List<Product> products;
     private ProductAdapter productAdapter;
     private String storeIds, storeNames;
     private NestedScrollView nestedScrollView;
     private int page = 1;
-    private TextView tvUserName;
+    private TextView tvUserName,tvDescription;
     private CircleImageView ivAvatar;
-    private ImageView ivCover;
+    private ImageView ivCover,ivBack;
+    private EditText edtSearch;
+    private LinearLayout lnHide;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +78,7 @@ public class ViewShopActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_shop);
 
         initView();
+        exit();
         Bundle bundle = getIntent().getExtras();
         if (bundle == null) {
             storeIds = storeId;
@@ -85,15 +93,42 @@ public class ViewShopActivity extends AppCompatActivity {
         initAction();
         getInfoShop();
         scrollPage();
+        edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                productAdapter.getFilter().filter(s.toString().toLowerCase());
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
+
+
+    private  void exit(){
+        ivBack.setOnClickListener(v->{
+            finish();
+        });
+    }
     private void initView() {
         rvAllProduct = findViewById(R.id.rvAllProduct);
         nestedScrollView = findViewById(R.id.nestedScrollView);
         tvUserName = findViewById(R.id.tvUserName);
         ivAvatar = findViewById(R.id.ivAvatar);
         ivCover = findViewById(R.id.ivCover);
+        edtSearch = findViewById(R.id.edtSearch);
+        lnHide = findViewById(R.id.lnHide);
+        tvDescription = findViewById(R.id.tvDescription);
+        ivBack = findViewById(R.id.ivBack);
 
     }
 
@@ -150,6 +185,7 @@ public class ViewShopActivity extends AppCompatActivity {
 
                             products.add(new Product(price, productName, image1, description, storeName, categoryName, storeId, quantity, id, unit));
                             productAdapter = new ProductAdapter(products, ViewShopActivity.this);
+                            productAdapter.setFilterListeners(ViewShopActivity.this::filteringFinished);
                             rvAllProduct.setAdapter(productAdapter);
                         }
 
@@ -195,6 +231,9 @@ public class ViewShopActivity extends AppCompatActivity {
                         JSONObject data = jsonObject.getJSONObject("user");
                         String image1 = data.getString("image1");
                         String image2 = data.getString("image2");
+                        String description = data.getString("description");
+                        tvDescription.setText(description);
+
                         Glide.with(getApplicationContext()).load(image1).centerCrop().error(R.drawable.avatar_empty).into(ivAvatar);
                         Glide.with(getApplicationContext()).load(image2).centerCrop().error(R.drawable.ic_cover).into(ivCover);
                         ProgressBarDialog.getInstance(ViewShopActivity.this).closeDialog();
@@ -224,6 +263,19 @@ public class ViewShopActivity extends AppCompatActivity {
             }
         };
         VolleySingleton.getInstance(ViewShopActivity.this).getRequestQueue().add(jsonObjectRequest);
+    }
+
+    @Override
+    public void filteringFinished(int filteredItemsCount) {
+        if (filteredItemsCount == 0) {
+            rvAllProduct.setVisibility(View.GONE);
+            lnHide.setVisibility(View.VISIBLE);
+
+
+        } else {
+            lnHide.setVisibility(View.GONE);
+            rvAllProduct.setVisibility(View.VISIBLE);
+        }
     }
 
 }

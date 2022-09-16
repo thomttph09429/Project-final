@@ -14,9 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.projectfinal.R;
-import com.app.projectfinal.data.SharedPrefsSingleton;
+import com.app.projectfinal.utils.SharedPrefsSingleton;
 import com.app.projectfinal.model.Chat;
-import com.bumptech.glide.Glide;
 
 import java.util.List;
 

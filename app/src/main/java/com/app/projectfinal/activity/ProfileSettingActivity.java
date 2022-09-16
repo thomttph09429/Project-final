@@ -4,22 +4,21 @@ import static com.app.projectfinal.activity.MainActivity.storeName;
 import static com.app.projectfinal.fragment.UserFragment.userDetail;
 import static com.app.projectfinal.utils.Constant.DATE_OF_BIRTH;
 import static com.app.projectfinal.utils.Constant.EMAIL;
-import static com.app.projectfinal.utils.Constant.PHONE_NUMBER;
 import static com.app.projectfinal.utils.Constant.PICK_IMAGE_REQUEST;
 import static com.app.projectfinal.utils.Constant.UPDATE_USER;
 import static com.app.projectfinal.utils.Constant.USER_ID_SAVE;
-import static com.app.projectfinal.utils.Constant.USER_NAME_SAVE;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
+import android.app.AlertDialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +36,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
 import com.app.projectfinal.activity.address.AddressActivity;
-import com.app.projectfinal.data.SharedPrefsSingleton;
+import com.app.projectfinal.utils.SharedPrefsSingleton;
+import com.app.projectfinal.fragment.ChangePassFragment;
 import com.app.projectfinal.utils.ConstantData;
 import com.app.projectfinal.utils.ProgressBarDialog;
 import com.app.projectfinal.utils.VolleySingleton;
@@ -65,13 +65,13 @@ import java.util.Map;
 public class ProfileSettingActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView tvUpdateAvatar;
     private Uri uriImage;
-    private ImageView ivAvtUser;
+    private ImageView ivAvtUser,ivBack;
     private String linkImageUrlFirebase, userId, dateOfBirth, email;
     private StorageReference storageRef;
     private StorageTask uploadTask;
     private LinearLayout lnAddress, lnNameLogin, lnNumberLogin, lnEmail, lnChangePass, lnPolicy, lnRules;
     private EditText edtUserLogin, edtEmail, edtDateOfBirth;
-    private AppCompatButton btnSaveInfo;
+    private AppCompatButton btnSaveInfo,btnSingOut;
     private TextView tvNumberLogin;
 
 
@@ -81,8 +81,14 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
         setContentView(R.layout.activity_profile_setting);
         initView();
         initAction();
+        exit();
         getInfo();
 
+    }
+    private void exit() {
+        ivBack.setOnClickListener(v -> {
+            finish();
+        });
     }
 
     /**
@@ -96,6 +102,7 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
         edtUserLogin = findViewById(R.id.edtUserLogin);
         tvNumberLogin = findViewById(R.id.tvNumberLogin);
         edtEmail = findViewById(R.id.edtEmail);
+        ivBack = findViewById(R.id.ivBack);
 
         tvUpdateAvatar = findViewById(R.id.tvUpdateAvatar);
         ivAvtUser = findViewById(R.id.ivAvtUser);
@@ -108,6 +115,7 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
         lnRules = findViewById(R.id.lnRules);
         edtDateOfBirth = findViewById(R.id.edtDateOfBirth);
         btnSaveInfo = findViewById(R.id.btnSaveInfo);
+        btnSingOut = findViewById(R.id.btnSingOut);
 
     }
 
@@ -115,6 +123,9 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
         tvUpdateAvatar.setOnClickListener(this);
         btnSaveInfo.setOnClickListener(this);
         lnAddress.setOnClickListener(this);
+        lnChangePass.setOnClickListener(this);
+        btnSingOut.setOnClickListener(this);
+
         userId = SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(USER_ID_SAVE);
 
     }
@@ -213,7 +224,7 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, user, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                AddInfoOfStoreToFirebase(storeName,linkImageUrlFirebase,edtUserLogin.getText().toString().trim(),tvNumberLogin.getText().toString());
+                AddInfoOfStoreToFirebase(storeName, linkImageUrlFirebase, edtUserLogin.getText().toString().trim(), tvNumberLogin.getText().toString());
                 ProgressBarDialog.getInstance(ProfileSettingActivity.this).closeDialog();
                 showToast("Cập nhật thành công", R.drawable.ic_mark);
 
@@ -233,6 +244,7 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
         };
         VolleySingleton.getInstance(getApplicationContext()).getRequestQueue().add(jsonObjectRequest);
     }
+
     private void AddInfoOfStoreToFirebase(String nameStore, String avatar, String userName, String phone) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(phone);
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -278,9 +290,46 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
             case R.id.lnAddress:
                 openAddressScreen();
                 break;
+            case R.id.lnChangePass:
+                changePass();
+                break;
+            case R.id.btnSingOut:
+                signOut();
+                break;
 
         }
 
+    }
+
+    private void signOut() {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        builder1.setMessage("Bạn chắc chắn muốn đăng xuất?");
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "Có",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                   SharedPrefsSingleton.getInstance(getApplicationContext()).deleteAll();
+                   startActivity(new Intent(ProfileSettingActivity.this,LoginActivity.class));
+                    }
+                });
+
+        builder1.setNegativeButton(
+                "Không",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+    }
+
+    private void changePass() {
+        ChangePassFragment changPass = new ChangePassFragment();
+        changPass.show(getSupportFragmentManager(), "ChangePassFragment");
     }
 
     private void openAddressScreen() {

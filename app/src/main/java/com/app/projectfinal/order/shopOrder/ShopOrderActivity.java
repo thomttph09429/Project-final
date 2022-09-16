@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.widget.ImageView;
 
 import com.app.projectfinal.R;
 import com.app.projectfinal.order.myOrder.ViewPagerMyOrderAdapter;
@@ -14,6 +15,7 @@ public class ShopOrderActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager2;
     private int pos;
+    private ImageView ivBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,10 +24,14 @@ public class ShopOrderActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         pos = bundle.getInt("pos");
         initView();
+        ivBack.setOnClickListener(v->{
+            finish();
+        });
 
     }
 
     private void initView() {
+        ivBack = findViewById(R.id.ivBack);
         tabLayout = findViewById(R.id.tabLayout);
         viewPager2 = findViewById(R.id.viewPager);
         ViewPagerShopOrderAdapter viewPagerAdapter = new ViewPagerShopOrderAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);

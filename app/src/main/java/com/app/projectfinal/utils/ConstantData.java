@@ -13,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.projectfinal.R;
-import com.app.projectfinal.data.SharedPrefsSingleton;
 
 public class ConstantData {
     public static String getToken(Context context) {

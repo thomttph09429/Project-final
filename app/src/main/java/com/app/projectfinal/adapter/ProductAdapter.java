@@ -20,6 +20,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,16 +36,21 @@ import com.app.projectfinal.model.Product;
 import com.app.projectfinal.utils.ValidateForm;
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHolder> {
+public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHolder> implements Filterable {
     private List<Product> products;
     private Product product;
     private Context context;
+    private List<Product> backupProducts;
+    private FilterListeners filterListeners;
 
     public ProductAdapter(List<Product> products, Context context) {
         this.products = products;
         this.context = context;
+        backupProducts = new ArrayList<>(products);
+
     }
 
 
@@ -92,6 +99,46 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         return products.size();
     }
 
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+    Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence keyword) {
+            ArrayList<Product> filterCollections = new ArrayList<>();
+
+            if (keyword.toString().equals("")) {
+                filterCollections.addAll(backupProducts);
+
+            } else {
+                for (Product product : backupProducts) {
+                    if (product.getProductName().toString().toLowerCase().contains(keyword.toString().toLowerCase()))
+                        filterCollections.add(product);
+                }
+
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filterCollections;
+
+            return results;
+
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+
+            products.clear();
+            products.addAll((ArrayList<Product>) results.values);
+            if (filterListeners != null)
+                filterListeners.filteringFinished(products.size());
+            notifyDataSetChanged();
+
+
+        }
+    };
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView name, price;
@@ -107,4 +154,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
 
 
     }
+    public void setFilterListeners(FilterListeners filterFinishedListener) {
+        filterListeners = filterFinishedListener;
+    }
+    public interface FilterListeners {
+        void filteringFinished(int filteredItemsCount);
+    }
+
 }

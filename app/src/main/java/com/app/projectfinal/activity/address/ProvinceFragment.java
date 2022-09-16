@@ -1,7 +1,6 @@
 package com.app.projectfinal.activity.address;
 
 import static com.app.projectfinal.utils.Constant.PROVINCE;
-import static com.app.projectfinal.utils.Constant.TOKEN;
 
 import android.os.Bundle;
 
@@ -9,7 +8,6 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +19,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.app.projectfinal.R;
 import com.app.projectfinal.adapter.address.ProvinceAdapter;
-import com.app.projectfinal.data.SharedPrefsSingleton;
-import com.app.projectfinal.model.address.Districts;
 import com.app.projectfinal.model.address.Province;
 import com.app.projectfinal.utils.ConstantData;
 import com.app.projectfinal.utils.ProgressBarDialog;

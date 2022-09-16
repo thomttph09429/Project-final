@@ -9,10 +9,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.app.projectfinal.R;
 import com.app.projectfinal.adapter.ListChatAdapter;
-import com.app.projectfinal.data.SharedPrefsSingleton;
+import com.app.projectfinal.utils.SharedPrefsSingleton;
 import com.app.projectfinal.model.ChatList;
 import com.app.projectfinal.model.User;
 import com.app.projectfinal.utils.ProgressBarDialog;
@@ -31,6 +32,7 @@ public class ListChatActivity extends AppCompatActivity {
     List<User> mUser;
     private RecyclerView rvListChat;
     private String phoneOfMe;
+    private ImageView ivBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +41,19 @@ public class ListChatActivity extends AppCompatActivity {
         initView();
         initAction();
         addUser();
+        exit();
 
     }
 
     private void initView() {
         rvListChat = findViewById(R.id.rvListChat);
+        ivBack = findViewById(R.id.ivBack);
+
+    }
+    private  void exit(){
+        ivBack.setOnClickListener(v->{
+            finish();
+        });
     }
 
     private void initAction() {

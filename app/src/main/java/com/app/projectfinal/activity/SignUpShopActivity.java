@@ -2,17 +2,13 @@ package com.app.projectfinal.activity;
 
 import static com.app.projectfinal.activity.MainActivity.status;
 import static com.app.projectfinal.activity.MainActivity.storeId;
-import static com.app.projectfinal.utils.Constant.ADDRESS;
 import static com.app.projectfinal.utils.Constant.ADD_STORES;
 import static com.app.projectfinal.utils.Constant.DESCRIPTION_STORE;
-import static com.app.projectfinal.utils.Constant.IS_ACTIVE;
 import static com.app.projectfinal.utils.Constant.LINK_SUPPORT_STORE;
 import static com.app.projectfinal.utils.Constant.MY_CAMERA_UPDATE_COVERPHOTO;
 import static com.app.projectfinal.utils.Constant.NAME_STORE;
 import static com.app.projectfinal.utils.Constant.PICK_IMAGE_REQUEST;
-import static com.app.projectfinal.utils.Constant.UPDATE_USER;
 import static com.app.projectfinal.utils.Constant.USER_ID;
-import static com.app.projectfinal.utils.Constant.USER_ID_SAVE;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,12 +34,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
-import com.app.projectfinal.activity.address.AddressActivity;
-import com.app.projectfinal.adapter.address.ListAddressAdapter;
-import com.app.projectfinal.data.SharedPrefsSingleton;
-import com.app.projectfinal.model.UserDetail;
-import com.app.projectfinal.model.address.AddressUser;
-import com.app.projectfinal.order.myOrder.OrderInformationActivity;
+import com.app.projectfinal.utils.SharedPrefsSingleton;
 import com.app.projectfinal.utils.Constant;
 import com.app.projectfinal.utils.ConstantData;
 import com.app.projectfinal.utils.ProgressBarDialog;
@@ -58,9 +49,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
-import com.google.gson.Gson;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -73,7 +62,7 @@ public class SignUpShopActivity extends AppCompatActivity {
     private TextView tvCountNameStore, tvEditAvatar;
     private EditText edtEnterStoreName, edtLinkFace, edtDesStore;
     private Button btnSignUpShop;
-    private ImageView ivCover;
+    private ImageView ivCover,ivBack;
     private CircleImageView ivAvatar;
     private Uri uriAvatar, uriCover;
     private StorageReference storageRef;
@@ -99,6 +88,9 @@ public class SignUpShopActivity extends AppCompatActivity {
         if (status == 1) {
             getInforShop();
         }
+        ivBack.setOnClickListener(v->{
+            finish();
+        });
     }
 
     private void getInforShop() {
@@ -376,6 +368,7 @@ public class SignUpShopActivity extends AppCompatActivity {
         tvEditAvatar = findViewById(R.id.tvEditAvatar);
         ivCover = findViewById(R.id.ivCover);
         ivAvatar = findViewById(R.id.ivAvatar);
+        ivBack = findViewById(R.id.ivBack);
 
     }
 

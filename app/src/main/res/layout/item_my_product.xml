@@ -5,26 +5,27 @@
 
     <ImageView
         android:id="@+id/ivImage"
-        android:scaleType="centerCrop"
         android:layout_width="@dimen/_100sdp"
-        android:layout_height="@dimen/_100sdp" />
+        android:layout_height="@dimen/_100sdp"
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/tvNameProduct"
         android:layout_width="wrap_content"
-        android:layout_marginTop="@dimen/_10sdp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:layout_toRightOf="@+id/ivImage"
         android:maxLines="2"
         android:text="quan ccccccccccccccccccccccccccccc" />
+
     <TextView
         android:id="@+id/text"
-        android:layout_marginLeft="@dimen/_10sdp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/ivImage"
         android:layout_below="@+id/tvNameProduct"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_toRightOf="@+id/ivImage"
         android:maxLines="2"
         android:text="@string/under_text" />
 
@@ -45,20 +46,28 @@
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_toRightOf="@+id/ivImage"
         android:text="Kho hàng" />
+
     <TextView
         android:id="@+id/tvQuantity"
-        android:layout_toRightOf="@+id/title"
         android:layout_width="wrap_content"
-        android:text="200"
-        android:layout_below="@+id/tvPrice"
         android:layout_height="wrap_content"
-        />
+        android:layout_below="@+id/tvPrice"
+        android:layout_toRightOf="@+id/title"
+        android:text="200" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_below="@+id/btnDelete"
+        android:background="@color/greenLight" />
+
+    <Button
+        android:id="@+id/btnDelete"
+        android:text="Xóa"
+        android:textAllCaps="false"
         android:layout_below="@+id/ivImage"
-        android:background="@color/greenLight"
-        />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 
 </RelativeLayout>

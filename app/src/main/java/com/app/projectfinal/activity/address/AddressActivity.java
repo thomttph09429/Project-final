@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -43,6 +44,7 @@ public class AddressActivity extends AppCompatActivity implements View.OnClickLi
     private RecyclerView rvAddress;
     public List<AddressUser> addressUserList;
     private ListAddressAdapter listAddressAdapter;
+    ImageView ivBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,9 @@ public class AddressActivity extends AppCompatActivity implements View.OnClickLi
         initView();
         initAction();
         getAllMyAddress();
+        ivBack.setOnClickListener(v->{
+            finish();
+        });
     }
 
     private void initAction() {
@@ -63,6 +68,8 @@ public class AddressActivity extends AppCompatActivity implements View.OnClickLi
     private void initView() {
         lnAddress = findViewById(R.id.lnAddress);
         rvAddress = findViewById(R.id.rvAddress);
+        ivBack = findViewById(R.id.ivBack);
+
     }
 
     private void openAddAddressScreen() {

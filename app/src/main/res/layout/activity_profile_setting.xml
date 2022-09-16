@@ -27,7 +27,7 @@
                 android:padding="@dimen/_11sdp">
 
                 <ImageView
-                    android:id="@+id/img_myShop_back"
+                    android:id="@+id/ivBack"
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
                     android:src="@drawable/arrow_left" />
@@ -353,5 +353,16 @@
 
 
     </LinearLayout>
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_below="@+id/lnRules"
+        android:id="@+id/btnSingOut"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Đăng xuất"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        android:background="@drawable/bg_border_40"
+        />
 
 </RelativeLayout>

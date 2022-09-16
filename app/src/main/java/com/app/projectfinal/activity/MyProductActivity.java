@@ -106,6 +106,7 @@ public class MyProductActivity extends AppCompatActivity {
                         if (products!=null){
                             myProductAdapter = new MyProductAdapter(products, MyProductActivity.this);
                             rvMyProduct.setAdapter(myProductAdapter);
+                            myProductAdapter.notifyDataSetChanged();
                         }else {
 
                         }

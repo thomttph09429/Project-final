@@ -1,19 +1,9 @@
 package com.app.projectfinal.activity;
 
-import static com.app.projectfinal.utils.Constant.ADD_STORES;
-import static com.app.projectfinal.utils.Constant.CATEGORY_NAME;
-import static com.app.projectfinal.utils.Constant.DESCRIPTION_PRODUCT;
-import static com.app.projectfinal.utils.Constant.ID_PRODUCT;
-import static com.app.projectfinal.utils.Constant.IMAGE1_PRODUCT;
-import static com.app.projectfinal.utils.Constant.NAME_PRODUCT;
+import static com.app.projectfinal.utils.Constant.AVATAR;
 import static com.app.projectfinal.utils.Constant.PHONE;
-import static com.app.projectfinal.utils.Constant.PRICE_PRODUCT;
-import static com.app.projectfinal.utils.Constant.PRODUCTS;
-import static com.app.projectfinal.utils.Constant.QUANTITY_PRODUCT;
 import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
 import static com.app.projectfinal.utils.Constant.STORE_NAME_PRODUCT;
-import static com.app.projectfinal.utils.Constant.UPDATE_USER;
-import static com.app.projectfinal.utils.Constant.USER_ID;
 import static com.app.projectfinal.utils.Constant.USER_NAME_SAVE;
 
 import androidx.annotation.NonNull;
@@ -21,22 +11,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
 import com.app.projectfinal.adapter.ChatAdapter;
-import com.app.projectfinal.data.SharedPrefsSingleton;
+import com.app.projectfinal.utils.SharedPrefsSingleton;
 import com.app.projectfinal.model.Chat;
 
 import com.app.projectfinal.utils.ValidateForm;
@@ -51,9 +35,9 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
-    private String storeName, storeId, userId, phoneOfStore, phoneOfMe;
+    private String storeName, storeId, userId, phoneOfStore, phoneOfMe, avatar;
     private TextView tvNameShop;
-    private ImageView btnSentMessage;
+    private ImageView btnSentMessage, ivBack;
     private EditText edtEnterMessage;
     private RecyclerView rvChat;
     private ChatAdapter chatAdapter;
@@ -68,6 +52,7 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
         initView();
         initAction();
+        exit();
         receiveInfoStoreFromClickItem();
         receiveInfoStore();
 
@@ -78,7 +63,7 @@ public class ChatActivity extends AppCompatActivity {
             clickSendMessage(getPhoneOfStore, getStoreName);
             Toast.makeText(this, "getPhoneOfStore", Toast.LENGTH_LONG).show();
 
-        }else {
+        } else {
             showInfoStore(storeName);
             readMessage(phoneOfStore);
             clickSendMessage(phoneOfStore, storeName);
@@ -86,6 +71,12 @@ public class ChatActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    private void exit() {
+        ivBack.setOnClickListener(v -> {
+            finish();
+        });
     }
 
     /**
@@ -119,6 +110,8 @@ public class ChatActivity extends AppCompatActivity {
         btnSentMessage = findViewById(R.id.btnSentMessage);
         edtEnterMessage = findViewById(R.id.edtEnterMessage);
         rvChat = findViewById(R.id.rvChat);
+        ivBack = findViewById(R.id.ivBack);
+
     }
 
     /**
@@ -134,15 +127,15 @@ public class ChatActivity extends AppCompatActivity {
         storeName = data.getString(STORE_NAME_PRODUCT);
         storeId = data.getString(STORE_ID_PRODUCT);
         phoneOfStore = data.getString(PHONE);
+        avatar = data.getString(AVATAR);
         Log.e("ChatActivity", storeId + "and" + phoneOfStore);
 
 
     }
 
 
-
-    private void showInfoStore( String nameStore) {
-            tvNameShop.setText(ValidateForm.capitalizeFirst(nameStore));
+    private void showInfoStore(String nameStore) {
+        tvNameShop.setText(ValidateForm.capitalizeFirst(nameStore));
 
     }
 
@@ -152,8 +145,7 @@ public class ChatActivity extends AppCompatActivity {
         btnSentMessage.setOnClickListener(v -> {
             String message = edtEnterMessage.getText().toString();
             if (!message.equals("")) {
-                    sendMessage(phoneOfMe, phone, message, store);
-
+                sendMessage(phoneOfMe, phone, message, store);
 
 
             }
@@ -211,7 +203,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 reference.child("name_store").setValue(store);
-                reference.child("avatar").setValue("yy");
+                reference.child("avatar").setValue(avatar);
 
             }
 
@@ -239,7 +231,7 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
-    private void readMessage( String phone) {
+    private void readMessage(String phone) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Chats");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -248,9 +240,9 @@ public class ChatActivity extends AppCompatActivity {
 
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Chat chat = dataSnapshot.getValue(Chat.class);
-                        if (chat.getReceiver().equals(phoneOfMe) && chat.getSender().equals(phone)
-                                || chat.getReceiver().equals(phone) && chat.getSender().equals(phoneOfMe)) {
-                            chatList.add(chat);
+                    if (chat.getReceiver().equals(phoneOfMe) && chat.getSender().equals(phone)
+                            || chat.getReceiver().equals(phone) && chat.getSender().equals(phoneOfMe)) {
+                        chatList.add(chat);
 
 
                     }

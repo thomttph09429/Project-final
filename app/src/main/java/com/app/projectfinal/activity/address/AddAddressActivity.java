@@ -1,21 +1,16 @@
 package com.app.projectfinal.activity.address;
 
 import static com.app.projectfinal.utils.Constant.ADDRESS;
-import static com.app.projectfinal.utils.Constant.CODE_PROVINCE;
 import static com.app.projectfinal.utils.Constant.DISTRICT_NAME;
-import static com.app.projectfinal.utils.Constant.LOGIN;
 import static com.app.projectfinal.utils.Constant.PHONE_NUMBER;
 import static com.app.projectfinal.utils.Constant.PROVINCE_NAME;
-import static com.app.projectfinal.utils.Constant.TOKEN;
 import static com.app.projectfinal.utils.Constant.USER_NAME_SAVE;
 import static com.app.projectfinal.utils.Constant.WARD_NAME;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,12 +26,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
-import com.app.projectfinal.activity.LoginActivity;
-import com.app.projectfinal.data.SharedPrefsSingleton;
-import com.app.projectfinal.utils.Constant;
+import com.app.projectfinal.utils.SharedPrefsSingleton;
 import com.app.projectfinal.utils.ConstantData;
 import com.app.projectfinal.utils.ProgressBarDialog;
-import com.app.projectfinal.utils.ValidateForm;
 import com.app.projectfinal.utils.VolleySingleton;
 
 import org.json.JSONException;

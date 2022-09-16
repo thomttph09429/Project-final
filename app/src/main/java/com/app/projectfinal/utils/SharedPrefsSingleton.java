@@ -1,11 +1,9 @@
-package com.app.projectfinal.data;
+package com.app.projectfinal.utils;
 
 import static com.app.projectfinal.utils.Constant.MY_SHARED_PREFERENCES;
-import static com.app.projectfinal.utils.Constant.TOKEN;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 public class SharedPrefsSingleton {
 
@@ -35,4 +33,10 @@ public class SharedPrefsSingleton {
         return sharedPref.getString(key, "");
 
     }
+    public void deleteAll() {
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.clear();
+        editor.apply();
+    }
+
 }

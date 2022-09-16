@@ -124,47 +124,14 @@
             android:padding="@dimen/_16sdp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <RelativeLayout
-        android:id="@+id/ll_options"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/til_form_pass"
-        android:layout_marginTop="@dimen/_3sdp">
 
-        <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/chb_remember"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:button="@drawable/checkbox_layout"
-            android:gravity="center" />
-
-        <TextView
-            style="@style/SupportText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/chb_remember"
-            android:layout_toEndOf="@+id/chb_remember"
-            android:text="@string/remember" />
-
-        <TextView
-            android:id="@+id/tv_forgot_pass"
-            style="@style/ContainerText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="10dp"
-            android:text="@string/forgot_pass" />
-
-    </RelativeLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_login"
         style="@style/ButtonText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ll_options"
+        android:layout_below="@+id/til_form_pass"
         android:layout_marginStart="@dimen/_8sdp"
         android:layout_marginTop="@dimen/_30sdp"
         android:layout_marginEnd="@dimen/_8sdp"

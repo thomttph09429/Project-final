@@ -3,6 +3,7 @@ package com.app.projectfinal.activity;
 
 import static com.app.projectfinal.activity.MainActivity.storeId;
 import static com.app.projectfinal.utils.Constant.ADD_STORES;
+import static com.app.projectfinal.utils.Constant.AVATAR;
 import static com.app.projectfinal.utils.Constant.BUY_NOW;
 import static com.app.projectfinal.utils.Constant.CATEGORY_NAME;
 import static com.app.projectfinal.utils.Constant.DESCRIPTION_PRODUCT;
@@ -16,7 +17,6 @@ import static com.app.projectfinal.utils.Constant.PRODUCTS;
 import static com.app.projectfinal.utils.Constant.QUANTITY_PRODUCT;
 import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
 import static com.app.projectfinal.utils.Constant.STORE_NAME_PRODUCT;
-import static com.app.projectfinal.utils.Constant.TOKEN;
 import static com.app.projectfinal.utils.Constant.UNIT_NAME;
 
 import androidx.annotation.NonNull;
@@ -26,7 +26,6 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,7 +36,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -49,13 +47,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
-import com.app.projectfinal.adapter.ProductAdapter;
 import com.app.projectfinal.adapter.ProductByShopAdapter;
 import com.app.projectfinal.bottom.ChooseCartFragment;
-import com.app.projectfinal.data.SharedPrefsSingleton;
 import com.app.projectfinal.model.Product;
 import com.app.projectfinal.utils.ConstantData;
-import com.app.projectfinal.utils.ProgressBarDialog;
 import com.app.projectfinal.utils.ValidateForm;
 import com.app.projectfinal.utils.VolleySingleton;
 import com.bumptech.glide.Glide;
@@ -72,10 +67,10 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DetailProductActivity extends AppCompatActivity implements View.OnClickListener {
-    private ImageView ivProduct;
+    private ImageView ivProduct,ivBack;
     private TextView tvName, tvPrice, tvNameShop, tvQuantity, tvCategory, tvDescription;
     private Bundle data;
-    private String productName, price, image1, storeName, categoryName, description, storeIdS, quantity, phone, unitName;
+    private String productName, price, image1, storeName, categoryName, description, storeIdS, quantity, phone, unitName, avatar;
     private RecyclerView rvProductByStoreId;
     private ProductByShopAdapter productByShopAdapter;
     private List<Product> products;
@@ -100,29 +95,7 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
         showProductsByStore();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_detail, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_carts:
-                Intent intent = new Intent(this, CartActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.action_report:
-                Toast.makeText(this, "Báo cáo", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.action_help:
-                Toast.makeText(this, "Hỗ trợ", Toast.LENGTH_SHORT).show();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     private void initActions() {
         products = new ArrayList<>();
@@ -133,6 +106,7 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
         btnBuy.setOnClickListener(this);
         btnAddCart.setOnClickListener(this);
         btnChat.setOnClickListener(this);
+        ivBack.setOnClickListener(this);
 
     }
 
@@ -159,6 +133,7 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
         btnBuy = findViewById(R.id.btnBuy);
         ivAvatar = findViewById(R.id.ivAvatar);
         lnBottom = findViewById(R.id.lnBottom);
+        ivBack= findViewById(R.id.ivBack);
 
     }
 
@@ -451,8 +426,12 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
             case R.id.btnChat:
                 clickChat();
                 break;
+            case R.id.ivBack:
+                finish();
+                break;
         }
     }
+
 
 
 }
