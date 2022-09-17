@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.projectfinal.R;
 import com.app.projectfinal.activity.ChatActivity;
+import com.app.projectfinal.model.Product;
 import com.app.projectfinal.utils.SharedPrefsSingleton;
 import com.app.projectfinal.model.Chat;
 import com.app.projectfinal.model.User;
@@ -26,16 +29,21 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ListChatAdapter extends RecyclerView.Adapter<ListChatAdapter.MyViewHolder> {
+public class ListChatAdapter extends RecyclerView.Adapter<ListChatAdapter.MyViewHolder> implements Filterable {
     private Context context;
     private List<User> userChats;
     private String lastMessages;
+    private FilterListeners filterListeners;
+    private List<User> backup;
 
     public ListChatAdapter(Context context, List<User> userChats) {
         this.context = context;
         this.userChats = userChats;
+        backup = new ArrayList<>(userChats);
+
     }
 
     @NonNull
@@ -48,7 +56,6 @@ public class ListChatAdapter extends RecyclerView.Adapter<ListChatAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull ListChatAdapter.MyViewHolder holder, int position) {
         User userChat = userChats.get(position);
-        Glide.with(context).load(userChat.getAvatar()).error(R.drawable.avatar_empty).into(holder.ivAvatarShop);
         holder.tvNameShop.setText(userChat.getName_store());
         checkLastMessage(userChat.getPhone_number(), holder.tvLastMessage);
 
@@ -103,6 +110,46 @@ public class ListChatAdapter extends RecyclerView.Adapter<ListChatAdapter.MyView
         return userChats.size();
     }
 
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+    Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence keyword) {
+            ArrayList<User> filterCollections = new ArrayList<>();
+
+            if (keyword.toString().equals("")) {
+                filterCollections.addAll(backup);
+
+            } else {
+                for (User user : backup) {
+                    if (user.getName_store().toString().toLowerCase().contains(keyword.toString().toLowerCase()))
+                        filterCollections.add(user);
+                }
+
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filterCollections;
+
+            return results;
+
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+
+            userChats.clear();
+            userChats.addAll((ArrayList<User>) results.values);
+            if (filterListeners != null)
+                filterListeners.filteringFinished(userChats.size());
+            notifyDataSetChanged();
+
+
+        }
+    };
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private ImageView ivAvatarShop;
         private TextView tvNameShop, tvLastMessage;
@@ -114,5 +161,9 @@ public class ListChatAdapter extends RecyclerView.Adapter<ListChatAdapter.MyView
             tvLastMessage = itemView.findViewById(R.id.tvLastMessage);
 
         }
+    }
+
+    public interface FilterListeners {
+        void filteringFinished(int filteredItemsCount);
     }
 }

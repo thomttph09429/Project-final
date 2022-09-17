@@ -69,7 +69,7 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
     private String linkImageUrlFirebase, userId, dateOfBirth, email;
     private StorageReference storageRef;
     private StorageTask uploadTask;
-    private LinearLayout lnAddress, lnNameLogin, lnNumberLogin, lnEmail, lnChangePass, lnPolicy, lnRules;
+    private LinearLayout lnAddress, lnNameLogin, lnNumberLogin, lnEmail, lnChangePass;
     private EditText edtUserLogin, edtEmail, edtDateOfBirth;
     private AppCompatButton btnSaveInfo,btnSingOut;
     private TextView tvNumberLogin;
@@ -111,8 +111,7 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
         lnNumberLogin = findViewById(R.id.lnNumberLogin);
         lnEmail = findViewById(R.id.lnEmail);
         lnChangePass = findViewById(R.id.lnChangePass);
-        lnPolicy = findViewById(R.id.lnPolicy);
-        lnRules = findViewById(R.id.lnRules);
+
         edtDateOfBirth = findViewById(R.id.edtDateOfBirth);
         btnSaveInfo = findViewById(R.id.btnSaveInfo);
         btnSingOut = findViewById(R.id.btnSingOut);

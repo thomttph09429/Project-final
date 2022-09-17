@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +56,7 @@ public class MyProductActivity extends AppCompatActivity {
     private List<Product> products;
     private MyProductAdapter myProductAdapter;
     private TextView tvTotal;
+    private ImageView ivBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,9 @@ public class MyProductActivity extends AppCompatActivity {
         initView();
         initAction();
         getProduct();
+        ivBack.setOnClickListener(v->{
+                finish();
+        });
     }
 
     private void initAction() {
@@ -144,6 +149,8 @@ public class MyProductActivity extends AppCompatActivity {
     private void initView() {
         tvTotal = findViewById(R.id.tvTotal);
         rvMyProduct = findViewById(R.id.rvMyProduct);
+        ivBack = findViewById(R.id.ivBack);
+
     }
 
 

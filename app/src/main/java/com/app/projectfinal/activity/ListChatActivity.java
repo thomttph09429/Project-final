@@ -8,11 +8,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.app.projectfinal.R;
 import com.app.projectfinal.adapter.ListChatAdapter;
+import com.app.projectfinal.fragment.HomeFragment;
 import com.app.projectfinal.utils.SharedPrefsSingleton;
 import com.app.projectfinal.model.ChatList;
 import com.app.projectfinal.model.User;
@@ -33,6 +37,7 @@ public class ListChatActivity extends AppCompatActivity {
     private RecyclerView rvListChat;
     private String phoneOfMe;
     private ImageView ivBack;
+    private EditText edtSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +48,28 @@ public class ListChatActivity extends AppCompatActivity {
         addUser();
         exit();
 
-    }
+        edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                listChatAdapter.getFilter().filter(s.toString().toLowerCase());
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });    }
 
     private void initView() {
         rvListChat = findViewById(R.id.rvListChat);
         ivBack = findViewById(R.id.ivBack);
+        edtSearch = findViewById(R.id.edtSearch);
 
     }
     private  void exit(){

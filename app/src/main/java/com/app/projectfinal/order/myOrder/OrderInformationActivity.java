@@ -29,6 +29,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
+import com.app.projectfinal.activity.ChatActivity;
 import com.app.projectfinal.activity.ViewShopActivity;
 import com.app.projectfinal.adapter.order.myOrder.ItemOrderAdapter;
 import com.app.projectfinal.model.order.DetailOrder;
@@ -50,13 +51,13 @@ import java.util.Map;
 public class OrderInformationActivity extends AppCompatActivity implements View.OnClickListener {
 
     private List<DetailOrder> detailOrders;
-    private String orderId, storeId, storeName;
+    private String orderId, storeId, storeName, phoneStore;
     private TextView tvUserName, tvPhoneNumber, tvAddress, tvNameShop, tvCodeOrder, tvTotalPrice, tvTimeOrder, tvPay, tvComplete, tvCancel;
     private RecyclerView rvListOrder;
     private ItemOrderAdapter mItemOrderAdapter;
     private RelativeLayout rlCancel, rlComplete, rlPay, rlTimeOrder, rlCode;
     private TextView tvStatusPending, tvStatusDelivery, tvStatusComplete, tvStatusCancel, tvViewShop;
-    private AppCompatButton btnCancel, btnProcess;
+    private AppCompatButton btnCancel, btnProcess,btnContact;
     private LinearLayoutCompat lnBottom;
     private ImageView ivBack;
 
@@ -82,6 +83,7 @@ public class OrderInformationActivity extends AppCompatActivity implements View.
         tvComplete = findViewById(R.id.tvComplete);
         tvCancel = findViewById(R.id.tvCancel);
         tvViewShop = findViewById(R.id.tvViewShop);
+        btnContact = findViewById(R.id.btnContact);
 
         rlCancel = findViewById(R.id.rlCancel);
         rlComplete = findViewById(R.id.rlComplete);
@@ -107,6 +109,8 @@ public class OrderInformationActivity extends AppCompatActivity implements View.
         tvViewShop.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
         ivBack.setOnClickListener(this);
+        btnContact.setOnClickListener(this);
+
         detailOrders = new ArrayList<>();
         Bundle bundle = getIntent().getExtras();
         orderId = bundle.getString("id");
@@ -166,6 +170,7 @@ public class OrderInformationActivity extends AppCompatActivity implements View.
     private void getInfor(DetailOrder detailOrder) {
         storeName = detailOrder.getName_store();
         tvNameShop.setText(storeName);
+        phoneStore= detailOrder.getPhone_store();
         tvAddress.setText(detailOrder.getLocation());
         tvPhoneNumber.setText(detailOrder.getCustomerPhone() + "");
         tvUserName.setText(detailOrder.getCustomerName());
@@ -272,8 +277,20 @@ public class OrderInformationActivity extends AppCompatActivity implements View.
             case R.id.tvViewShop:
                 openViewShop();
                 break;
+            case R.id.btnContact:
+                sendMessage();
+                break;
         }
 
+    }
+
+    private void sendMessage() {
+        Intent intent = new Intent(this, ChatActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("phoneOfStore", phoneStore);
+        bundle.putString("storeName", storeName);
+        intent.putExtras(bundle);
+       startActivity(intent);
     }
 
     private void openViewShop() {

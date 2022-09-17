@@ -283,78 +283,9 @@
     </LinearLayout>
 
 
-    <LinearLayout
-        android:id="@+id/lnPolicy"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/lnChangePass"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:background="@drawable/bg_border_0"
-        android:gravity="center"
-        android:padding="@dimen/_5sdp"
-        android:weightSum="10">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:padding="@dimen/_5sdp"
-            android:text="Tiêu chuẩn cộng đồng" />
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="7"
-            android:gravity="bottom|end"
-            android:padding="@dimen/_5sdp" />
-
-        <ImageView
-            android:layout_width="@dimen/_15sdp"
-            android:layout_height="@dimen/_15sdp"
-            android:layout_weight="1"
-            android:src="@drawable/ic_right" />
-
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/lnRules"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/lnPolicy"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:background="@drawable/bg_border_0"
-        android:gravity="center"
-        android:padding="@dimen/_5sdp"
-        android:weightSum="10">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:padding="@dimen/_5sdp"
-            android:text="Điều khoản" />
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="7"
-            android:gravity="bottom|end"
-            android:padding="@dimen/_5sdp" />
-
-        <ImageView
-            android:layout_width="@dimen/_15sdp"
-            android:layout_height="@dimen/_15sdp"
-            android:layout_weight="1"
-            android:src="@drawable/ic_right" />
-
-
-    </LinearLayout>
     <androidx.appcompat.widget.AppCompatButton
-        android:layout_below="@+id/lnRules"
+        android:layout_below="@+id/lnChangePass"
         android:id="@+id/btnSingOut"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_width="match_parent"

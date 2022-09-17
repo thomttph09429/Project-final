@@ -34,11 +34,11 @@
                 android:layout_height="wrap_content">
 
 
-                    <ImageView
-                        android:id="@+id/img_myShop_back"
-                        android:layout_width="@dimen/_25sdp"
-                        android:layout_height="@dimen/_25sdp"
-                        android:src="@drawable/arrow_left" />
+                <ImageView
+                    android:id="@+id/ivBack"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:src="@drawable/arrow_left" />
 
                 <TextView
                     android:id="@+id/text"

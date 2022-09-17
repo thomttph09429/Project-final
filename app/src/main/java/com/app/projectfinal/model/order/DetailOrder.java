@@ -7,7 +7,7 @@ public class DetailOrder {
     private String userId;
     private int status;
     private String note;
-    private String createdAt,createdBy,updatedAt,updatedBy,userName;
+    private String createdAt,createdBy,updatedAt,updatedBy,userName, phone_store;
     private String addressId;
     private String customerName;
     private int customerPhone;
@@ -17,7 +17,7 @@ public class DetailOrder {
     private String store_id;
     private String image_store,name_store;
 
-    public DetailOrder(String id, String code, String userId, int status, String note, String createdAt, String createdBy, String updatedAt, String updatedBy, String userName, String addressId, String customerName, int customerPhone, String location, List<ItemOrder> products, int totalPrice, String store_id, String image_store, String name_store) {
+    public DetailOrder(String id, String code, String userId, int status, String note, String createdAt, String createdBy, String updatedAt, String updatedBy, String userName, String phone_store, String addressId, String customerName, int customerPhone, String location, List<ItemOrder> products, int totalPrice, String store_id, String image_store, String name_store) {
         this.id = id;
         this.code = code;
         this.userId = userId;
@@ -28,6 +28,7 @@ public class DetailOrder {
         this.updatedAt = updatedAt;
         this.updatedBy = updatedBy;
         this.userName = userName;
+        this.phone_store = phone_store;
         this.addressId = addressId;
         this.customerName = customerName;
         this.customerPhone = customerPhone;
@@ -39,6 +40,13 @@ public class DetailOrder {
         this.name_store = name_store;
     }
 
+    public String getPhone_store() {
+        return phone_store;
+    }
+
+    public void setPhone_store(String phone_store) {
+        this.phone_store = phone_store;
+    }
     public String getId() {
         return id;
     }

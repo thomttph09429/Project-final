@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -49,7 +50,7 @@ public class ChangeAddressFragment extends DialogFragment {
     private ChooseAddressAdapter chooseAddressAdapter;
     private ListenerChooseAddress mListenerChooseAddress;
     private OnInputListener mOnInputListener;
-
+    private ImageView ivBack;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +65,7 @@ public class ChangeAddressFragment extends DialogFragment {
             view = inflater.inflate(R.layout.fragment_change_address, container);
             initView();
             initAction();
+            exit();
             chooseAddress();
             getAllMyAddress();
             mListenerChooseAddress = new ListenerChooseAddress() {
@@ -87,7 +89,14 @@ public class ChangeAddressFragment extends DialogFragment {
 
     private void initView() {
         rvAddress = view.findViewById(R.id.rvAddress);
+        ivBack = view.findViewById(R.id.ivBack);
 
+    }
+
+    private void exit(){
+        ivBack.setOnClickListener(v->{
+            dismiss();
+        });
     }
     private void chooseAddress() {
     }

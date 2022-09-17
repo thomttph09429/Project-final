@@ -91,7 +91,7 @@ public class DeliveryConfirmFragment extends Fragment {
                             lnShow.setVisibility(View.VISIBLE);
                             lnHide.setVisibility(View.GONE);
                         }
-                        tvAmountDelivery.setText("Bạn có " + totalOrder + " đơn đag giao");
+                        tvAmountDelivery.setText("Bạn có " + totalOrder + " đơn đang giao");
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject object = jsonArray.getJSONObject(i);
                             totalPrice = object.getInt(TOTAL_PRICE);

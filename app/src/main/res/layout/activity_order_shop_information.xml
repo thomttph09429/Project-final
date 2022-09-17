@@ -67,7 +67,7 @@
                     android:textColor="@color/white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Bạn đã hủy đơn hàng này!"
+                    android:text="Đơn hàng này đã bị hủy!"
                     />
                 <TextView
                     android:visibility="gone"
@@ -85,7 +85,7 @@
                     android:textColor="@color/white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Người gửi đang giao hàng!"
+                    android:text="Đang giao hàng!"
                     />
                 <TextView
                     android:visibility="gone"
@@ -94,7 +94,7 @@
                     android:textColor="@color/white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Đơn hàng đang chờ xác nhận!"
+                    android:text="Đơn hàng đang chờ bạn xác nhận!"
                     />
             </RelativeLayout>
 
@@ -367,6 +367,7 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnContact"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/bottom"

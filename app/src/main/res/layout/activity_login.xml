@@ -34,26 +34,13 @@
         android:layout_marginTop="@dimen/_3sdp"
         android:text="@string/content_login" />
 
-    <com.omega_r.libs.OmegaCenterIconButton
-        android:id="@+id/btn_login_with_google"
-        style="@style/ContentText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_content_login"
-        android:layout_marginTop="@dimen/_23sdp"
-        android:background="@drawable/bg_stroke_border_5"
-        android:drawableStart="@drawable/google"
-        android:gravity="center"
-        android:padding="@dimen/_3sdp"
-        android:text="@string/login_with_gg"
-        android:textAlignment="center"
-        android:textAllCaps="false" />
+
 
     <LinearLayout
         android:id="@+id/ll_view_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_login_with_google"
+        android:layout_below="@+id/tv_content_login"
         android:layout_marginTop="@dimen/_6sdp"
         android:layout_marginBottom="@dimen/_4sdp">
 

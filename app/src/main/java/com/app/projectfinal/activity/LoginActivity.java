@@ -46,7 +46,6 @@ import java.io.UnsupportedEncodingException;
 public class LoginActivity extends AppCompatActivity {
 
     private TextView tv_register;
-    private AppCompatButton btn_login_with_google;
     private FirebaseAuth fAuth;
     private FirebaseFirestore fStore;
     private GoogleSignInOptions gso;
@@ -148,7 +147,6 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void initView() {
         tv_register = (TextView) findViewById(R.id.tv_register);
-        btn_login_with_google = (AppCompatButton) findViewById(R.id.btn_login_with_google);
         btn_login = findViewById(R.id.btn_login);
         edt_acc = findViewById(R.id.edt_acc);
         edt_pass = findViewById(R.id.edt_pass);

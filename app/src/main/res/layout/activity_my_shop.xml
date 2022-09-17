@@ -42,7 +42,6 @@
                     android:textStyle="bold" />
 
 
-
                 <ImageView
                     android:id="@+id/ivChat"
                     android:layout_width="@dimen/_20sdp"
@@ -119,15 +118,14 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_30sdp"
             android:background="@color/greenLight"
-            android:orientation="horizontal"
-          >
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center"
-                android:layout_marginRight="@dimen/_5sdp"
                 android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
                 android:background="@drawable/order"
                 android:paddingLeft="@dimen/_5sdp" />
 
@@ -147,8 +145,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:gravity="left"
-                android:textSize="@dimen/_10sdp"
                 android:text="Lịch sử đơn hàng"
+                android:textSize="@dimen/_10sdp"
                 android:textStyle="italic" />
         </LinearLayout>
 
@@ -161,13 +159,10 @@
             <LinearLayout
                 android:id="@+id/lnWaitConfirm"
                 android:layout_width="0dp"
-                android:background="@drawable/bg_border_green_light_20"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/bg_border_green_light_20"
                 android:orientation="vertical">
-
-
-
 
 
                 <RelativeLayout
@@ -176,12 +171,13 @@
                     android:layout_gravity="center_horizontal">
 
                     <ImageButton
-                        android:layout_marginTop="@dimen/_10sdp"
                         android:id="@+id/imgBtn_user_waitCheck"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_10sdp"
                         android:background="@drawable/boxtime" />
+
                     <RelativeLayout
                         android:id="@+id/rlTotalPending"
                         android:layout_width="wrap_content"
@@ -224,25 +220,24 @@
 
             <LinearLayout
                 android:id="@+id/lnDelivery"
-                android:background="@drawable/bg_border_green_light_20"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/bg_border_green_light_20"
                 android:orientation="vertical">
-
-
 
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal">
+
                     <ImageButton
-                        android:layout_marginTop="@dimen/_10sdp"
                         android:id="@+id/imgBtn_user_waitShip"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_10sdp"
                         android:background="@drawable/boxship" />
 
                     <RelativeLayout
@@ -283,6 +278,15 @@
 
             </LinearLayout>
 
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="8dp">
+
             <LinearLayout
                 android:id="@+id/lnComplete"
                 android:layout_width="0dp"
@@ -292,21 +296,17 @@
                 android:orientation="vertical">
 
 
-
-
-
-
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal">
 
                     <ImageButton
-                        android:layout_marginTop="@dimen/_10sdp"
                         android:id="@+id/imgBtn_user_goShip"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_10sdp"
                         android:background="@drawable/goship" />
 
                     <RelativeLayout
@@ -334,6 +334,7 @@
                     </RelativeLayout>
 
                 </RelativeLayout>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -349,12 +350,11 @@
 
             <LinearLayout
                 android:id="@+id/lnCancel"
-                android:background="@drawable/bg_border_green_light_20"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/bg_border_green_light_20"
                 android:orientation="vertical">
-
 
 
                 <RelativeLayout
@@ -363,13 +363,12 @@
                     android:layout_gravity="center_horizontal">
 
                     <ImageButton
-                        android:layout_marginTop="@dimen/_10sdp"
                         android:id="@+id/imgBtn_user_refund"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_10sdp"
                         android:background="@drawable/refund" />
-
 
 
                     <RelativeLayout
@@ -386,20 +385,18 @@
                             android:background="@drawable/bg_circle" />
 
                         <TextView
-                            android:gravity="center_horizontal"
                             android:id="@+id/tvTotalCancel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_18sdp"
                             android:layout_marginTop="@dimen/_10sdp"
+                            android:gravity="center_horizontal"
                             android:text="6"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_8sdp" />
                     </RelativeLayout>
 
                 </RelativeLayout>
-
-
 
 
                 <TextView
@@ -429,16 +426,15 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_30sdp"
             android:background="@color/greenLight"
-            android:orientation="horizontal"
-         >
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_marginRight="@dimen/_5sdp"
-                android:background="@drawable/tienich"
-                android:layout_marginLeft="@dimen/_5sdp" />
+                android:background="@drawable/tienich" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -495,40 +491,6 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/icon_taichinh" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="3dp"
-                    android:text="Tài Chính"
-                    android:textColor="@color/black"
-                    android:textSize="11dp"
-                    android:textStyle="normal" />
-
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/greenLight_20"
-            android:orientation="horizontal"
-            android:paddingTop="8dp">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <ImageButton
-                    android:id="@+id/imgBtn_myShop_thongKe"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="center"
                     android:background="@drawable/icon_hieuquabanhang" />
 
                 <TextView
@@ -541,33 +503,10 @@
                     android:textColor="@color/black"
                     android:textSize="11dp"
                     android:textStyle="normal" />
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <ImageButton
-                    android:id="@+id/imgBtn_myShop_huongDan"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/icon_huongdan" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="3dp"
-                    android:text="Hướng dẫn"
-                    android:textColor="@color/black"
-                    android:textSize="11dp"
-                    android:textStyle="normal" />
             </LinearLayout>
         </LinearLayout>
+
     </LinearLayout>
 
 
@@ -603,7 +542,6 @@
                 android:textSize="@dimen/_10sdp"
                 android:textStyle="bold" />
         </LinearLayout>
-
 
 
         <LinearLayout

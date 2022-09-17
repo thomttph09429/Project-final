@@ -9,7 +9,7 @@
         android:layout_height="@dimen/_42sdp"
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_10sdp"
-        android:src="@drawable/avatar_empty" />
+        android:src="@drawable/logo_not_text" />
 
     <TextView
         android:id="@+id/tvNameShop"

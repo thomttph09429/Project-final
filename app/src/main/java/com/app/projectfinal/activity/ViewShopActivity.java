@@ -63,7 +63,7 @@ public class ViewShopActivity extends AppCompatActivity  implements ProductAdapt
     private RecyclerView rvAllProduct;
     private List<Product> products;
     private ProductAdapter productAdapter;
-    private String storeIds, storeNames;
+    private String storeIds, storeNames, phone;
     private NestedScrollView nestedScrollView;
     private int page = 1;
     private TextView tvUserName,tvDescription;
@@ -91,6 +91,7 @@ public class ViewShopActivity extends AppCompatActivity  implements ProductAdapt
 
         }
         initAction();
+
         getInfoShop();
         scrollPage();
         edtSearch.addTextChangedListener(new TextWatcher() {
@@ -232,6 +233,8 @@ public class ViewShopActivity extends AppCompatActivity  implements ProductAdapt
                         String image1 = data.getString("image1");
                         String image2 = data.getString("image2");
                         String description = data.getString("description");
+                         phone = data.getString("phone");
+
                         tvDescription.setText(description);
 
                         Glide.with(getApplicationContext()).load(image1).centerCrop().error(R.drawable.avatar_empty).into(ivAvatar);

@@ -61,13 +61,11 @@ public class ChatActivity extends AppCompatActivity {
             showInfoStore(getStoreName);
             readMessage(getPhoneOfStore);
             clickSendMessage(getPhoneOfStore, getStoreName);
-            Toast.makeText(this, "getPhoneOfStore", Toast.LENGTH_LONG).show();
 
         } else {
             showInfoStore(storeName);
             readMessage(phoneOfStore);
             clickSendMessage(phoneOfStore, storeName);
-            Toast.makeText(this, "PhoneOfStore", Toast.LENGTH_LONG).show();
 
         }
 
@@ -94,6 +92,27 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
+
+
+    /**
+     * receive information of store from user click "chat" at DetailProductActivity
+     * pass data from DetailProductActivity
+     * <pre>
+     *     author:ThomTT1
+     *     date: 08/03/2022
+     * </pre>
+     */
+    private void receiveInfoStore() {
+        Bundle data = getIntent().getExtras();
+        storeName = data.getString(STORE_NAME_PRODUCT);
+        storeId = data.getString(STORE_ID_PRODUCT);
+        phoneOfStore = data.getString(PHONE);
+        avatar = data.getString(AVATAR);
+        Log.e("ChatActivity", storeId + "and" + phoneOfStore);
+
+
+    }
+
     private void initAction() {
         chatList = new ArrayList<>();
         phoneOfMe = SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(PHONE);
@@ -114,24 +133,6 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * receive information of store from user click "chat" at DetailProductActivity
-     * pass data from DetailProductActivity
-     * <pre>
-     *     author:ThomTT1
-     *     date: 08/03/2022
-     * </pre>
-     */
-    private void receiveInfoStore() {
-        Bundle data = getIntent().getExtras();
-        storeName = data.getString(STORE_NAME_PRODUCT);
-        storeId = data.getString(STORE_ID_PRODUCT);
-        phoneOfStore = data.getString(PHONE);
-        avatar = data.getString(AVATAR);
-        Log.e("ChatActivity", storeId + "and" + phoneOfStore);
-
-
-    }
 
 
     private void showInfoStore(String nameStore) {
@@ -203,7 +204,6 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 reference.child("name_store").setValue(store);
-                reference.child("avatar").setValue(avatar);
 
             }
 
@@ -219,7 +219,6 @@ public class ChatActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String userName = SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(USER_NAME_SAVE);
                 references.child("name_store").setValue(userName);
-                references.child("avatar").setValue("yy");
 
             }
 

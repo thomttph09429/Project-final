@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -48,7 +49,7 @@ public class DistrictFragment extends DialogFragment {
     private List<Districts> districtsList;
     private int codeProvince;
     private  String provinceName;
-
+    private ImageView ivBack;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +64,8 @@ public class DistrictFragment extends DialogFragment {
             view = inflater.inflate(R.layout.fragment_district, container);
             initView();
             initAction();
+            exit();
+
             receiveCodeProvince();
             getDistrict();
 
@@ -87,9 +90,14 @@ public class DistrictFragment extends DialogFragment {
 
     private void initView() {
         rvDistrict = view.findViewById(R.id.rvDistrict);
+        ivBack = view.findViewById(R.id.ivBack);
 
     }
-
+    private void exit(){
+        ivBack.setOnClickListener(v->{
+            dismiss();
+        });
+    }
     private void getDistrict() {
 
         String url = "https://provinces.open-api.vn/api/p/" + codeProvince + "?depth=2";

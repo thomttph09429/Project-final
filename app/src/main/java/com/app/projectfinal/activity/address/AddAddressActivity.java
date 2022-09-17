@@ -44,6 +44,7 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
     private Bundle bundle = null;
     private AppCompatButton btnSaveAddress;
     private EditText edtEnterAddress;
+    private  ImageView ivBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,7 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_add_address);
         initView();
         initAction();
+        exit();
         getAddress();
         saveAddress();
     }
@@ -126,6 +128,8 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
         tvAddress = findViewById(R.id.tvAddress);
         btnSaveAddress = findViewById(R.id.btnSaveAddress);
         edtEnterAddress = findViewById(R.id.edtEnterAddress);
+        ivBack = findViewById(R.id.ivBack);
+
     }
 
     private void getAddress() {
@@ -139,6 +143,11 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
         }
 
 
+    }
+    private  void  exit(){
+        ivBack.setOnClickListener(v->{
+            finish();
+        });
     }
 
     @Override

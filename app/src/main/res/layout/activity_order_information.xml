@@ -67,7 +67,7 @@
                     android:textColor="@color/white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Bạn đã hủy đơn hàng này!"
+                    android:text="Đơn hàng này đã bị hủy!"
                     />
                 <TextView
                     android:visibility="gone"

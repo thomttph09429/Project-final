@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -41,6 +42,7 @@ public class ProvinceFragment extends DialogFragment {
     private ProvinceAdapter provinceAdapter;
     private RecyclerView rvProvince;
     private List<Province> provinces;
+    private ImageView ivBack;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,7 @@ public class ProvinceFragment extends DialogFragment {
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_province, container);
             initView();
+            exit();
             initAction();
             getProvince();
 
@@ -73,6 +76,13 @@ public class ProvinceFragment extends DialogFragment {
 
     private void initView() {
         rvProvince = view.findViewById(R.id.rvProvince);
+        ivBack = view.findViewById(R.id.ivBack);
+
+    }
+    private void exit(){
+        ivBack.setOnClickListener(v->{
+            dismiss();
+        });
     }
 
     private void getProvince() {
