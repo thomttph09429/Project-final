@@ -108,7 +108,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvGetResutl"
-            android:layout_marginTop="@dimen/_30sdp">
+            android:layout_marginTop="@dimen/_15sdp">
 
             <FrameLayout
                 android:id="@+id/relative_chart"
@@ -149,14 +149,12 @@
         </RelativeLayout>
 
 
-
-
         <RelativeLayout
-            android:layout_marginTop="@dimen/_10sdp"
             android:id="@+id/rl1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lmn">
+            android:layout_below="@+id/lmn"
+            android:layout_marginTop="@dimen/_10sdp">
 
             <TextView
                 android:id="@+id/tv1"
@@ -168,12 +166,13 @@
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"
                 android:layout_alignParentEnd="true"
-                android:layout_marginRight="@dimen/_130sdp"
+                android:layout_marginRight="@dimen/_20sdp"
                 android:src="@color/color_1" />
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/rl2"
+            android:layout_marginTop="@dimen/_6sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rl1">
@@ -188,12 +187,13 @@
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"
                 android:layout_alignParentEnd="true"
-                android:layout_marginRight="@dimen/_130sdp"
+                android:layout_marginRight="@dimen/_20sdp"
                 android:src="@color/color_2" />
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/rl3"
+            android:layout_marginTop="@dimen/_6sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rl2">
@@ -208,12 +208,13 @@
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"
                 android:layout_alignParentEnd="true"
-                android:layout_marginRight="@dimen/_130sdp"
+                android:layout_marginRight="@dimen/_20sdp"
                 android:src="@color/color_3" />
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/rl4"
+            android:layout_marginTop="@dimen/_6sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rl3">
@@ -228,11 +229,12 @@
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"
                 android:layout_alignParentEnd="true"
-                android:layout_marginRight="@dimen/_130sdp"
+                android:layout_marginRight="@dimen/_20sdp"
                 android:src="@color/color_4" />
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/rl5"
+            android:layout_marginTop="@dimen/_6sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rl4">
@@ -247,10 +249,11 @@
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"
                 android:layout_alignParentEnd="true"
-                android:layout_marginRight="@dimen/_130sdp"
+                android:layout_marginRight="@dimen/_20sdp"
                 android:src="@color/color_5" />
         </RelativeLayout>
         <RelativeLayout
+            android:layout_marginTop="@dimen/_6sdp"
             android:id="@+id/rl6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -266,11 +269,12 @@
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"
                 android:layout_alignParentEnd="true"
-                android:layout_marginRight="@dimen/_130sdp"
+                android:layout_marginRight="@dimen/_20sdp"
                 android:src="@color/color_6" />
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/rl7"
+            android:layout_marginTop="@dimen/_6sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rl6">
@@ -285,11 +289,12 @@
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"
                 android:layout_alignParentEnd="true"
-                android:layout_marginRight="@dimen/_130sdp"
+                android:layout_marginRight="@dimen/_20sdp"
                 android:src="@color/color_7" />
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/rl8"
+            android:layout_marginTop="@dimen/_6sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rl7">
@@ -304,11 +309,12 @@
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"
                 android:layout_alignParentEnd="true"
-                android:layout_marginRight="@dimen/_130sdp"
+                android:layout_marginRight="@dimen/_20sdp"
                 android:src="@color/color_8" />
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/rl9"
+            android:layout_marginTop="@dimen/_6sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rl8">
@@ -323,7 +329,7 @@
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"
                 android:layout_alignParentEnd="true"
-                android:layout_marginRight="@dimen/_130sdp"
+                android:layout_marginRight="@dimen/_20sdp"
                 android:src="@color/color_9" />
         </RelativeLayout>
 
