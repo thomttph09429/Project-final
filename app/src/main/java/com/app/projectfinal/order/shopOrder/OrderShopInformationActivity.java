@@ -46,11 +46,11 @@ public class OrderShopInformationActivity extends AppCompatActivity implements V
 
     private List<DetailOrder> detailOrders;
     private String orderId;
-    private TextView tvUserName, tvPhoneNumber, tvAddress, tvNameShop, tvCodeOrder, tvTotalPrice, tvTimeOrder, tvPay, tvComplete, tvCancel;
+    private TextView tvUserName, tvPhoneNumber, tvAddress, tvCodeOrder, tvTotalPrice, tvTimeOrder, tvPay, tvComplete, tvCancel;
     private RecyclerView rvListOrder;
     private ItemOrderAdapter mItemOrderAdapter;
     private RelativeLayout rlCancel, rlComplete, rlPay, rlTimeOrder, rlCode;
-    private TextView tvStatusPending, tvStatusDelivery, tvStatusComplete, tvStatusCancel;
+    private TextView tvStatusPending, tvStatusDelivery, tvStatusComplete, tvNote, tvStatusCancel;
     private AppCompatButton btnCancel, btnProcess;
     private LinearLayoutCompat lnBottom;
     private ImageView ivBack;
@@ -68,7 +68,6 @@ public class OrderShopInformationActivity extends AppCompatActivity implements V
         tvAddress = findViewById(R.id.tvAddress);
         tvPhoneNumber = findViewById(R.id.tvPhoneNumber);
         tvUserName = findViewById(R.id.tvUserName);
-        tvNameShop = findViewById(R.id.tvNameShop);
         rvListOrder = findViewById(R.id.rvListOrder);
         tvTotalPrice = findViewById(R.id.tvTotalPrice);
         tvCodeOrder = findViewById(R.id.tvCodeOrder);
@@ -91,6 +90,7 @@ public class OrderShopInformationActivity extends AppCompatActivity implements V
         btnProcess = findViewById(R.id.btnProcess);
         lnBottom = findViewById(R.id.lnBottom);
         ivBack = findViewById(R.id.ivBack);
+        tvNote = findViewById(R.id.tvNote);
 
     }
 
@@ -157,7 +157,6 @@ public class OrderShopInformationActivity extends AppCompatActivity implements V
 
 
     private void getInfor(DetailOrder detailOrder) {
-        tvNameShop.setText(detailOrder.getName_store());
         tvAddress.setText(detailOrder.getLocation());
         tvPhoneNumber.setText(detailOrder.getCustomerPhone() + "");
         tvUserName.setText(detailOrder.getCustomerName());
@@ -168,6 +167,8 @@ public class OrderShopInformationActivity extends AppCompatActivity implements V
         tvPay.setText(detailOrder.getUpdatedAt());
         tvComplete.setText(detailOrder.getUpdatedAt());
         tvCancel.setText(detailOrder.getUpdatedAt());
+            tvNote.setText("Ghi chú: "+detailOrder.getNote());
+
         if (detailOrder.getStatus() == 0) {
             rlCancel.setVisibility(View.VISIBLE);
             tvStatusCancel.setVisibility(View.VISIBLE);
@@ -180,6 +181,7 @@ public class OrderShopInformationActivity extends AppCompatActivity implements V
 
         } else if (detailOrder.getStatus() == 2) {
             tvStatusDelivery.setVisibility(View.VISIBLE);
+            btnCancel.setVisibility(View.VISIBLE);
 
         } else {
             rlComplete.setVisibility(View.VISIBLE);

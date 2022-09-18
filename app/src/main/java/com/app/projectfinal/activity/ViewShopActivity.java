@@ -229,7 +229,7 @@ public class ViewShopActivity extends AppCompatActivity  implements ProductAdapt
                 if (response != null) {
                     try {
                         JSONObject jsonObject = response.getJSONObject("data");
-                        JSONObject data = jsonObject.getJSONObject("user");
+                        JSONObject data = jsonObject.getJSONObject("store");
                         String image1 = data.getString("image1");
                         String image2 = data.getString("image2");
                         String description = data.getString("description");

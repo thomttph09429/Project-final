@@ -70,6 +70,7 @@ public class OrderActivity extends AppCompatActivity implements ChangeAddressFra
     private String totalAmount, addressId;
     private AppCompatButton btnBuy;
     private RelativeLayout rlNotAddress;
+    private ImageView ivBack;
 
 
     @Override
@@ -92,8 +93,15 @@ public class OrderActivity extends AppCompatActivity implements ChangeAddressFra
         rvPay.setLayoutManager(layoutManager);
         buyAdapter = new ChooseProductToBuyAdapter(cartListChecked, this);
         rvPay.setAdapter(buyAdapter);
-        clickOrderProducts();
+        btnBuy.setOnClickListener(v -> {
+            if (!tvAddress.getText().toString().equals("")) {
+                clickOrderProducts();
 
+            }
+        });
+        ivBack.setOnClickListener(v -> {
+            finish();
+        });
     }
 
 
@@ -108,11 +116,12 @@ public class OrderActivity extends AppCompatActivity implements ChangeAddressFra
         tvNote = findViewById(R.id.tvNote);
         tvChangeAddress = findViewById(R.id.tvChangeAddress);
         rlNotAddress = findViewById(R.id.rlNotAddress);
+        ivBack = findViewById(R.id.ivBack);
 
     }
 
-   private void clickUpdateAddress() {
-        rlNotAddress.setOnClickListener(v->{
+    private void clickUpdateAddress() {
+        rlNotAddress.setOnClickListener(v -> {
             startActivity(new Intent(this, ProfileSettingActivity.class));
 
         });
@@ -120,61 +129,59 @@ public class OrderActivity extends AppCompatActivity implements ChangeAddressFra
     }
 
     private void clickOrderProducts() {
-        btnBuy.setOnClickListener(v -> {
-            JSONArray array = new JSONArray();
-            JSONObject object = new JSONObject();
 
-            try {
-                for (int i = 0; i < cartListChecked.size(); i++) {
-                    JSONObject obj = new JSONObject();
-                    obj.put(ID_PRODUCT, cartListChecked.get(i).getIdProduct());
-                    obj.put(STORE_ID_PRODUCT, cartListChecked.get(i).getIdShop());
-                    obj.put(QUANTITY_PRODUCT, cartListChecked.get(i).getAmount());
-                    obj.put(PRICE_PRODUCT, ValidateForm.getPriceToInt(cartListChecked.get(i).getPrice()));
-                    array.put(obj);
-                }
-
-                object.put("products", array);
-                object.put("userId", ConstantData.getUserId(this));
-                object.put("addressId", addressId);
-                object.put("note", tvNote.getText().toString().trim());
-                Log.e("address", object + "");
-
-
-            } catch (JSONException e) {
-                e.printStackTrace();
+        JSONArray array = new JSONArray();
+        JSONObject object = new JSONObject();
+        try {
+            for (int i = 0; i < cartListChecked.size(); i++) {
+                JSONObject obj = new JSONObject();
+                obj.put(ID_PRODUCT, cartListChecked.get(i).getIdProduct());
+                obj.put(STORE_ID_PRODUCT, cartListChecked.get(i).getIdShop());
+                obj.put(QUANTITY_PRODUCT, cartListChecked.get(i).getAmount());
+                obj.put(PRICE_PRODUCT, ValidateForm.getPriceToInt(cartListChecked.get(i).getPrice()));
+                array.put(obj);
             }
 
-
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, ORDER, object, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    showToast("Đơn hàng đã được đặt" + "", R.drawable.ic_mark);
-                    Intent intent = new Intent(OrderActivity.this, MyOrderActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("pos", 0);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                    finish();
+            object.put("products", array);
+            object.put("userId", ConstantData.getUserId(this));
+            object.put("addressId", addressId);
+            object.put("note", tvNote.getText().toString().trim());
 
 
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(OrderActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-                }
-            }) {
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    HashMap<String, String> headers = new HashMap<>();
-                    headers.put("Authorization", ConstantData.getToken(getApplicationContext()));
-                    return headers;
-                }
-            };
-            VolleySingleton.getInstance(OrderActivity.this).getRequestQueue().add(jsonObjectRequest);
-        });
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, ORDER, object, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                showToast("Đơn hàng đã được đặt" + "", R.drawable.ic_mark);
+                Intent intent = new Intent(OrderActivity.this, MyOrderActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("pos", 0);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                finish();
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(OrderActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", ConstantData.getToken(getApplicationContext()));
+                return headers;
+            }
+        };
+        VolleySingleton.getInstance(OrderActivity.this).getRequestQueue().add(jsonObjectRequest);
+
     }
 
     private void initAction() {

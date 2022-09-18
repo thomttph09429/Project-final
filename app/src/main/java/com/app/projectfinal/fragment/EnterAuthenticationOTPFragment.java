@@ -46,6 +46,7 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.concurrent.TimeUnit;
 
 public class EnterAuthenticationOTPFragment extends DialogFragment {
@@ -236,7 +237,20 @@ public class EnterAuthenticationOTPFragment extends DialogFragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), "" + error.toString(), Toast.LENGTH_LONG).show();
+                try {
+                    String responseBody = new String(error.networkResponse.data, "utf-8");
+                    JSONObject data = new JSONObject(responseBody);
+                    JSONObject errors = data.getJSONObject("error");
+                    String message = errors.getString("message");
+                    Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), error.toString(), Toast.LENGTH_LONG).show();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
                 ProgressBarDialog.getInstance(getContext()).closeDialog();
             }
         });
@@ -258,15 +272,13 @@ public class EnterAuthenticationOTPFragment extends DialogFragment {
             //below line is used for getting getting credentials from our verification id and code.
             if (edtEnterOTP.getText().toString().isEmpty()) {
                 Toast.makeText(getContext(), "Vui lòng nhập mã!", Toast.LENGTH_LONG).show();
-            }
-//            else if (!edtEnterOTP.getText().toString().trim().equals(codeId)) {
-//                Toast.makeText(getContext(), "Bạn đã nhập sai mã!", Toast.LENGTH_LONG).show();
-//
-//            }
-            else {
+            } else if (!edtEnterOTP.getText().toString().trim().equals(codeId)) {
+                Toast.makeText(getContext(), "Bạn đã nhập sai mã!", Toast.LENGTH_LONG).show();
+
+            } else {
                 ProgressBarDialog.getInstance(getContext()).showDialog("Đợi một lát", getContext());
                 registerServer(phoneNumber, pass, ValidateForm.capitalizeFirst(name));
-                Log.e("heheheeee", phoneNumber + ""+pass+""+name+"");
+                Log.e("heheheeee", phoneNumber + "" + pass + "" + name + "");
 
             }
 

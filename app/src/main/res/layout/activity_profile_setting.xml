@@ -41,17 +41,17 @@
                     android:textSize="@dimen/_18sdp"
                     android:textStyle="bold" />
 
-                                <androidx.appcompat.widget.AppCompatButton
-                                    android:id="@+id/btnSaveInfo"
-                                    android:layout_width="@dimen/_50sdp"
-                                    android:layout_height="@dimen/_25sdp"
-                                    android:layout_gravity="end"
-                                    android:layout_marginLeft="@dimen/_20sdp"
-                                    android:background="@drawable/bg_boder_20_green"
-                                    android:text="Lưu"
-                                    android:textAllCaps="false"
-                                    android:textColor="@color/color_main"
-                                    android:textSize="@dimen/_10sdp" />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnSaveInfo"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_gravity="end"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:background="@drawable/bg_boder_20_green"
+                    android:text="Lưu"
+                    android:textAllCaps="false"
+                    android:textColor="@color/color_main"
+                    android:textSize="@dimen/_10sdp" />
 
 
             </LinearLayout>
@@ -283,17 +283,15 @@
     </LinearLayout>
 
 
-
     <androidx.appcompat.widget.AppCompatButton
-        android:layout_below="@+id/lnChangePass"
         android:id="@+id/btnSingOut"
-        android:layout_marginTop="@dimen/_10sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Đăng xuất"
-        android:textColor="@color/white"
-        android:textAllCaps="false"
+        android:layout_below="@+id/lnChangePass"
+        android:layout_marginTop="@dimen/_10sdp"
         android:background="@drawable/bg_border_40"
-        />
+        android:text="Đăng xuất"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
 
 </RelativeLayout>

@@ -162,32 +162,16 @@
 
             <RelativeLayout
                 android:id="@+id/middle"
-                android:padding="@dimen/_10sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rlAddress">
+                android:layout_below="@+id/rlAddress"
+                android:padding="@dimen/_10sdp">
 
-                <TextView
-                    android:id="@+id/tvNameShop"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cửa hàng nông sản"
-                    android:textColor="@color/black_94"
-                    android:textSize="@dimen/_13sdp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvViewShop"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:text="Xem shop" />
 
                 <View
                     android:id="@+id/ivView"
                     android:layout_width="match_parent"
                     android:layout_height="0.01dp"
-                    android:layout_below="@+id/tvViewShop"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:background="@color/labelGrayGreenBG" />
@@ -201,6 +185,7 @@
 
 
                 <TextView
+                    android:id="@+id/tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/rvListOrder"
@@ -225,17 +210,25 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:textColor="@color/red"
                         android:id="@+id/tvTotalPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="188.99"
+                        android:textColor="@color/red"
                         android:textSize="@dimen/_13sdp"
                         android:textStyle="bold" />
 
 
                 </LinearLayout>
 
+                <TextView
+                    android:id="@+id/tvNote"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv"
+                    android:text="Ghi chú:"
+                    android:textSize="@dimen/_11sdp" />
             </RelativeLayout>
 
             <RelativeLayout

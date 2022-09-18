@@ -35,7 +35,6 @@
         android:text="@string/content_login" />
 
 
-
     <LinearLayout
         android:id="@+id/ll_view_margin"
         android:layout_width="match_parent"
@@ -56,8 +55,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:textColor="@color/grayLight"
-            android:text="@string/or" />
+            android:text="@string/or"
+            android:textColor="@color/grayLight" />
 
         <View
             android:layout_width="0dp"
@@ -75,8 +74,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ll_view_margin"
-        app:boxStrokeColor="@color/gray"
         android:textColorHint="@color/gray"
+        app:boxStrokeColor="@color/gray"
         app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -95,8 +94,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/til_form_acc"
         android:layout_marginTop="@dimen/_15sdp"
-        app:boxStrokeColor="@color/gray"
         android:textColorHint="@color/gray"
+        app:boxStrokeColor="@color/gray"
         app:endIconCheckable="true"
         app:endIconMode="password_toggle"
         app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium">
@@ -111,7 +110,13 @@
             android:padding="@dimen/_16sdp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-
+    <TextView
+        android:id="@+id/tvFogetPass"
+        android:layout_below="@+id/til_form_pass"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_height="wrap_content"
+        android:text="  Quên mật khẩu" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_login"

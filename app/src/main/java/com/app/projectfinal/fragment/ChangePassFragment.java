@@ -44,7 +44,7 @@ public class ChangePassFragment extends DialogFragment {
     private View view;
     private EditText edtPass, edtRePass;
     private AppCompatButton btnChangePass;
-private ImageView iVBack;
+private ImageView ivBack;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,7 +60,7 @@ private ImageView iVBack;
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_change_pass, container);
             initView();
-            iVBack.setOnClickListener(v->{
+            ivBack.setOnClickListener(v->{
                 dismiss();
             });
             changePass();
@@ -88,7 +88,7 @@ private ImageView iVBack;
         edtPass = view.findViewById(R.id.edtPass);
         edtRePass = view.findViewById(R.id.edtRePass);
         btnChangePass = view.findViewById(R.id.btnChangePass);
-        iVBack = view.findViewById(R.id.ivBack);
+        ivBack = view.findViewById(R.id.ivBack);
 
     }
 

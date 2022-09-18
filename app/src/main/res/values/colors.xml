@@ -37,4 +37,17 @@
     <color name="border_item">#CCE59D</color>
     <color name="black_94">#F018273A</color>
 
+
+    <color name="color_1">#F44336</color>
+    <color name="color_2">#FFEB3B</color>
+    <color name="color_3">#9C27B0</color>
+    <color name="color_4">#673AB7</color>
+    <color name="color_5">#3F51B5</color>
+    <color name="color_6">#009688</color>
+    <color name="color_7">#8BC34A</color>
+    <color name="color_8">#FF5722</color>
+    <color name="color_9">#F018273A</color>
+
+
+
 </resources>

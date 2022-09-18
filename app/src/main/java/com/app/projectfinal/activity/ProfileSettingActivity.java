@@ -311,6 +311,7 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
                     public void onClick(DialogInterface dialog, int id) {
                    SharedPrefsSingleton.getInstance(getApplicationContext()).deleteAll();
                    startActivity(new Intent(ProfileSettingActivity.this,LoginActivity.class));
+                   finish();
                     }
                 });
 

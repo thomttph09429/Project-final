@@ -356,7 +356,7 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
                 if (response != null) {
                     try {
                         JSONObject jsonObject = response.getJSONObject("data");
-                        JSONObject data = jsonObject.getJSONObject("user");
+                        JSONObject data = jsonObject.getJSONObject("store");
                         String avatar = data.getString("image1");
                         Glide.with(getApplicationContext()).load(avatar).error(R.drawable.ic_image_error).into(ivAvatar);
 

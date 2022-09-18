@@ -44,7 +44,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyShopActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView tvStoreName, tvViewShop, tvHistory;
-    private LinearLayout lnStartSell, lnContact, lnMyProduct, lnShopSetting, lnWaitConfirm, lnDelivery, lnComplete, lnCancel, lnViewShop;
+    private LinearLayout lnStartSell,lnStatistical, lnContact, lnMyProduct, lnShopSetting, lnWaitConfirm, lnDelivery, lnComplete, lnCancel, lnViewShop;
     public static String storeName, avatar;
     public static String storeId;
     private RelativeLayout rlTotalPending, rlTotalProcess;
@@ -77,6 +77,7 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
         lnContact.setOnClickListener(this);
         ivBack.setOnClickListener(this);
         ivChat.setOnClickListener(this);
+        lnStatistical.setOnClickListener(this);
 
     }
 
@@ -102,6 +103,7 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
         tvTotalPending = findViewById(R.id.tvTotalPending);
         lnContact = findViewById(R.id.lnContact);
         ivChat = findViewById(R.id.ivChat);
+        lnStatistical = findViewById(R.id.lnStatistical);
 
 
     }
@@ -151,7 +153,7 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
                 if (response != null) {
                     try {
                         JSONObject jsonObject = response.getJSONObject("data");
-                        JSONObject data = jsonObject.getJSONObject("user");
+                        JSONObject data = jsonObject.getJSONObject("store");
                         storeName = data.getString(STORE_NAME_PRODUCT);
                         avatar = data.getString("image1");
                         tvStoreName.setText(storeName);
@@ -350,6 +352,9 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.ivChat:
                 openChatScreen();
+                break;
+            case R.id.lnStatistical:
+                startActivity(new Intent(this, StatisticalActivity.class));
                 break;
 
         }

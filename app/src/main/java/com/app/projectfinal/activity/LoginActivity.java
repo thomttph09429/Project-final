@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -45,7 +46,7 @@ import java.io.UnsupportedEncodingException;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private TextView tv_register;
+    private TextView tv_register, tvFogetPass;
     private FirebaseAuth fAuth;
     private FirebaseFirestore fStore;
     private GoogleSignInOptions gso;
@@ -69,7 +70,20 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initAction() {
+        tvFogetPass.setOnClickListener(v -> {
+            Toast.makeText(this, "Liên hệ quản trị viên để đặt lại mật khẩu", Toast.LENGTH_SHORT).show();
 
+            Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+            emailIntent.setData(Uri.parse("mailto:" + "truongthithom1999@gmail.com"));
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Liên hệ với NSV");
+            emailIntent.putExtra(Intent.EXTRA_TEXT, "Dear...,");
+
+            try {
+                startActivity(Intent.createChooser(emailIntent, "Send email using..."));
+            } catch (android.content.ActivityNotFoundException ex) {
+                Toast.makeText(this, "No email clients installed.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**
@@ -107,13 +121,11 @@ public class LoginActivity extends AppCompatActivity {
                     Snackbar snackbar = Snackbar
                             .make(parentLayout, "Tên đăng nhập từ 8 ký tự", Snackbar.LENGTH_LONG);
                     snackbar.show();
-                }
-                else if (!ValidateForm.validatePassword(passWord)) {
+                } else if (!ValidateForm.validatePassword(passWord)) {
                     Snackbar snackbar = Snackbar
                             .make(parentLayout, "Mật khẩu từ 8 đến 16 ký tự, ít nhât 1 ký tự hoa, 1 ký tự số", Snackbar.LENGTH_LONG);
                     snackbar.show();
-                }
-                else {
+                } else {
                     signInWithServer(userName, passWord);
 
                 }
@@ -151,6 +163,7 @@ public class LoginActivity extends AppCompatActivity {
         edt_acc = findViewById(R.id.edt_acc);
         edt_pass = findViewById(R.id.edt_pass);
         parentLayout = findViewById(android.R.id.content);
+        tvFogetPass = findViewById(R.id.tvFogetPass);
 
     }
 
@@ -213,7 +226,8 @@ public class LoginActivity extends AppCompatActivity {
                     JSONObject data = new JSONObject(responseBody);
                     JSONObject errors = data.getJSONObject("error");
                     String message = errors.getString("message");
-                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();                    Toast.makeText(LoginActivity.this,  error.toString(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, error.toString(), Toast.LENGTH_LONG).show();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -223,7 +237,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
                 ProgressBarDialog.getInstance(LoginActivity.this).closeDialog();
-
 
 
             }
@@ -240,6 +253,7 @@ public class LoginActivity extends AppCompatActivity {
      *     author:ThomTT
      *     date:02/08/2022
      * </pre>
+     *
      * @param idUser
      * @param userName
      * @param phoneNumber
@@ -276,11 +290,11 @@ public class LoginActivity extends AppCompatActivity {
                 reference.child("name_store").setValue("Người dùng");
 
                 ProgressBarDialog.getInstance(LoginActivity.this).closeDialog();
-                        SharedPrefsSingleton.getInstance(getApplicationContext()).putStringValue(PHONE, phoneNumber);
-                        Toast.makeText(LoginActivity.this, "" + "Đăng nhập thành công!", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
+                SharedPrefsSingleton.getInstance(getApplicationContext()).putStringValue(PHONE, phoneNumber);
+                Toast.makeText(LoginActivity.this, "" + "Đăng nhập thành công!", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
             }
 
             @Override
@@ -288,7 +302,6 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
-
 
 
     }

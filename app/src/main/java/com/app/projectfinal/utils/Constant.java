@@ -15,6 +15,7 @@ public class Constant {
     public static final String ORDER = HTTP+ "orders";
     public static final String TOTAL_ORDER = HTTP+ "orders/total";
     public static final String CHANGE_PASS = HTTP+ "users/update-password";
+    public static final String STATISTICAL = HTTP+ "stores/statistical";
 
     public static final int PICK_IMAGE_REQUEST = 100;
     public static final int MY_CAMERA_UPDATE_COVERPHOTO = 200;
