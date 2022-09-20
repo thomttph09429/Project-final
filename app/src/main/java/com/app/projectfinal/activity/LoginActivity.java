@@ -123,7 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                     snackbar.show();
                 } else if (!ValidateForm.validatePassword(passWord)) {
                     Snackbar snackbar = Snackbar
-                            .make(parentLayout, "Mật khẩu từ 8 đến 16 ký tự, ít nhât 1 ký tự hoa, 1 ký tự số", Snackbar.LENGTH_LONG);
+                            .make(parentLayout, "Mật khẩu từ 8 đến 16 ký tự, ít nhât 1 ký tự hoa, 1 ký tự số và không có khoảng trắng", Snackbar.LENGTH_LONG);
                     snackbar.show();
                 } else {
                     signInWithServer(userName, passWord);
@@ -227,7 +227,6 @@ public class LoginActivity extends AppCompatActivity {
                     JSONObject errors = data.getJSONObject("error");
                     String message = errors.getString("message");
                     Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-                    Toast.makeText(LoginActivity.this, error.toString(), Toast.LENGTH_LONG).show();
 
                 } catch (JSONException e) {
                     e.printStackTrace();

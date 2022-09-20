@@ -9,8 +9,7 @@
     <RelativeLayout
         android:id="@+id/rlTop"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-      >
+        android:layout_height="wrap_content">
 
 
         <TextView
@@ -38,6 +37,15 @@
 
             />
 
+        <ImageView
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:id="@+id/ivDelete"
+            android:src="@drawable/ic_delete_24"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_height="wrap_content"
+            />
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"

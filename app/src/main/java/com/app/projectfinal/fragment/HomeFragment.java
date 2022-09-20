@@ -13,6 +13,7 @@ import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
 import static com.app.projectfinal.utils.Constant.STORE_NAME_PRODUCT;
 import static com.app.projectfinal.utils.Constant.UNIT_NAME;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -31,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -59,17 +61,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HomeFragment extends Fragment implements ProductAdapter.FilterListeners{
+public class HomeFragment extends Fragment implements ProductAdapter.FilterListeners {
     private View view;
     private RecyclerView rcvProduct, rvViewByCategories;
     private ProductAdapter productAdapter;
     private List<Product> products;
-    private TextView tvLoading, tvAllProduct;
+    private TextView  tvAllProduct;
     private ImageView ivMessage, ivCart;
     private NestedScrollView nestedScrollView;
     private int page = 1;
@@ -117,12 +120,9 @@ public class HomeFragment extends Fragment implements ProductAdapter.FilterListe
             public void clickTypeCategory(String id) {
                 products.clear();
                 showProductByCategory(id);
-                Log.e("id click", id);
 
             }
         };
-        String token = ConstantData.getToken(getContext());
-        Log.e("token", token);
 
 
         edtSearch.addTextChangedListener(new TextWatcher() {
@@ -157,7 +157,6 @@ public class HomeFragment extends Fragment implements ProductAdapter.FilterListe
     }
 
     private void showProductByCategory(String id) {
-        tvLoading.setVisibility(View.GONE);
         ProgressBarDialog.getInstance(getContext()).showDialog("Đang tải", getContext());
         String urlProducts = PRODUCTS + "?" + "categoryId=" + id;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlProducts, null, new Response.Listener<JSONObject>() {
@@ -221,7 +220,6 @@ public class HomeFragment extends Fragment implements ProductAdapter.FilterListe
 
     private void initView() {
         rcvProduct = view.findViewById(R.id.rcv_products);
-        tvLoading = view.findViewById(R.id.tvLoading);
         ivMessage = view.findViewById(R.id.ivMessage);
         ivCart = view.findViewById(R.id.ivCart);
         nestedScrollView = view.findViewById(R.id.nestedScrollView);
@@ -256,13 +254,19 @@ public class HomeFragment extends Fragment implements ProductAdapter.FilterListe
                 if (scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()) {
                     page++;
                     getProducts(page);
-                    tvLoading.setVisibility(View.VISIBLE);
                 }
 
             }
         });
 
 
+    }
+
+    boolean isLastVisible() {
+        LinearLayoutManager layoutManager = ((LinearLayoutManager) rcvProduct.getLayoutManager());
+        int pos = layoutManager.findLastCompletelyVisibleItemPosition();
+        int numItems = rcvProduct.getAdapter().getItemCount();
+        return (pos >= numItems - 1);
     }
 
     /**
@@ -276,10 +280,10 @@ public class HomeFragment extends Fragment implements ProductAdapter.FilterListe
      */
     private void getProducts(int page) {
         if (page == 1) {
-            tvLoading.setVisibility(View.GONE);
             ProgressBarDialog.getInstance(getContext()).showDialog("Đang tải", getContext());
 
         }
+
         String urlProducts = PRODUCTS + "?" + "page=" + page + "&size=" + 20;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlProducts, null, new Response.Listener<JSONObject>() {
@@ -401,7 +405,6 @@ public class HomeFragment extends Fragment implements ProductAdapter.FilterListe
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), error.toString(), Toast.LENGTH_LONG).show();
 
             }
         }) {
@@ -418,7 +421,7 @@ public class HomeFragment extends Fragment implements ProductAdapter.FilterListe
     private void clickViewAll() {
         tvAllProduct.setOnClickListener(v -> {
             products.clear();
-            getProducts(page);
+            getProducts(1);
 
         });
     }

@@ -10,6 +10,7 @@ import static com.app.projectfinal.utils.Constant.WARD_NAME;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -44,7 +45,7 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
     private Bundle bundle = null;
     private AppCompatButton btnSaveAddress;
     private EditText edtEnterAddress;
-    private  ImageView ivBack;
+    private ImageView ivBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,59 +62,57 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
         btnSaveAddress.setOnClickListener(v -> {
             if (tvAddress.getText().toString().equals("Tỉnh/Thành phố, Quận/Huyện, Phường/Xã") || edtEnterAddress.getText().toString().equals("")) {
                 showToast("Bạn chưa nhập địa chỉ", R.drawable.ic_priority);
-            }else {
+            } else {
 
 
-            JSONObject address = new JSONObject();
-            ProgressBarDialog.getInstance(this).showDialog("Đang tải", this);
-            String userName = SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(USER_NAME_SAVE);
-            String phone = SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(PHONE_NUMBER);
-            String addressDetail = edtEnterAddress.getText().toString().trim();
-            String province = tvAddress.getText().toString();
+                JSONObject address = new JSONObject();
+                ProgressBarDialog.getInstance(this).showDialog("Đang tải", this);
+                String userName = SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(USER_NAME_SAVE);
+                String phone = SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(PHONE_NUMBER);
+                String addressDetail = edtEnterAddress.getText().toString().trim();
+                String province = tvAddress.getText().toString();
 
-            try {
+                try {
 
-                address.put("storeId", "");
-                address.put("customerName", userName);
-                address.put("phone", phone);
-                address.put("location", province +" "+ addressDetail);
-                JSONObject data = new JSONObject();
-                data.put("address", address);
-                JSONObject product = new JSONObject();
-                product.put("data", data);
-                showToast("Thêm thành công", R.drawable.ic_mark);
-                finish();
-
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, ADDRESS, address, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    ProgressBarDialog.getInstance(AddAddressActivity.this).closeDialog();
-
-
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(AddAddressActivity.this, error.toString(), Toast.LENGTH_LONG).show();
-                    ProgressBarDialog.getInstance(AddAddressActivity.this).closeDialog();
-
-
+                    address.put("storeId", "");
+                    address.put("customerName", userName);
+                    address.put("phone", phone);
+                    address.put("location", province + " " + addressDetail);
+                    JSONObject data = new JSONObject();
+                    data.put("address", address);
+                    JSONObject product = new JSONObject();
+                    product.put("data", data);
+                    showToast("Thêm thành công", R.drawable.ic_mark);
+                    finish();
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
 
-            }) {
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    HashMap<String, String> headers = new HashMap<>();
-                    headers.put("Authorization", ConstantData.getToken(getApplicationContext()));
-                    return headers;
-                }
-            };
-            VolleySingleton.getInstance(getApplicationContext()).getRequestQueue().add(jsonObjectRequest);
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, ADDRESS, address, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        ProgressBarDialog.getInstance(AddAddressActivity.this).closeDialog();
+
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(AddAddressActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+                        ProgressBarDialog.getInstance(AddAddressActivity.this).closeDialog();
+
+
+                    }
+
+                }) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        HashMap<String, String> headers = new HashMap<>();
+                        headers.put("Authorization", ConstantData.getToken(getApplicationContext()));
+                        return headers;
+                    }
+                };
+                VolleySingleton.getInstance(getApplicationContext()).getRequestQueue().add(jsonObjectRequest);
             }
         });
     }
@@ -144,8 +143,9 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
 
 
     }
-    private  void  exit(){
-        ivBack.setOnClickListener(v->{
+
+    private void exit() {
+        ivBack.setOnClickListener(v -> {
             finish();
         });
     }

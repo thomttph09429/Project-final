@@ -62,6 +62,12 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getOrderQuantity();
+
+    }
 
     private void initAction() {
         lnStartSell.setOnClickListener(this);
@@ -157,7 +163,6 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
                         storeName = data.getString(STORE_NAME_PRODUCT);
                         avatar = data.getString("image1");
                         tvStoreName.setText(storeName);
-                        getOrderQuantity();
                         Glide.with(MyShopActivity.this).load(avatar).centerCrop().error(R.drawable.avatar_empty).into(ivAvatar);
 
                         ProgressBarDialog.getInstance(MyShopActivity.this).closeDialog();

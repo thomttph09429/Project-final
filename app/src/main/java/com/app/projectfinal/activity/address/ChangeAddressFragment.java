@@ -37,6 +37,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -132,8 +133,18 @@ public class ChangeAddressFragment extends DialogFragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), error.toString(), Toast.LENGTH_LONG).show();
-                ProgressBarDialog.getInstance(getContext()
+                try {
+                    String responseBody = new String(error.networkResponse.data, "utf-8");
+                    JSONObject data = new JSONObject(responseBody);
+                    JSONObject errors = data.getJSONObject("error");
+                    String message = errors.getString("message");
+                    Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }                ProgressBarDialog.getInstance(getContext()
                 ).closeDialog();
 
             }
@@ -141,7 +152,7 @@ public class ChangeAddressFragment extends DialogFragment {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<>();
-                headers.put("Authorization", ConstantData.getToken(getContext().getApplicationContext()));
+                headers.put("Authorization", ConstantData.getToken(getContext()));
                 return headers;
             }
         };

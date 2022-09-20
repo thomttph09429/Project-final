@@ -71,7 +71,7 @@ private ImageView ivBack;
     private void changePass() {
         btnChangePass.setOnClickListener(v -> {
             if (!ValidateForm.validatePassword(edtPass.getText().toString().trim())) {
-                Toast.makeText(getContext(), "Mật khẩu từ 8 đến 16 ký tự, ít nhât 1 ký tự hoa, 1 ký tự số", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Mật khẩu từ 8 đến 16 ký tự, ít nhât 1 ký tự hoa, 1 ký tự số, không có khoảng trắng", Toast.LENGTH_SHORT).show();
 
             } else {
                 if (!ValidateForm.checkRePassWord(edtPass.getText().toString().trim(), edtRePass.getText().toString().trim())) {

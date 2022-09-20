@@ -226,6 +226,7 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
                 AddInfoOfStoreToFirebase(storeName, linkImageUrlFirebase, edtUserLogin.getText().toString().trim(), tvNumberLogin.getText().toString());
                 ProgressBarDialog.getInstance(ProfileSettingActivity.this).closeDialog();
                 showToast("Cập nhật thành công", R.drawable.ic_mark);
+                finish();
 
             }
         }, new Response.ErrorListener() {

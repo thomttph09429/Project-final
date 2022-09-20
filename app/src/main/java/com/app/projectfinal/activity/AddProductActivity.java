@@ -263,7 +263,6 @@ public class AddProductActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(AddProductActivity.this, "Thêm thất bại " + error.toString(), Toast.LENGTH_LONG).show();
-                Log.e("thatbai", user + "");
                 ProgressBarDialog.getInstance(AddProductActivity.this).closeDialog();
 
             }

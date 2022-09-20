@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_marginBottom="@dimen/_10sdp"
+    android:layout_marginBottom="@dimen/_13sdp"
     android:layout_height="wrap_content">
 
     <ImageView
@@ -59,7 +59,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/btnDelete"
+        android:layout_below="@+id/ivImage"
         android:background="@color/greenLight" />
 
     <Button
@@ -69,6 +69,7 @@
         android:layout_toRightOf="@+id/ivImage"
         android:layout_below="@+id/title"
         android:text="Xóa"
+        android:visibility="gone"
         android:layout_marginLeft="@dimen/_10sdp"
         android:textAllCaps="false" />
 

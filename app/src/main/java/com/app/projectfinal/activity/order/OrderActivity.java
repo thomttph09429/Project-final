@@ -40,6 +40,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
 import com.app.projectfinal.activity.AddProductActivity;
 import com.app.projectfinal.activity.ProfileSettingActivity;
+import com.app.projectfinal.activity.address.AddressActivity;
 import com.app.projectfinal.activity.address.ChangeAddressFragment;
 import com.app.projectfinal.adapter.chooseProduct.ChooseProductToBuyAdapter;
 import com.app.projectfinal.db.Cart;
@@ -57,6 +58,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -78,6 +80,12 @@ public class OrderActivity extends AppCompatActivity implements ChangeAddressFra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
         initView();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getAddress();
         initAction();
         clickChangeAddress();
@@ -93,17 +101,23 @@ public class OrderActivity extends AppCompatActivity implements ChangeAddressFra
         rvPay.setLayoutManager(layoutManager);
         buyAdapter = new ChooseProductToBuyAdapter(cartListChecked, this);
         rvPay.setAdapter(buyAdapter);
+
+
+
         btnBuy.setOnClickListener(v -> {
-            if (!tvAddress.getText().toString().equals("")) {
+            if (!tvAddress.getText().toString().isEmpty()){
                 clickOrderProducts();
 
+            }else {
+                showToast("Hãy chọn địa chỉ" + "", R.drawable.ic_priority);
+
             }
+
         });
         ivBack.setOnClickListener(v -> {
             finish();
         });
     }
-
 
     private void initView() {
         tvAddress = findViewById(R.id.tvAddress);
@@ -122,7 +136,7 @@ public class OrderActivity extends AppCompatActivity implements ChangeAddressFra
 
     private void clickUpdateAddress() {
         rlNotAddress.setOnClickListener(v -> {
-            startActivity(new Intent(this, ProfileSettingActivity.class));
+                startActivity(new Intent(this, AddressActivity.class));
 
         });
 
@@ -169,8 +183,18 @@ public class OrderActivity extends AppCompatActivity implements ChangeAddressFra
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(OrderActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+                try {
+                    String responseBody = new String(error.networkResponse.data, "utf-8");
+                    JSONObject data = new JSONObject(responseBody);
+                    JSONObject errors = data.getJSONObject("error");
+                    String message = errors.getString("message");
+                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
 
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
             }
         }) {
             @Override
@@ -229,6 +253,8 @@ public class OrderActivity extends AppCompatActivity implements ChangeAddressFra
                         tvAddress.setText(addressUser.getLocation());
                         tvUserName.setText(addressUser.getCustomerName());
                         tvPhoneNumber.setText(addressUser.getPhone());
+                        rlNotAddress.setVisibility(View.GONE);
+                        tvChangeAddress.setVisibility(View.VISIBLE);
                     } else {
                         rlNotAddress.setVisibility(View.VISIBLE);
                         tvChangeAddress.setVisibility(View.GONE);

@@ -2,6 +2,7 @@ package com.app.projectfinal.activity.address;
 
 import static com.app.projectfinal.utils.Constant.ADDRESS;
 import static com.app.projectfinal.utils.Constant.CATEGORY;
+import static com.app.projectfinal.utils.Constant.TOTAL;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,7 +41,7 @@ import java.util.List;
 import java.util.Map;
 
 public class AddressActivity extends AppCompatActivity implements View.OnClickListener {
-    private LinearLayout lnAddress;
+    private LinearLayout lnAddress,lnHide;
     private RecyclerView rvAddress;
     public List<AddressUser> addressUserList;
     private ListAddressAdapter listAddressAdapter;
@@ -52,10 +53,15 @@ public class AddressActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_address);
         initView();
         initAction();
-        getAllMyAddress();
         ivBack.setOnClickListener(v->{
             finish();
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getAllMyAddress();
     }
 
     private void initAction() {
@@ -69,6 +75,7 @@ public class AddressActivity extends AppCompatActivity implements View.OnClickLi
         lnAddress = findViewById(R.id.lnAddress);
         rvAddress = findViewById(R.id.rvAddress);
         ivBack = findViewById(R.id.ivBack);
+        lnHide = findViewById(R.id.lnHide);
 
     }
 
@@ -86,6 +93,15 @@ public class AddressActivity extends AppCompatActivity implements View.OnClickLi
                 try {
                     JSONObject jsonObject = response.getJSONObject("data");
                     JSONArray jsonArray = jsonObject.getJSONArray("addresses");
+                    int  totalOrder = jsonObject.getInt(TOTAL);
+                    if (totalOrder == 0) {
+                        rvAddress.setVisibility(View.GONE);
+                        lnHide.setVisibility(View.VISIBLE);
+
+                    } else {
+                        rvAddress.setVisibility(View.VISIBLE);
+                        lnHide.setVisibility(View.GONE);
+                    }
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
                         Gson gson = new Gson();

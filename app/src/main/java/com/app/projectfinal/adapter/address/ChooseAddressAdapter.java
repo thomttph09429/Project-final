@@ -30,7 +30,6 @@ public class ChooseAddressAdapter extends RecyclerView.Adapter<ChooseAddressAdap
     }
 
 
-
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -44,13 +43,13 @@ public class ChooseAddressAdapter extends RecyclerView.Adapter<ChooseAddressAdap
         holder.tvPhoneNumber.setText(addressUserList.get(position).getPhone());
         holder.tvAddress.setText(addressUserList.get(position).getLocation());
         holder.tvUserName.setText(addressUserList.get(position).getCustomerName());
-        holder.itemView.setOnClickListener(v->{
-            int position1= holder.getAdapterPosition();
+        holder.itemView.setOnClickListener(v -> {
+            int position1 = holder.getAdapterPosition();
             listenerChooseAddress.onItemClick(addressUserList.get(position1).getLocation(), addressUserList.get(position1).getId());
             notifyDataSetChanged();
 
         });
-
+        holder.ivDelete.setVisibility(View.GONE);
 
     }
 
@@ -60,13 +59,15 @@ public class ChooseAddressAdapter extends RecyclerView.Adapter<ChooseAddressAdap
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvUserName,tvPhoneNumber,tvAddress;
+        private TextView tvUserName, tvPhoneNumber, tvAddress;
+        private ImageView ivDelete;
 
         public MyViewHolder(@NonNull View v) {
             super(v);
             tvUserName = v.findViewById(R.id.tvUserName);
-            tvPhoneNumber= v.findViewById(R.id.tvPhoneNumber);
-            tvAddress= v.findViewById(R.id.tvAddress);
+            tvPhoneNumber = v.findViewById(R.id.tvPhoneNumber);
+            tvAddress = v.findViewById(R.id.tvAddress);
+            ivDelete = v.findViewById(R.id.ivDelete);
 
         }
     }

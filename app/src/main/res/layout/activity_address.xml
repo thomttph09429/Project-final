@@ -42,6 +42,31 @@
         android:layout_above="@+id/lnAddress"
         android:layout_below="@+id/toolbar" />
 
+    <LinearLayout
+        android:layout_below="@+id/toolbar"
+        android:id="@+id/lnHide"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_120sdp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:src="@drawable/ic_order_empty" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chưa có địa chỉ!"
+            android:textSize="@dimen/_11sdp" />
+    </LinearLayout>
+
+
+
+
         <LinearLayout
             android:id="@+id/lnAddress"
             android:layout_width="match_parent"

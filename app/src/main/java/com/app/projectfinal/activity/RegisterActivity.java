@@ -102,7 +102,7 @@ public class RegisterActivity extends AppCompatActivity {
                     snackbar.show();
                 } else if (!ValidateForm.validatePassword(pass)) {
                     Snackbar snackbar = Snackbar
-                            .make(parentLayout, "Mật khẩu từ 8 đến 16 ký tự, ít nhât 1 ký tự hoa, 1 ký tự số", Snackbar.LENGTH_LONG);
+                            .make(parentLayout, "Mật khẩu từ 8 đến 16 ký tự, ít nhât 1 ký tự hoa, 1 ký tự số và không có khoảng trắng", Snackbar.LENGTH_LONG);
                     snackbar.show();
                 } else if (!ValidateForm.checkRePassWord(pass, rePass)) {
                     Snackbar snackbar = Snackbar
