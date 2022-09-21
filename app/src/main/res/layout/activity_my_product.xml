@@ -52,15 +52,6 @@
                     android:textStyle="bold" />
 
 
-                <ImageView
-                    android:id="@+id/img_kekabMenu"
-                    android:layout_width="30dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center|end"
-                    android:layout_marginTop="0dp"
-                    android:background="@drawable/ic_chart_white" />
             </RelativeLayout>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -97,6 +88,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/tvTotal" />
+
+
+
+            <LinearLayout
+                android:layout_below="@+id/tvTotal"
+                android:id="@+id/lnHide"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_120sdp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_100sdp"
+                    android:src="@drawable/ic_order_empty" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Chưa có sản phẩm nào!"
+                    android:textSize="@dimen/_11sdp" />
+            </LinearLayout>
+
 
         </RelativeLayout>
 

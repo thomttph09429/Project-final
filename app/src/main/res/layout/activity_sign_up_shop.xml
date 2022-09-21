@@ -173,7 +173,7 @@
                     android:layout_weight="1"
                     android:background="@color/greenLight_30"
                     android:paddingStart="@dimen/_10sdp"
-                    android:text="FaceBook"
+                    android:text="Mạng xã hội"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp"
                     android:textStyle="bold" />
@@ -189,7 +189,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_35sdp"
                     android:background="@color/greenLight_20"
-                    android:hint="Rau sạch"
+                    android:hint=""
                     android:paddingStart="@dimen/_10sdp"
                     android:paddingLeft="@dimen/_8sdp"
                     android:textColor="@color/black"
@@ -248,7 +248,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="@drawable/bg_border_40"
-            android:text="Lưu"
+            android:text="Đăng ký"
             android:textAllCaps="false"
             android:textColor="@color/white" />
 

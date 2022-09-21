@@ -136,7 +136,7 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void openShopSettingScreen() {
-        Intent intent = new Intent(this, SignUpShopActivity.class);
+        Intent intent = new Intent(this, ProfileShopActivity.class);
         startActivity(intent);
     }
 

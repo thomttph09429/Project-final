@@ -59,16 +59,16 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ViewShopActivity extends AppCompatActivity  implements ProductAdapter.FilterListeners{
+public class ViewShopActivity extends AppCompatActivity implements ProductAdapter.FilterListeners {
     private RecyclerView rvAllProduct;
     private List<Product> products;
     private ProductAdapter productAdapter;
     private String storeIds, storeNames, phone;
     private NestedScrollView nestedScrollView;
     private int page = 1;
-    private TextView tvUserName,tvDescription;
+    private TextView tvUserName, tvDescription;
     private CircleImageView ivAvatar;
-    private ImageView ivCover,ivBack;
+    private ImageView ivCover, ivBack;
     private EditText edtSearch;
     private LinearLayout lnHide;
 
@@ -114,12 +114,12 @@ public class ViewShopActivity extends AppCompatActivity  implements ProductAdapt
     }
 
 
-
-    private  void exit(){
-        ivBack.setOnClickListener(v->{
+    private void exit() {
+        ivBack.setOnClickListener(v -> {
             finish();
         });
     }
+
     private void initView() {
         rvAllProduct = findViewById(R.id.rvAllProduct);
         nestedScrollView = findViewById(R.id.nestedScrollView);
@@ -169,7 +169,15 @@ public class ViewShopActivity extends AppCompatActivity  implements ProductAdapt
                     try {
                         JSONObject jsonObject = response.getJSONObject("data");
                         JSONArray jsonArray = jsonObject.getJSONArray("products");
+                        int total = jsonObject.getInt("total");
+                        if (total == 0) {
+                            rvAllProduct.setVisibility(View.GONE);
+                            lnHide.setVisibility(View.VISIBLE);
 
+                        } else {
+                            rvAllProduct.setVisibility(View.VISIBLE);
+                            lnHide.setVisibility(View.GONE);
+                        }
 
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject object = jsonArray.getJSONObject(i);
@@ -189,8 +197,6 @@ public class ViewShopActivity extends AppCompatActivity  implements ProductAdapt
                             productAdapter.setFilterListeners(ViewShopActivity.this::filteringFinished);
                             rvAllProduct.setAdapter(productAdapter);
                         }
-
-
 
 
                     } catch (JSONException e) {
@@ -233,7 +239,7 @@ public class ViewShopActivity extends AppCompatActivity  implements ProductAdapt
                         String image1 = data.getString("image1");
                         String image2 = data.getString("image2");
                         String description = data.getString("description");
-                         phone = data.getString("phone");
+                        phone = data.getString("phone");
 
                         tvDescription.setText(description);
 

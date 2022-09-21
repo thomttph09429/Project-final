@@ -62,7 +62,7 @@ public class SignUpShopActivity extends AppCompatActivity {
     private TextView tvCountNameStore, tvEditAvatar;
     private EditText edtEnterStoreName, edtLinkFace, edtDesStore;
     private Button btnSignUpShop;
-    private ImageView ivCover,ivBack;
+    private ImageView ivCover, ivBack;
     private CircleImageView ivAvatar;
     private Uri uriAvatar, uriCover;
     private StorageReference storageRef;
@@ -85,63 +85,10 @@ public class SignUpShopActivity extends AppCompatActivity {
             openFileChoseCover();
 
         });
-        if (status == 1) {
-            getInforShop();
-        }
-        ivBack.setOnClickListener(v->{
+
+        ivBack.setOnClickListener(v -> {
             finish();
         });
-    }
-
-    private void getInforShop() {
-        ProgressBarDialog.getInstance(this).showDialog("Đang tải", this);
-        String url = ADD_STORES + "/" + storeId;
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-
-                try {
-                    JSONObject jsonObject = response.getJSONObject("data");
-                    JSONObject data = jsonObject.getJSONObject("store");
-                    String image1 = data.getString("image1");
-                    String image2 = data.getString("image2");
-                    String storeName = data.getString("storeName");
-                    String description = data.getString("description");
-                    String linkSupport = data.getString("linkSupport");
-                    Glide.with(SignUpShopActivity.this).load(image1).centerCrop().error(R.drawable.avatar_empty).into(ivAvatar);
-                    Glide.with(SignUpShopActivity.this).load(image2).centerCrop().error(R.drawable.avatar_empty).into(ivCover);
-                    edtDesStore.setText(description);
-                    edtEnterStoreName.setText(storeName);
-                    edtLinkFace.setText(linkSupport);
-                    ProgressBarDialog.getInstance(SignUpShopActivity.this).closeDialog();
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(SignUpShopActivity.this, e.toString(), Toast.LENGTH_LONG).show();
-                    ProgressBarDialog.getInstance(SignUpShopActivity.this).closeDialog();
-
-                }
-
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(SignUpShopActivity.this, error.toString(), Toast.LENGTH_LONG).show();
-                ProgressBarDialog.getInstance(SignUpShopActivity.this
-                ).closeDialog();
-
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<>();
-                headers.put("Authorization", ConstantData.getToken(SignUpShopActivity.this.getApplicationContext()));
-                return headers;
-            }
-        };
-        VolleySingleton.getInstance(this).getRequestQueue().add(jsonObjectRequest);
     }
 
 
@@ -173,143 +120,81 @@ public class SignUpShopActivity extends AppCompatActivity {
     }
 
     private void uploadImageAvatar() {
-        if (uriAvatar != null) {
-            ProgressBarDialog.getInstance(this).showDialog("Vui lòng đợi", this);
-            final StorageReference fileReference = storageRef.child(System.currentTimeMillis()
-                    + "." + getFileExtension(uriAvatar));
+        ProgressBarDialog.getInstance(this).showDialog("Vui lòng đợi", this);
+        final StorageReference fileReference = storageRef.child(System.currentTimeMillis()
+                + "." + getFileExtension(uriAvatar));
 
-            uploadTask = fileReference.putFile(uriAvatar);
-            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if (!task.isSuccessful()) {
-                        throw task.getException();
-                    }
-                    return fileReference.getDownloadUrl();
+        uploadTask = fileReference.putFile(uriAvatar);
+        uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
                 }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()) {
-                        Uri downloadUri = task.getResult();
-                        image1 = downloadUri.toString();
+                return fileReference.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    Uri downloadUri = task.getResult();
+                    image1 = downloadUri.toString();
+                    uploadImageCover();
 
-                        uploadImageCover();
 
-                    } else {
-                        Toast.makeText(SignUpShopActivity.this, "đã xảy ra lỗi" + task.getResult(), Toast.LENGTH_SHORT).show();
-                    }
+                } else {
+                    Toast.makeText(SignUpShopActivity.this, "đã xảy ra lỗi" + task.getResult(), Toast.LENGTH_SHORT).show();
                 }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                }
-            });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+            }
+        });
 
-        } else {
-            Toast.makeText(SignUpShopActivity.this, "Không có ảnh nào được chọn", Toast.LENGTH_SHORT).show();
 
-        }
     }
 
     private void uploadImageCover() {
-        if (uriCover != null) {
-            final StorageReference fileReference = storageRef.child(System.currentTimeMillis()
-                    + "." + getFileExtension(uriCover));
+        final StorageReference fileReference = storageRef.child(System.currentTimeMillis()
+                + "." + getFileExtension(uriCover));
 
-            uploadTask = fileReference.putFile(uriCover);
-            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if (!task.isSuccessful()) {
-                        throw task.getException();
-                    }
-                    return fileReference.getDownloadUrl();
+        uploadTask = fileReference.putFile(uriCover);
+        uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
                 }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()) {
-                        Uri downloadUri = task.getResult();
-                        image2 = downloadUri.toString();
-                        if (status==1){
-                            updateInfoStore();
+                return fileReference.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    Uri downloadUri = task.getResult();
+                    image2 = downloadUri.toString();
 
-                        }else {
-                            String storeName = edtEnterStoreName.getText().toString().trim();
-                            String linkFace = edtLinkFace.getText().toString().trim();
-                            String description = edtDesStore.getText().toString().trim();
-                            String userId = ConstantData.getUserId(SignUpShopActivity.this);
-                            if (image1!=null && image2!=null){
-                                signUpToBecomeSeller(userId, storeName, description, linkFace);
+                    String storeName = edtEnterStoreName.getText().toString().trim();
+                    String linkFace = edtLinkFace.getText().toString().trim();
+                    String description = edtDesStore.getText().toString().trim();
+                    String userId = ConstantData.getUserId(SignUpShopActivity.this);
+                    signUpToBecomeSeller(userId, storeName, description, linkFace);
 
-                            }
 
-                        }
-
-                    } else {
-                        Toast.makeText(SignUpShopActivity.this, "đã xảy ra lỗi" + task.getResult(), Toast.LENGTH_SHORT).show();
-                    }
+                } else {
+                    Toast.makeText(SignUpShopActivity.this, "đã xảy ra lỗi" + task.getResult(), Toast.LENGTH_SHORT).show();
                 }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                }
-            });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+            }
+        });
 
-        } else {
-            Toast.makeText(SignUpShopActivity.this, "Không có ảnh nào được chọn", Toast.LENGTH_SHORT).show();
 
-        }
     }
 
-    /**
-     * update store when was sign up store
-     */
-    private void updateInfoStore() {
-        JSONObject user = new JSONObject();
-        String url = ADD_STORES + "/" + storeId;
-        try {
-
-            user.put("userId", ConstantData.getUserId(this));
-            user.put("name", edtEnterStoreName.getText().toString());
-            user.put("linkSupport", edtLinkFace.getText().toString());
-            user.put("description", edtDesStore.getText().toString());
-            user.put("image1", image1);
-            user.put("image2", image2);
-
-            JSONObject datas = new JSONObject();
-            datas.put("data", user);
-            Log.e("ma", user + "");
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, user, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                ProgressBarDialog.getInstance(SignUpShopActivity.this).closeDialog();
-                ConstantData.showToast("Cập nhật thành công", R.drawable.ic_mark, SignUpShopActivity.this, getWindow().getDecorView().findViewById(android.R.id.content));
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(SignUpShopActivity.this, "" + error.toString(), Toast.LENGTH_LONG).show();
-                ProgressBarDialog.getInstance(SignUpShopActivity.this).closeDialog();
-
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<>();
-                headers.put("Authorization", ConstantData.getToken(getApplicationContext()));
-                return headers;
-            }
-        };
-
-        VolleySingleton.getInstance(getApplicationContext()).getRequestQueue().add(jsonObjectRequest);
-    }
 
     /**
      * click button sign up
@@ -320,8 +205,20 @@ public class SignUpShopActivity extends AppCompatActivity {
      */
     private void signUpShop() {
         btnSignUpShop.setOnClickListener(v -> {
+            String edtName = edtEnterStoreName.getText().toString().trim();
+            if (uriAvatar == null) {
+                Toast.makeText(SignUpShopActivity.this, "" + "Chưa chọn ảnh đại diện", Toast.LENGTH_LONG).show();
 
-            uploadImageAvatar();
+            } else if (uriCover==null) {
+                Toast.makeText(SignUpShopActivity.this, "" + "Chưa chọn ảnh bìa", Toast.LENGTH_LONG).show();
+
+            } else if (!ValidateForm.isName(edtName)) {
+                Toast.makeText(SignUpShopActivity.this, "" + "Tên cửa hàng từ 8 kí tự", Toast.LENGTH_LONG).show();
+
+            } else {
+                uploadImageAvatar();
+
+            }
 
 
         });
@@ -416,8 +313,7 @@ public class SignUpShopActivity extends AppCompatActivity {
 
                         ProgressBarDialog.getInstance(SignUpShopActivity.this).closeDialog();
                         Toast.makeText(SignUpShopActivity.this, "" + "Đăng ký thành công!", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(SignUpShopActivity.this, MyShopActivity.class);
-                        startActivity(intent);
+
                         finish();
                     } catch (JSONException e) {
                         e.printStackTrace();

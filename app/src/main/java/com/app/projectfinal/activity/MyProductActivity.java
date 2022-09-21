@@ -22,7 +22,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +59,7 @@ public class MyProductActivity extends AppCompatActivity {
     private MyProductAdapter myProductAdapter;
     private TextView tvTotal;
     private ImageView ivBack;
+    private LinearLayout lnHide;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +94,14 @@ public class MyProductActivity extends AppCompatActivity {
                         JSONArray jsonArray = jsonObject.getJSONArray("products");
                         total = jsonObject.getString(TOTAL);
                         tvTotal.setText(total);
+                        if (Integer.parseInt(total) == 0) {
+                            rvMyProduct.setVisibility(View.GONE);
+                            lnHide.setVisibility(View.VISIBLE);
 
+                        } else {
+                            rvMyProduct.setVisibility(View.VISIBLE);
+                            lnHide.setVisibility(View.GONE);
+                        }
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject object = jsonArray.getJSONObject(i);
                             String productName = object.getString(NAME_PRODUCT);
@@ -150,6 +160,7 @@ public class MyProductActivity extends AppCompatActivity {
         tvTotal = findViewById(R.id.tvTotal);
         rvMyProduct = findViewById(R.id.rvMyProduct);
         ivBack = findViewById(R.id.ivBack);
+        lnHide = findViewById(R.id.lnHide);
 
     }
 

@@ -163,7 +163,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Không tìm thấy kết quả nào"
+                        android:text="Không có sản phẩm nào"
                         android:textSize="@dimen/_11sdp" />
                 </LinearLayout>
 
