@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,6 +24,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -40,6 +42,7 @@ import com.app.projectfinal.utils.SharedPrefsSingleton;
 import com.app.projectfinal.fragment.ChangePassFragment;
 import com.app.projectfinal.utils.ConstantData;
 import com.app.projectfinal.utils.ProgressBarDialog;
+import com.app.projectfinal.utils.ValidateForm;
 import com.app.projectfinal.utils.VolleySingleton;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Continuation;
@@ -59,21 +62,25 @@ import com.google.firebase.storage.UploadTask;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class ProfileSettingActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView tvUpdateAvatar;
     private Uri uriImage;
-    private ImageView ivAvtUser,ivBack;
+    private ImageView ivAvtUser, ivBack;
     private String linkImageUrlFirebase, userId, dateOfBirth, email;
     private StorageReference storageRef;
     private StorageTask uploadTask;
     private LinearLayout lnAddress, lnNameLogin, lnNumberLogin, lnEmail, lnChangePass;
-    private EditText edtUserLogin, edtEmail, edtDateOfBirth;
-    private AppCompatButton btnSaveInfo,btnSingOut;
-    private TextView tvNumberLogin;
-
+    private EditText edtUserLogin, edtEmail;
+    private AppCompatButton btnSaveInfo, btnSingOut;
+    private TextView tvNumberLogin,edtDateOfBirth;
+    final Calendar myCalendarStart = Calendar.getInstance();
+    private String startSate = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +92,8 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
         getInfo();
 
     }
+
+
     private void exit() {
         ivBack.setOnClickListener(v -> {
             finish();
@@ -124,6 +133,7 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
         lnAddress.setOnClickListener(this);
         lnChangePass.setOnClickListener(this);
         btnSingOut.setOnClickListener(this);
+        edtDateOfBirth.setOnClickListener(this);
 
         userId = SharedPrefsSingleton.getInstance(getApplicationContext()).getStringValue(USER_ID_SAVE);
 
@@ -152,7 +162,6 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
 
     private void uploadImage() {
         storageRef = FirebaseStorage.getInstance().getReference("Posts");
-        if (uriImage != null) {
             ProgressBarDialog.getInstance(this).showDialog("Vui lòng đợi", this);
             final StorageReference fileReference = storageRef.child(System.currentTimeMillis()
                     + "." + getFileExtension(uriImage));
@@ -187,11 +196,8 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
                 }
             });
 
-        } else {
-            Toast.makeText(ProfileSettingActivity.this, "Không có ảnh nào được chọn", Toast.LENGTH_SHORT).show();
-
         }
-    }
+
 
     private void getInfo() {
         edtUserLogin.setText(userDetail.getUserName());
@@ -226,7 +232,6 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
                 AddInfoOfStoreToFirebase(storeName, linkImageUrlFirebase, edtUserLogin.getText().toString().trim(), tvNumberLogin.getText().toString());
                 ProgressBarDialog.getInstance(ProfileSettingActivity.this).closeDialog();
                 showToast("Cập nhật thành công", R.drawable.ic_mark);
-                finish();
 
             }
         }, new Response.ErrorListener() {
@@ -244,7 +249,45 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
         };
         VolleySingleton.getInstance(getApplicationContext()).getRequestQueue().add(jsonObjectRequest);
     }
+    private void updateInfoNoImage() {
+        JSONObject user = new JSONObject();
+        String url = UPDATE_USER + "/" + userId;
+        try {
+            dateOfBirth = edtDateOfBirth.getText().toString().trim();
+            email = edtEmail.getText().toString().trim();
+            user.put(DATE_OF_BIRTH, dateOfBirth);
+            user.put(EMAIL, email);
+            user.put("userName", edtUserLogin.getText().toString().trim());
 
+            JSONObject data = new JSONObject();
+            data.put("data", user);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, user, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                AddInfoOfStoreToFirebase(storeName, linkImageUrlFirebase, edtUserLogin.getText().toString().trim(), tvNumberLogin.getText().toString());
+                ProgressBarDialog.getInstance(ProfileSettingActivity.this).closeDialog();
+                showToast("Cập nhật thành công", R.drawable.ic_mark);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(ProfileSettingActivity.this, "" + error.toString(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", ConstantData.getToken(getApplicationContext()));
+                return headers;
+            }
+        };
+        VolleySingleton.getInstance(getApplicationContext()).getRequestQueue().add(jsonObjectRequest);
+    }
     private void AddInfoOfStoreToFirebase(String nameStore, String avatar, String userName, String phone) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(phone);
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -277,7 +320,29 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
         }
     }
 
+    private void openDateStart() {
 
+
+        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+                myCalendarStart.set(Calendar.YEAR, year);
+                myCalendarStart.set(Calendar.MONTH, month);
+                myCalendarStart.set(Calendar.DAY_OF_MONTH, day);
+                updateLabelStart();
+
+            }
+        };
+        new DatePickerDialog(ProfileSettingActivity.this, date, myCalendarStart.get(Calendar.YEAR), myCalendarStart.get(Calendar.MONTH), myCalendarStart.get(Calendar.DAY_OF_MONTH)).show();
+
+
+    }
+    private void updateLabelStart() {
+        String myFormat = "yyyy-MM-dd";
+        SimpleDateFormat dateFormat = new SimpleDateFormat(myFormat, Locale.US);
+        startSate = dateFormat.format(myCalendarStart.getTime());
+        edtDateOfBirth.setText(startSate);
+    }
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -285,13 +350,26 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
                 updateAvatar();
                 break;
             case R.id.btnSaveInfo:
-                uploadImage();
+                if (!ValidateForm.isValidEmail(edtEmail.getText().toString())) {
+                    Toast.makeText(this, "email chưa đúng định dạng", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (uriImage!=null){
+                        uploadImage();
+
+                    }else {
+                        updateInfoNoImage();
+                    }
+
+                }
                 break;
             case R.id.lnAddress:
                 openAddressScreen();
                 break;
             case R.id.lnChangePass:
                 changePass();
+                break;
+            case R.id.edtDateOfBirth:
+                openDateStart();
                 break;
             case R.id.btnSingOut:
                 signOut();
@@ -310,11 +388,12 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
                 "Có",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                   SharedPrefsSingleton.getInstance(getApplicationContext()).deleteAll();
-                        Intent intent = new Intent(ProfileSettingActivity.this,LoginActivity.class);
+                        SharedPrefsSingleton.getInstance(getApplicationContext()).deleteAll();
+                        Intent intent = new Intent(ProfileSettingActivity.this, LoginActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
-                        finish();                    }
+                        finish();
+                    }
                 });
 
         builder1.setNegativeButton(

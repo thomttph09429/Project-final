@@ -15,6 +15,8 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ValidateForm {
     /**
@@ -186,6 +188,15 @@ public class ValidateForm {
         return newPrice;
 
     }
-
+    public static boolean isValidEmail(String email)
+    {
+        if (email != null)
+        {
+            Pattern p = Pattern.compile("^[A-Za-z].*?@gmail\\.com$");
+            Matcher m = p.matcher(email);
+            return m.find();
+        }
+        return false;
+    }
 
 }

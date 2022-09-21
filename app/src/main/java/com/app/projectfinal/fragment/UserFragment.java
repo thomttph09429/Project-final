@@ -87,6 +87,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         isSignUpToBecomeSeller();
+        getInfoUser();
 
     }
 
@@ -239,7 +240,6 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                         int newOrder = data.getInt("newOrder");
                         int processingOrder = data.getInt("processingOrder");
                         int finishOrder = data.getInt("finishOrder");
-                        getInfoUser();
 
                         //delivery
                         if (processingOrder != 0) {
