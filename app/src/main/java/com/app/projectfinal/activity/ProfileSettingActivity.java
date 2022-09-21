@@ -311,9 +311,10 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                    SharedPrefsSingleton.getInstance(getApplicationContext()).deleteAll();
-                   startActivity(new Intent(ProfileSettingActivity.this,LoginActivity.class));
-                   finish();
-                    }
+                        Intent intent = new Intent(ProfileSettingActivity.this,LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        finish();                    }
                 });
 
         builder1.setNegativeButton(
