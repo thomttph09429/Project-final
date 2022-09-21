@@ -35,6 +35,7 @@
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/drawable/bg_stroke_border_5.xml" value="0.1465" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/drawable/ic_add_cart.xml" value="0.107" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/drawable/ic_add_image.xml" value="0.1115" />
+        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/drawable/ic_avatar.xml" value="0.1805" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/drawable/ic_back.xml" value="0.128" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/drawable/ic_cart.xml" value="0.107" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/drawable/ic_chart_white.xml" value="0.122" />
@@ -55,30 +56,34 @@
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/activity_chat.xml" value="0.20416666666666666" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/activity_detail_product.xml" value="0.3225806451612903" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/activity_list_chat.xml" value="0.33" />
-        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/activity_login.xml" value="0.22" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/activity_logout.xml" value="0.20364583333333333" />
+        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/activity_my_order.xml" value="0.2" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/activity_my_product.xml" value="0.20364583333333333" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/activity_my_shop.xml" value="0.45740740740740743" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/activity_myshop.xml" value="0.25" />
-        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/activity_order.xml" value="0.22" />
+        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/activity_order.xml" value="0.2" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/activity_order_information.xml" value="0.29342105263157897" />
-        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/activity_order_shop_information.xml" value="0.20416666666666666" />
+        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/activity_order_shop_information.xml" value="0.33" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/activity_product_detail.xml" value="0.33" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/activity_product_detail2.xml" value="0.16304347826086957" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/activity_profile_setting.xml" value="0.33" />
+        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/activity_profile_shop.xml" value="0.20416666666666666" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/activity_register.xml" value="0.1" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/activity_shop_order.xml" value="0.19947916666666668" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/activity_shop_settings.xml" value="0.18" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/activity_sign_up_shop.xml" value="0.33" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/activity_splash.xml" value="0.2" />
+        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/activity_statistical.xml" value="0.25" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/activity_unit.xml" value="0.20364583333333333" />
-        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/activity_view_shop.xml" value="0.20416666666666666" />
+        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/activity_view_shop.xml" value="0.25" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/custom_toast.xml" value="0.19479166666666667" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/dialog_confirm.xml" value="0.20416666666666666" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/fragment_cancel.xml" value="0.20416666666666666" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/fragment_cancel_confirm.xml" value="0.20416666666666666" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/fragment_change_address.xml" value="0.18541666666666667" />
+        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/fragment_change_pass.xml" value="0.2" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/fragment_choose_address.xml" value="0.33" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/fragment_choose_cart.xml" value="0.33" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/fragment_complete.xml" value="0.33" />
@@ -90,23 +95,26 @@
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/fragment_enter_authetication_o_t_p.xml" value="0.44315992292870904" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/fragment_home.xml" value="0.22" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/fragment_list_category_dialog.xml" value="0.2" />
-        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/fragment_notifications.xml" value="0.1" />
+        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/fragment_my_notifi.xml" value="0.2" />
+        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/fragment_notifications.xml" value="0.18" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/fragment_order_information.xml" value="0.19947916666666668" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/fragment_province.xml" value="0.2" />
+        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/fragment_shop_notifi.xml" value="0.2" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/fragment_unit.xml" value="0.20364583333333333" />
-        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/fragment_user.xml" value="0.44074074074074077" />
+        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/fragment_user.xml" value="0.25" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/fragment_wait.xml" value="0.2" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/fragment_wait_confirm.xml" value="0.20416666666666666" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/fragment_ward.xml" value="0.2" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/item_address.xml" value="0.2" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/item_adds.xml" value="0.16304347826086957" />
-        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/item_cart.xml" value="0.37410071942446044" />
+        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/item_cart.xml" value="0.25" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/item_cart_product.xml" value="0.19067028985507245" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/item_category.xml" value="0.33" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/item_chat_left.xml" value="0.20416666666666666" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/item_chat_right.xml" value="0.33" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/item_list_chat.xml" value="0.20416666666666666" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/item_my_product.xml" value="0.2" />
+        <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/item_notify.xml" value="0.5" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/item_order.xml" value="0.33" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/item_pay.xml" value="0.33" />
         <entry key="..\:/DATN/DATN/DATN_GITS/ProjectFinal/app/src/main/res/layout/item_product.xml" value="0.33" />
