@@ -63,8 +63,18 @@ public class ShopNotifiFragment extends Fragment {
             view = inflater.inflate(R.layout.fragment_shop_notifi, container, false);
         initView();
         initAction();
-        getProducts();
         return view;
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        getProducts();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        orders.clear();
     }
 
     private void initView() {

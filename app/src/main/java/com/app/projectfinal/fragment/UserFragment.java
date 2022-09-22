@@ -77,7 +77,6 @@ public class UserFragment extends Fragment implements View.OnClickListener {
             view = inflater.inflate(R.layout.fragment_user, container, false);
         initView();
         initAction();
-        getOrderQuantity();
 
 
         return view;
@@ -88,6 +87,8 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         super.onResume();
         isSignUpToBecomeSeller();
         getInfoUser();
+        getOrderQuantity();
+
 
     }
 

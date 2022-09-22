@@ -64,6 +64,13 @@ public class AddressActivity extends AppCompatActivity implements View.OnClickLi
         getAllMyAddress();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        addressUserList.clear();
+
+    }
+
     private void initAction() {
         lnAddress.setOnClickListener(this::onClick);
         addressUserList = new ArrayList<>();
