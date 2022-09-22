@@ -34,6 +34,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -68,12 +70,13 @@ public class StatisticalActivity extends AppCompatActivity implements View.OnCli
         graph.setShapeBackgroundColor(getResources().getColor(R.color.black));
 
         data = new ArrayList<>();
-
+        getCurrentTime();
+        getStatisticals();
         tvGetResutl.setOnClickListener(v -> {
             if (!startSate.equals("") && !endDate.equals("")) {
-                getStatistical();
+            getStatistical();
             } else {
-                Toast.makeText(this, "Hãy chọn thời gian", Toast.LENGTH_SHORT).show();
+                Toast.makeText( this, "Hãy chọn thời gian", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -149,6 +152,19 @@ public class StatisticalActivity extends AppCompatActivity implements View.OnCli
         SimpleDateFormat dateFormat = new SimpleDateFormat(myFormat, Locale.US);
         endDate = dateFormat.format(myCalendarEnd.getTime());
         tvEnd.setText(endDate);
+    }
+
+    private String getCurrentTime() {
+        String date = "";
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+            LocalDateTime now;
+            now = LocalDateTime.now();
+            date = dtf.format(now);
+            tvEnd.setText(date);
+        }
+        return date;
+
     }
 
     private void openDateEnd() {
@@ -245,4 +261,88 @@ public class StatisticalActivity extends AppCompatActivity implements View.OnCli
         VolleySingleton.getInstance(StatisticalActivity.this).getRequestQueue().add(jsonObjectRequest);
 
     }
+
+
+    private void getStatisticals() {
+        String url = STATISTICAL + "?endDate=" + getCurrentTime() + "&storeId=" + storeId;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                if (response != null) {
+                    try {
+                        Log.e("hhffffffffffffff", response + "");
+                        JSONObject jsonObject = response.getJSONObject("data");
+                        float totalMoney = jsonObject.getInt("totalMoney");
+                        float totalMoneySaleFlowers = jsonObject.getInt("totalMoneySaleFlowers");
+                        float totalMoneySaleCoffee = jsonObject.getInt("totalMoneySaleCoffee");
+                        float totalMoneySaleRice = jsonObject.getInt("totalMoneySaleRice");
+                        float totalMoneySalePepper = jsonObject.getInt("totalMoneySalePepper");
+                        float totalMoneySaleTea = jsonObject.getInt("totalMoneySaleTea");
+                        float totalMoneySaleCashew = jsonObject.getInt("totalMoneySaleCashew");
+                        float totalMoneySaleFruit = jsonObject.getInt("totalMoneySaleFruit");
+                        float totalMoneySaleVegetables = jsonObject.getInt("totalMoneySaleVegetables");
+                        int totalMoneySaleTree = jsonObject.getInt("totalMoneySaleTree");
+                        tv1.setText("Hoa: " + ValidateForm.getDecimalFormattedString(totalMoneySaleFlowers + ""));
+                        tv2.setText("Cà phê: " + ValidateForm.getDecimalFormattedString(totalMoneySaleCoffee + ""));
+                        tv3.setText("Lúa gạo: " + ValidateForm.getDecimalFormattedString(totalMoneySaleRice + ""));
+                        tv4.setText("Hồ tiêu: " + ValidateForm.getDecimalFormattedString(totalMoneySalePepper + ""));
+                        tv5.setText("Chè: " + ValidateForm.getDecimalFormattedString(totalMoneySaleTea + ""));
+                        tv6.setText("Hạt điều: " + ValidateForm.getDecimalFormattedString(totalMoneySaleCashew + ""));
+                        tv7.setText("Trái cây: " + ValidateForm.getDecimalFormattedString(totalMoneySaleFruit + ""));
+                        tv8.setText("Rau củ: " + ValidateForm.getDecimalFormattedString(totalMoneySaleVegetables + ""));
+                        tv9.setText("Cây: " + ValidateForm.getDecimalFormattedString(totalMoneySaleTree + ""));
+                        tvTotalMoney.setText(ValidateForm.getDecimalFormattedString(totalMoney + "") + "");
+                        if (totalMoney != 0) {
+                            float percent1 = totalMoneySaleFlowers / totalMoney * 100;
+                            float percent2 = totalMoneySaleCoffee / totalMoney * 100;
+                            float percent3 = totalMoneySaleRice / totalMoney * 100;
+                            float percent4 = totalMoneySalePepper / totalMoney * 100;
+                            float percent5 = totalMoneySaleTea / totalMoney * 100;
+                            float percent6 = totalMoneySaleCashew / totalMoney * 100;
+                            float percent7 = totalMoneySaleFruit / totalMoney * 100;
+                            float percent8 = totalMoneySaleVegetables / totalMoney * 100;
+                            float percent9 = totalMoneySaleTree / totalMoney * 100;
+                            Log.e("hffhfhfff", percent1 + "" + percent7 + "" + percent6 + "" + percent8 + "");
+                            Resources resources = getResources();
+                            data.add(new GraphData(percent1, resources.getColor(R.color.color_1)));
+                            data.add(new GraphData(percent2, resources.getColor(R.color.color_2)));
+                            data.add(new GraphData(percent3, resources.getColor(R.color.color_3)));
+                            data.add(new GraphData(percent4, resources.getColor(R.color.color_4)));
+                            data.add(new GraphData(percent5, resources.getColor(R.color.color_5)));
+                            data.add(new GraphData(percent6, resources.getColor(R.color.color_6)));
+                            data.add(new GraphData(percent7, resources.getColor(R.color.color_7)));
+                            data.add(new GraphData(percent8, resources.getColor(R.color.color_8)));
+                            data.add(new GraphData(percent9, resources.getColor(R.color.color_9)));
+                            graph.setData(data);
+                        }
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(StatisticalActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+
+                    }
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", ConstantData.getToken(getApplicationContext().getApplicationContext()));
+                return headers;
+            }
+        };
+        VolleySingleton.getInstance(StatisticalActivity.this).getRequestQueue().add(jsonObjectRequest);
+
+    }
+
+
+
 }

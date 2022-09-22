@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DATN</string>
+    <string name="app_name">NSV</string>
 
     <string name="login">Đăng nhập</string>
     <string name="login_with_gg">Tiếp tục với Google</string>

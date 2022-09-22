@@ -3,6 +3,7 @@ package com.app.projectfinal.fragment;
 import static com.app.projectfinal.activity.MainActivity.status;
 import static com.app.projectfinal.activity.MainActivity.storeId;
 import static com.app.projectfinal.activity.MainActivity.total;
+import static com.app.projectfinal.utils.Constant.ADD_STORES;
 import static com.app.projectfinal.utils.Constant.STORE_ID_PRODUCT;
 import static com.app.projectfinal.utils.Constant.TOTAL_ORDER;
 import static com.app.projectfinal.utils.Constant.UPDATE_USER;
@@ -30,6 +31,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.app.projectfinal.R;
 import com.app.projectfinal.activity.CartActivity;
 import com.app.projectfinal.activity.ListChatActivity;
+import com.app.projectfinal.activity.MainActivity;
 import com.app.projectfinal.activity.MyShopActivity;
 import com.app.projectfinal.activity.ProfileSettingActivity;
 import com.app.projectfinal.activity.SignUpShopActivity;
@@ -41,6 +43,7 @@ import com.app.projectfinal.utils.VolleySingleton;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -59,7 +62,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     private ImageView ivMessage, ivCart;
     private CircleImageView ivAvatar;
     public static UserDetail userDetail;
-
+    public static int statuss, totals;
     public UserFragment() {
     }
 
@@ -85,6 +88,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
+        isHaveAccount();
         isSignUpToBecomeSeller();
         getInfoUser();
         getOrderQuantity();
@@ -141,14 +145,14 @@ public class UserFragment extends Fragment implements View.OnClickListener {
      * </pre>
      */
     private void isSignUpToBecomeSeller() {
-        if (total != 0) {
+        if (totals != 0) {
 
 
-            if (status == 1) {
+            if (statuss == 1) {
                 tvWhenNotSignUp.setVisibility(View.GONE);
                 tvMyShop.setVisibility(View.VISIBLE);
                 lnStartSell.setVisibility(View.GONE);
-            } else if (status == 0) {
+            } else if (statuss == 0) {
                 tvWhenNotSignUp.setVisibility(View.VISIBLE);
                 tvMyShop.setVisibility(View.GONE);
                 lnStartSell.setVisibility(View.VISIBLE);
@@ -164,6 +168,50 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         } else {
 
         }
+
+    }
+    public void isHaveAccount() {
+        String urlProducts = ADD_STORES + "/" + "?userId=" + ConstantData.getUserId(getContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlProducts, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                if (response != null) {
+                    try {
+                        JSONObject jsonObject = response.getJSONObject("data");
+                        totals= jsonObject.getInt("total");
+                        JSONArray data = jsonObject.getJSONArray("stores");
+
+                        for (int i = 0; i < data.length(); i++) {
+                            JSONObject jsonObject1 = data.getJSONObject(i);
+                            statuss= jsonObject1.getInt("status");
+
+
+                        }
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getContext(), e.toString(), Toast.LENGTH_LONG).show();
+
+                    }
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", ConstantData.getToken(getContext()));
+                return headers;
+            }
+        };
+        VolleySingleton.getInstance(getContext()).getRequestQueue().add(jsonObjectRequest);
 
     }
 
