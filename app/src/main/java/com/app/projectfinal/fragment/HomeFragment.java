@@ -201,7 +201,6 @@ public class HomeFragment extends Fragment implements ProductAdapter.FilterListe
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), error.toString(), Toast.LENGTH_LONG).show();
                 ProgressBarDialog.getInstance(getContext()).closeDialog();
 
             }
@@ -236,7 +235,7 @@ public class HomeFragment extends Fragment implements ProductAdapter.FilterListe
         LinearLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         rcvProduct.setHasFixedSize(true);
         rcvProduct.setLayoutManager(layoutManager);
-        getProducts(page);
+        getProducts(page, 20);
 
     }
 
@@ -253,7 +252,7 @@ public class HomeFragment extends Fragment implements ProductAdapter.FilterListe
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 if (scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()) {
                     page++;
-                    getProducts(page);
+                    getProducts(page, 20);
                 }
 
             }
@@ -278,13 +277,13 @@ public class HomeFragment extends Fragment implements ProductAdapter.FilterListe
      *
      * @param page
      */
-    private void getProducts(int page) {
+    private void getProducts(int page,int size) {
         if (page == 1) {
             ProgressBarDialog.getInstance(getContext()).showDialog("Đang tải", getContext());
 
         }
 
-        String urlProducts = PRODUCTS + "?" + "page=" + page + "&size=" + 20;
+        String urlProducts = PRODUCTS + "?" + "page=" + page + "&size=" + size;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlProducts, null, new Response.Listener<JSONObject>() {
             @Override
@@ -330,7 +329,6 @@ public class HomeFragment extends Fragment implements ProductAdapter.FilterListe
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), error.toString(), Toast.LENGTH_LONG).show();
                 ProgressBarDialog.getInstance(getContext()).closeDialog();
 
             }
@@ -421,7 +419,7 @@ public class HomeFragment extends Fragment implements ProductAdapter.FilterListe
     private void clickViewAll() {
         tvAllProduct.setOnClickListener(v -> {
             products.clear();
-            getProducts(1);
+            getProducts(1, 50);
 
         });
     }

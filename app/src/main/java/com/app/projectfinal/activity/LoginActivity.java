@@ -117,9 +117,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String userName = edt_acc.getText().toString().trim();
                 String passWord = edt_pass.getText().toString().trim();
-                if (!ValidateForm.isName(userName)) {
+                if (!ValidateForm.isPhoneNumber(userName)) {
                     Snackbar snackbar = Snackbar
-                            .make(parentLayout, "Tên đăng nhập từ 8 ký tự", Snackbar.LENGTH_LONG);
+                            .make(parentLayout, "Hãy nhập số điện thoại 10 số", Snackbar.LENGTH_LONG);
                     snackbar.show();
                 } else if (!ValidateForm.validatePassword(passWord)) {
                     Snackbar snackbar = Snackbar

@@ -209,7 +209,6 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), error.toString(), Toast.LENGTH_LONG).show();
                 ProgressBarDialog.getInstance(getContext()
                 ).closeDialog();
 
@@ -265,7 +264,6 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), error.toString(), Toast.LENGTH_LONG).show();
                 ProgressBarDialog.getInstance(getContext()).closeDialog();
 
             }

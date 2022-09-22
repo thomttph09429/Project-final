@@ -237,7 +237,6 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(ProfileSettingActivity.this, "" + error.toString(), Toast.LENGTH_LONG).show();
             }
         }) {
             @Override
@@ -276,7 +275,6 @@ public class ProfileSettingActivity extends AppCompatActivity implements View.On
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(ProfileSettingActivity.this, "" + error.toString(), Toast.LENGTH_LONG).show();
             }
         }) {
             @Override

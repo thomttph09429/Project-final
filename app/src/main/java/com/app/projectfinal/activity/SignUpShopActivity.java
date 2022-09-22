@@ -323,7 +323,6 @@ public class SignUpShopActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(SignUpShopActivity.this, "" + error.toString(), Toast.LENGTH_LONG).show();
             }
         }) {
             @Override
@@ -358,7 +357,6 @@ public class SignUpShopActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(SignUpShopActivity.this, "" + error.toString(), Toast.LENGTH_LONG).show();
             }
         }) {
             @Override

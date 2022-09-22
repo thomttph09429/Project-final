@@ -243,7 +243,6 @@ public class EnterAuthenticationOTPFragment extends DialogFragment {
                     JSONObject errors = data.getJSONObject("error");
                     String message = errors.getString("message");
                     Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
-                    Toast.makeText(getContext(), error.toString(), Toast.LENGTH_LONG).show();
 
                 } catch (JSONException e) {
                     e.printStackTrace();

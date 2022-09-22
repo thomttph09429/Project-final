@@ -120,7 +120,6 @@ public class MyNotifiFragment extends Fragment {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(getContext(), error.toString(), Toast.LENGTH_LONG).show();
 
                 }
             }) {

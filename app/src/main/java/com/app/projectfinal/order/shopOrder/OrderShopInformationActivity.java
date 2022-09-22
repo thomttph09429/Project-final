@@ -139,7 +139,6 @@ public class OrderShopInformationActivity extends AppCompatActivity implements V
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(OrderShopInformationActivity.this, error.toString(), Toast.LENGTH_LONG).show();
                 ProgressBarDialog.getInstance(OrderShopInformationActivity.this).closeDialog();
 
             }
@@ -242,7 +241,6 @@ public class OrderShopInformationActivity extends AppCompatActivity implements V
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(OrderShopInformationActivity.this, "" + error.toString(), Toast.LENGTH_LONG).show();
             }
         }) {
             @Override

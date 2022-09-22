@@ -212,7 +212,6 @@ public class ViewShopActivity extends AppCompatActivity implements ProductAdapte
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(ViewShopActivity.this, error.toString(), Toast.LENGTH_LONG).show();
 
             }
         }) {
@@ -259,7 +258,6 @@ public class ViewShopActivity extends AppCompatActivity implements ProductAdapte
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(ViewShopActivity.this, error.toString(), Toast.LENGTH_LONG).show();
                 ProgressBarDialog.getInstance(ViewShopActivity.this).closeDialog();
 
             }

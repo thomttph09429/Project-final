@@ -150,7 +150,6 @@ public class OrderInformationActivity extends AppCompatActivity implements View.
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(OrderInformationActivity.this, error.toString(), Toast.LENGTH_LONG).show();
                 ProgressBarDialog.getInstance(OrderInformationActivity.this).closeDialog();
 
             }
@@ -252,7 +251,6 @@ public class OrderInformationActivity extends AppCompatActivity implements View.
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(OrderInformationActivity.this, "" + error.toString(), Toast.LENGTH_LONG).show();
             }
         }) {
             @Override

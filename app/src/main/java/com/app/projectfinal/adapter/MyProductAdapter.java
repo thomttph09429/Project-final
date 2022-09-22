@@ -176,7 +176,6 @@ public class MyProductAdapter extends RecyclerView.Adapter<MyProductAdapter.MyVi
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, "" + error.toString(), Toast.LENGTH_LONG).show();
                 ProgressBarDialog.getInstance(context).closeDialog();
 
             }

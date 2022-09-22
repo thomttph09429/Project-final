@@ -259,7 +259,6 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(DetailProductActivity.this, error.toString(), Toast.LENGTH_LONG).show();
 
             }
         }) {
@@ -332,7 +331,6 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(DetailProductActivity.this, error.toString(), Toast.LENGTH_LONG).show();
 
             }
         }) {
@@ -373,7 +371,6 @@ public class DetailProductActivity extends AppCompatActivity implements View.OnC
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(DetailProductActivity.this, error.toString(), Toast.LENGTH_LONG).show();
 
             }
         }) {

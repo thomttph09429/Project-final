@@ -81,9 +81,10 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edt_acc"
             style="@style/InputText"
+            android:inputType="number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/acc_sdt"
+            android:hint="Số điện thoại"
             android:padding="@dimen/_16sdp" />
     </com.google.android.material.textfield.TextInputLayout>
 

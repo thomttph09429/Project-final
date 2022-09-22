@@ -127,7 +127,6 @@ public class ProfileShopActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(ProfileShopActivity.this, error.toString(), Toast.LENGTH_LONG).show();
                 ProgressBarDialog.getInstance(ProfileShopActivity.this
                 ).closeDialog();
 
@@ -282,7 +281,6 @@ public class ProfileShopActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(ProfileShopActivity.this, "" + error.toString(), Toast.LENGTH_LONG).show();
                 ProgressBarDialog.getInstance(ProfileShopActivity.this).closeDialog();
 
             }

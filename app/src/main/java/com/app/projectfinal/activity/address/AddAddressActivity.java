@@ -98,7 +98,6 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(AddAddressActivity.this, error.toString(), Toast.LENGTH_LONG).show();
                         ProgressBarDialog.getInstance(AddAddressActivity.this).closeDialog();
 
 

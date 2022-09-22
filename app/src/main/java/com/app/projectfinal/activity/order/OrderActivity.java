@@ -272,7 +272,6 @@ public class OrderActivity extends AppCompatActivity implements ChangeAddressFra
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(OrderActivity.this, error.toString(), Toast.LENGTH_LONG).show();
 
 
             }

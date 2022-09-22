@@ -181,7 +181,6 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(MyShopActivity.this, error.toString(), Toast.LENGTH_LONG).show();
                 ProgressBarDialog.getInstance(MyShopActivity.this).closeDialog();
 
             }
@@ -241,7 +240,6 @@ public class MyShopActivity extends AppCompatActivity implements View.OnClickLis
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(MyShopActivity.this, error.toString(), Toast.LENGTH_LONG).show();
                 ProgressBarDialog.getInstance(MyShopActivity.this).closeDialog();
 
             }
